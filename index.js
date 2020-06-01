@@ -86,7 +86,7 @@ function listFiles(auth) {
   const drive = google.drive({ version: "v3", auth });
   drive.files.list(
     {
-      pageSize: 3,
+      pageSize: 20,
       fields: "nextPageToken, files(id, name)",
     },
     (err, res) => {
