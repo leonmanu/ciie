@@ -7,18 +7,16 @@
   <body>
     <% include ../partials/nav.ejs %>
 
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center" style="margin-top: 50px;">
       <div class="container">
         <a href="/" class="lang-logo">
-          <img src="/lang-logo.png" />
+          <img src="/ees62-logo.png" />
         </a>
-        <h1>Getting Started on Heroku with Node.js</h1>
+        <h1>Escuela de Educación Secundaria Nº 62</h1>
         <p>
-          This is a sample Node application deployed to Heroku. It's a
-          reasonably simple app - but a good foundation for understanding how to
-          get the most out of the Heroku platform.
+          Continuidad pedagógica
         </p>
-        <a
+        <!-- <a
           type="button"
           class="btn btn-lg btn-default"
           href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"
@@ -31,121 +29,54 @@
           href="https://github.com/heroku/node-js-getting-started"
           ><span class="glyphicon glyphicon-download"></span> Source on
           GitHub</a
-        >
+        > -->
       </div>
     </div>
     <div class="container">
-      <div class="alert alert-info text-center" role="alert">
-        <ul>
-          <% archivos.forEach(function(file){ %>
-          <li><%= file.name%> - <%= file.id%></li>
-          <% }); %>
-        </ul>
-      </div>
-      <hr />
-      <div class="row">
-        <div class="col-md-6">
-          <h3>
-            <span class="glyphicon glyphicon-info-sign"></span> How this sample
-            app works
-          </h3>
-          <ul>
-            <li>
-              This app was deployed to Heroku, either using Git or by using
-              <a href="https://github.com/heroku/node-js-getting-started"
-                >Heroku Button</a
-              >
-              on the repository.
-            </li>
+      <!-- <div class="alert alert-info text-center" role="alert">
+        <h2>The XMLHttpRequest Object</h2>
 
-            <li>
-              When Heroku received the source code, it fetched all the
-              dependencies in the
-              <a
-                href="https://github.com/heroku/node-js-getting-started/blob/master/package.json"
-                >package.json</a
-              >, creating a deployable slug.
-            </li>
-            <li>
-              The platform then spins up a dyno, a lightweight container that
-              provides an isolated environment in which the slug can be mounted
-              and executed.
-            </li>
-            <li>
-              You can scale your app, manage it, and deploy over
-              <a href="https://addons.heroku.com/">150 add-on services</a>, from
-              the Dashboard or CLI.
-            </li>
-          </ul>
+        <button type="button" onclick="loadDoc()">Get my CD collection</button>
+        <br /><br />
+        <table id="demo"></table>
+      </div> -->
+      <div class="w3-row-padding w3-center w3-margin-top">
+        <% cursos.forEach(function(curso){ %>
+        <div class="w3-third w3-margin-bottom">
+          <div
+            class="w3-card w3-container w3-padding-16"
+            style="min-height: 200px;"
+          >
+            <header class="w3-container w3-light-grey">
+              <h3>
+                <%= curso.curso%>
+              </h3>
+            </header>
+            <span class="w3-tag w3-small w3-blue">
+              <% switch (curso.orientacion) { case 'COM' : %>
+              <p>COMUNICACIÓN</p>
+              <% break; case 'SOC' : %>
+              <p>SOCIALES</p>
+              <% break; case 'ECO' : %>
+              <p>ECONOMÍA</p>
+              <% break; case 'MUS' : %>
+              <p>MÚSICA</p>
+              <% break; } %>
+            </span>
+            <br />
+            <a
+              href="https://drive.google.com/drive/u/0/folders/<%= curso.id%>"
+              class="w3-button w3-white w3-border w3-border-blue"
+              >ver en Drive</a
+            >
+          </div>
         </div>
-        <div class="col-md-6">
-          <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-          <ul>
-            <li>
-              If you are following the
-              <a
-                href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"
-                >Getting Started</a
-              >
-              guide, then please head back to the tutorial and follow the next
-              steps!
-            </li>
-            <li>
-              If you deployed this app by deploying the Heroku Button, then in a
-              command line shell, run:
-            </li>
-            <ul>
-              <li>
-                <code
-                  >git clone
-                  https://github.com/heroku/node-js-getting-started.git</code
-                >
-                - this will create a local copy of the source code for the app
-              </li>
-              <li>
-                <code>cd node-js-getting-started</code> - change directory into
-                the local source code repository
-              </li>
-              <li>
-                <code>heroku git:remote -a &lt;your-app-name></code> - associate
-                the Heroku app with the repository
-              </li>
-              <li>
-                You'll now be set up to run the app locally, or
-                <a
-                  href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes"
-                  >deploy changes</a
-                >
-                to Heroku
-              </li>
-            </ul>
-          </ul>
-          <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-          <ul>
-            <li><a href="https://www.heroku.com/home">Heroku</a></li>
-            <li>
-              <a href="https://devcenter.heroku.com/">Heroku Dev Center</a>
-            </li>
-            <li>
-              <a
-                href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"
-                >Getting Started on Heroku with Node.js</a
-              >
-            </li>
-            <li>
-              <a href="https://devcenter.heroku.com/articles/deploying-nodejs"
-                >Deploying Node Apps on Heroku</a
-              >
-            </li>
-          </ul>
-        </div>
+        <% }); %>
       </div>
+
       <!-- row -->
       <div class="alert alert-info text-center" role="alert">
-        Please do work through the Getting Started guide, even if you do know
-        how to build such an application. The guide covers the basics of working
-        with Heroku, and will familiarize you with all the concepts you need in
-        order to build and deploy your own apps.
+        Pie de página
       </div>
     </div>
   </body>
