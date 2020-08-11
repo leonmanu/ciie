@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/header.ejs %>
+  </head>
+
+  <body>
+    <% include ../partials/nav.ejs %>
+
+    <div class="jumbotron text-center" style="margin-top: 50px;">
+      <div class="container">
+        <a href="/" class="lang-logo">
+          <img src="/ees62-logo.png" />
+        </a>
+        <h1>Escuela de Educación Secundaria Nº 62</h1>
+        <p>
+          Continuidad pedagógica
+        </p>
+        <!-- <a
+          type="button"
+          class="btn btn-lg btn-default"
+          href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"
+          ><span class="glyphicon glyphicon-flash"></span> Getting Started on
+          Heroku with Node.js</a
+        >
+        <a
+          type="button"
+          class="btn btn-lg btn-primary"
+          href="https://github.com/heroku/node-js-getting-started"
+          ><span class="glyphicon glyphicon-download"></span> Source on
+          GitHub</a
+        > -->
+      </div>
+    </div>
+    <div class="container">
+      <!-- <div class="alert alert-info text-center" role="alert">
+        <h2>The XMLHttpRequest Object</h2>
+        <button type="button" onclick="loadDoc()">Get my CD collection</button>
+        <br /><br />
+        <table id="demo"></table>
+      </div> -->
+      Hola
+
+      <div class="w3-row-padding w3-center w3-margin-top">
+        <% resultados.forEach(function(resultado){ %>
+        <div class="w3-third w3-margin-bottom">
+          <div
+            class="w3-card w3-container w3-padding-16"
+            style="min-height: 200px;"
+          >
+            <header class="w3-container w3-light-grey">
+              <h3>
+                <%= resultado.name%> 
+              </h3>
+              <h6>exten: <%= resultado.extension%> </h6>
+            </header>
+            <br />
+            <a
+              href="/curso/cursoAsignaturas<%= resultado.id%>"
+              class="w3-button w3-white w3-border w3-border-blue"
+              >ver en Drive</a
+            >
+          </div>
+        </div>
+        <% }); %>
+      </div>
+
+      <!-- row -->
+      <div class="alert alert-info text-center" role="alert">
+        Pie de página
+      </div>
+    </div>
+  </body>
+</html>
