@@ -4,51 +4,56 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
-
-<body>
+<body style="font-family:Verdana;color:#aaaaaa;">
   <% include ../partials/nav.ejs %>
 
 
+  
+  <div style="overflow:auto">
+    <div class="menu">
+      <a href="#">.</a>
 
-  <div class="divContaier">
-    <div class="">
-      <% resultados.forEach(function(resultado){ %>
-
-
-      <%= resultado.mimeType%></h2>
-      <h4 class="title">
-        <%= resultado.webContentLink%></h4>
-
-
-      <div class="flex-container">
-        <div class="flex-1">
-          <h2 class="">
-            <img src=<%= resultado.iconLink%> />
-            <%= resultado.name%></h2>
-          <h2 class="title">
+    </div>
+  
+    <div class="main">
+      <div class="">
+        <% resultados.forEach(function(resultado){ %>
+  
+  
+        <%= resultado.mimeType%></h2>
+        <h4 class="title">
+          <%= resultado.webContentLink%></h4>
+  
+  
+        <div class="flex-container">
+          <div class="flex-1">
+            <h2 class="">
+              <img class="brand" src=<%= resultado.iconLink%> />
+              <%= resultado.name%></h2>
+            <h2 class="title">
+          </div>
+  
+          <div class="flex-2">
+            <% if(resultado.mimeType == 'application/vnd.google-apps.folder'){%>
+              <a href="/curso/cursoAsignaturas<%= resultado.id%>" class="linkButton"><img class="brand" src="/img/arrow.jpg"></a>
+              <% } else{ %>
+              <a href="https://docs.google.com/uc?id=<%= resultado.id%>" class="linkButton"><img class="brand" src="/img/view.jpg"></a>
+              <a href="<%= resultado.webContentLink%>" class="linkButton"> <img class="brand" src="/img/pdfDown.jpg" /></a>
+              <% } %>
+          </div>
         </div>
 
-        <div class="flex-2">
-          <% if(resultado.mimeType == 'application/vnd.google-apps.folder'){%>
-            <a href="/curso/cursoAsignaturas<%= resultado.id%>" class="linkButton">Acceder</a>
-            <% } else{ %>
-            <a href="https://docs.google.com/uc?id=<%= resultado.id%>" class="linkButton">Ver</a>
-            <a href="<%= resultado.webContentLink%>" class="linkButton">Descargar*</a>
-            <% } %>
-        </div>
+  
+        <% }); %>
+  
+  
       </div>
-
-
-      <% }); %>
-
-
     </div>
-
-    <!-- row -->
-    <div class="alert alert-info text-center" role="alert">
-      Pie de página
-    </div>
+  
+  
   </div>
-</body>
-
+  
+  <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
+  
+  </body>
 </html>
