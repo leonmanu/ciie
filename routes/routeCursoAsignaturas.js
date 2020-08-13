@@ -22,10 +22,14 @@ routerCursoAsignaturas.route('/cursoAsignaturas:id')
             console.log("error en  ROUTE" + error);
             res.render('pages/cursoAsignaturas');
         })
-         
-        
-        
 
+    })
+
+    routerCursoAsignaturas.route('/bajarArchivo:id')
+    .get(function(req,res){
+        //resultados = fnExterna('1N1PPMOm3SN-tnkjWCY5gVFQPX1hnXdD6');
+        var fnExterna = require("../javascript/ajax/dirveApi/dowFile.js")
+        fnExterna(req.params.id);
     })
 
     

@@ -96,13 +96,13 @@ module.exports = files = id => {
       drive.files.list(
         {
           parents: "1Ru-Mfghj-XPV3pfZ0OnNqrg0HJl8Kdb1",
-          fields: "nextPageToken, files(id, name, mimeType, iconLink)",
+          fields: "nextPageToken, files(id, name, mimeType, iconLink, webContentLink)",
           q: "'" + id + "' in parents",
           folderId: folderId,
           orderBy: "name",
         },
         (err, res) => {
-          var cursoDatos;
+          //var cursoDatos;
           //var orientacion = "";
           if (err) return console.log("The API returned an error: " + err);
           const files = res.data.files;
