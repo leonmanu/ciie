@@ -49,22 +49,24 @@
 
               <div class="flex-2">
                 <div class="btn-group">
-                <a href="https://drive.google.com/file/d/<%= resultado.id%>/view" class="button"><img class="brand"
-                  src="/img/view.jpg"></a>
+               
                 <% if(resultado.mimeType.substring(0, 27) == 'application/vnd.google-apps'){%>
                   
                 <% switch (resultado.mimeType) {
                     case 'application/vnd.google-apps.document' : %>
-                <!-- <a href="https://docs.google.com/document/d/<%= resultado.id%>/export?format=doc "
-                  class="button"><img class="brand" src="/img/down-doc.png"></a> -->
-                  <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf"
-                    class="button"><img class="brand" src="/img/down-doc.png"></a>
+                    <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf"
+                      class="button"><img class="brand" src="/img/view.jpg"></a>
+                <a href="https://docs.google.com/document/d/<%= resultado.id%>/export?format=doc "
+                  class="button"><img class="brand" src="/img/down-doc.png"></a>
+                  
                 <% break;
                     
                     case 'application/vnd.google-apps.spreadsheet' : %>
-                    
-                    <a href="https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=xlsx"
+                    <a href="https://docs.google.com/viewer?url=https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=pdf"
+                      class="button"><img class="brand" src="/img/view.jpg"></a>
+                     <a href="https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=xlsx"
                       class="button"><img class="brand" src="/img/down-xls.png"></a>
+                      
                 <% break;
                     
                     case 'subAdmin' : %>
@@ -74,6 +76,8 @@
                     } %>
                   
                 <% } else{ %>
+                  <a href="https://drive.google.com/file/d/<%= resultado.id%>/view" class="button"><img class="brand"
+                    src="/img/view.jpg"></a>
                 <a href="<%= resultado.webContentLink%>" class="button"> <img class="brand"
                     src="/img/download.png" /></a>
                   
