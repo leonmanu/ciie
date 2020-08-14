@@ -47,6 +47,8 @@
               </div>
 
               <div class="flex-2">
+                <a href="https://drive.google.com/file/d/<%= resultado.id%>/view" class="linkButton"><img class="brand"
+                  src="/img/view.jpg"></a>
                 <% if(resultado.mimeType.substring(0, 27) == 'application/vnd.google-apps'){%>
                 <% switch (resultado.mimeType) {
                     case 'application/vnd.google-apps.document' : %>
@@ -65,17 +67,14 @@
                 <% break;
                     
                     } %>
-                    <a href="https://drive.google.com/file/d/<%= resultado.id%>/view" class="linkButton"><img class="brand"
-                      src="/img/view.jpg"></a>
+                    
                 <% } else{ %>
-                  <a href="https://docs.google.com/uc?id=<%= resultado.id%>" class="linkButton"><img class="brand"
-                    src="/img/view.jpg"></a>
                 <a href="<%= resultado.webContentLink%>" class="linkButton"> <img class="brand"
                     src="/img/download.png" /></a>
                 <% } %>
                 
                 <% } %>
-              </div>
+              </div>  
 
             </div>
 
