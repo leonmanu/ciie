@@ -34,6 +34,7 @@
 
           <div class="flex-2">
             <!--  -->
+            
             <a href="/curso/cursoAsignaturas<%= resultado.id%>" class="linkButton"><img class="brand"
                 src="/img/arrow.jpg"></a>
             <% } else{ %>
@@ -43,23 +44,25 @@
 
 
                 <%= resultado.name%>
-                <h2 class="title">
+                <h2 class="title"></h2>
               </div>
 
               <div class="flex-2">
-                <a href="https://drive.google.com/file/d/<%= resultado.id%>/view" class="linkButton"><img class="brand"
+                <div class="btn-group">
+                <a href="https://drive.google.com/file/d/<%= resultado.id%>/view" class="button"><img class="brand"
                   src="/img/view.jpg"></a>
                 <% if(resultado.mimeType.substring(0, 27) == 'application/vnd.google-apps'){%>
+                  
                 <% switch (resultado.mimeType) {
                     case 'application/vnd.google-apps.document' : %>
                 <a href="https://docs.google.com/document/d/<%= resultado.id%>/export?format=doc "
-                  class="linkButton"><img class="brand" src="/img/down-doc.png"></a>
+                  class="button"><img class="brand" src="/img/down-doc.png"></a>
                 <% break;
                     
                     case 'application/vnd.google-apps.spreadsheet' : %>
                     
                     <a href="https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=xlsx"
-                      class="linkButton"><img class="brand" src="/img/down-xls.png"></a>
+                      class="button"><img class="brand" src="/img/down-xls.png"></a>
                 <% break;
                     
                     case 'subAdmin' : %>
@@ -67,13 +70,15 @@
                 <% break;
                     
                     } %>
-                    
+                  
                 <% } else{ %>
-                <a href="<%= resultado.webContentLink%>" class="linkButton"> <img class="brand"
+                <a href="<%= resultado.webContentLink%>" class="button"> <img class="brand"
                     src="/img/download.png" /></a>
+                  
                 <% } %>
-                
+                </div>
                 <% } %>
+              
               </div>  
 
             </div>

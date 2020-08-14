@@ -53,12 +53,30 @@ height: 50px;
 
 
 .linkButton {
-  background-color: #f44336;
+  background-color: #74c6fd;
   color: white;
   padding: 14px 25px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  float: right;
+}
+
+.btn-group .button {
+  background-color: #4c7faf; /* Green */
+  border: 1px solid rgb(0, 41, 128);
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;  
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+.btn-group .button:hover {
+  background-color: #7a9aa1;
 }
 
 
@@ -90,7 +108,7 @@ color: rgb(0, 0, 0);
 .flex-1 {
   display: flex;
   align-items: stretch;
-  width: 80%;
+  width: 70%;
   height: 100px;
   text-overflow: ellipsis;  
   overflow: hidden;
@@ -99,7 +117,7 @@ color: rgb(0, 0, 0);
 .flex-2 {
   display: flex;
   align-items: stretch;
-  width: 20%;
+  width: 30%;
   height: 100px
 }
 
@@ -115,7 +133,7 @@ color: rgb(0, 0, 0);
 .flex-container > div {
   margin: 10px;
   text-align: center;
-  line-height: 75px;
+  line-height: 55px;
   font-size: 30px;
 }
 
