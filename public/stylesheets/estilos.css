@@ -1,192 +1,166 @@
 /* para el navbar */
 body {
-    background-color: #40739e;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
-  /* Add a color to the active/current link */
-.active {
-    background-color: white;
-    display:inline-block;
-    padding: 0px 0px;
-  }
-
-  /* logo escuela */
-
-  .logo {
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    
-       /* if you want it vertically middle of the navbar. */
+  background-color: #40739e;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.brand {
+/* Add a color to the active/current link */
+.active {
+  background-color: white;
+  display:inline-block;
+  padding: 0px 0px;
+}
+
+/* logo escuela */
+
+.logo {
   display: inline-block;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   
      /* if you want it vertically middle of the navbar. */
 }
 
-  .textCenter {
-    text-align: center;
+.brand {
+display: inline-block;
+width: 50px;
+height: 50px;
+
+   /* if you want it vertically middle of the navbar. */
+}
+
+.brand1 {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  
+     /* if you want it vertically middle of the navbar. */
   }
 
-  
 
 /* CARDS */
 
 
 
-  /* 13/08 */
+/* 13/08 */
 
-  .txtb{
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid #000;
-    background: none;
-    padding: 10px;
-    outline: none;
-    font-size: 18px;
-  }
 
-  .task{
-    width: 100%;
-    background: rgba(255,255,255,0.5);
-    padding: 18px;
-    margin: 6px 0;
-    overflow: hidden;
-  }
 
-  .task{
-    width: 100%;
-    background: rgba(0,0,0,.5);
-  color: #fff;
-    padding: 18px;
-    margin: 6px 0;
-    overflow: hidden;
-  }
-  
-  .task i{
-    float: right;
-    margin-left: 20px;
-    cursor: pointer;
-  }
-  
-  .comp .task{
-    background: rgba(0,0,0,.5);
-    color: #fff;
-  }
 
-  .linkButton {
-    background-color: #f44336;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-  }
-  
 
-  /*  */
 
-  .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-    grid-gap: 10px;
-    padding: 10px;
-  }
-  
-  .grid-container > div {
-    background: rgba(0,0,0,.5);
-    color: #fff;
-    text-align: center;
-    padding: 0px 0;
-    font-size: 30px;
-  }
-  
-  .item1 {
-    grid-column: 50px 1fr;
-  }
 
-  /*  */
 
-  .flex-container {
-    display: flex;
-    align-items: stretch;
-    background: rgba(0,0,0,.5);
-  color: #fff;
+.linkButton {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+
+/*  */
+
+
+
+
+
+/*  */
+
+.flex-container {
+  display: flex;
+  align-items: stretch;
+  background: rgba(0,0,0,.5);
+color: #fff;
+overflow: hidden;
+
+}
+
+.flex-container1 {
+  display: flex;
+  align-items: stretch;
+  background: rgba(216, 215, 215, 0.5);
+color: rgb(0, 0, 0);
+
+}
+
+.flex-1 {
+  display: flex;
+  align-items: stretch;
+  width: 80%;
+  height: 100px;
+  text-overflow: ellipsis;  
   overflow: hidden;
-  }
-  
-  .flex-1 {
-    display: flex;
-    align-items: stretch;
-    width: 80%;
-    height: 100px;
-    text-overflow: ellipsis;  
-  }
-  
-  .flex-2 {
-    display: flex;
-    align-items: stretch;
-    width: 20%;
-    height: 100px
-  }
+}
 
-  .flex-logo {
-    display: flex;
-    align-items: stretch;
-    width: 20%;
-    height: 100px;
-    background-color: #e5e5e5;
-    padding: 10px;
-  }
-  
-  .flex-container > div {
-    margin: 10px;
-    text-align: center;
-    line-height: 75px;
-    font-size: 30px;
-  }
+.flex-2 {
+  display: flex;
+  align-items: stretch;
+  width: 20%;
+  height: 100px
+}
 
-  /* ----------- */
+.flex-logo {
+  display: flex;
+  align-items: stretch;
+  width: 20%;
+  height: 100px;
+  background-color: #e5e5e5;
+  padding: 10px;
+}
 
-  * {
-    box-sizing: border-box;
-  }
-  .menu {
-    float:left;
-    width:20%;
-    text-align:center;
-  }
-  .menu a {
-    background-color:#e5e5e5;
-    padding:8px;
-    margin-top:7px;
-    display:block;
+.flex-container > div {
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+
+.flex-container1 > div {
+  margin: 10px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+}
+
+/* ----------- */
+
+* {
+  box-sizing: border-box;
+}
+.menu {
+  float:left;
+  width:20%;
+  text-align:center;
+}
+.menu a {
+  background-color:#e5e5e5;
+  padding:8px;
+  margin-top:7px;
+  display:block;
+  width:100%;
+  color:black;
+}
+.main {
+  float:left;
+  width:60%;
+  padding:0 20px;
+}
+.right {
+  background-color:#e5e5e5;
+  float:left;
+  width:20%;
+  padding:15px;
+  margin-top:7px;
+  text-align:center;
+}
+
+@media only screen and (max-width:1500px) {
+  /* For mobile phones: */
+  .menu, .main, .right {
     width:100%;
-    color:black;
   }
-  .main {
-    float:left;
-    width:60%;
-    padding:0 20px;
-  }
-  .right {
-    background-color:#e5e5e5;
-    float:left;
-    width:20%;
-    padding:15px;
-    margin-top:7px;
-    text-align:center;
-  }
-  
-  @media only screen and (max-width:1500px) {
-    /* For mobile phones: */
-    .menu, .main, .right {
-      width:100%;
-    }
-  }
+}

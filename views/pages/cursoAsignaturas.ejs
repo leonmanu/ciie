@@ -4,56 +4,93 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
+
 <body style="font-family:Verdana;color:#aaaaaa;">
   <% include ../partials/nav.ejs %>
 
 
-  
+
   <div style="overflow:auto">
     <div class="menu">
       <a href="#">.</a>
 
     </div>
-  
+
     <div class="main">
       <div class="">
         <% resultados.forEach(function(resultado){ %>
-  
-  
-        <%= resultado.mimeType%></h2>
+
+
         <h4 class="title">
-          <%= resultado.webContentLink%></h4>
-  
-  
+
+        <% if(resultado.mimeType == 'application/vnd.google-apps.folder'){%>
         <div class="flex-container">
-          <div class="flex-1">
-            <h2 class="">
-              <img class="brand" src=<%= resultado.iconLink%> />
-              <%= resultado.name%></h2>
-            <h2 class="title">
+          <div class="flex-1" style="padding: 15px;">
+            <img class="brand" src=<%= resultado.iconLink%> />
+
+
+            <%= resultado.name%>
           </div>
-  
+
           <div class="flex-2">
-            <% if(resultado.mimeType == 'application/vnd.google-apps.folder'){%>
-              <a href="/curso/cursoAsignaturas<%= resultado.id%>" class="linkButton"><img class="brand" src="/img/arrow.jpg"></a>
-              <% } else{ %>
-              <a href="https://docs.google.com/uc?id=<%= resultado.id%>" class="linkButton"><img class="brand" src="/img/view.jpg"></a>
-              <a href="<%= resultado.webContentLink%>" class="linkButton"> <img class="brand" src="/img/pdfDown.jpg" /></a>
-              <% } %>
+            <!--  -->
+            <a href="/curso/cursoAsignaturas<%= resultado.id%>" class="linkButton"><img class="brand"
+                src="/img/arrow.jpg"></a>
+            <% } else{ %>
+            <div class="flex-container1">
+              <div class="flex-1" style="padding: 15px;">
+                <img class="brand1" src=<%= resultado.iconLink%> />
+
+
+                <%= resultado.name%>
+                <h2 class="title">
+              </div>
+
+              <div class="flex-2">
+                <% if(resultado.mimeType.substring(0, 27) == 'application/vnd.google-apps'){%>
+                <% switch (resultado.mimeType) {
+                    case 'application/vnd.google-apps.document' : %>
+                <a href="https://docs.google.com/document/d/<%= resultado.id%>/export?format=doc "
+                  class="linkButton"><img class="brand" src="/img/down-doc.png"></a>
+                <% break;
+                    
+                    case 'application/vnd.google-apps.spreadsheet' : %>
+                    
+                    <a href="https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=xlsx"
+                      class="linkButton"><img class="brand" src="/img/down-xls.png"></a>
+                <% break;
+                    
+                    case 'subAdmin' : %>
+                Sub Admin
+                <% break;
+                    
+                    } %>
+                    <a href="https://drive.google.com/file/d/<%= resultado.id%>/view" class="linkButton"><img class="brand"
+                      src="/img/view.jpg"></a>
+                <% } else{ %>
+                  <a href="https://docs.google.com/uc?id=<%= resultado.id%>" class="linkButton"><img class="brand"
+                    src="/img/view.jpg"></a>
+                <a href="<%= resultado.webContentLink%>" class="linkButton"> <img class="brand"
+                    src="/img/download.png" /></a>
+                <% } %>
+                
+                <% } %>
+              </div>
+
+            </div>
+
+
+            <% }); %>
+
+
           </div>
         </div>
 
-  
-        <% }); %>
-  
-  
+
       </div>
-    </div>
-  
-  
-  </div>
-  
-  <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
-  
-  </body>
+
+      <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
+
+</body>
+
 </html>
