@@ -96,7 +96,7 @@ module.exports = files = id => {
       drive.files.list(
         {
           parents: "1Ru-Mfghj-XPV3pfZ0OnNqrg0HJl8Kdb1",
-          fields: "nextPageToken, files(id, name, mimeType, iconLink, webContentLink)",
+          fields: "nextPageToken, files(id, name, mimeType, iconLink, webContentLink, trashed)",
           q: "'" + id + "' in parents",
           folderId: folderId,
           orderBy: "name",
