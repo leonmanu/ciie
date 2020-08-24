@@ -18,93 +18,91 @@
 
     <div class="main">
       <div class="">
+
         <% resultados.forEach(function(resultado){ %>
-
-
         <h4 class="title">
+          <% if(resultado.mimeType == 'application/vnd.google-apps.folder'){%>
+          <div class="flex-container">
+            <div class="flex-1" style="padding: 15px;">
+              <img class="brand" src=<%= resultado.iconLink%> />
+              <%= resultado.name%>
+            </div>
 
-        <% if(resultado.mimeType == 'application/vnd.google-apps.folder'){%>
-        <div class="flex-container">
-          <div class="flex-1" style="padding: 15px;">
-            <img class="brand" src=<%= resultado.iconLink%> />
+            <div class="flex-2">
+              <a href="/curso/cursoAsignaturas<%= resultado.id%>" class="linkButton"><img class="brand"
+                  src="/img/arrow.jpg"></a>
+            </div>
 
-
-            <%= resultado.name%>
           </div>
+          <% } %>
+        </h4>
+        <% }); %>
+        <!-- Otro loop -->
 
-          <div class="flex-2">
-            <!--  -->
-            
-            <a href="/curso/cursoAsignaturas<%= resultado.id%>" class="linkButton"><img class="brand"
-                src="/img/arrow.jpg"></a>
-            <% } else{ %>
+        <% resultados.forEach(function(resultado){ %>
+          <h4 class="title">
+            <% if(resultado.mimeType != 'application/vnd.google-apps.folder'){%>
             <div class="flex-container1">
               <div class="flex-1" style="padding: 15px;">
                 <img class="brand1" src=<%= resultado.iconLink%> />
-
-
                 <%= resultado.name%>
-                <h2 class="title"></h2>
               </div>
-
+  
               <div class="flex-2">
                 <div class="btn-group">
-               
-                <% if(resultado.mimeType.substring(0, 27) == 'application/vnd.google-apps'){%>
-                  
-                <% switch (resultado.mimeType) {
-                    case 'application/vnd.google-apps.document' : %>
-                    <!-- <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf"
-                      class="button"><img class="brand" src="/img/view.jpg"></a> -->
-                <a href="https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf "
-                  class="button"><img class="brand" src="/img/down-doc.png"></a>
-                  
-                <% break;
-                    
-                    case 'application/vnd.google-apps.spreadsheet' : %>
-                    <!-- <a href="https://docs.google.com/viewer?url=https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=pdf"
-                      class="button"><img class="brand" src="/img/view.jpg"></a> -->
-                     <a href="https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=pdf"
-                      class="button"><img class="brand" src="/img/down-xls.png"></a>
-                      
-                <% break;
-                    
-                    case 'subAdmin' : %>
-                Sub Admin
-                <% break;
-                    
-                    } %>
-                  
-                <% } else{ %>
-                  <!-- COMUNES -->
-                  <!-- ver -->
-                  <!-- <a href="https://drive.google.com/mobile/file/d/<%= resultado.id%>/view" class="button"><img class="brand"
-                    src="/img/view.jpg"></a> -->
-                    <!-- bajar -->
-                    
-                        
-                <a href="<%= resultado.webContentLink%>/export?format=pdf" class="button"> <img class="brand"
-                    src="/img/arrow.jpg" /></a>
-                  
-                <% } %>
+                  <% if(resultado.mimeType.substring(0, 27) == 'application/vnd.google-apps'){%>
+
+                    <% switch (resultado.mimeType) {
+                      case 'application/vnd.google-apps.document' : %>
+                        <!-- <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf"
+                        class="button"><img class="brand" src="/img/view.jpg"></a> -->
+                        <a href="https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf " class="button"><img
+                         class="brand" src="/img/down-doc.png"></a>
+  
+                        <% break;
+                
+                      case 'application/vnd.google-apps.spreadsheet' : %>
+                        <!-- <a href="https://docs.google.com/viewer?url=https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=pdf"
+                        class="button"><img class="brand" src="/img/view.jpg"></a> -->
+                        <a href="https://docs.google.com/spreadsheets/d/<%= resultado.id%>/export?format=pdf"
+                        class="button"><img class="brand" src="/img/down-xls.png"></a>
+  
+                        <% break;
+                
+                case 'subAdmin' : %>
+                    Sub Admin
+                    <% break;
+                
+                } %>
+  
+                    <% } else{ %>
+                      <!-- COMUNES -->
+                      <!-- ver -->
+                      <!-- <a href="https://drive.google.com/mobile/file/d/<%= resultado.id%>/view" class="button"><img class="brand"
+                  src="/img/view.jpg"></a> -->
+                      <!-- bajar -->
+    
+    
+                      <a href="<%= resultado.webContentLink%>/export?format=pdf" class="button"> <img class="brand"
+                          src="/img/arrow.jpg" /></a>
+    
+                      <% } %>
                 </div>
-                <% } %>
-              
-              </div>  
-
+              </div>
+  
             </div>
+            <% } %>
+          </h4>
+          <% }); %>
 
-
-            <% }); %>
-
+        <!-- Se repite el loop -->
 
           </div>
-        </div>
 
 
       </div>
-
-      <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
+    </div>
+    <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
 
 </body>
 
