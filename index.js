@@ -16,6 +16,6 @@ express()
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
   //.get("/",  (req, res) => res.render("pages/index", { resultados }))
-  .get("/", (req, res) => res.redirect("/curso/cursoAsignaturas1N1PPMOm3SN-tnkjWCY5gVFQPX1hnXdD6"))
+  .get("/", (req, res) => res.redirect("/curso/cursoAsignaturas1UTapDMpbXqAHS6F0RN7Yrh4u3g4voRui"))
   .use("/curso", routerCurso)
   .listen(PORT, () => console.log(`Listening on ${PORT}}`));

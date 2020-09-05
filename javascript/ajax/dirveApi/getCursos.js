@@ -25,7 +25,7 @@ module.exports = files = id => {
 
 
     // Load client secrets from a local file.
-    fs.readFile("credentials3.json", (err, content) => {
+    fs.readFile("credentials.json", (err, content) => {
       if (err) return console.log("Error loading client secret file:", err);
       // Authorize a client with credentials, then call the Google Drive API.
       authorize(JSON.parse(content), listFiles);
@@ -38,7 +38,7 @@ module.exports = files = id => {
      * @param {function} callback The callback to call with the authorized client.
      */
     function authorize(credentials, callback) {
-      const { client_secret, client_id, redirect_uris } = credentials.installed;
+      const { client_secret, client_id, redirect_uris } = credentials.web;
       const oAuth2Client = new google.auth.OAuth2(
         client_id,
         client_secret,
@@ -47,6 +47,7 @@ module.exports = files = id => {
 
       // Check if we have previously stored a token.
       fs.readFile(TOKEN_PATH, (err, token) => {
+        console.log("Token "+TOKEN_PATH);
         if (err) return getAccessToken(oAuth2Client, callback);
         oAuth2Client.setCredentials(JSON.parse(token));
         callback(oAuth2Client);
