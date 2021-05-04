@@ -47,9 +47,5 @@ routerCursoAsignaturas.route('/cursoAsignaturas:id')
         })
     })
 
-    folderColor.getHexa = function(id){
-        var color = this.getColor(id);
-        return color.folderColorRgb;
-      }
     module.exports = routerCursoAsignaturas;
     
