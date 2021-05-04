@@ -34,11 +34,6 @@
                 <p>|</p>
                   <a href="https://drive.google.com/drive/folders/<%= resultado.id%>" class="linkButton"><img class="brand"
                     src="/img/drive.png"></a>
-
-                  
-
-
-
             </div>
 
           </div>
@@ -58,13 +53,16 @@
             </div>
 
             <div class="flex-2">
+              <a href="/curso/bajarArchivo<%= resultado.id%>" class="linkButton"><img class="brand"
+                src="/img/download.png"></a>
+              <p>|</p>
               <div class="btn-group">
                 <% if(resultado.mimeType.substring(0, 27) == 'application/vnd.google-apps'){%>
 
                 <% switch (resultado.mimeType) {
                       case 'application/vnd.google-apps.document' : %>
-                <!-- <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf"
-                        class="button"><img class="brand" src="/img/view.jpg"></a> -->
+                <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf"
+                        class="button"><img class="brand" src="/img/view.jpg"></a>
                 <a href="https://docs.google.com/document/d/<%= resultado.id%>/export?format=pdf " class="button"><img
                     class="brand" src="/img/down-doc.png"></a>
 
