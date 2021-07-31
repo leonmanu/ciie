@@ -6,68 +6,63 @@
 
   <body>
     <% include ../partials/nav.ejs %>
-    
-    <div class="jumbotron text-center" style="margin-top: 50px;">
+    <div class="jumbotron text-center">
       <div class="container">
-          <img class="imgLogo" src="/img/478.png" />
-        <h1>Escuela de Educación Secundaria Nº 62</h1>
-        <p>
-          Continuidad pedagógica
-        </p>
-        <!-- <a
-          type="button"
-          class="btn btn-lg btn-default"
-          href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"
-          ><span class="glyphicon glyphicon-flash"></span> Getting Started on
-          Heroku with Node.js</a
-        >
-        <a
-          type="button"
-          class="btn btn-lg btn-primary"
-          href="https://github.com/heroku/node-js-getting-started"
-          ><span class="glyphicon glyphicon-download"></span> Source on
-          GitHub</a
-        > -->
+        <a href="/" class="lang-logo" style="background: #f7f7f7;">
+          <img src="/ees62-logo2.png">
+        </a>
+        <h1>Boletín Virtual</h1>
+        <p>Esta aplicación permite consultar el estado de los boletines de calificaciones de los estudiantes.</p>
+        <form class="form-inline" action="/boletin/consulta" method="GET">
+          <div class="form-group">
+             <input type="number" name="id"  min="0" step="1" class="btn btn-lg btn-default" placeholder="Ingrese su DNI sin puntos" required>
+          </div>
+          <button type="submit" class="btn btn-lg btn-primary">Enviar consulta <span class="glyphicon glyphicon-arrow-right"></span></button>
+        </form>
+        
       </div>
     </div>
     <div class="container">
-      <!-- <div class="alert alert-info text-center" role="alert">
-        <h2>The XMLHttpRequest Object</h2>
-        <button type="button" onclick="loadDoc()">Get my CD collection</button>
-        <br /><br />
-        <table id="demo"></table>
-      </div> -->
-      Hola
-
-      <div class="w3-row-padding w3-center w3-margin-top">
-        <% resultados.forEach(function(resultado){ %>
-        <div class="w3-third w3-margin-bottom">
-          <div
-            class="w3-card w3-container w3-padding-16"
-            style="min-height: 200px;"
-          >
-            <header class="w3-container w3-light-grey">
-              <h3>
-                <%= resultado.name%> 
-              </h3>
-              
-              <h6>exten: <%= resultado.extension%> </h6>
-            </header>
-            <br />
-            <a
-              href="/curso/cursoAsignaturas<%= resultado.id%>"
-              class="w3-button w3-white w3-border w3-border-blue"
-              >ver en Drive</a
-            >
-          </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h3><span class="glyphicon glyphicon-info-sign"></span> Funcionamiento</h3>
+          <ul>
+            <li>Los estudiantes deben ingresar su número de DNI y presión el botón "Enviar consulta".</li>
+            <li>El sistema devolverá la calificación cargada hasta el momento.</li>
+            <li>Este boletín es dinámico, por lo tanto, puede sufrir modificaciones.</li>
+            <li class="alert-danger">Este sistema no funciona sin un número de DNI.</li>
+          </ul>
         </div>
-        <% }); %>
-      </div>
-
-      <!-- row -->
-      <div class="alert alert-info text-center" role="alert">
-        Pie de página
+      </div> <!-- row -->
+      
+    </div>
+    
+    <div class="jumbotron text-center">
+      <h1>My First Bootstrap Page</h1>
+      <p>Resize this responsive page to see the effect!</p> 
+    </div>
+      
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Column 1</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 2</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 3</h3>        
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        </div>
       </div>
     </div>
+    
+    
+    <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
   </body>
 </html>
