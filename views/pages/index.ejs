@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include ../partials/header.ejs %>
-  </head>
 
-  <body>
-    <% include ../partials/nav.ejs %>
-    <div class="jumbotron text-center">
-      <div class="container">
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+  <% include ../partials/nav.ejs %>
+    <div class="jumbotron text-center p-1">
         <a href="/" class="lang-logo" style="background: #f7f7f7;">
           <img src="/ees62-logo2.png">
         </a>
-        <h1>Boletín Virtual</h1>
-        <p>Esta aplicación permite consultar el estado de los boletines de calificaciones de los estudiantes.</p>
+        <h1>E.E.S. N° 62</h1>
+        <p>Escuela de Educación Secundaria N° 62</p>
+    </div>
+    <div class="text-center">
+        <h2>Boletín Virtual</h2>
         <form class="form-inline" action="/boletin/consulta" method="GET">
           <div class="form-group">
-             <input type="number" name="id"  min="0" step="1" class="btn btn-lg btn-default" placeholder="Ingrese su DNI sin puntos" required>
+            <input type="number" name="id" min="0" step="1" class="btn btn-lg btn-default"
+              placeholder="Ingrese su DNI sin puntos" required>
           </div>
-          <button type="submit" class="btn btn-lg btn-primary">Enviar consulta <span class="glyphicon glyphicon-arrow-right"></span></button>
+          <button type="submit" class="btn btn-lg btn-primary">Enviar consulta <span
+              class="glyphicon glyphicon-arrow-right"></span></button>
         </form>
-        
-      </div>
+
     </div>
     <div class="container">
       <div class="row">
@@ -34,35 +38,11 @@
           </ul>
         </div>
       </div> <!-- row -->
-      
+
     </div>
-    
-    <div class="jumbotron text-center">
-      <h1>My First Bootstrap Page</h1>
-      <p>Resize this responsive page to see the effect!</p> 
-    </div>
-      
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <h3>Column 1</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-        <div class="col-sm-4">
-          <h3>Column 2</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-        <div class="col-sm-4">
-          <h3>Column 3</h3>        
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-      </div>
-    </div>
-    
-    
+
+
     <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
-  </body>
+</body>
+
 </html>
