@@ -15,7 +15,7 @@
     margin-top: -20px; }
   .jumbotron .lang-logo {
     display: block;
-    background: #B01302;
+    background: #cabebd;
     border-radius: 50%;
     overflow: hidden;
     width: 100px;
@@ -25,3 +25,12 @@
     .jumbotron .lang-logo img {
       max-width: 100%; }
 
+.table > thead > tr > th{
+  text-align: center;
+  vertical-align: middle;
+  padding: 0%;
+}
+
+.table > thead > tr > th-pad{
+  padding: 70%;
+}
