@@ -51,13 +51,31 @@
   <% resultados.forEach(function(r) { %>
     <tr>
     <td><strong> <%= r[0] %></strong></td>
-    <td style="text-align: center;"><%= r[7] %></td>
+    <td style="text-align: center;">
+      <% switch (r[7]) {
+        case 'TEA' : %>
+        <strong class="text-success"><%= r[7] %></strong>
+                <% break;
+        
+        case 'TEP' : %>
+        <strong class="text-warning"><%= r[7] %></strong>
+                <% break;
+        
+        case 'TED' : %>
+          <strong class="text-danger"><%= r[7] %></strong>
+                <% break;
+        
+        } %>
+      
+    </td>
     <td></td>
     <td></td>
     <td></td>
   </tr>
 <% }); %>
 </table>
+
+
 
 </div>
 <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;"><%= new Date();%></div>
