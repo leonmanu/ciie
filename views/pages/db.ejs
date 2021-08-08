@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <%- include ../partials/header.ejs %>
 </head>
@@ -10,32 +10,30 @@
 
 <div class="container">
   <div class="text-center">
-      <img src="/ees62-logo2.png" width="80" height="80">
+      <img src="/ees62-logo2.png" width="70" height="70">
 </div>
-<h2 class="text-center"><strong> Informe de Trayectoria Educativa '21</strong></h2>
-<div class="container">
-  <table class="table">
+<h3 class="text-center"><strong> Informe de Trayectoria Educativa '21</strong></h3>
+
+  <table class="table table-sm">
     <tr>
       <td>
-        <h3> <strong> Escuela de Educación Secundaria N° 62 </strong></h3>
+        <h4> <strong> Escuela de Educación Secundaria N° 62 </strong></h4>
       </td>
       <td>
-        <h3> <strong> Curso: <%= resultados[0][1] %> </strong></h3>
+        <h4> <strong> Curso: <%= resultados[0][1] %> </strong></h4>
       </td>
     </tr>
     <tr>
       <td>
-        <h3><%= resultados[0][3] %></h3>
+        <h4><%= resultados[0][3] %></h4>
       </td>
       <td>
-        <h3>DNI: <%= resultados[0][5] %></h3>
+        <h4>DNI: <%= resultados[0][5] %></h4>
       </td>
     </tr>
   </table>
-</div>
 
-
-<table class="table table-striped table-bordered" > 
+<table class="table table-striped table-bordered table-sm" > 
   <thead>
     <tr>
       <th  rowspan="2" class="col-10 col-sm-4">Asignatura</th>
@@ -48,6 +46,7 @@
       <th rowspan="2">Nota Final</th>
     </tr>
   </thead>
+
   <% resultados.forEach(function(r) { %>
     <tr>
     <td><strong> <%= r[0] %></strong></td>
@@ -75,9 +74,35 @@
 <% }); %>
 </table>
 
-
+<div >
+  <small>
+  <strong class="text-success"> TEA - Trayectoria Educativa Avanzada: </strong> 
+  
+  <ul>
+    <li>Alcanzaron los aprendizajes priorizados hasta el final del período.</li>
+    <li>Sostuvieron una buena vinculación pedagógica. </li>
+    <li>Realizaron la totalidad de las actividades propuestas por sus docentes.</li>
+  </ul>
+</div>
+<div>
+  <strong class="text-warning"> TEP - Trayectoria Educativa en Proceso:  </strong>
+  <ul>
+    <li>No alcanzaron la totalidad de los aprendizajes priorizados hasta el final del período</li>
+    <li>Sostuvieron una buena vinculación pedagógica. </li>
+    <li>Realizaron parcialmente las actividades propuestas por sus docentes.</li>
+  </ul>
+</div>
+<div>
+  <strong class="text-danger"> TED - Trayectoria Educativa Discontinua:  </strong>
+  <ul>
+    <li>No alcanzaron los aprendizajes priorizados durante el período. </li>
+    <li>No tuvieron una vinculación pedagógica.  </li>
+    <li>No realizaron las actividades propuestas por sus docentes.</li>
+  </ul>
+</small>
+</div>
 
 </div>
-<div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;"><%= new Date();%></div>
+<div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;"><%= new Intl.DateTimeFormat('es', { month: 'long', day: '2-digit',year: 'numeric'}).format(new Date()) %></div>
 </body>
 </html>
