@@ -42,7 +42,8 @@
     <tr  class="text-center">
       <th>1° Período <br> <small> mar-jul</small></th>
       <th>2° Período <br> <small> ago-dic</small></th>
-      <th>3° Período <br> <small> feb-mar</small></th>
+      <th>3° Período <br> <small> int. dic</small></th>
+      <th>4° Período <br> <small> feb-mar</small></th>
       <th rowspan="2">Nota Final</th>
     </tr>
   </thead>
@@ -67,9 +68,88 @@
         } %>
       
     </td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td style="text-align: center;">
+      <% switch (r[8]) {
+        case 'TEA' : %>
+        <strong class="text-success"><%= r[8] %></strong>
+                <% break;
+        
+        case 'TEP' : %>
+        <strong class="text-warning"><%= r[8] %></strong>
+                <% break;
+        
+        case 'TED' : %>
+          <strong class="text-danger"><%= r[8] %></strong>
+                <% break;
+        
+        } %>
+      
+    </td>
+    <td style="text-align: center;">
+      <%
+        if(r[8]=='TEA'){%>
+          ------->
+          <%} else{
+          switch (r[9]) {
+            case 'TEA' : %>
+            <strong class="text-success"><%= r[9] %></strong>
+                    <% break;
+            
+            case 'TEP' : %>
+            <strong class="text-warning"><%= r[9] %></strong>
+                    <% break;
+            
+            case 'TED' : %>
+              <strong class="text-danger"><%= r[9] %></strong>
+                    <% break;
+            
+            }
+        }
+      %>
+      
+    </td>
+    <td style="text-align: center;">
+      <%
+        if(r[8]=='TEA'||r[9]=='TEA'){%>
+          ------->
+          <%} else{
+          switch (r[10]) {
+            case 'TEA' : %>
+            <strong class="text-success"><%= r[10] %></strong>
+                    <% break;
+            
+            case 'TEP' : %>
+            <strong class="text-warning"><%= r[10] %></strong>
+                    <% break;
+            
+            case 'TED' : %>
+              <strong class="text-danger"><%= r[10] %></strong>
+                    <% break;
+            
+            }
+        }
+      %>
+    </td>
+    <td style="text-align: center;">
+      <% switch (r[11]) {
+        case 'TEA' : %>
+        <strong class="text-success"><%= r[11] %></strong>
+                <% break;
+        
+        case 'TEP' : %>
+        <strong class="text-warning"><%= r[11] %></strong>
+                <% break;
+        
+        case 'TED' : %>
+          <strong class="text-danger"><%= r[11] %></strong>
+                <% break;
+        
+                default: %>
+                <strong class=""><%= r[11] %></strong>
+                <% break;
+        
+        } %>
+    </td>
   </tr>
 <% }); %>
 </table>

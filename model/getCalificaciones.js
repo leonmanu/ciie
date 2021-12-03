@@ -80,7 +80,7 @@ function getNewToken(oAuth2Client, callback) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
     spreadsheetId: '1U4ldmBJSpwbHLI6eAAMEwc2MtgtlU8_-eBCISkLzRjE',
-    range: 'Datos!A2:H',
+    range: 'Datos!A2:L',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
