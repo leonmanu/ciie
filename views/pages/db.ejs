@@ -85,12 +85,13 @@
         } %>
       
     </td>
-    <td style="text-align: center;">
       <%
         if(r[8]=='TEA'){%>
+          <td class="dark" style="text-align: center;">
           ------->
-          <%} else{
-          switch (r[9]) {
+          <%} else{ %>
+            <td style="text-align: center;">
+              <% switch (r[9]) {
             case 'TEA' : %>
             <strong class="text-success"><%= r[9] %></strong>
                     <% break;
@@ -108,11 +109,13 @@
       %>
       
     </td>
-    <td style="text-align: center;">
       <%
         if(r[8]=='TEA'||r[9]=='TEA'){%>
+          <td class="dark" style="text-align: center;">
           ------->
-          <%} else{
+          <%} else{ %>
+            <td style="text-align: center;">
+              <% 
           switch (r[10]) {
             case 'TEA' : %>
             <strong class="text-success"><%= r[10] %></strong>

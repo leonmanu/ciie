@@ -32,6 +32,10 @@
   margin:0px;
 }
 
+td.dark {
+  background-color: #b7b7b7 !important;
+}
+
 .table {
   margin:0px;
 }
