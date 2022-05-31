@@ -92,18 +92,8 @@ function getNewToken(oAuth2Client, callback) {
          if (r[5] == id) {
           resultados.push(r)
          }
-        //filtro.push(r)
         i++;
       });
-      // filtro.forEach(r => {
-      //   console.log("forEach r : "+r)
-      // });
-      // rows.map((row) => {
-      //   //resultados = rows;
-      //   console.log(`${row[0]}, ${row[4]}`);
-        
-      // });
-      //console.log("curso prueba" + rows[0]);
       resolve(resultados);
     } else {
       console.log('No data found.');
