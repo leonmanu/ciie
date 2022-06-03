@@ -3,8 +3,10 @@ const path = require("path")
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
-const inicilaRouter = require('./routes/google.route')
+const inicialRouter = require('./routes/google.route')
 const usuarioRouter = require('./routes/usuario.route')
+const cursoRouter = require('./routes/curso.route')
+const cargoRouter = require('./routes/cargo.route')
 
 var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
@@ -14,6 +16,8 @@ var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const app = express()
 
 app    
+    //.use(express.static(path.join(__dirname, "public")))
+    .use(express.static(__dirname + '/public'))
     .set("views", path.join(__dirname, "views"))
     .set("view engine", "ejs")
     .use(bodyParser.urlencoded({ extended: true }))
@@ -25,25 +29,16 @@ app
     }))
     .use(passport.initialize())
     .use(passport.session())
-    .use(inicilaRouter)
+    .use(inicialRouter)
     .use("/usuario",usuarioRouter)
+    .use("/curso",cursoRouter)
+    .use("/cargo",cargoRouter)
 
 module.exports = app
 
+
 authUser = async (request, accessToken, refreshToken, profile, done)  => {
-//     await usuarioController.getOneByEmail({email: profile.email}).then((currentUser) => {
-//        if (currentUser.email == profile.email) {
-//            //currentUser = profile
-//            console.log("done: ",done)
-//            return done(null,profile)
-//        } else {        
-//            //usuarioController.post({usuario: profile})
-//            //console.log("NOuser:::", result)
-//            done(null,profile)
-//            res.redirect('views/pages/usuario/formularioAlta')
-//        }
-//    })
-    return done(null,profile)
+    return done(null,profile) //corregir para que se rompa la sesión si no está registrado
 }
 
 passport.use(new GoogleStrategy({
@@ -56,13 +51,9 @@ passport.use(new GoogleStrategy({
 ))
 
 passport.serializeUser( (user, done) => {
-    // console.log(`\n--------> Serialize User:`)
-    //console.log("serializeUser",user)
     done(null, user)
  })
  passport.deserializeUser((user, done) => {
-    // console.log("\n--------- Deserialized User:")
-    //console.log("deserializeUser",user)
     done (null, user)
   })
 passport.authenticate()

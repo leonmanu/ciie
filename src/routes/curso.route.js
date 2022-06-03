@@ -15,9 +15,8 @@ router
     .post('/form', post)
     .get("/logout", (req,res) => {
         req.logout(function(err) {
-            if (err) { return next(err) }
-            req.app.locals.usuario = null
-            res.redirect('/')
+            if (err) { return next(err); }
+            res.redirect('/');
           })
     })
     
