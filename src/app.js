@@ -1,4 +1,5 @@
 const express = require('express')
+const engine = require('ejs-locals')
 const path = require("path")
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -19,6 +20,7 @@ const app = express()
 app    
     //.use(express.static(path.join(__dirname, "public")))
     .use(express.static(__dirname + '/public'))
+    .engine('ejs', engine)
     .set("views", path.join(__dirname, "views"))
     .set("view engine", "ejs")
     .use(bodyParser.urlencoded({ extended: true }))

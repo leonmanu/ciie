@@ -2,24 +2,24 @@
 <html>
 
 <head>
-  <%= include ../partials/header.ejs %>
+  <%- include ../partials/header.ejs %>
 </head>
 
 <body  class="w3-light-grey">
   <!-- Top container -->
 
-  <%= include ../partials/topContainer.ejs %>
+  <%- include ../partials/topContainer.ejs %>
 <!-- Sidebar/menu -->
 
 <%if(typeof(usuario) == "undefined"){%>
-  <%= include ../partials/lateralNavInicial.ejs %>
+  <%- include ../partials/lateralNavInicial.ejs %>
   <%} else {%>
   <%if(usuario == null){%>
-    <%= include ../partials/lateralNavInicial.ejs %>
+    <%- include ../partials/lateralNavInicial.ejs %>
   
 <%} else {%>
   
-  <% include ../partials/lateralNav.ejs %>
+  <%- include ../partials/lateralNav.ejs %>
 <%}%>
 <%}%>
 
