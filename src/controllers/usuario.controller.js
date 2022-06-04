@@ -15,10 +15,10 @@ const siExisteUsuario = async (req, res) => {
     const resultado = await usuarioSheet.getOneByEmail(req.user.email)
     console.log("USUARIO: ",req.user.email)
     if (req.user.email == resultado.email) {// más adelante filtrar: provider abc.gob.ar
-        
+        req.app.locals.usuario = req.user._json
         res.redirect("/")
    } else {        
-    res.redirect("/usuarioAlta", {usuario:req.user._json})
+    res.redirect("/usuarioAlta")
     
    }
 
