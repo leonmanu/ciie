@@ -12,16 +12,13 @@
 <!-- Sidebar/menu -->
 
 <%if(typeof(usuario) == "undefined"){%>
-  <%- include ../partials/lateralNavInicial.ejs %>
-  <%} else {%>
-  <%if(usuario == null){%>
-    <%- include ../partials/lateralNavInicial.ejs %>
+  
   
 <%} else {%>
   
   <%- include ../partials/lateralNav.ejs %>
 <%}%>
-<%}%>
+
 
 
 
