@@ -2,6 +2,7 @@ const express = require('express')
 const path = require("path")
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const MemoryStore = require('memorystore')(session)
 const passport = require('passport')
 const inicialRouter = require('./routes/google.route')
 const usuarioRouter = require('./routes/usuario.route')
@@ -23,6 +24,10 @@ app
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json())
     .use(session({
+      cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
         secret: "secret",
         resave: false ,
         saveUninitialized: true
