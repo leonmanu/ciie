@@ -10,11 +10,10 @@
 
   <% include ../partials/topContainer.ejs %>
 <!-- Sidebar/menu -->
-<%if(typeof usuario == 'object' && usuario){%>
+<%if(typeof(usuario) == 'object' && usuario){%>
   <% include ../partials/lateralNav.ejs %>
-  
 <%} else {%>
-  <% include ../partials/lateralNav.ejs %>
+  <% include ../partials/lateralNavInicial.ejs %>
   
 <%}%>
 
