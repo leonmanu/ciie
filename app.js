@@ -18,7 +18,7 @@ const app = express()
 app    
     //.use(express.static(path.join(__dirname, "public")))
     .use(express.static(__dirname + '/src/public'))
-    .set("views", path.join(__dirname, "src/views"))
+    .set("views", path.join(__dirname, "/src/views"))
     .set("view engine", "ejs")
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json())
