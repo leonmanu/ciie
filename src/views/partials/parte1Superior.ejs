@@ -11,7 +11,16 @@
   <%- include("../partials/topContainer") %>
 <!-- Sidebar/menu -->
 
-<%- include("../partials/lateralNav") %>
+<%if(typeof(usuario) == "undefined"){%>
+  <%- include("../partials/lateralNavinicial") %>
+  <%} else {%>
+  <%if(usuario == null){%>
+  <%- include("../partials/lateralNavinicial") %>
+  
+<%} else {%>
+  <%- include("../partials/lateralNav") %>
+<%}%>
+<%}%>
 
 
 
