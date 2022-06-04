@@ -7,7 +7,7 @@ var sessionMiddelware = require('../middelware/session.middelware')
 
 
 router
-    .get('/:id', (req,res) => {
+    .get('/', (req,res) => {
         getPorDocente(req, res)
     } )
     .get('/alta', function(req,res){
