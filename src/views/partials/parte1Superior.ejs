@@ -12,10 +12,10 @@
 <!-- Sidebar/menu -->
 
 <%if(typeof(usuario) == "undefined"){%>
-  <%= include("/src/views/partials/lateralNavinicial") %>
+  <%- include("../partials/lateralNavInicial") %>
   <%} else {%>
   <%if(usuario == null){%>
-    <%= include("../partials/lateralNavInicial") %>
+  <%= include("../partials/lateralNavInicial") %>
   
 <%} else {%>
   <%- include("../partials/lateralNav") %>
