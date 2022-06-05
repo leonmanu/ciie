@@ -8,7 +8,7 @@ const inicialRouter = require('./routes/google.route')
 const usuarioRouter = require('./routes/usuario.route')
 const cursoRouter = require('./routes/curso.route')
 const cargoRouter = require('./routes/cargo.route')
-
+const env = require('./environment/environment')
 var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
 const LocalStrategy = require('passport-local').Strategy
@@ -24,9 +24,10 @@ app
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json())
     .use(session({
-      cookie: {maxAge: 10000},
+      cookie: {secure: true, maxAge: 10000},
       secret: "secret",
-      resave: false 
+      resave: false ,
+      saveUninitialized: true
     }))
     .use(passport.initialize())
     .use(passport.session())
@@ -43,8 +44,8 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 }
 
 passport.use(new GoogleStrategy({
-    clientID:   "460276808063-s47r0nb77ceta3a7lumqqk1ojaq8gigi.apps.googleusercontent.com",
-    clientSecret: "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",
+    clientID: env.envGoogle.CLIENT_ID,
+    clientSecret: env.envGoogle.CLIENT_SECRET,
     callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
     passReqToCallback   : true
   }, authUser
