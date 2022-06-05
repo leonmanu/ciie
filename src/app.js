@@ -15,7 +15,7 @@ const LocalStrategy = require('passport-local').Strategy
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 
 const app = express()
-
+var hour = 36000000;
 app    
     //.use(express.static(path.join(__dirname, "public")))
     .use(express.static(__dirname + '/public'))
@@ -24,6 +24,9 @@ app
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json())
     .use(session({
+      cookie: {
+        expires: new Date(Date.now() + hour)
+      },
       secret: "secret",
       resave: false ,
       saveUninitialized: true
@@ -45,7 +48,7 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 passport.use(new GoogleStrategy({
     clientID:   "460276808063-s47r0nb77ceta3a7lumqqk1ojaq8gigi.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
+    callbackURL: "http://localhost:3000/auth/google/callback",
     passReqToCallback   : true
   }, authUser
   
