@@ -2,12 +2,13 @@ const {Router} = require('express')
 const passport = require('passport')
 const router = Router()
 
-const {getPorDocente} = require('../controllers/cargo.controller')
+const {getPorDocente} = require('../controllers/docenteCargo.controller')
 var sessionMiddelware = require('../middelware/session.middelware')
 
 
 router
-    .get('/', (req,res) => {
+    .get('/', sessionMiddelware, (req,res) => {
+        console.log("CarogRouter")
         getPorDocente(req, res)
     } )
     .get('/alta', function(req,res){

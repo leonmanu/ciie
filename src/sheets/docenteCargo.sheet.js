@@ -15,7 +15,8 @@ async function obtenercredenciales(){
 }
 
 async function getCargosTodos(){
-    const documento = await obtenercredenciales()
+    await obtenercredenciales()
+    
     const registros =  await sheet.getRows()
     return registros
 }

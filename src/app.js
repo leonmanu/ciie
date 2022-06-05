@@ -7,7 +7,7 @@ const passport = require('passport')
 const inicialRouter = require('./routes/google.route')
 const usuarioRouter = require('./routes/usuario.route')
 const cursoRouter = require('./routes/curso.route')
-const cargoRouter = require('./routes/cargo.route')
+const docenteCargo = require('./routes/docenteCargo.route')
 
 var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
@@ -36,7 +36,7 @@ app
     .use(inicialRouter)
     .use("/usuario",usuarioRouter)
     .use("/curso",cursoRouter)
-    .use("/cargo",cargoRouter)
+    .use("/docente/cargo",docenteCargo)
 
 module.exports = app
 

@@ -54,7 +54,7 @@ async function getOneByEmail(email){
             apellido: resultado[0].apellido,
             nombre: resultado[0].nombre
         }
-        console.log("usuarioInterface ok: ",usuarioInterface)
+        //console.log("usuarioInterface ok: ",usuarioInterface)
         return usuarioInterface
         }catch(e){
             console.error(e.message," no se encontró objeto, devuelvo 'null' ");

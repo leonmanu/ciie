@@ -1,0 +1,41 @@
+<div class="w3-container w3-white w3-padding-16">
+  <form action="/usuario/form" method="post">
+
+    <div class="w3-row-padding" style="margin:0 -16px;">
+
+      <div class="w3-third w3-margin-bottom">
+        <label for="inputRol">Rol</label>
+        <select id="inputRol"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="rol" required>
+          <option value="" disabled>Seleccione un rol</option>
+          <option value="6" selected>Profesor/a</option>
+          <% roles.forEach(function(rol){ %>
+          <option value="<%= rol.id%>"><%= rol.nombre%></option>
+           <% }); %>
+
+        </select>
+      </div>
+
+      <div class="w3-third w3-margin-bottom">
+        <label for="inputCurso">Curso</label>
+        <select id="inputCurso"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="curso" required>
+          <option value="" disabled selected>Seleccione un curso</option>
+          <% cursos.forEach(function(curso){ %>
+          <option value="1"><%= curso.clave%> - <%= curso.turnoNombre%></option>
+           <% }); %>
+        </select>
+      </div>
+      
+      <div class="w3-third">
+        <label for="inputApellido">Asignatura</label>
+        <select id="inputApellido"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="apellido" required>
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
+      </div>
+    </div>
+    <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search
+      availability</button>
+  </form>
+</div>

@@ -1,5 +1,5 @@
 const req = require('express/lib/request')
-const cargoSheet =  require("../sheets/cargo.sheet")
+const cargoSheet =  require("../sheets/docenteCargo.sheet")
 
 
 const getCargosTodos = async (req, res) => {

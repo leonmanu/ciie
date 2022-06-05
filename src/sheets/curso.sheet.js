@@ -13,13 +13,15 @@ async function obtenercredenciales(){
     return documento
 }
 
-async function get(){
-    const documento = await obtenercredenciales()
+async function getTodos(){
+    await obtenercredenciales()
+    
     const registros =  await sheet.getRows()
     //const resultados = registros.filter(row => row ['apellido'] === 'Carruega')
     // registros.map((registro)=>{
 
     // })
+    console.log("Registtros------------------> \n", registros)
 
     return registros
     
@@ -77,7 +79,7 @@ async function del(pObjeto) {
 }
 
 module.exports = {
-    get: get,
+    getTodos: getTodos,
     getOne: getOne,
     post: post,
     put : put,
