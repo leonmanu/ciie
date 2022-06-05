@@ -9,7 +9,7 @@ const getCargosTodos = async (req, res) => {
 
 const getPorDocente = async (req, res) => {
     cargos = await cargoService.getPorDocente(req, res)
-    res.render("pages/cargo/cargoActuales", {cargos: cargos})
+    res.render("pages/cargo/cargoActuales", {cargos: cargos, user: req.user})
 }
 
 module.exports = {

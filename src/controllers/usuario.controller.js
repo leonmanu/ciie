@@ -16,7 +16,7 @@ const siExisteUsuario = async (req, res) => {
     console.log("USUARIO: ",req.user.email)
     if (req.user.email == resultado.email) {// más adelante filtrar: provider abc.gob.ar
         //req.app.locals.usuario = req.user._json
-        res.render('pages/index', {usuario: req.user._json})
+        res.render('pages/index', {user: req.user._json})
    } else {        
     res.redirect("/usuarioAlta")
     
