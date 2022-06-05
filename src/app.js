@@ -46,7 +46,7 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 passport.use(new GoogleStrategy({
     clientID: env.envGoogle.CLIENT_ID,
     clientSecret: env.envGoogle.CLIENT_SECRET,
-    callbackURL: "https:/ees62.herokuapp.com/auth/google/callback",
+    callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
     passReqToCallback   : true
   }, authUser
   
