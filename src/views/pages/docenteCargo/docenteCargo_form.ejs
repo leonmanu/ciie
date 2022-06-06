@@ -1,9 +1,11 @@
+<script src="/js/docenteCargoAlta.ajax.js"></script>
+
 <div class="w3-container w3-white w3-padding-16">
   <form action="/usuario/form" method="post">
 
     <div class="w3-row-padding" style="margin:0 -16px;">
 
-      <div class="w3-third w3-margin-bottom">
+      <div class="w3-quarter w3-margin-bottom">
         <label for="inputRol">Rol</label>
         <select id="inputRol"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="rol" required>
           <option value="" disabled>Seleccione un rol</option>
@@ -15,8 +17,19 @@
         </select>
       </div>
 
-      <div class="w3-third w3-margin-bottom">
+      <div class="w3-quarter w3-margin-bottom">
+        <label for="inputRevista">S. de Revista</label>
+        <select id="inputRevista"  class="w3-input w3-border" type="text" placeholder="Ingrese su Situación de Revista" name="revista" required>
+          <option value="" disabled selected>Seleccione una s. de revista</option>
+          <% revistas.forEach(function(revista){ %>
+          <option value="<%= revista.id%>"><%= revista.nombre%></option>
+           <% }); %>
+        </select>
+      </div>
+
+      <div class="w3-quarter w3-margin-bottom">
         <label for="inputCurso">Curso</label>
+        <img class="w3-bar-item w3-right" id="waitIconCurso" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="25" height="25" />
         <select id="inputCurso"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="curso" required>
           <option value="" disabled selected>Seleccione un curso</option>
           <% cursos.forEach(function(curso){ %>
@@ -25,9 +38,9 @@
         </select>
       </div>
       
-      <div class="w3-third">
-        <label for="inputAsignatura">Asignatura</label>
-        <img class="w3-bar-item w3-right" id="waitIcon" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="25" height="25" />
+      <div class="w3-quarter">
+        <label for="inputAsignatura">Cargo/Asignatura</label>
+        <img class="w3-bar-item w3-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="25" height="25" />
         <select id="inputAsignatura"  class="w3-input w3-border inputAsignatura" name="Asignatura"  required disabled >
           <option value="" disabled selected>Seleccione una asignatura</option>
           <option value="1">Option 1</option>

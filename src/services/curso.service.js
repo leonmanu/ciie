@@ -3,7 +3,11 @@ const cursoSheet =  require("../sheets/curso.sheet")
 
 
 const getTodos = async (req, res) => {
-    resultado = await cursoSheet.getTodos()
+    registros = await cursoSheet.getTodos()
+    resultado = []
+    await registros.forEach( registro => {
+        resultado.push({ idCurso: registro.idCurso, clave: registro.clave, turnoNombre: registro.turnoNombre})
+    })
     return resultado
 }
 

@@ -2,7 +2,7 @@ const {Router} = require('express')
 const passport = require('passport')
 const router = Router()
 const {get, pintarForm, post, getInforme} = require('../controllers/estudiante.controller')
-const {getEstudiantes} = require('../controllers/curso.controller')
+
 const {siExisteUsuario} = require('../controllers/usuario.controller')
 const { getOne } = require('../sheets/estudiante.sheet')
 var sessionMiddelware = require('../middelware/session.middelware')
@@ -28,7 +28,6 @@ router
     })
     .get('/form', pintarForm)
     .post('/form', post)
-    .get('/curso/:id', getEstudiantes)
     .get('/auth/google', 
             passport.authenticate('google', { scope: [ 'email', 'profile' ]
         }))
