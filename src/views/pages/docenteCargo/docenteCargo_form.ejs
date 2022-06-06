@@ -20,15 +20,16 @@
         <select id="inputCurso"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="curso" required>
           <option value="" disabled selected>Seleccione un curso</option>
           <% cursos.forEach(function(curso){ %>
-          <option value="1"><%= curso.clave%> - <%= curso.turnoNombre%></option>
+          <option value="<%= curso.idCurso %>"><%= curso.clave%> - <%= curso.turnoNombre%></option>
            <% }); %>
         </select>
       </div>
       
       <div class="w3-third">
-        <label for="inputApellido">Asignatura</label>
-        <select id="inputApellido"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="apellido" required>
-          <option value="" disabled selected>Choose your option</option>
+        <label for="inputAsignatura">Asignatura</label>
+        <img class="w3-bar-item w3-right" id="waitIcon" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="25" height="25" />
+        <select id="inputAsignatura"  class="w3-input w3-border inputAsignatura" name="Asignatura"  required disabled >
+          <option value="" disabled selected>Seleccione una asignatura</option>
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>

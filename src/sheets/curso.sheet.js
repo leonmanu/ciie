@@ -21,7 +21,7 @@ async function getTodos(){
     // registros.map((registro)=>{
 
     // })
-    console.log("Registtros------------------> \n", registros)
+
 
     return registros
     

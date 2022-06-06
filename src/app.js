@@ -7,7 +7,8 @@ const passport = require('passport')
 const inicialRouter = require('./routes/google.route')
 const usuarioRouter = require('./routes/usuario.route')
 const cursoRouter = require('./routes/curso.route')
-const docenteCargo = require('./routes/docenteCargo.route')
+const docenteCargoRouter = require('./routes/docenteCargo.route')
+const cargoRouter = require('./routes/cargo.route')
 
 var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
@@ -36,7 +37,8 @@ app
     .use(inicialRouter)
     .use("/usuario",usuarioRouter)
     .use("/curso",cursoRouter)
-    .use("/docente/cargo",docenteCargo)
+    .use("/docente/cargo",docenteCargoRouter)
+    .use("/cargo", cargoRouter)
 
 module.exports = app
 
@@ -48,8 +50,8 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 passport.use(new GoogleStrategy({
     clientID:   "460276808063-s47r0nb77ceta3a7lumqqk1ojaq8gigi.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
-    //callbackURL: "http://localhost:3000/auth/google/callback",
+    //callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
+    callbackURL: "http://localhost:3000/auth/google/callback",
     passReqToCallback   : true
   }, authUser
   

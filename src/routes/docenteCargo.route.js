@@ -8,7 +8,6 @@ var sessionMiddelware = require('../middelware/session.middelware')
 
 router
     .get('/', sessionMiddelware, (req,res) => {
-        console.log("CarogRouter")
         getPorDocente(req, res)
     } )
     .get('/alta', function(req,res){
