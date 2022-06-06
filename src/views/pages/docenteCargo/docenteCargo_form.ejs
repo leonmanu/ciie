@@ -1,7 +1,7 @@
 <script src="/js/docenteCargoAlta.ajax.js"></script>
 
 <div class="w3-container w3-white w3-padding-16">
-  <form action="/usuario/form" method="post">
+  <form action="/docente/cargo/alta" method="post">
 
     <div class="w3-row-padding" style="margin:0 -16px;">
 
@@ -13,7 +13,6 @@
           <% roles.forEach(function(rol){ %>
           <option value="<%= rol.id%>"><%= rol.nombre%></option>
            <% }); %>
-
         </select>
       </div>
 
@@ -41,15 +40,19 @@
       <div class="w3-quarter">
         <label for="inputAsignatura">Cargo/Asignatura</label>
         <img class="w3-bar-item w3-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="25" height="25" />
-        <select id="inputAsignatura"  class="w3-input w3-border inputAsignatura" name="Asignatura"  required disabled >
+        <select id="inputAsignatura"  class="w3-input w3-border inputAsignatura" name="cursoAsignatura"  required disabled >
           <option value="" disabled selected>Seleccione una asignatura</option>
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
         </select>
       </div>
+
     </div>
-    <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search
-      availability</button>
+    
+    <button class="w3-button w3-dark-grey w3-margin-top " type="submit">
+      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+      Enviar solicitud
+    </button>
   </form>
 </div>

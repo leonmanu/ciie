@@ -1,4 +1,5 @@
 const req = require('express/lib/request')
+const docenteCargoService =  require("../services/docenteCargo.service")
 const cargoService =  require("../services/docenteCargo.service")
 const cursoService = require('../services/curso.service')
 const rolService = require('../services/rol.service')
@@ -19,7 +20,18 @@ const getPorDocente = async (req, res) => {
     res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos: cargos, cursos: cursos, roles: roles, revistas: revistas})
 }
 
+const post = (req, res) => {
+    sheet.post(req.body)
+    res.redirect('/')
+}
+
+const postDocenteCargo = async (req, res) => {
+    resultado = await docenteCargoService.postDocenteCargo(req, res)
+    await res.redirect('/docente/cargo')
+}
+
 module.exports = {
     getCargosTodos : getCargosTodos,
-    getPorDocente:getPorDocente
+    getPorDocente:getPorDocente,
+    postDocenteCargo: postDocenteCargo
 } 

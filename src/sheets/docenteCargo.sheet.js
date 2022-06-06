@@ -21,7 +21,16 @@ async function getCargosTodos(){
     return registros
 }
 
+async function postDocenteCargo(objetoInterface) {
+    console.log("postDocenteCargo: Antes: ", objetoInterface)
+    await obtenercredenciales()
+
+    const objetoSalvado = await sheet.addRow(objetoInterface)
+    console.log("postDocenteCargo: Después: ", objetoSalvado)
+    return objetoSalvado
+}
 
 module.exports = {
-    getCargosTodos:getCargosTodos
+    getCargosTodos: getCargosTodos,
+    postDocenteCargo:postDocenteCargo
 }

@@ -22,20 +22,25 @@
         <table class="w3-table w3-bordered w3-hoverable">
           <thead>
           <tr>
+            <th>Cargo</th>
             <th>Curso</th>
             <th>Asignatura</th>
-            <th>Points</th>
+            <th>Acción</th>
           </tr>
         </thead>
           <% cargos.forEach(function(cargo){ %>
             <tr>
-
+              
+              <td>
+                <%= cargo.rol%>
+              </td>
               <td>
                 <%= cargo.curso%>
               </td>
               <td>
                 <%= cargo.asignatura%>
               </td>
+
 
             </tr>
             <% }); %>

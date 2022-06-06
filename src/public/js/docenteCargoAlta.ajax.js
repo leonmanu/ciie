@@ -103,12 +103,12 @@ $(document).ready(function () {
 
 
   //prueba la concección con el js
-    $(document).ready(function(){
-      $("button").click(function(){
-        alert("hola");
-        $.ajax({url: "demo_test.txt", success: function(result){
-          $("#div1").html(result);
-        }});
-      });
-    });
+    // $(document).ready(function(){
+    //   $("button").click(function(){
+    //     alert("hola");
+    //     $.ajax({url: "demo_test.txt", success: function(result){
+    //       $("#div1").html(result);
+    //     }});
+    //   });
+    // });
 }); 
