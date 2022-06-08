@@ -15,9 +15,7 @@ const getCargosTodos = async (req, res) => {
 const getPorDocente = async (req, res) => {
     cargos = await cargoService.getPorDocente(req, res)
     cursos = await cursoService.getTodos()
-    roles = await rolService.getTodos()
-    revistas = await revistaService.revistaGetTodos_Json()
-    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos: cargos, cursos: cursos, roles: roles, revistas: revistas})
+    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos: cargos, cursos: cursos})
 }
 
 const post = (req, res) => {

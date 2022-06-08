@@ -9,7 +9,7 @@ const getTodos = async (req, res) => {
 
 const getCargoPorRol = async (req, res) => {
     registros = await cargoService.getCargoPorRol(req, res)
-    console.log("getCargoPorRol: ",registros)
+    //console.log("getCargoPorRol: ",registros)
     res.send(registros)
 }
 

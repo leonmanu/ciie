@@ -10,9 +10,6 @@
         <select id="inputRol"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="rol" required>
           <option value="" disabled>Seleccione un rol</option>
           <option value="6" selected>Profesor/a</option>
-          <% roles.forEach(function(rol){ %>
-          <option value="<%= rol.id%>"><%= rol.nombre%></option>
-           <% }); %>
         </select>
       </div>
 
@@ -20,9 +17,6 @@
         <label for="inputRevista">S. de Revista</label>
         <select id="inputRevista"  class="w3-input w3-border" type="text" placeholder="Ingrese su Situación de Revista" name="revista" required>
           <option value="" disabled selected>Seleccione una s. de revista</option>
-          <% revistas.forEach(function(revista){ %>
-          <option value="<%= revista.id%>"><%= revista.nombre%></option>
-           <% }); %>
         </select>
       </div>
 
@@ -42,17 +36,22 @@
         <img class="w3-bar-item w3-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="25" height="25" />
         <select id="inputAsignatura"  class="w3-input w3-border inputAsignatura" name="cursoAsignatura"  required disabled >
           <option value="" disabled selected>Seleccione una asignatura</option>
-          <option value="1">Option 1</option>
-          <option value="2">Option 2</option>
-          <option value="3">Option 3</option>
         </select>
       </div>
 
     </div>
     
-    <button class="w3-button w3-dark-grey w3-margin-top " type="submit">
+    <button class="w3-button w3-green w3-margin-top w3-third" type="submit">
       <i class="fa fa-paper-plane" aria-hidden="true"></i>
       Enviar solicitud
+    </button>
+    <button id="btnLimpar" class="w3-button w3-grey w3-margin-top w3-third" type="button">
+      <i class="fa fa-eraser" aria-hidden="true"></i>
+      Limpiar
+    </button>
+    <button id="btnCancelar" class="w3-button w3-red w3-margin-top w3-third" type="button">
+      <i class="fa fa-ban" aria-hidden="true"></i>
+      Cancelar
     </button>
   </form>
 </div>

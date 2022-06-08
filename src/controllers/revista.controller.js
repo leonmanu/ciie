@@ -5,6 +5,7 @@ const revistaService = require('../services/revista.service')
 
 const revistaGetTodo = async (req, res) => {
     registros = await revistaService.revistaGetTodos_Json(req, res)
+    //console.log("Revista >>>>> ",registros)
     res.send(registros)
 }
 

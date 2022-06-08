@@ -15,14 +15,14 @@ const getTodos = async (req, res) => {
 
 const getCargoPorRol = async(req, res) => {
     rol = req.body.idRol
-    console.log("Rol: ", rol)
+    //console.log("Rol: ", rol)
     const registros = await cargoSheet.getTodos()
     const resultado = []
     const filtrados = registros.filter(row => row.rol == rol)
     await filtrados.forEach( registro => {
         resultado.push({ id: registro.id, asignatura: registro.nombreAlternativo})
     })
-    console.log("Resultado: ",resultado)
+    //console.log("Resultado: ",resultado)
     return resultado
 }
 

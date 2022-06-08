@@ -13,7 +13,7 @@ const getPorDocente = async (req, res) => {
     const resultados = registros.filter(row => row ["idGoogleUsuario"] === req.user.id)
         registros.map((registro)=>{
     })
-    console.log("REQ: ", resultados)
+    //console.log("REQ: ", resultados)
     return resultados
 }
 

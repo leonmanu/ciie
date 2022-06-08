@@ -4,13 +4,11 @@
 
     </head>
     <body>
-    
-    <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
-    
-    <button>Get External Content</button>
-    <div class="w3-container  w3-padding-16">
-      <h5><b></i>Alta de cargos</b></h5>
-      <div class="w3-ul w3-card-4 w3-white">
+
+    <div  class="w3-container  w3-padding-16" >
+      <h5 id="lblFormAlta"  style="display: none;"><b></i>Alta de cargos</b></h5>
+      <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
+      <div id="divFormAlta" class="w3-ul w3-card-4 w3-white" style="display: none;">
         <%- include ./docenteCargo_form.ejs %>
       </div>
 
