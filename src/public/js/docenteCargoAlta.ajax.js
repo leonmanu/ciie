@@ -164,6 +164,7 @@ $(document).ready(function () {
     }
   });
 
+  //== CUANDO SE SELECCIONA CURSO  =========================================
   $('#inputCurso').on('change', function () {
       var selector = $(this).val();
       $("#waitIconAsignatura").css("display", "block");

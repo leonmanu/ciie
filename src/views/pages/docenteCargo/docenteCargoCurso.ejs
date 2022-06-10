@@ -1,0 +1,50 @@
+<%- include ../../partials/parte1Superior.ejs %>
+<!-- <%- include ./docenteCargo_navbar.ejs %> -->
+
+
+    </head>
+    <body>
+
+    <div class="w3-container w3-padding-16">
+      <h5><b></i>Mis cursos (Pf)</b></h5>
+      <div class="w3-container w3-card-4 w3-white  w3-padding-16">
+        <table class="w3-table w3-bordered w3-hoverable">
+          <thead>
+          <tr>
+            <th>Cargo</th>
+            <th>Curso</th>
+            <th>Asignatura</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+          <% cargos.forEach(function(cargo){ %>
+            <tr>
+              
+              <td>
+                <%= cargo.rol%>
+              </td>
+              <td>
+                <%= cargo.curso%>
+              </td>
+              <td>
+                <%= cargo.asignatura%>
+              </td>
+              <td>
+                <a class="w3-button w3-green " href="curso/estudiante/<%= cargo.curso%>">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                  Enviar solicitud
+                </a>
+              </td>
+
+              
+            </tr>
+            <% }); %>
+
+        </table>
+      </div>
+
+    </div>
+    <hr>
+
+
+    <%- include ../../partials/parte2Inferior.ejs %>

@@ -13,25 +13,19 @@ async function obtenercredenciales(){
     return documento
 }
 
-async function get(){
+async function getTodo(){
     const documento = await obtenercredenciales()
-    const registros =  await sheet.getRows()
-    //const resultados = registros.filter(row => row ['apellido'] === 'Carruega')
-    // registros.map((registro)=>{
-
-    // })
+    sheetEstudianteAsignatura = documento.sheetsById[2145868572]
+    const registros =  await sheetEstudianteAsignatura.getRows()
 
     return registros
     
 }
 
-async function getPorCurso(curso){
+async function getTodoPorCurso(){
     const documento = await obtenercredenciales()
+    sheet = documento.sheetsById[1287324365]
     const registros =  await sheet.getRows()
-    const resultados = registros.filter(row => row ['apellido'] === 'Carruega')
-    registros.map((registro)=>{
-
-    })
 
     return registros
     
@@ -89,10 +83,11 @@ async function del(pObjeto) {
 }
 
 module.exports = {
-    get: get,
+    getTodo: getTodo,
+    getTodoPorCurso: getTodoPorCurso,
     getOne: getOne,
-    getPorCurso:getPorCurso,
     post: post,
     put : put,
-    del : del
+    del : del,
+
 }

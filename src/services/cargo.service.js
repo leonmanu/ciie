@@ -1,7 +1,7 @@
 const req = require('express/lib/request')
 const cargoSheet =  require("../sheets/cargo.sheet")
 
-
+//Dedería llamarse getTodosPorCurso o algo de Asignaturas
 const getTodos = async (req, res) => {
     console.log("PARAM: ", req.params.id)
     const registros = await cargoSheet.getTodos()
@@ -20,9 +20,9 @@ const getCargoPorRol = async(req, res) => {
     const resultado = []
     const filtrados = registros.filter(row => row.rol == rol)
     await filtrados.forEach( registro => {
-        resultado.push({ id: registro.id, asignatura: registro.nombreAlternativo})
+        resultado.push({ id: registro.id, asignatura: registro.rolNombre})
     })
-    //console.log("Resultado: ",resultado)
+    console.log("Resultado: ",resultado)
     return resultado
 }
 

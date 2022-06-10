@@ -17,6 +17,15 @@ const getPorDocente = async (req, res) => {
     return resultados
 }
 
+const getPorDocenteCargoCurso = async (req, res) => {
+    const registros = await cargoSheet.getCargosTodos()
+    const resultados = registros.filter(row => row ["idGoogleUsuario"] === req.user.id && row.rol === "Pf")
+        registros.map((registro)=>{
+    })
+    //console.log("REQ: ", resultados)
+    return resultados
+}
+
 const postDocenteCargo = async (req, res) => {
     //habría que verificar si la combinación es válida (si ya existe o si puede solicitarla)
     const objetoInterface = {
@@ -30,8 +39,11 @@ const postDocenteCargo = async (req, res) => {
 }
 
 
+
+
 module.exports = {
     getCargosTodos : getCargosTodos,
     getPorDocente: getPorDocente,
-    postDocenteCargo: postDocenteCargo
+    postDocenteCargo: postDocenteCargo,
+    getPorDocenteCargoCurso: getPorDocenteCargoCurso
 } 

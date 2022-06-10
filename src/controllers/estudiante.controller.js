@@ -1,5 +1,6 @@
 let sheet = require('../sheets/estudiante.sheet')
 let cursoSheet = require('../sheets/curso.sheet')
+const estudianteService = require('../services/estudiante.service')
 
 
 const get = async (req, res) => {
@@ -10,6 +11,12 @@ const get = async (req, res) => {
     res.render('pages/index', {user: null})
    }
     
+}
+
+const getPorCursoAsignatura = async (req,res) =>{
+    registros = await estudianteService.getPorCursoAsignatura(req,res)
+    console.log("ESTUDIANTE_CONTROLLER -> GetPorCurso: ", registros)
+    res.render('pages/estudiante/estudianteAsignatura', {user: req.user._json, registros})
 }
 
 const getOne = async (req, res) => {
@@ -48,5 +55,6 @@ module.exports = {
     getInforme: getInforme,
     pintarForm : pintarForm,
     post : post,
-    put : put
+    put : put,
+    getPorCursoAsignatura: getPorCursoAsignatura
 } 

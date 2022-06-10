@@ -7,7 +7,7 @@ const revistaService = require('../services/revista.service')
 
 
 const getCargosTodos = async (req, res) => {
-    cargos = await cargoService.getCargosTodos()
+    cargos = await cargoService.getCargosTodos() 
     cursos = await cursoService.getTodos()
     res.render("pages/cargo/cargoActuales", {cargos: cargos, cursos: cursos})
 }
@@ -16,6 +16,11 @@ const getPorDocente = async (req, res) => {
     cargos = await cargoService.getPorDocente(req, res)
     cursos = await cursoService.getTodos()
     res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos: cargos, cursos: cursos})
+}
+
+const getCargoCursoPorDocente = async (req, res) => {
+    cargos = await cargoService.getPorDocenteCargoCurso(req, res)
+    res.render("pages/docenteCargo/docenteCargoCurso", {user: req.user, cargos: cargos})
 }
 
 const post = (req, res) => {
@@ -31,5 +36,6 @@ const postDocenteCargo = async (req, res) => {
 module.exports = {
     getCargosTodos : getCargosTodos,
     getPorDocente:getPorDocente,
-    postDocenteCargo: postDocenteCargo
+    postDocenteCargo: postDocenteCargo,
+    getCargoCursoPorDocente:getCargoCursoPorDocente
 } 

@@ -11,7 +11,7 @@ const getTodos = async (req, res) => {
             id: registro.id,
             nombre: registro.nombre,
             codigo: registro.codigo,
-            jerarquia: registro.jerarqui
+            jerarquia: registro.jerarquia
         })
     })
     return resultado

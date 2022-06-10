@@ -11,6 +11,8 @@ const docenteCargoRouter = require('./routes/docenteCargo.route')
 const cargoRouter = require('./routes/cargo.route')
 const rolRouter = require('./routes/rol.route')
 const revistaRouter = require('./routes/revista.route')
+const estudianteRouter = require('./routes/estudiante.route')
+const calificacionRouter = require('./routes/calificacion.route')
 
 var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
@@ -43,6 +45,8 @@ app
     .use("/cargo", cargoRouter)
     .use("/rol", rolRouter)
     .use("/revista", revistaRouter)
+    .use("/estudiante", estudianteRouter)
+    .use("/calificacion", calificacionRouter)
 
 module.exports = app
 
@@ -54,8 +58,8 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 passport.use(new GoogleStrategy({
     clientID:   "460276808063-s47r0nb77ceta3a7lumqqk1ojaq8gigi.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
-    //callbackURL: "http://localhost:3000/auth/google/callback",
+    //callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
+    callbackURL: "http://localhost:3000/auth/google/callback",
     passReqToCallback   : true
   }, authUser
   

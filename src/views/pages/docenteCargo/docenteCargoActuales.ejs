@@ -17,7 +17,7 @@
     <div class="w3-container w3-padding-16">
       <h5><b></i>Mis cargos</b></h5>
       <div class="w3-container w3-card-4 w3-white  w3-padding-16">
-        <table class="w3-table w3-bordered w3-hoverable">
+        <table class="w3-table w3-bordered">
           <thead>
           <tr>
             <th>Cargo</th>
@@ -38,7 +38,14 @@
               <td>
                 <%= cargo.asignatura%>
               </td>
-
+              <td class="w3-padding-0">
+                  <a href="/estudiante/curso/<%= cargo.curso%>/asignatura/<%= cargo.asignaturaId%>" class="w3-button w3-red"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
+                 
+              </td>
+              <td class="w3-padding-0">
+                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="w3-button w3-green"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
+               
+            </td>
 
             </tr>
             <% }); %>
@@ -48,6 +55,5 @@
 
     </div>
     <hr>
-
 
     <%- include ../../partials/parte2Inferior.ejs %>
