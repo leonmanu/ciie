@@ -44,21 +44,21 @@ $(document).ready(function () {
       contentType: 'application/json',
       method: 'POST',
       dataType: 'text',
-      success: await function (response) {  
+      success: await function (response) {
         var jsonResponser = JSON.parse(response);
 
 
         jsonResponser.forEach(function (m) {
 
-          slcRevista.append("<option value='"+m.id+"' > " + m.nombre + " </option>\ ");
-          
-            console.log(m.nombre);
+          slcRevista.append("<option value='" + m.id + "' > " + m.nombre + " </option>\ ");
+
+          console.log(m.nombre);
         })
 
         $('#divFormAlta').show('slow');
         $("#waitIconLblAltaCargo").css("display", "none");
       }
-      
+
     });
     
     

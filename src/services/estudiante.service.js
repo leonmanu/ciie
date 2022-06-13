@@ -1,5 +1,8 @@
 const req = require('express/lib/request')
+const { head } = require('request')
 const estudianteSheet =  require("../sheets/estudiante.sheet")
+const utilidadesService = require('./utilidades.service')
+
 
 
 const getTodos = async (req, res) => {
@@ -25,12 +28,13 @@ async function getPorCursoAsignatura(req){
     return resultados
 }
 
-async function getPorCurso(req){
-    console.log("getPorCurso: ", req.params.curso)
+async function getPorCurso(curso){
+    console.log("CURSO::: >> ", curso)
     const registros =  await estudianteSheet.getTodoPorCurso()
-    const resultados = await registros.filter(row => row.cursoClave === req.params.curso)
-    console.log("getPorCurso_sheet: entró")
-    return resultados
+    const resultados = await registros.filter(row => row.cursoClave === curso)
+    const resultadoJson = await utilidadesService.convertToJson(resultados)
+    //console.log('GET-POR-CURSO_-_-_-> ',resultadoJson)
+    return resultadoJson
     
 }
 module.exports = {

@@ -1,13 +1,42 @@
 <%- include ../../partials/parte1Superior.ejs %>
 
+<script src="/js/estudianteAsignatura.ajax.js"></script>
 
     </head>
     <body>
 
+
+<!-- ///////////////////////////////////////////////////////7 -->
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+
+ 
+<div class="panel panel-default">
+  <div class="panel-heading"><b>HTML Table Edits/Upates</b> </div>
+
+  <div class="panel-body">
+	
+	<p>All the changes will be displayed below</p>
+	<div class="post_msg"> </div>
+
+  </div>
+</div>
+
+
+
+<!-- ///////////////////////////////////////////////////////7 -->
+
+
     <div class="w3-container w3-padding-16">
-      <h5><b></i>Estudiantes</b></h5>
-      <%= asignatura.asignatura%>
+      <h3>Calificaciones</h3>
+      
+      
       <div class="w3-container w3-card-4 w3-white  w3-padding-16">
+        <div>
+          <h5> <b><span id="spnCurso"><%= curso.clave%></span></b> - <span id="spnAsignatura"><%= asignatura.asignatura%></span><span id="spnIdAsignatura" hidden><%= asignatura.idAsignatura%></span></h5>
+        <hr>
+        </div>
         <table class="w3-table w3-bordered">
           <thead>
           <tr>
@@ -17,25 +46,7 @@
             <th>Acción</th>
           </tr>
         </thead>
-          <% estudiantes.forEach(function(registro){ %>
-            <tr>
-              
-              <td>
-                <%= registro.estudianteNombre%>
-              </td>
-              <td>
-                <%= registro.nombre%>
-              </td>
-              <td>
-                <%= registro.nombre%>
-              </td>
-              <td class="w3-padding-0">
-                  <a href="/estudiante/curso/" class="w3-button"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
-                 
-              </td>
-
-            </tr>
-            <% }); %>
+          <tbody class="tbl_user_data"></tbody>
 
         </table>
       </div>
