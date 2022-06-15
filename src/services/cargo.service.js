@@ -26,6 +26,7 @@ const getCargoPorRol = async(req, res) => {
     return resultado
 }
 
+
 module.exports = {
     getTodos : getTodos,
     getCargoPorRol: getCargoPorRol

@@ -5,6 +5,7 @@ const router = Router()
 const {getPorDocente} = require('../controllers/docenteCargo.controller')
 const {getCargoCursoPorDocente} = require('../controllers/docenteCargo.controller')
 const {postDocenteCargo} = require('../controllers/docenteCargo.controller')
+const {putBajaDocenteCargo_controller} = require('../controllers/docenteCargo.controller')
 var sessionMiddelware = require('../middelware/session.middelware')
 
 
@@ -20,6 +21,7 @@ router
     .get('/alta', function(req,res){
         res.render("pages/cargo/cargoAlta")
     })
+    .get('/:rowNumber/baja', putBajaDocenteCargo_controller)
     
 
 

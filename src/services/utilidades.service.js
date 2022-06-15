@@ -5,10 +5,9 @@ const convertToJson = async (resultados) => {
     resultados.forEach(s => {
 
         var varuser = {}
-
+        varuser['_rowNumber'] = resultados[i]._rowNumber //acá le guardo el número de fila en la sheet
         header.forEach(r => {
             varuser[r] = resultados[i][r]
-
         })
         jsonArray.push(varuser)
         i++

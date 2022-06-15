@@ -39,15 +39,28 @@
                 <%= cargo.asignatura%> 
               </td>
               <td class="w3-padding-0">
-                  <a href="/estudiante/curso/<%= cargo.curso%>/asignatura/<%= cargo.asignaturaId%>" class="w3-button w3-red"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
+                <button onclick="document.getElementById('<%= cargo.cursoAsignatura%>').style.display='block'" class="w3-button w3-red w3-large"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                  
                  
               </td>
               <td class="w3-padding-0">
-                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="w3-button w3-green"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
+                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="w3-button w3-blue"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
                
             </td>
 
             </tr>
+            <div id="<%= cargo.cursoAsignatura%>" class="w3-modal">
+              <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                <div class="w3-center"><br>
+                  <span onclick="document.getElementById('<%= cargo.cursoAsignatura%>').style.display='none'" class="w3-button w3-xlarge w3-hover-blue w3-display-topright" title="Close Modal">&times;</span>
+                  <h3>Está seguro que desea borrar el cargo de <%= cargo.rol%>: <%= cargo.asignatura%> ?</h3>
+                </div>
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                  <a onclick="document.getElementById('id01').style.display='block'" href="/docente/cargo/<%= cargo._rowNumber%>/baja" class="w3-button w3-red">Borrar</a>
+                  <button onclick="document.getElementById('<%= cargo.cursoAsignatura%>').style.display='none'" type="button" class="w3-button w3-blue">Cancel</button>
+                </div>
+              </div>
+            </div>
             <% }); %>
 
         </table>
@@ -55,5 +68,11 @@
 
     </div>
     <hr>
+    ////////
+
+ 
+      
+    
+      
 
     <%- include ../../partials/parte2Inferior.ejs %>

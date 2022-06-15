@@ -9,7 +9,7 @@ const {postCalificacion_controller} = require('../controllers/calificacion.contr
 var sessionMiddelware = require('../middelware/session.middelware')
 
 router
-    .get('/curso:curso/asignatura:asignatura', getCursoYAsignatura_controller)//trae además a los estudiantes
+    .get('/curso:curso/asignatura:asignatura',sessionMiddelware, getCursoYAsignatura_controller)//trae además a los estudiantes
     .get('/curso:curso/asignatura:asignatura/estudiantes', getEstudiantePorAsignatura_controller)
     .post('/post', postCalificacion_controller)
     

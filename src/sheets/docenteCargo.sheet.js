@@ -11,13 +11,15 @@ async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
     sheet = documento.sheetsById[483612079]
+    sheet_get = documento.sheetsById[1292811399]
     return documento
 }
 
 async function getCargosTodos(){
     await obtenercredenciales()
     
-    const registros =  await sheet.getRows()
+    const registros =  await sheet_get.getRows()
+    //console.log("Cargo por docente::::::::::::.. ", registros)
     return registros
 }
 
@@ -30,7 +32,20 @@ async function postDocenteCargo(objetoInterface) {
     return objetoSalvado
 }
 
+async function putBajaDocenteCargo(rowNumber, fechaBaja) {
+    console.log(fechaBaja, "postDocenteCargo: Antes: ", rowNumber)
+
+    const registros = await sheet.getRows()
+    registros[rowNumber - 2].fechaBaja = fechaBaja
+    await registros[rowNumber - 2].save()
+    
+    console.log("postDocenteCargo: Después: ", registros[rowNumber - 2].asignatura)
+    //console.log('lenght: ', registros.length)
+    return rowNumber
+}
+
 module.exports = {
     getCargosTodos: getCargosTodos,
-    postDocenteCargo:postDocenteCargo
+    postDocenteCargo:postDocenteCargo,
+    putBajaDocenteCargo: putBajaDocenteCargo
 }

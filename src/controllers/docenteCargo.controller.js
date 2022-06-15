@@ -33,9 +33,15 @@ const postDocenteCargo = async (req, res) => {
     await res.redirect('/docente/cargo')
 }
 
+const putBajaDocenteCargo = async(req, res) => {
+    resultado = await docenteCargoService.putBajaDocenteCargo(req.params.rowNumber)
+    await res.redirect('/docente/cargo')
+}
+
 module.exports = {
     getCargosTodos : getCargosTodos,
     getPorDocente:getPorDocente,
     postDocenteCargo: postDocenteCargo,
-    getCargoCursoPorDocente:getCargoCursoPorDocente
+    getCargoCursoPorDocente:getCargoCursoPorDocente,
+    putBajaDocenteCargo_controller:putBajaDocenteCargo
 } 

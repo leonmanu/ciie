@@ -40,7 +40,7 @@ async function post(pObjeto) {
     console.log(pObjeto)
 }
 
-async function put(pObjeto) {
+async function put(cargo) {
     const documento = await obtenercredenciales()
     
     const sheet = documento.sheetsById[82786429]
@@ -62,7 +62,7 @@ async function del(pObjeto) {
     const documento = await obtenercredenciales()
 
     const sheet = documento.sheetsById[82786429]
-    await sheet.addRow(pObjeto)
+    await sheet.
 
     console.log(pObjeto)
 }
