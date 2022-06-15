@@ -14,9 +14,8 @@ async function obtenercredenciales(){
 }
 
 async function getTodo(){
-    const documento = await obtenercredenciales()
-    sheetEstudianteAsignatura = documento.sheetsById[2145868572]
-    const registros =  await sheetEstudianteAsignatura.getRows()
+    await obtenercredenciales()
+    const registros =  await sheet.getRows()
 
     return registros
     
@@ -24,27 +23,13 @@ async function getTodo(){
 
 async function getTodoPorCurso(){
     const documento = await obtenercredenciales()
-    sheet = documento.sheetsById[1287324365]
+    sheet = documento.sheetsById[1585615507] // acá usé la query ordenada: EstudianteCurso_get
     const registros =  await sheet.getRows()
 
     return registros
     
 }
 
-async function getOne(id){
-    const documento = await obtenercredenciales()
-
-    const registros =  await sheet.getRows()
-    const resultado = registros.filter(row => row.idEstudiante === id)
-    const estudiate = registros.
-    // registros.map((registro)=>{
-
-    // })
-    console.log(resultado[0])
-
-    return resultado
-    
-}
 
 async function post(pObjeto) {
     const documento = await obtenercredenciales()
@@ -85,7 +70,6 @@ async function del(pObjeto) {
 module.exports = {
     getTodo: getTodo,
     getTodoPorCurso: getTodoPorCurso,
-    getOne: getOne,
     post: post,
     put : put,
     del : del,

@@ -3,42 +3,15 @@ $( window ).on( "load", function() {
 	var idAsignatura = $('#spnIdAsignatura').html();
 	//AJAX	obtener estudiantes///////////////////////
 	var tbl = '';
-	$.post("/calificacion/estudiantes",{
+	// $.get(`/calificacion/curso${spncurso}/asignatura${idAsignatura}/estudiantes`,{
 
-			curso: spncurso,
-			asignatura: idAsignatura
-		},
-		function (data, status) {
-			$.each(data, function(index, val) 
-			{
-				//you can replace with your database row id
-				var row_id = val.idEstudianteCurso;
+	// 	},
+	// 	function (data, status) {
+	// 		fnRellenarTabla(data);
+	// 	});
 
-				//loop through ajax row data
-				tbl +='<tr row_id="'+row_id+'">';
-					tbl +='<td ><div class="row_data" edit_type="click" col_name="fname">'+val.estudianteNombre+'</div></td>';
-					tbl +='<td ><div class="row_data" edit_type="click" col_name="lname">'+val['lname']+'</div></td>';
-					tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['email']+'</div></td>';
 
-					//--->edit options > start
-					tbl +='<td>';
-					 
-						tbl +='<span class="btn_edit" > <a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
-
-						//only show this button if edit button is clicked
-						tbl +='<span class="btn_save"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
-						tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
-
-					tbl +='</td>';
-					//--->edit options > end
-					
-				tbl +='</tr>';
-				$(document).find('.tbl_user_data').html(tbl);
-				$(document).find('.btn_save').hide();
-				$(document).find('.btn_cancel').hide(); 
-			});
-		});
-
+		
 
 
 	// $('#spnAsignatura').html("perro1");
@@ -62,20 +35,66 @@ $( window ).on( "load", function() {
 
 	//ajax row data
 
+	var fnRellenarTabla = (data) =>{
+		$.each(data, function(index, val) 
+			{
+				//you can replace with your database row id
+				var row_id = val.idEstudianteCurso;
 
+				//loop through ajax row data
+				tbl +='<tr row_id="'+row_id+'">';
+					tbl +='<td>'
+							+'<div class="" edit_type="click" col_name="nombre">'
+								+val.estudianteNombre
+							+'</div>'
+						+'</td>';
 
-	var random_id = function  () 
-	{
-		var id_num = Math.random().toString(9).substr(2,3);
-		var id_str = Math.random().toString(36).substr(2);
-		
-		return id_num + id_str;
+					tbl +='<td>'
+							+'<select class="row_data w3-select" edit_type="click" col_name="valoracion1">'
+								+'<option value="" disabled selected></option>'
+								+'<option value="1">1-TED</option>'
+								+'<option value="2">2-TED</option>'
+								+'<option value="3">3-TED</option>'
+								+'<option value="4">4-TEP</option>'
+								+'<option value="5">5-TEP</option>'
+								+'<option value="6">6-TEP</option>'
+								+'<option value="7">7-TEA</option>'
+								+'<option value="8">8-TEA</option>'
+								+'<option value="9">9-TEA</option>'
+								+'<option value="10">10-TEA</option>'
+							+'</select>'
+						+'</td>';
+					tbl +='<td>'
+							+'<input class="row_data w3-input w3-animate-input" edit_type="click" col_name="informe1" style="width:135px"/>'
+						+'</td>';
+
+					//--->edit options > start
+					tbl +='<td>';
+					 
+						tbl +='<span class="btn_edit" > <a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
+
+						//only show this button if edit button is clicked
+						tbl +='<span class="btn_save"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
+						tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
+
+					tbl +='</td>';
+					//--->edit options > end
+					
+				tbl +='</tr>';
+				$(document).find('.tbl_user_data').html(tbl);
+				$(document).find('.btn_save').hide();
+				$(document).find('.btn_cancel').hide(); 
+			});
 	}
 
-
-	//--->create data table > start
-	
-	
+		//calculo que hay que quitarlo
+	// var random_id = function  () 
+	// {
+	// 	var id_num = Math.random().toString(9).substr(2,3);
+	// 	var id_str = Math.random().toString(36).substr(2);
+		
+	// 	return id_num + id_str;
+	// }
 
 
 
@@ -202,7 +221,7 @@ $( window ).on( "load", function() {
 		var tbl_row = $(this).closest('tr');
 
 		var row_id = tbl_row.attr('row_id');
-
+		//acá deberían ir los otro atributos
 		
 		//hide save and cacel buttons
 		tbl_row.find('.btn_save').hide();
@@ -213,28 +232,37 @@ $( window ).on( "load", function() {
 
 
 		//make the whole row editable
-		tbl_row.find('.row_data')
-		.attr('edit_type', 'click')
-		.removeClass('bg-warning')
-		.css('padding','') 
+		// tbl_row.find('.row_data')
+		// .attr('edit_type', 'click')
+		// .removeClass('bg-warning')
+		// .css('padding','') 
 
 		//--->get row data > start
 		var arr = {}; 
 		tbl_row.find('.row_data').each(function(index, val) 
 		{   
 			var col_name = $(this).attr('col_name');  
-			var col_val  =  $(this).html();
+			var col_val  =  $(this).val();
 			arr[col_name] = col_val;
 		});
+
+		
+
 		//--->get row data > end
 
 		//use the "arr"	object for your ajax call
-		$.extend(arr, {row_id:row_id});
+		$.extend(arr, {row_id:row_id, asignatura:idAsignatura});
 
 		//out put to show
-		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
-		 
+		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
+		alert(arr.valoracion1) 
 
+		$.post(`/calificacion/post`,{
+			arr
+		},
+		function (data, status) {
+			alert("Se envió la calificación")
+		});
 	});
 	//--->save whole row entery > end
 

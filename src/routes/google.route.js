@@ -22,7 +22,7 @@ router
         successRedirect: "/dashboard",
         failureRedirect: "/login",
      }))
-    .get('/estudiante/:id', getOne)
+    //.get('/estudiante/:id', getOne)
     .get('/app/informe',sessionMiddelware, function(req,res,next){
         res.redirect(getInforme)
     })

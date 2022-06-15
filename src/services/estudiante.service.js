@@ -19,6 +19,15 @@ const getTodos = async (req, res) => {
     return resultado
 }
 
+async function getUno(id){
+    const registros =  await estudianteSheet.getTodo()
+    const resultado = registros.filter(row => row.id == id)
+    const resultadoJson = await utilidadesService.convertToJson(resultado)
+    //console.log(resultadoJson[0])
+
+    return resultadoJson[0]
+    
+}
 
 async function getPorCursoAsignatura(req){
     console.log("getPorCurso: ", req.params.curso)
@@ -39,6 +48,7 @@ async function getPorCurso(curso){
 }
 module.exports = {
     getTodos : getTodos,
+    getUno: getUno,
     getPorCursoAsignatura: getPorCursoAsignatura,
     getPorCurso:getPorCurso
 } 

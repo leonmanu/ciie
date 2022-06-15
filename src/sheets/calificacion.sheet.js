@@ -1,55 +1,30 @@
-const { GoogleSpreadsheetRow } = require('google-spreadsheet')
 const { GoogleSpreadsheet } = require('google-spreadsheet')
 const credenciales = require('../json/credecialSheets.json')
 
 let googleId = "1d-cWeBzIPIdpzgZUpYs_zlnllEkERVdEqRfgJ31DO3U"
-
-let documento
+let documento = new GoogleSpreadsheet(googleId)
 let sheet
 
 async function obtenercredenciales(){
-    this.documento =  new GoogleSpreadsheet(googleId)
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
-    sheet = documento.sheetsById[0]
+    sheet = documento.sheetsById[1287807919]
     return documento
 }
 
-async function get(){
-    const documento = await obtenercredenciales()
+async function getCalificacion(){
+    await obtenercredenciales()
     const registros =  await sheet.getRows()
-    const resultados = registros.filter(row => row ['estudiante'] === 'ALBARRACÍN, Guadalupe')
-    // registros.map((registro)=>{
-
-    // })
-    console.log(registros)
-
+    //console.log("SHEETS Calificaciones = ", registros)
     return registros
     
 }
 
-async function getOne(){
-    const documento = await obtenercredenciales()
+async function postCalificacion(objetoInterface) {
+    await obtenercredenciales()
+    const resultado = await sheet.addRow(objetoInterface)
 
-    const sheet = documento.sheetsById[82786429]
-    const registros =  await sheet.getRows()
-    const resultados = registros.filter(row => row ['Estudiante'] === 'ALBARRACÍN, Guadalupe')
-    // registros.map((registro)=>{
-
-    // })
-    console.log(registros)
-
-    return registros
-    
-}
-
-async function post(pObjeto) {
-    const documento = await obtenercredenciales()
-
-    const sheet = documento.sheetsById[82786429]
-    await sheet.addRow(pObjeto)
-
-    console.log(pObjeto)
+    console.log("resultado postSheet: ",resultado)
 }
 
 async function put(pObjeto) {
@@ -80,9 +55,8 @@ async function del(pObjeto) {
 }
 
 module.exports = {
-    get: get,
-    getOne: getOne,
-    post: post,
+    getCalificacion: getCalificacion,
+    postCalificacion: postCalificacion,
     put : put,
     del : del
 }
