@@ -1,5 +1,6 @@
 const req = require('express/lib/request')
 const calificacionSheet =  require("../sheets/calificacion.sheet")
+const utilidadesService = require('./utilidades.service')
 
 // const getCargosTodos = async (req, res) => {
 //     resultado = await cargoSheet.getCargosTodos()
@@ -43,14 +44,15 @@ const getEstudiantePorAsignatura = async (asignatura, curso) => {
 // }
 
 const postCalificacion = async (req, res) => {
-    console.log("calificacion.service:: ",req.body.arr)
-    const objetoInterface = {
-        estudiante: req.body.arr.row_id,
-        valoracion1: req.body.arr.valoracion1,
-        informe1: req.body.arr.informe1,
-        asignatura: req.body.arr.asignatura,
-    }
-    const resultado = await calificacionSheet.postCalificacion(objetoInterface)
+
+    jsonStringfy = JSON.stringify(req.body.arr)
+    jsonParse = JSON.parse(jsonStringfy)
+    console.log("calificacion.service:: ",jsonParse)
+    
+    //resultadoJson = utilidadesService.convertToJson(req.body.arr)
+    
+    console.log("ESTUDIANTE: ",jsonParse)
+    const resultado = await calificacionSheet.postCalificacion(jsonParse)
     return resultado
 }
 

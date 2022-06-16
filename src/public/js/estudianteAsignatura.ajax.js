@@ -1,101 +1,8 @@
 $( window ).on( "load", function() {
 	var spncurso = $('#spnCurso').html();
-	var idAsignatura = $('#spnIdAsignatura').html();
+	var idAsignatura = $('#spnIdAsignatura').val();
 	//AJAX	obtener estudiantes///////////////////////
 	var tbl = '';
-	// $.get(`/calificacion/curso${spncurso}/asignatura${idAsignatura}/estudiantes`,{
-
-	// 	},
-	// 	function (data, status) {
-	// 		fnRellenarTabla(data);
-	// 	});
-
-
-		
-
-
-	// $('#spnAsignatura').html("perro1");
-	// $.ajax({
-	// 	url: '/calificacion/estudiantes',
-	// 	contentType: 'application/json',
-	// 	method: 'POST',
-	// 	data: JSON.stringify({ curso:  $('#spnCurso').html(), asignatura:  $('#spnIdAsignatura').html() }),
-	// 	dataType: 'json',
-	// 	success: async function (response) {
-	// 		await $('#spnAsignatura').html("perro2");
-	// 		alert(spncurso + '||' + idAsignatura);
-	// 		var jsonResponser = JSON.parse(response);
-	// 		jsonResponser.forEach(function (m) {
-	// 			$('#spnAsignatura').html(m);
-	// 		})
-	// 	}
-	// });
-	 
-	//\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-	//ajax row data
-
-	var fnRellenarTabla = (data) =>{
-		$.each(data, function(index, val) 
-			{
-				//you can replace with your database row id
-				var row_id = val.idEstudianteCurso;
-
-				//loop through ajax row data
-				tbl +='<tr row_id="'+row_id+'">';
-					tbl +='<td>'
-							+'<div class="" edit_type="click" col_name="nombre">'
-								+val.estudianteNombre
-							+'</div>'
-						+'</td>';
-
-					tbl +='<td>'
-							+'<select class="row_data w3-select" edit_type="click" col_name="valoracion1">'
-								+'<option value="" disabled selected></option>'
-								+'<option value="1">1-TED</option>'
-								+'<option value="2">2-TED</option>'
-								+'<option value="3">3-TED</option>'
-								+'<option value="4">4-TEP</option>'
-								+'<option value="5">5-TEP</option>'
-								+'<option value="6">6-TEP</option>'
-								+'<option value="7">7-TEA</option>'
-								+'<option value="8">8-TEA</option>'
-								+'<option value="9">9-TEA</option>'
-								+'<option value="10">10-TEA</option>'
-							+'</select>'
-						+'</td>';
-					tbl +='<td>'
-							+'<input class="row_data w3-input w3-animate-input" edit_type="click" col_name="informe1" style="width:135px"/>'
-						+'</td>';
-
-					//--->edit options > start
-					tbl +='<td>';
-					 
-						tbl +='<span class="btn_edit" > <a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
-
-						//only show this button if edit button is clicked
-						tbl +='<span class="btn_save"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
-						tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
-
-					tbl +='</td>';
-					//--->edit options > end
-					
-				tbl +='</tr>';
-				$(document).find('.tbl_user_data').html(tbl);
-				$(document).find('.btn_save').hide();
-				$(document).find('.btn_cancel').hide(); 
-			});
-	}
-
-		//calculo que hay que quitarlo
-	// var random_id = function  () 
-	// {
-	// 	var id_num = Math.random().toString(9).substr(2,3);
-	// 	var id_str = Math.random().toString(36).substr(2);
-		
-	// 	return id_num + id_str;
-	// }
-
 
 
 
@@ -161,7 +68,8 @@ $( window ).on( "load", function() {
 
 		tbl_row.find('.btn_save').show();
 		tbl_row.find('.btn_cancel').show();
-
+		tbl_row.find('.w3-select').prop("disabled", false);
+		tbl_row.find('.w3-input').prop("disabled", false);
 		//hide edit button
 		tbl_row.find('.btn_edit').hide(); 
 
@@ -196,6 +104,8 @@ $( window ).on( "load", function() {
 		//hide save and cacel buttons
 		tbl_row.find('.btn_save').hide();
 		tbl_row.find('.btn_cancel').hide();
+		tbl_row.find('.w3-select').prop("disabled", true);
+		tbl_row.find('.w3-input').prop("disabled", true);
 
 		//show edit button
 		tbl_row.find('.btn_edit').show();
@@ -226,6 +136,8 @@ $( window ).on( "load", function() {
 		//hide save and cacel buttons
 		tbl_row.find('.btn_save').hide();
 		tbl_row.find('.btn_cancel').hide();
+		tbl_row.find('.w3-select').prop("disabled", true);
+		tbl_row.find('.w3-input').prop("disabled", true);
 
 		//show edit button
 		tbl_row.find('.btn_edit').show();
@@ -251,7 +163,7 @@ $( window ).on( "load", function() {
 		//--->get row data > end
 
 		//use the "arr"	object for your ajax call
-		$.extend(arr, {row_id:row_id, asignatura:idAsignatura});
+		$.extend(arr, {estudiante:row_id, asignatura:idAsignatura});
 
 		//out put to show
 		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')

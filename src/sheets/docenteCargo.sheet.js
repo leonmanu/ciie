@@ -28,18 +28,18 @@ async function postDocenteCargo(objetoInterface) {
     await obtenercredenciales()
 
     const objetoSalvado = await sheet.addRow(objetoInterface)
-    console.log("postDocenteCargo: Después: ", objetoSalvado)
+    //console.log("postDocenteCargo: Después: ", objetoSalvado)
     return objetoSalvado
 }
 
 async function putBajaDocenteCargo(rowNumber, fechaBaja) {
     console.log(fechaBaja, "postDocenteCargo: Antes: ", rowNumber)
-
+    const index = rowNumber - 2
     const registros = await sheet.getRows()
-    registros[rowNumber - 2].fechaBaja = fechaBaja
-    await registros[rowNumber - 2].save()
+    registros[index].fechaBaja = fechaBaja
+    await registros[index].save()
     
-    console.log("postDocenteCargo: Después: ", registros[rowNumber - 2].asignatura)
+    console.log("postDocenteCargo: Después: ", registros[index].asignatura)
     //console.log('lenght: ', registros.length)
     return rowNumber
 }

@@ -1,6 +1,6 @@
 <%- include ../../partials/parte1Superior.ejs %>
-<% let valoracion1 %>
-<% let informe1="hola" %>
+<% let valoracion1, valoracion2 %>
+<% let informe1, informe2 %>
 
 <script src="/js/estudianteAsignatura.ajax.js"></script>
 
@@ -8,16 +8,11 @@
 
 <body>
 
-  <div class="panel panel-default">
-    <div class="panel-heading"><b>HTML Table Edits/Upates</b> </div>
+
+
   
-    <div class="panel-body">
-  
-      <p>All the changes will be displayed below</p>
-      <div class="post_msg"> </div>
-  
-    </div>
-  </div>
+
+
 
   <!-- ///////////////////////////////////////////////////////7 -->
 
@@ -27,18 +22,36 @@
       <div>
         <h5> <b><span id="spnCurso"> <%= curso.clave%> </span></b> - 
           <span id="spnAsignatura"> <%= asignatura.asignatura%>
-          </span><span id="spnIdAsignatura" hidden>
-            <%= asignatura.idAsignatura%>
           </span>
+          <input id="spnIdAsignatura" value="<%= asignatura.idAsignatura%>" hidden>
+            
         </h5>
         <hr>
+      </div>
+      <div class="w3-container">
+        <div class="w3-row">
+          <a id="periodo1" href="javascript:void(0)" onclick="openCity(event);" aria-disabled="true">
+            <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding">1° Perído</div>
+          </a>
+          <a id="periodo2" href="javascript:void(0)" onclick="openCity(event);">
+            <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding">2° Perído</div>
+          </a>
+          <a id="periodo3" href="javascript:void(0)" >
+            <div class="w3-quarter w3-bottombar w3-hover-light-grey w3-padding w3-opacity">3° Perído</div>
+          </a>
+          <a id="periodo4" href="javascript:void(0)" >
+            <div class="w3-quarter w3-bottombar w3-hover-light-grey w3-padding w3-opacity" >4° Perído</div>
+          </a>
+        </div>
       </div>
       <table class="w3-table w3-bordered">
         <thead>
           <tr>
             <th>Estudiante</th>
-            <th>Valoración</th>
-            <th>Informe</th>
+            <th>Valoración (1)</th>
+            <th>Informe (1)</th>
+            <th>Valoración (2)</th>
+            <th>Informe (2)</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -52,17 +65,19 @@
                 <%= estuPorCurso.estudianteNombre%>
               </div>
             </td>
-            <td>
-              <% for (var l=estudiantesPorCalificaciones.length, i=0; i < l; i++) { %>
-                <% estuPorCalificaciones = estudiantesPorCalificaciones[i]%>
-                <% if( estuPorCurso.estudiante === estuPorCalificaciones.estudiante ){ %>
-                  <% valoracion1=estuPorCalificaciones.valoracion1%>
-                  <% informe1=estuPorCalificaciones.informe1%>
-                  <% break %>
-                <% } %>
+            <% for (var l=estudiantesPorCalificaciones.length, i=0; i < l; i++) { %>
+              <% estuPorCalificaciones = estudiantesPorCalificaciones[i]%>
+              <% if( estuPorCurso.estudiante === estuPorCalificaciones.estudiante ){ %>
+                <% valoracion1=estuPorCalificaciones.valoracion1%>
+                <% informe1=estuPorCalificaciones.informe1%>
+                <% break %>
+              <% } %>
 
-              <% }; %>
-              <select class="row_data w3-select" edit_type="click" col_name="valoracion1">
+            <% }; %>
+            
+            <!-- 1° Informe -->
+            <td>
+              <select class="row_data w3-select" edit_type="click" col_name="valoracion1" disabled>
                 <option value="" disabled selected></option>
                 <% calificacionCodigos.forEach(function(calificacionCodigo){ %>
                   <% if( valoracion1==calificacionCodigo.simbolo ){ %>
@@ -79,18 +94,42 @@
             </td>
             <td>
               <input class="row_data w3-input w3-animate-input" edit_type="click" col_name="informe1" style="width:135px"
-                value="<%= informe1%>" />
+                value="<%= informe1%>" disabled/>
             </td>
+
+            <!-- 2° Informe -->
+
+            <td>
+              <select class="row_data w3-select" edit_type="click" col_name="valoracion2" disabled>
+                <option value="" disabled selected></option>
+                <% calificacionCodigos.forEach(function(calificacionCodigo){ %>
+                  <% if( valoracion2 == calificacionCodigo.simbolo ){ %>
+                    <option value="<%=calificacionCodigo.simbolo%>" selected>
+                      <%= calificacionCodigo.simbolo %> - <%= calificacionCodigo.letra %>
+                    </option>
+                  <% } else{ %>
+                    <option value="<%=calificacionCodigo.simbolo%>">
+                      <%= calificacionCodigo.simbolo %> - <%= calificacionCodigo.letra %>
+                    </option>
+                  <% } %>
+                <% }); %>
+              </select>
+            </td>
+            <td>
+              <input class="row_data w3-input w3-animate-input" edit_type="click" col_name="informe2" style="width:135px"
+                value="<%= informe2 %>" autofocus="off" autocorrect="off" autocapitalize="off" disabled="true" />
+            </td>
+
+            <!-- Botones de edición -->
             <td class="w3-padding-0">
-              <a href="/estudiante/curso/" class="w3-button"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
               <span class="btn_edit"> 
-                <a href="#" class="btn btn-link " row_id="'+row_id+'"> Edit</a> 
+                <a href="#" class="w3-button w3-white w3-border w3-border-blue" row_id="'+row_id+'">Editar</a> 
               </span>
               <span class="btn_save" hidden>
-                <a href="#" class="btn btn-link" row_id="'+row_id+'"> Save</a> |
+                <a href="#" class="w3-button w3-white w3-border w3-border-green" row_id="'+row_id+'"> Save </a>
               </span>
               <span class="btn_cancel" hidden>
-                <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> |
+                <a href="#" class="w3-button w3-white w3-border w3-border-red" row_id="'+row_id+'">Cancel</a>
               </span>
             </td>
 
@@ -103,5 +142,40 @@
 
   </div>
   <hr>
+ 
+  <script type="text/javascript">
+    $(document).ready(function() {
+      document.getElementsByClassName("tablink")[0].className += " w3-border-black";
+      $('td:nth-child(4),th:nth-child(4)').hide();
+            $('td:nth-child(5),th:nth-child(5)').hide();
+        $('#periodo1').click(function() {
+            //$('td:nth-child(2)').hide();
+            // if your table has header(th), use this
+            $('td:nth-child(2),th:nth-child(2)').show();
+            $('td:nth-child(3),th:nth-child(3)').show();
+            $('td:nth-child(4),th:nth-child(4)').hide();
+            $('td:nth-child(5),th:nth-child(5)').hide();
+        });
+        $('#periodo2').click(function() {
+            //$('td:nth-child(2)').hide();
+            // if your table has header(th), use this
+            $('td:nth-child(4),th:nth-child(4)').show();
+            $('td:nth-child(5),th:nth-child(5)').show();
+            $('td:nth-child(2),th:nth-child(2)').hide();
+            $('td:nth-child(3),th:nth-child(3)').hide();
+        });
+    });
+</script>
 
+<script>
+function openCity(evt, cityName) {
+  var i, tablinks;
+
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-border-black", "");
+  }
+  evt.currentTarget.firstElementChild.className += " w3-border-black";
+}
+  </script>
 <%- include ../../partials/parte2Inferior.ejs %>

@@ -29,8 +29,18 @@ const post = (req, res) => {
 }
 
 const postDocenteCargo = async (req, res) => {
-    resultado = await docenteCargoService.postDocenteCargo(req, res)
+    console.log("docenteCargo.controller::: ", req.body)
+    const cargoAsignatura = await docenteCargoService.getSiExiste(req.body.cursoAsignatura)
+    if (cargoAsignatura.length > 0 ) {
+        console.log("cargoAsignatura: ",cargoAsignatura[0].usuario)
+        res.send('El cargo fue soliciatod por: ' + cargoAsignatura[0].usuario)
+        await res.redirect('/docente/cargo')
+    }
+    else{
+        resultado = await docenteCargoService.postDocenteCargo(req, res)
+        console.log("cargoAsignatura: cargoAsignatura.length",cargoAsignatura.length)
     await res.redirect('/docente/cargo')
+    }
 }
 
 const putBajaDocenteCargo = async(req, res) => {

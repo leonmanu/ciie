@@ -8,13 +8,14 @@ let sheet
 async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
-    sheet = documento.sheetsById[1287807919]
+    sheet_get = documento.sheetsById[1287807919]
+    sheet = documento.sheetsById[1731131025]
     return documento
-}
+}   
 
 async function getCalificacion(){
     await obtenercredenciales()
-    const registros =  await sheet.getRows()
+    const registros =  await sheet_get.getRows()
     //console.log("SHEETS Calificaciones = ", registros)
     return registros
     
