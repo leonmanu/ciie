@@ -37,20 +37,20 @@ const postDocenteCargo = async (req, res) => {
         revista: req.body.revista,
         estado: 3,
     }
-    objetoInterface.fechaAlta = new Date().toISOString
+    objetoInterface.fechaAlta = new Date().toISOString()
     const resultado = await cargoSheet.postDocenteCargo(objetoInterface)
     return resultado
 }
 
 const getSiExiste = async (cursoAsignatura) => {
     const registros = await cargoSheet.getCargosTodos()
-    const resultado = registros.filter(row => row.cursoAsignatura === cursoAsignatura) 
+    const resultado = registros.filter(row => row.cursoAsignatura === cursoAsignatura && row.fechaBaja == '') //&& row.fechaBaja
     console.log("getSiExiste ",resultado," cursoAsignatura ",cursoAsignatura)
     return resultado
 }
 
 const putBajaDocenteCargo = async(rowNumber) => {
-    const fechaBaja = new Date().toISOString
+    const fechaBaja = new Date().toISOString()
     const resultado = await cargoSheet.putBajaDocenteCargo(rowNumber, fechaBaja)
     return resultado
 }

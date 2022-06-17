@@ -32,7 +32,7 @@ const getEstudiantePorAsignatura = async (asignatura, curso) => {
     
     registros = await calificacionSheet.getCalificacion()
     resultado = await registros.filter( row => row.asignatura === asignatura && row.curso === curso)
-    console.log("getSiExiteEstudianteAsignatura", resultado)
+
     return resultado
 }
 
@@ -47,13 +47,21 @@ const postCalificacion = async (req, res) => {
 
     jsonStringfy = JSON.stringify(req.body.arr)
     jsonParse = JSON.parse(jsonStringfy)
-    console.log("calificacion.service:: ",jsonParse)
+    if ( jsonParse.rowNumber > 1) {
+        console.log("EXISTE:: ",jsonParse.rowNumber)
+        const resultado = await calificacionSheet.putCalificacion(jsonParse)
+        return resultado
+    } else {
+        console.log("NO existe:: ",jsonParse.rowNumber)
+        console.log("ESTUDIANTE: ",jsonParse)
+        const resultado = await calificacionSheet.postCalificacion(jsonParse)
+        return resultado
+    }
+    //console.log("calificacion.service:: ",jsonParse)
     
     //resultadoJson = utilidadesService.convertToJson(req.body.arr)
     
-    console.log("ESTUDIANTE: ",jsonParse)
-    const resultado = await calificacionSheet.postCalificacion(jsonParse)
-    return resultado
+    
 }
 
 

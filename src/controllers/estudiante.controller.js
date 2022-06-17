@@ -15,7 +15,7 @@ const get = async (req, res) => {
 
 const getPorCursoAsignatura = async (req,res) =>{
     registros = await estudianteService.getPorCursoAsignatura(req,res)
-    console.log("ESTUDIANTE_CONTROLLER -> GetPorCurso: ", registros)
+    //console.log("ESTUDIANTE_CONTROLLER -> GetPorCurso: ", registros)
     res.render('pages/estudiante/estudianteAsignatura', {user: req.user._json, registros})
 }
 

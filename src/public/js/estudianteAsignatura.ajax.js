@@ -131,6 +131,7 @@ $( window ).on( "load", function() {
 		var tbl_row = $(this).closest('tr');
 
 		var row_id = tbl_row.attr('row_id');
+		var rowNumber = tbl_row.attr('rowNumber');
 		//acá deberían ir los otro atributos
 		
 		//hide save and cacel buttons
@@ -163,11 +164,11 @@ $( window ).on( "load", function() {
 		//--->get row data > end
 
 		//use the "arr"	object for your ajax call
-		$.extend(arr, {estudiante:row_id, asignatura:idAsignatura});
+		$.extend(arr, {estudiante:row_id, asignatura:idAsignatura, rowNumber: rowNumber});
 
 		//out put to show
 		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
-		alert(arr.valoracion1) 
+		alert(arr.rowNumber) 
 
 		$.post(`/calificacion/post`,{
 			arr

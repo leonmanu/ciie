@@ -1,6 +1,7 @@
 <%- include ../../partials/parte1Superior.ejs %>
 <% let valoracion1, valoracion2 %>
 <% let informe1, informe2 %>
+<% let rowNumber %>
 
 <script src="/js/estudianteAsignatura.ajax.js"></script>
 
@@ -56,27 +57,32 @@
           </tr>
         </thead>
         <tbody class="tbl_user_data">
+          
           <% estudiantesPorCurso.forEach(function(estuPorCurso){ %>
+            <% rowNumber=''%>
             <% valoracion1='' %>
                   <% informe1='' %>
-          <tr row_id='<%= estuPorCurso.estudiante%>'>
+                  <% for (var l=estudiantesPorCalificaciones.length, i=0; i < l; i++) { %>
+                    <% estuPorCalificaciones = estudiantesPorCalificaciones[i]%>
+                    <% if( estuPorCurso.estudiante === estuPorCalificaciones.estudiante ){ %>
+                      <% valoracion1=estuPorCalificaciones.valoracion1%>
+                      <% informe1=estuPorCalificaciones.informe1%>
+                      <% rowNumber=estuPorCalificaciones._rowNumber%>
+                      <% break %>
+                    <% } %>
+      
+                  <% }; %>
+          <tr row_id='<%= estuPorCurso.estudiante%>' rowNumber="<%= rowNumber%>">
             <td>
               <div class="" edit_type="click" col_name="nombre">
                 <%= estuPorCurso.estudianteNombre%>
               </div>
             </td>
-            <% for (var l=estudiantesPorCalificaciones.length, i=0; i < l; i++) { %>
-              <% estuPorCalificaciones = estudiantesPorCalificaciones[i]%>
-              <% if( estuPorCurso.estudiante === estuPorCalificaciones.estudiante ){ %>
-                <% valoracion1=estuPorCalificaciones.valoracion1%>
-                <% informe1=estuPorCalificaciones.informe1%>
-                <% break %>
-              <% } %>
-
-            <% }; %>
+           
             
             <!-- 1° Informe -->
             <td>
+
               <select class="row_data w3-select" edit_type="click" col_name="valoracion1" disabled>
                 <option value="" disabled selected></option>
                 <% calificacionCodigos.forEach(function(calificacionCodigo){ %>

@@ -7,7 +7,7 @@ const utilidadesService = require('./utilidades.service')
 const getTodo = async (asignaturaId) => {
     const registros = await calificacionCodigoSheet.getTodos()
     const resultadoJson = await utilidadesService.convertToJson(registros)
-    console.log("calificacionCodigoServie -> resultadoJson: ",resultadoJson)
+
     return resultadoJson
 }
 

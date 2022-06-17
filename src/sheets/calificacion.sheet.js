@@ -25,7 +25,22 @@ async function postCalificacion(objetoInterface) {
     await obtenercredenciales()
     const resultado = await sheet.addRow(objetoInterface)
 
-    console.log("resultado postSheet: ",resultado)
+    //console.log("resultado postSheet: ",resultado)
+}
+
+async function putCalificacion(objetoInterface) {
+
+    const index = objetoInterface.rowNumber - 2
+    const registros = await sheet.getRows()
+
+    var header = registros[0]._sheet.headerValues
+    header.forEach(r => {
+        console.log("header: foreach: ", r)
+        registros[index][r] = objetoInterface[r]
+    })
+
+    resultado = await registros[index].save()
+    return registros[index][r] 
 }
 
 async function put(pObjeto) {
@@ -59,5 +74,6 @@ module.exports = {
     getCalificacion: getCalificacion,
     postCalificacion: postCalificacion,
     put : put,
-    del : del
+    del : del,
+    putCalificacion: putCalificacion
 }

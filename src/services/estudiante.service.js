@@ -38,7 +38,6 @@ async function getPorCursoAsignatura(req){
 }
 
 async function getPorCurso(curso){
-    console.log("CURSO::: >> ", curso)
     const registros =  await estudianteSheet.getTodoPorCurso()
     const resultados = await registros.filter(row => row.cursoClave === curso)
     const resultadoJson = await utilidadesService.convertToJson(resultados)
