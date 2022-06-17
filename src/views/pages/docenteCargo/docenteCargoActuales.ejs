@@ -44,9 +44,12 @@
                  
               </td>
               <td class="w3-padding-0">
-                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="w3-button w3-blue"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
-               
-            </td>
+                <% if(cargo.curso == '-----'){ %>
+                  <button class="w3-button w3-blue" disabled><i class="fa fa-users fa-fw" aria-hidden="true"></i> Estudiantes</button>
+                  <% } else { %>
+                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="w3-button w3-blue" ><i class="fa fa-users fa-fw" aria-hidden="true"></i> Estudiantes</a>
+                <% } %>
+              </td>
 
             </tr>
             <div id="<%= cargo.cursoAsignatura%>" class="w3-modal">
@@ -68,11 +71,5 @@
 
     </div>
     <hr>
-    ////////
-
- 
-      
-    
-      
 
     <%- include ../../partials/parte2Inferior.ejs %>
