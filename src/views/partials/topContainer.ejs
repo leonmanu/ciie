@@ -1,4 +1,41 @@
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-    <span class="w3-bar-item w3-right">E.E.S. N° 62</span>
+<!-- Image and text -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand text-right" href="#">
+    <img class="" id="waitIconAsignatura" src='/img/logoees62gris.png' width="30" height="30" />
+  </a>
+ 
+  <div class="collapse navbar-collapse" id="navbarText">
+    EES62
+    <ul class="navbar-nav mr-auto">
+     
+    </ul>    
   </div>
+
+  <%if(typeof(user) == "undefined"){%>
+    <a class="w3-button w3-section w3-blue w3-ripple" href="/auth/google"> <i class="fa fa-google" aria-hidden="true"></i> Iniciar sesión </a>
+    <%} else {%>
+    <%if(user == null){%>
+      <a class="w3-button w3-section w3-blue w3-ripple" href="/auth/google"> <i class="fa fa-google" aria-hidden="true"></i> Iniciar sesión </a>
+    
+  <%} else {%>
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <img src="<%= user.picture %>" class="" style="width:22px">
+          <span> <%= user.given_name %> <%= user.family_name %></span>
+        </a>
+        <div class="dropdown-menu">
+          <a href="/docente/cargo" class="dropdown-item"><i class="fa fa-briefcase"></i>  Cargos</a>
+          <div class="dropdown-divider"></div>
+          <a href="/usuario/logout" class="dropdown-item" ><i class="fa fa-sign-out" ></i> Salir</a>
+        </div>
+      </li>
+    </ul>
+    
+  <%}%>
+  <%}%>
+</nav>

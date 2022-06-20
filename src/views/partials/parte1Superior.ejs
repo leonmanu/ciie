@@ -6,26 +6,11 @@
   <%- include ../partials/header.ejs %>
 </head>
 
-<body  class="w3-light-grey">
+<body  class="">
   <!-- Top container -->
 
   <%- include ../partials/topContainer %>
 <!-- Sidebar/menu -->
 
-<%if(typeof(user) == "undefined"){%>
-  <%- include ../partials/lateralNavinicial %>
-  <%} else {%>
-  <%if(user == null){%>
-  <%- include ../partials/lateralNavinicial %>
-  
-<%} else {%>
-  <%- include ../partials/lateralNav %>
-<%}%>
-<%}%>
-
-
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+<div class="main">

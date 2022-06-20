@@ -5,6 +5,8 @@
     </head>
     <body>
 
+      
+
     <div  class="w3-container  w3-padding-16" >
       <h5 id="lblFormAlta"  style="display: none;"><b></i>Alta de cargos</b></h5>
       <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
@@ -14,10 +16,9 @@
 
     </div>
 
-    <div class="w3-container w3-padding-16">
-      <h5><b></i>Mis cargos</b></h5>
-      <div class="w3-container w3-card-4 w3-white  w3-padding-16">
-        <table class="w3-table w3-bordered">
+    <div class="container">
+      
+        <table class="table table-hover">
           <thead>
           <tr>
             <th>Cargo</th>
@@ -39,7 +40,10 @@
                 <%= cargo.asignatura%> 
               </td>
               <td class="w3-padding-0">
-                <button onclick="document.getElementById('<%= cargo.cursoAsignatura%>').style.display='block'" class="w3-button w3-red w3-large"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%= cargo.cursoAsignatura%>">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
                   
                  
               </td>
@@ -52,22 +56,32 @@
               </td>
 
             </tr>
-            <div id="<%= cargo.cursoAsignatura%>" class="w3-modal">
-              <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-                <div class="w3-center"><br>
-                  <span onclick="document.getElementById('<%= cargo.cursoAsignatura%>').style.display='none'" class="w3-button w3-xlarge w3-hover-blue w3-display-topright" title="Close Modal">&times;</span>
-                  <h3>Está seguro que desea borrar el cargo de <%= cargo.rol%>: <%= cargo.asignatura%> ?</h3>
-                </div>
-                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                  <a onclick="document.getElementById('id01').style.display='block'" href="/docente/cargo/<%= cargo._rowNumber%>/baja" class="w3-button w3-red">Borrar</a>
-                  <button onclick="document.getElementById('<%= cargo.cursoAsignatura%>').style.display='none'" type="button" class="w3-button w3-blue">Cancel</button>
-                </div>
-              </div>
-            </div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal<%= cargo.cursoAsignatura%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Está seguro que desea borrar el cargo de <%= cargo.rol%>: <%= cargo.asignatura%> ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a href="/docente/cargo/<%= cargo._rowNumber%>/baja" type="button" class="btn btn-danger">Confirmar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
             <% }); %>
 
         </table>
-      </div>
 
     </div>
     <hr>
