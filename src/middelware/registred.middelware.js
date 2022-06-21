@@ -1,8 +1,8 @@
 let usuarioSheet = require('../sheets/usuario.sheet')
 
-module.exports = checkRegitrated = (req, res, next) => {
+module.exports = checkRegitrated = async (req, res, next) => {
     const resultado = await usuarioSheet.getOneByEmail(req.user.email)
-    if (resultado) {
+    if (resultado.email != null) {
         console.log("Registrado? x Sí: ",resultado)
         return next()
     }

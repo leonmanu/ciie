@@ -13,10 +13,9 @@
       </div>
 
     </div>
-
-    <div class="container">
+    <div class="container p-0 my-3">
       <h5 id="lblFormAlta"  style="display: block;"><b></i>Cargos actuales</b></h5>
-        <table class="table table-hover">
+        <table class="table table-hover table-responsive">
           <thead>
           <tr>
             <th>Cargo</th>
@@ -37,7 +36,7 @@
               <td>
                 <%= cargo.asignatura%> 
               </td>
-              <td class="w3-padding-0">
+              <td class="">
 
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%= cargo.cursoAsignatura%>">
                   <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -45,11 +44,11 @@
                   
                  
               </td>
-              <td class="w3-padding-0">
+              <td class="">
                 <% if(cargo.curso == '-----'){ %>
-                  <button class="w3-button w3-blue" disabled><i class="fa fa-users fa-fw" aria-hidden="true"></i> Estudiantes</button>
+                  <button class="btn btn-outline-secondary disabled"><i class="fa fa-users fa-fw" aria-hidden="true"></i> </button>
                   <% } else { %>
-                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="btn btn-outline-success" ><i class="fa fa-users fa-fw" aria-hidden="true"></i> Estudiantes</a>
+                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="btn btn-outline-success" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><i class="fa fa-users fa-fw" aria-hidden="true"></i></a>
                 <% } %>
               </td>
 

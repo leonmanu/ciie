@@ -17,7 +17,7 @@ const siExisteUsuario = async (req, res) => {
     if (req.user.email == resultado.email) {// más adelante filtrar: provider abc.gob.ar
         //req.app.locals.usuario = req.user._json
         res.render('pages/index', {user: req.user._json})
-   } else {        
+   } else {
     res.redirect("/usuarioAlta")
     
    }
@@ -27,7 +27,6 @@ const siExisteUsuario = async (req, res) => {
 }
 
 const getOneByEmail = async (email, req, res) => {
-    //console.log("usuario.getOne: ", usuario.usuario.email)
     const resultado = await usuarioSheet.getOneByEmail(email)
     console.log("Usuario.controller ", resultado)
     return resultado
