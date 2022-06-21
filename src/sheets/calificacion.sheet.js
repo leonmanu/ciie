@@ -21,6 +21,14 @@ async function getCalificacion(){
     
 }
 
+async function getCalificacionCrudas(){
+    await obtenercredenciales()
+    const registros =  await sheet.getRows()
+    //console.log("SHEETS Calificaciones = ", registros)
+    return registros
+    
+}
+
 async function postCalificacion(objetoInterface) {
     await obtenercredenciales()
     const resultado = await sheet.addRow(objetoInterface)
@@ -28,19 +36,17 @@ async function postCalificacion(objetoInterface) {
     //console.log("resultado postSheet: ",resultado)
 }
 
-async function putCalificacion(objetoInterface) {
+async function putCalificacion(objExistente, objNuevo) {
 
-    const index = objetoInterface.rowNumber - 2
-    const registros = await sheet.getRows()
-
-    var header = registros[0]._sheet.headerValues
+    var header = objExistente._sheet.headerValues
     header.forEach(r => {
         console.log("header: foreach: ", r)
-        registros[index][r] = objetoInterface[r]
+        objExistente[r] = objNuevo[r]
     })
 
-    resultado = await registros[index].save()
-    return registros[index][r] 
+    resultado = await objExistente.save()
+    console.log("objExistente ::   ", objExistente)
+    return objExistente
 }
 
 async function put(pObjeto) {
@@ -72,6 +78,7 @@ async function del(pObjeto) {
 
 module.exports = {
     getCalificacion: getCalificacion,
+    getCalificacionCruda: getCalificacionCrudas,
     postCalificacion: postCalificacion,
     put : put,
     del : del,

@@ -45,11 +45,22 @@ const getEstudiantePorAsignatura = async (req, res) => {
 }
 
 const postCalificacion = async (req, res) => {
-    const calificacion = await calificacionService.postCalificacion(req)
-    console.log("Calificción == ", calificacion)
+    jsonStringfy = JSON.stringify(req.body.arr)
+    jsonParse = JSON.parse(jsonStringfy)
+    console.log("Json: ", jsonParse)
+    
+    resultado = await calificacionService.postCalificacion(jsonParse)
 
-    res.send(calificacion)
+    return "Hola"
 }
+
+//-------------esta servía
+// const postCalificacion = async (req, res) => {
+//     const calificacion = await calificacionService.postCalificacion(req)
+//     console.log("Calificción == ", calificacion)
+
+//     res.send(calificacion)
+// }
 
 module.exports = {
     getEstudiantePorAsignatura_controller: getEstudiantePorAsignatura,

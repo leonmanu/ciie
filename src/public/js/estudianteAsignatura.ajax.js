@@ -168,13 +168,13 @@ $( window ).on( "load", function() {
 
 		//out put to show
 		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
-		alert(arr.estudiante) 
+		//alert(arr.rowNumber) 
 
 		$.post(`/calificacion/post`,{
 			arr
 		},
 		function (data, status) {
-			alert("Se envió la calificación")
+			//alert("Se envió la calificación")
 		});
 	});
 	//--->save whole row entery > end

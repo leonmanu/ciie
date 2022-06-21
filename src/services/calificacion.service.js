@@ -36,20 +36,22 @@ const getEstudiantePorAsignatura = async (asignatura, curso) => {
     return resultado
 }
 
-// const getEstudiantePorAsignatura = async (estudiante, asignatura) => {
-//     console.log("getSiExiteEstudianteAsignatura")
-//     registros = calificacionSheet.getCalificacion()
-//     resultado = registros.filter( row => row.estudiante === estudiante && row.asignatura === asignatura)
-//     return resultado
-// }
+const getEstudianteAsignatura = async (estudiante, asignatura) => { //para saber si existe estudiante con esa asignatura
+    console.log("getSiExiteEstudianteAsignatura > ",estudiante," > ",asignatura)
+    registros = await calificacionSheet.getCalificacionCruda()
+    resultado = await registros.filter( row => row.estudiante === estudiante && row.asignatura === asignatura)
+    return resultado
+}
 
-const postCalificacion = async (req, res) => {
+const postCalificacion = async (jsonParse) => {
 
-    jsonStringfy = JSON.stringify(req.body.arr)
-    jsonParse = JSON.parse(jsonStringfy)
-    if ( jsonParse.rowNumber > 1) {
-        console.log("EXISTE:: ",jsonParse.rowNumber)
-        const resultado = await calificacionSheet.putCalificacion(jsonParse)
+    const calificacionExistente = await getEstudianteAsignatura(jsonParse.estudiante, jsonParse.asignatura)
+    
+    console.log("Calificción == ", calificacionExistente[0])
+    
+    if (calificacionExistente[0]) {
+        console.log("EXISTE:: ",calificacionExistente[0]._rowNumber)
+        const resultado = await calificacionSheet.putCalificacion(calificacionExistente[0], jsonParse)
         return resultado
     } else {
         console.log("NO existe:: ",jsonParse.rowNumber)
@@ -64,12 +66,35 @@ const postCalificacion = async (req, res) => {
     
 }
 
+// const postCalificacion = async (req, res) => {
+
+//     jsonStringfy = JSON.stringify(req.body.arr)
+//     jsonParse = JSON.parse(jsonStringfy)
+
+//     if ( jsonParse.rowNumber > 1) {
+//         console.log("EXISTE:: ",jsonParse.rowNumber)
+//         const resultado = await calificacionSheet.putCalificacion(jsonParse)
+//         return resultado
+//     } else {
+//         console.log("NO existe:: ",jsonParse.rowNumber)
+//         console.log("ESTUDIANTE: ",jsonParse)
+//         const resultado = await calificacionSheet.postCalificacion(jsonParse)
+//         return resultado
+//     }
+//     //console.log("calificacion.service:: ",jsonParse)
+    
+//     //resultadoJson = utilidadesService.convertToJson(req.body.arr)
+    
+    
+// }
+
 
 
 
 module.exports = {
     postCalificacion: postCalificacion,
-    getEstudiantePorAsignatura: getEstudiantePorAsignatura
+    getEstudiantePorAsignatura: getEstudiantePorAsignatura,
+    getEstudianteAsignatura: getEstudianteAsignatura
     // getCargosTodos : getCargosTodos,
     // getPorDocente: getPorDocente,
     
