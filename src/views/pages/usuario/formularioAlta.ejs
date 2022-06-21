@@ -1,53 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <%- include ../../partials/header.ejs %>
 </head>
 
-<body  class="w3-light-grey">
-   <!-- Top container -->
-   <% include ../../partials/topContainer.ejs %>
+<body class="w3-light-grey">
+  <!-- Top container -->
+  <% include ../../partials/topContainer.ejs %>
 
-   <!-- Sidebar/menu -->
+    <!-- Sidebar/menu -->
 
     <!-- Overlay effect when opening sidebar on small screens -->
-  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+      title="close side menu" id="myOverlay"></div>
 
-  <!-- !PAGE CONTENT! -->
-  <div class="w3-main" style="margin-left:300px;margin-top:43px;">
- 
-    <div class="container ">
-      <div id="Flight" class="w3-container w3-padding-16 myLink">
-        <h3> Bienvenido usuario <u><%= user.email %></u></h3>
-        <h4> Te pediremos algunos datos </h4>
-    
-        <div class="w3-container w3-white w3-padding-16">
-          <form action="/usuario/form" method="post">
-            <input id="inputEmail"  value="<%= user.email %>" class="hiding" type="text" name="email"  required>
-        <input id="inputIdGoogle"  value="<%= user.id %>" class="hiding" type="text" name="idGoogle"  required>
-            <hr>
-            <h5> Datos personales </h5>
-            <div class="w3-row-padding" style="margin:0 -16px;">
-              <div class="w3-half w3-margin-bottom">
-                <label for="inputNombre">Nombre/s</label>
-                <input id="inputNombre" value="<%= user.name.givenName %>"  class="w3-input w3-border" type="text" placeholder="Ingrese su/s nombre/s" name="nombre" required>
+    <!-- !PAGE CONTENT! -->
+    <div class="main">
+      <br>
+      <div class="container">
+        <div id="Flight" class="w3-container w3-padding-16 myLink">
+          <h3> Bienvenido usuario <u>
+              <%= user.email %>
+            </u></h3>
+          <h4> Te pediremos algunos datos </h4>
+
+          <div class="w3-container w3-white w3-padding-16">
+            <form action="/usuario/form" method="post">
+              <input id="inputEmail" value="<%= user.email %>" class="hiding" type="text" name="email" hidden="true"
+                required>
+              <input id="inputIdGoogle" value="<%= user.id %>" class="hiding" type="text" name="idGoogle" hidden="true"
+                required>
+              <hr>
+              <h5> Datos personales </h5>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="inputNombre">Nombre/s</label>
+                  <input id="inputNombre" value="<%= user.name.givenName %>" class="form-control" type="text"
+                    placeholder="Ingrese su/s nombre/s" name="nombre" required>
+                </div>
+                <div class="col-sm-6">
+                  <label for="inputApellido">Apellido/s</label>
+                  <input id="inputApellido" value="<%= user.name.familyName %>" class="form-control" type="text"
+                    placeholder="Ingrese su/s apellido/s" name="apellido" required>
+                </div>
               </div>
-              <div class="w3-half">
-                <label for="inputApellido">Apellido/s</label>
-                <input id="inputApellido"  value="<%= user.name.familyName %>" class="w3-input w3-border" type="text" placeholder="Ingrese su/s apellido/s" name="apellido" required>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="inputCuil">CUIL</label>
+                  <input id="inputCuil" class="form-control" type="text" placeholder="Ingrese cuil, sólo números"
+                    name="cuil" required>
+                </div>
+                <div class="col-sm-6">
+                  <label for="inputFechnac">Fecha de Nacimiento</label>
+                  <input id="inputFechnac" class="form-control" type="date" placeholder="Ingrese fecha de nacimiento"
+                    name="fechanac">
+                </div>
               </div>
-            </div>
-            <div class="w3-row-padding" style="margin:8px -16px;">
-              <div class="w3-half w3-margin-bottom">
-                <label for="inputCuil">CUIL</label>
-                <input id="inputCuil" class="w3-input w3-border" type="text" placeholder="Ingrese cuil, sólo números" name="cuil" required>
-              </div>
-              <div class="w3-half">
-                <label for="inputFechnac">Fecha de Nacimiento</label>
-                <input id="inputFechnac"  class="w3-input w3-border" type="date" placeholder="Ingrese fecha de nacimiento" name="fechanac">
-              </div>
-            </div>
-            <!-- <hr>
+              <br>
+              <!-- <hr>
             <h5> Datos del cargo </h5>
             <div class="w3-row-padding" style="margin:0 -16px;">
               <div class="w3-half w3-margin-bottom">
@@ -69,43 +81,44 @@
                 </select>
               </div>
             </div> -->
-            <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button>
-          </form>
-        </div>
+              <button class="btn btn-primary" type="submit"><i class=""></i> Enviar</button>
+            </form>
+          </div>
 
         </div>
+      </div>
+      <script src="../../../js/lateralBar.js"></script>
+      <div style="text-align:center;padding:10px;margin-top:7px;">
+        <%= new Intl.DateTimeFormat('es', { month: 'long' , day: '2-digit' ,year: 'numeric' }).format(new Date()) %>
+      </div>
+    </div> <!-- row -->
+
     </div>
-    <script src="../../../js/lateralBar.js"></script>
-<div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;"><%= new Intl.DateTimeFormat('es', { month: 'long', day: '2-digit',year: 'numeric'}).format(new Date()) %></div>
-</div> <!-- row -->
-      
-</div>
-<script>
-  // Get the Sidebar
-  var mySidebar = document.getElementById("mySidebar");
-  
-  // Get the DIV with overlay effect
-  var overlayBg = document.getElementById("myOverlay");
-  
-  // Toggle between showing and hiding the sidebar, and add overlay effect
-  function w3_open() {
-    if (mySidebar.style.display === 'block') {
-      mySidebar.style.display = 'none';
-      overlayBg.style.display = "none";
-    } else {
-      mySidebar.style.display = 'block';
-      overlayBg.style.display = "block";
-    }
-  }
-  
-  // Close the sidebar with the close button
-  function w3_close() {
-    mySidebar.style.display = "none";
-    overlayBg.style.display = "none";
-  }
-  </script>
-<div style="background-color:#070606;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
+    <script>
+      // Get the Sidebar
+      var mySidebar = document.getElementById("mySidebar");
+
+      // Get the DIV with overlay effect
+      var overlayBg = document.getElementById("myOverlay");
+
+      // Toggle between showing and hiding the sidebar, and add overlay effect
+      function w3_open() {
+        if (mySidebar.style.display === 'block') {
+          mySidebar.style.display = 'none';
+          overlayBg.style.display = "none";
+        } else {
+          mySidebar.style.display = 'block';
+          overlayBg.style.display = "block";
+        }
+      }
+
+      // Close the sidebar with the close button
+      function w3_close() {
+        mySidebar.style.display = "none";
+        overlayBg.style.display = "none";
+      }
+    </script>
+    <div style="background-color:#070606;text-align:center;padding:10px;margin-top:7px;">© Manuel León</div>
 </body>
+
 </html>
-
-
