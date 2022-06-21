@@ -58,12 +58,16 @@
           <% estudiantesPorCurso.forEach(function(estuPorCurso){ %>
             <% rowNumber=''%>
             <% valoracion1='' %>
+            <% valoracion2='' %>
                   <% informe1='' %>
+                  <% informe2='' %>
                   <% for (var l=estudiantesPorCalificaciones.length, i=0; i < l; i++) { %>
                     <% estuPorCalificaciones = estudiantesPorCalificaciones[i]%>
                     <% if( estuPorCurso.estudiante === estuPorCalificaciones.estudiante ){ %>
                       <% valoracion1=estuPorCalificaciones.valoracion1%>
+                      <% valoracion2=estuPorCalificaciones.valoracion2%>
                       <% informe1=estuPorCalificaciones.informe1%>
+                      <% informe2=estuPorCalificaciones.informe2%>
                       <% rowNumber=estuPorCalificaciones._rowNumber%>
                       <% break %>
                     <% } %>
