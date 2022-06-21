@@ -135,8 +135,8 @@ $( window ).on( "load", function() {
 		//acá deberían ir los otro atributos
 		
 		//hide save and cacel buttons
-		tbl_row.find('.btn_save').hide();
-		tbl_row.find('.btn_cancel').hide();
+		//tbl_row.find('.btn_save').hide();
+		//tbl_row.find('.btn_cancel').hide();
 		tbl_row.find('.w3-select').prop("disabled", true);
 		tbl_row.find('.w3-input').prop("disabled", true);
 
@@ -168,7 +168,7 @@ $( window ).on( "load", function() {
 
 		//out put to show
 		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
-		alert(arr.rowNumber) 
+		alert(arr.estudiante) 
 
 		$.post(`/calificacion/post`,{
 			arr

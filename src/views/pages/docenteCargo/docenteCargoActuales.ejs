@@ -4,10 +4,8 @@
 
     </head>
     <body>
-
-      
-
-    <div  class="w3-container  w3-padding-16" >
+      <br>
+    <div  class="container" >
       <h5 id="lblFormAlta"  style="display: none;"><b></i>Alta de cargos</b></h5>
       <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
       <div id="divFormAlta" class="w3-ul w3-card-4 w3-white" style="display: none;">
@@ -17,7 +15,7 @@
     </div>
 
     <div class="container">
-      
+      <h5 id="lblFormAlta"  style="display: block;"><b></i>Cargos actuales</b></h5>
         <table class="table table-hover">
           <thead>
           <tr>
@@ -51,7 +49,7 @@
                 <% if(cargo.curso == '-----'){ %>
                   <button class="w3-button w3-blue" disabled><i class="fa fa-users fa-fw" aria-hidden="true"></i> Estudiantes</button>
                   <% } else { %>
-                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="w3-button w3-blue" ><i class="fa fa-users fa-fw" aria-hidden="true"></i> Estudiantes</a>
+                <a href="/calificacion/curso<%= cargo.curso%>/asignatura<%= cargo.asignaturaId%>" class="btn btn-outline-success" ><i class="fa fa-users fa-fw" aria-hidden="true"></i> Estudiantes</a>
                 <% } %>
               </td>
 
