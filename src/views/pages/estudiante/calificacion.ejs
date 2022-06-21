@@ -8,17 +8,12 @@
 </head>
 
 <body>
-
-
-
-<div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">uno</div>
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">dos</div>
-  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">3</div>
-</div>
+  <div class="">
+    
+  </div>
   <!-- ///////////////////////////////////////////////////////7 -->
 
-  <div class="container">
+  <div class="container-sm mx-auto">
     <h3>Calificaciones</h3>
     <div class="">
       <div>
@@ -30,32 +25,32 @@
         </h5>
         <hr>
       </div>
-      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
-        </li>
-      </ul>
+
       
-      <table id="estudiantes" class="table table-striped table-bordered nowrap">
+      <div class="nav nav-pills mb-3">
+        <a id="periodo1" class="nav-link" href="javascript:void(0)" onclick="openCity(event);" aria-disabled="true">
+          <div class="tablink nav-item">1° Perído</div>
+        </a>
+        <a id="periodo2" class="nav-link" href="javascript:void(0)" onclick="openCity(event);">
+          <div class="tablink nav-item">2° Perído</div>
+        </a>
+        <a id="periodo3" class="nav-link disabled" href="javascript:void(0)" >
+          <div class="tablink nav-item">3° Perído</div>
+        </a>
+        <a id="periodo4" class="nav-link disabled" href="javascript:void(0)">
+          <div class="tablink nav-item">4° Perído</div>
+        </a>
+      </div>
+
+      <table id="estudiantes" class="table table-striped table-bordered responsive">
         <thead>
           <tr>
-            <th rowspan="2" class="col-lg-3">Estudiante</th>
-            <th rowspan="2" class="col-lg-2">Dni</th>
-            <th colspan="2">1° perído</th>
-            <th colspan="2">2° perído</th>
-            <th rowspan="2"></th>
-          </tr>
-          <tr>
+            <th>Estudiante</th>
             <th>Valoración (1)</th>
             <th>Informe (1)</th>
             <th>Valoración (2)</th>
             <th>Informe (2)</th>
+            <th>Acción</th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
@@ -80,11 +75,6 @@
                 <%= estuPorCurso.estudianteNombre%>
               </div>
             </td>
-            <td>
-              <div class="" edit_type="click" col_name="nombre">
-                <%= estuPorCurso.dni%>
-              </div>
-            </td>
            
             
             <!-- 1° Informe -->
@@ -105,9 +95,8 @@
                 <% }); %>
               </select>
             </td>
-            <td class="col-sm-10">
-              <input  class="row_data form-control" edit_type="click" col_name="informe1" style="width:135px"
-                value="<%= informe1%>"/>
+            <td>
+              <input  class="row_data form-control" edit_type="click" col_name="informe1" value="<%= informe1%>"/>
             </td>
 
             <!-- 2° Informe -->
@@ -129,8 +118,7 @@
               </select>
             </td>
             <td>
-              <input class="row_data form-control" edit_type="click" col_name="informe2" style="width:135px"
-                value="<%= informe2 %>" autofocus="off" autocorrect="off" autocapitalize="off"/>
+              <input class="row_data form-control" edit_type="click" col_name="informe2" value="<%= informe2 %>" autofocus="off" autocorrect="off" autocapitalize="off"/>
             </td>
 
             <!-- Botones de edición -->
@@ -158,7 +146,7 @@
  
   <script type="text/javascript">
     $(document).ready(function() {
-      document.getElementsByClassName("tablink")[0].className += " w3-border-black";
+      document.getElementsByClassName("nav-item")[0].className += "active";
       $('td:nth-child(4),th:nth-child(4)').hide();
             $('td:nth-child(5),th:nth-child(5)').hide();
         $('#periodo1').click(function() {
@@ -186,9 +174,9 @@ function openCity(evt, cityName) {
 
   tablinks = document.getElementsByClassName("tablink");
   for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" w3-border-black", "");
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  evt.currentTarget.firstElementChild.className += " w3-border-black";
+  evt.currentTarget.firstElementChild.className += " active";
 }
   </script>
 <%- include ../../partials/parte2Inferior.ejs %>
