@@ -6,11 +6,13 @@ const {getPorDocente} = require('../controllers/docenteCargo.controller')
 const {getCargoCursoPorDocente} = require('../controllers/docenteCargo.controller')
 const {postDocenteCargo} = require('../controllers/docenteCargo.controller')
 const {putBajaDocenteCargo_controller} = require('../controllers/docenteCargo.controller')
+var registredMiddelware = require('../middelware/registred.middelware')
+
 var sessionMiddelware = require('../middelware/session.middelware')
 
 
 router
-    .get('/', sessionMiddelware, (req,res) => {
+    .get('/', sessionMiddelware, registredMiddelware, (req,res) => {
         getPorDocente(req, res)
     } )
     .get('/curso', sessionMiddelware, (req,res) => {
