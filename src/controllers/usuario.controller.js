@@ -14,17 +14,25 @@ const siExisteUsuario = async (req, res) => {
    
     const resultado = await usuarioSheet.getOneByEmail(req.user.email)
     console.log("USUARIO: ",req.user.email)
-    if (req.user.email == resultado.email) {// más adelante filtrar: provider abc.gob.ar
-        //req.app.locals.usuario = req.user._json
-        res.render('pages/index', {user: req.user._json})
-   } else {
-    res.redirect("/usuarioAlta")
+    if(req.user._json.domain === 'abc.gob.ar'){
+        if(req.user.email == resultado.email){
+            res.render('pages/index', {user: req.user._json})
+       } else {
+            res.redirect("/usuarioAlta")
+       }
+    }
+     else {
+        req.logout(function(err) {
+            if (err) { return next(err) }
+            req.app.locals.usuario = null
+            res.redirect('/')
+          })
+    }
+    
     
    }
 
-    // return resultado
-    //res.render('pages/index', {registros})
-}
+
 
 const getOneByEmail = async (email, req, res) => {
     const resultado = await usuarioSheet.getOneByEmail(email)

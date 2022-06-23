@@ -10,7 +10,7 @@ var sessionMiddelware = require('../middelware/session.middelware')
 
 router
     .get('/usuarioAlta', sessionMiddelware, function(req,res){
-        console.log("appx ",req.user._json)
+        console.log("appx ",req.user)
         res.render("pages/usuario/formularioAlta", {user: req.user})
     })
     .get('/prueba',sessionMiddelware, function(req,res){
