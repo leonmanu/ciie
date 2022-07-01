@@ -23,27 +23,28 @@
           <input id="spnIdAsignatura" value="<%= asignatura.idAsignatura%>" hidden>
             
         </h5>
-        <hr>
+        <hr class="mb-0">
       </div>
-
       
-      <div class="nav nav-pills mb-3">
-        <a id="periodo1" class="nav-link" href="javascript:void(0)" onclick="openCity(event);" aria-disabled="true">
-          <div class="tablink nav-item">1° Perído</div>
-        </a>
-        <a id="periodo2" class="nav-link" href="javascript:void(0)" onclick="openCity(event);">
-          <div class="tablink nav-item">2° Perído</div>
-        </a>
-        <a id="periodo3" class="nav-link disabled" href="javascript:void(0)" >
-          <div class="tablink nav-item">3° Perído</div>
-        </a>
-        <a id="periodo4" class="nav-link disabled" href="javascript:void(0)">
-          <div class="tablink nav-item">4° Perído</div>
-        </a>
+      <div class="sticky-top mb-3 bg-primary pt-1 pb-1 mt-0">
+        <div class="nav nav-pills btn-group col-md-12">
+          <a id="periodo1" class="nav-link tabbtn btn btn-primary" href="javascript:void(0)" onclick="openCity(event);" aria-disabled="true">
+            <div class="tablink nav-item ">1° Perído</div>
+          </a>
+          <a id="periodo2" class="nav-link tabbtn btn btn-primary" href="javascript:void(0)" onclick="openCity(event);">
+            <div class="tablink nav-item">2° Perído</div>
+          </a>
+          <a id="periodo3" class="nav-link tabbtn btn btn-primary disabled" href="javascript:void(0)" >
+            <div class="tablink nav-item">3° Perído</div>
+          </a>
+          <a id="periodo4" class="nav-link tabbtn btn btn-primary disabled" href="javascript:void(0)">
+            <div class="tablink nav-item">4° Perído</div>
+          </a>
+        </div>
       </div>
 
       <table id="estudiantes" class="table table-striped table-bordered responsive">
-        <thead>
+        <thead class="">
           <tr>
             <th>Estudiante</th>
             <th>Valoración (1)</th>
@@ -150,7 +151,7 @@
  
   <script type="text/javascript">
     $(document).ready(function() {
-      document.getElementsByClassName("nav-item")[0].className += "active";
+      document.getElementsByClassName("tabbtn")[0].className += " active";
       $('td:nth-child(4),th:nth-child(4)').hide();
             $('td:nth-child(5),th:nth-child(5)').hide();
         $('#periodo1').click(function() {
@@ -176,11 +177,12 @@
 function openCity(evt, cityName) {
   var i, tablinks;
 
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  tabbtns = document.getElementsByClassName("tabbtn");
+  for (i = 0; i < tabbtns.length; i++) {
+    tabbtns[i].className = tabbtns[i].className.replace(" active", "");
   }
-  evt.currentTarget.firstElementChild.className += " active";
+  evt.currentTarget.className += " active";
+  //evt.currentTarget.firstElementChild.className += " text-success";
 }
   </script>
 <%- include ../../partials/parte2Inferior.ejs %>
