@@ -16,6 +16,17 @@ const getCursoYAsignatura = async (req, res) => {
     res.render('pages/estudiante/calificacion', {user: req.user._json, curso, asignatura, estudiantesPorCurso, estudiantesPorCalificaciones, calificacionCodigos})
 }
 
+const getCursoAsignaturaInforme = async (req, res) => {
+    const curso = await cursoService.getPorClave(req.params.curso)
+    const asignatura = await asignaturaService.getPorId(req.params.asignatura)
+    const estudiantesPorCurso = await estudianteService.getPorCurso(req.params.curso)
+    const estudiantesPorCalificaciones = await calificacionService.getEstudiantePorAsignatura(req.params.asignatura, req.params.curso)
+    const calificacionCodigos = await calificacionCodigoService.getTodo()
+    console.log("CURSO <<<<<<==>>>>>> ", curso)
+
+    res.render('pages/estudiante/calificacionInforme', {user: req.user._json, curso, asignatura, estudiantesPorCurso, estudiantesPorCalificaciones, calificacionCodigos})
+}
+
 const getEstudiantePorAsignatura = async (req, res) => {
     console.log(`Curso: ${req.body.curso} Asignatura: ${req.body.idAsignatura}`)
     const registros = await estudianteService.getPorCurso(req.params.curso)
@@ -65,5 +76,6 @@ const postCalificacion = async (req, res) => {
 module.exports = {
     getEstudiantePorAsignatura_controller: getEstudiantePorAsignatura,
     getCursoYAsignatura_controller :getCursoYAsignatura,
-    postCalificacion_controller: postCalificacion
+    postCalificacion_controller: postCalificacion,
+    getCursoAsignaturaInforme: getCursoAsignaturaInforme
 } 
