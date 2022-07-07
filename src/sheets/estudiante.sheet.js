@@ -27,9 +27,7 @@ async function getTodoPorCurso(){
     const registros =  await sheet.getRows()
 
     return registros
-    
 }
-
 
 async function post(pObjeto) {
     const documento = await obtenercredenciales()
@@ -72,6 +70,5 @@ module.exports = {
     getTodoPorCurso: getTodoPorCurso,
     post: post,
     put : put,
-    del : del,
-
+    del : del
 }

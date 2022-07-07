@@ -2,7 +2,7 @@ const {Router} = require('express')
 const passport = require('passport')
 const router = Router()
 
-const {cursoGetTodo, getCursosTodos, getEstudiantes} = require('../controllers/curso.controller')
+const {cursoGetTodo, getCursosTodos} = require('../controllers/curso.controller')
 const {siExisteUsuario,post} = require('../controllers/usuario.controller')
 var sessionMiddelware = require('../middelware/session.middelware')
 
@@ -20,6 +20,8 @@ router
           })
     })
     .get('/todos', getCursosTodos)
-    .get('/:clave/estudiantes', getEstudiantes)
+    .get(':clave/estudiantes', getCursosTodos)
     
+
+
 module.exports = router

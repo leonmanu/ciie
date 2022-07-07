@@ -18,12 +18,12 @@ router
     .get('/curso', sessionMiddelware, (req,res) => {
         getCargoCursoPorDocente(req, res)
     } )
-    .post('/alta', postDocenteCargo)
+    .post('/alta', sessionMiddelware, postDocenteCargo)
 
-    .get('/alta', function(req,res){
+    .get('/alta', sessionMiddelware, function(req,res){
         res.render("pages/cargo/cargoAlta")
     })
-    .get('/:rowNumber/baja', putBajaDocenteCargo_controller)
+    .get('/:rowNumber/baja', sessionMiddelware, putBajaDocenteCargo_controller)
     
 
 

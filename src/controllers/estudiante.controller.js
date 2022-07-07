@@ -19,6 +19,7 @@ const getPorCursoAsignatura = async (req,res) =>{
     res.render('pages/estudiante/estudianteAsignatura', {user: req.user._json, registros})
 }
 
+
 const getOne = async (req, res) => {
     registros = await cursoSheet.get()
     res.render('pages/index', {registros})

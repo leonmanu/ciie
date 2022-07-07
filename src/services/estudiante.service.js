@@ -37,14 +37,14 @@ async function getPorCursoAsignatura(req){
     return resultados
 }
 
-async function getPorCurso(curso){
+async function getPorCurso(clave){
     const registros =  await estudianteSheet.getTodoPorCurso()
-    const resultados = await registros.filter(row => row.cursoClave === curso)
+    const resultados = await registros.filter(row => row.cursoClave == clave)
     const resultadoJson = await utilidadesService.convertToJson(resultados)
-    //console.log('GET-POR-CURSO_-_-_-> ',resultadoJson)
-    return resultadoJson
     
+    return resultadoJson
 }
+
 module.exports = {
     getTodos : getTodos,
     getUno: getUno,
