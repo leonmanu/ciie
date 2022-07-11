@@ -29,8 +29,16 @@ const getPorClave = async (claveCurso) => {
     return resultadoJson[0]
 }
 
+const getPorId = async (idCurso) => {
+    const registros = await cursoSheet.getTodos()
+    const resultados = await registros.filter(row => row.idCurso === idCurso)
+    const resultadoJson = await utilidadesService.convertToJson(resultados)
+    return resultadoJson[0]
+}
+
 module.exports = {
     getTodos : getTodos,
     getCursosTodos: getCursosTodos,
-    getPorClave: getPorClave
+    getPorClave: getPorClave,
+    getPorId:getPorId,
 } 

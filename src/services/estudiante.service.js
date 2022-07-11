@@ -1,6 +1,7 @@
 const req = require('express/lib/request')
 const { head } = require('request')
 const estudianteSheet =  require("../sheets/estudiante.sheet")
+const estudianteCursoSheet =require("../sheets/estudianteCurso.sheet")
 const utilidadesService = require('./utilidades.service')
 
 
@@ -44,6 +45,8 @@ async function getPorCurso(clave){
     
     return resultadoJson
 }
+
+
 
 module.exports = {
     getTodos : getTodos,

@@ -14,7 +14,7 @@ async function obtenercredenciales(){
 }
 
 async function get(){
-    const documento = await obtenercredenciales()
+    await obtenercredenciales()
     const registros =  await sheet.getRows()
 
     return registros
@@ -73,6 +73,8 @@ async function put(pObjeto) {
     }
 
 }
+
+
 
 async function del(pObjeto) {
     const documento = await obtenercredenciales()
