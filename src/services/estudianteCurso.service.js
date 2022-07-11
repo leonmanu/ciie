@@ -6,29 +6,49 @@ const cursoService = require('./curso.service')
 const utilidadesService = require('./utilidades.service')
 
 async function putUno(objeto){
+    const curso = await cursoService.getPorId(objeto.curso)
     const registro =  await this.getUno(objeto.rowId)
     registro.estudianteNombre = null
     registro.cursoClave = null
+    const registroNuevo = registro
     registro.fechaBaja = objeto.fechaBaja
+    
     if (objeto.motivoBaja == 1 || objeto.motivoBaja == 3) {
-        const curso = await cursoService.getPorId(objeto.curso)
+        const ultimo = await this.getUltimo()
+        
         registro.observacion = 'Pasó a ' + curso.clave
+        
+        await registro.save()
+
+        registroNuevo.idEstudianteCurso = (parseInt(ultimo.idEstudianteCurso)+1).toString()
+        registroNuevo.curso = objeto.curso
+        registroNuevo.estudianteNombre = null
+        registroNuevo.cursoClave = null
+        registroNuevo.fechaAlta = objeto.fechaBaja
+        registroNuevo.fechaBaja = null
+        registroNuevo.observacion = null
+        
+        const objetoCreado = await this.post(registroNuevo)
+        console.log("NUEVO:::::::: ", objetoCreado)
       } else {
         if (objeto.motivoBaja == 2) {
             registro.observacion = 'Salió a otra escuela'
         } else {
             registro.observacion = ''
         }
+        registro.save()
       }
-    registro.save()
-    console.log("Resultado:: ", registro)
-    //const resultadoJson = await utilidadesService.convertToJson(resultado)
-    console.log("Objeto rowId: "+objeto.rowId)
-    console.log("Objeto fechaBaja: "+objeto.fechaBaja)
-    console.log("Objeto motivoBaja: "+objeto.motivoBaja)
-    console.log("Objeto curso: "+objeto.curso)
-    return registro
+    
+    // console.log("Resultado:: ", registro)
+    // //const resultadoJson = await utilidadesService.convertToJson(resultado)
+    // console.log("Objeto rowId: "+objeto.rowId)
+    // console.log("Objeto fechaBaja: "+objeto.fechaBaja)
+    // console.log("Objeto motivoBaja: "+objeto.motivoBaja)
+    // console.log("Objeto curso: "+objeto.curso)
+    
+    return curso.clave
 }
+
 
 async function getUno(rowId){
     const registros =  await estudianteCursoSheet.get()
@@ -39,7 +59,23 @@ async function getUno(rowId){
     return resultado[0]
 }
 
+async function getUltimo(){
+    const registros =  await estudianteCursoSheet.get()
+    const indice = registros.length
+    const resultado = registros[indice - 1]
+
+    return resultado
+}
+
+async function post(objeto){
+    const objetoCreado =  await estudianteCursoSheet.post(objeto)
+
+    return objetoCreado
+}
+
 module.exports = {
     getUno: getUno,
     putUno: putUno,
+    getUltimo: getUltimo,
+    post: post
 } 

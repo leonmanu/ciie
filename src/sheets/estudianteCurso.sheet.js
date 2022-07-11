@@ -47,13 +47,11 @@ async function getOne(){
     
 }
 
-async function post(pObjeto) {
+async function post(objeto) {
     const documento = await obtenercredenciales()
+    await sheet.addRow(objeto)
 
-    const sheet = documento.sheetsById[82786429]
-    await sheet.addRow(pObjeto)
-
-    console.log(pObjeto)
+    return objeto
 }
 
 async function put(pObjeto) {

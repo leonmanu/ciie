@@ -41,7 +41,9 @@ const post = (req, res) => {
 }
 
 const putUno = async (req, res) => {
-    registros = await estudianteCursoService.putUno(req.body)
+    curso = await estudianteCursoService.putUno(req.body)
+
+    res.redirect(req.get('referer'))
 }
 
 const del = async (req, res) => {
