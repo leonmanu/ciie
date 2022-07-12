@@ -192,7 +192,34 @@ $(document).ready(function () {
       });
   });
 
+  //== CUANDO SE SELECCIONA CARGO===============
+  $('#inputAsignatura').on('change', function () {
+    var selector = $(this).val();
 
+    $("#waitIconAsignatura2").css("display", "block");
+    $.ajax({
+        url: '/docente/cargo/siDisponible/'+selector,
+        contentType: 'application/json',
+        method: 'GET',
+        data: JSON.stringify({ cargo: selector }),
+        dataType: 'text',
+        success: function (response) {
+
+            //var jsonResponser = JSON.parse(response);
+            if (response == 'Disponible') {
+              $('#disponibleMsg').attr('class', 'text-success')
+              $('#disponibleMsg').text('Cargo ' + response)
+              $('#btnEnviar').removeAttr("disabled");
+            } else {
+              $('#disponibleMsg').attr('class', 'text-danger')
+              $('#disponibleMsg').text('Cargo ocupado por: ' + response)
+              $('#btnEnviar').prop("disabled", true);
+            }
+            
+            $("#waitIconAsignatura2").css("display", "none");
+        }
+    });
+});
 
 
   //prueba la concección con el js

@@ -43,6 +43,12 @@ const postDocenteCargo = async (req, res) => {
     }
 }
 
+const getSiDisponible = async (req, res) => {
+    const resultado = await docenteCargoService.getSiDisponible(req.params.cargo)
+    console.log("docenteCargo.Controller:: ", resultado)
+    res.send(resultado)
+}
+
 const putBajaDocenteCargo = async(req, res) => {
     resultado = await docenteCargoService.putBajaDocenteCargo(req.params.rowNumber)
     await res.redirect('/docente/cargo')
@@ -53,5 +59,6 @@ module.exports = {
     getPorDocente:getPorDocente,
     postDocenteCargo: postDocenteCargo,
     getCargoCursoPorDocente:getCargoCursoPorDocente,
-    putBajaDocenteCargo_controller:putBajaDocenteCargo
+    putBajaDocenteCargo_controller:putBajaDocenteCargo,
+    getSiDisponible:getSiDisponible,
 } 

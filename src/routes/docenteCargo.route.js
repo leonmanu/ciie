@@ -3,7 +3,7 @@ const passport = require('passport')
 const router = Router()
 
 const {getPorDocente} = require('../controllers/docenteCargo.controller')
-const {getCargoCursoPorDocente} = require('../controllers/docenteCargo.controller')
+const {getCargoCursoPorDocente, getSiDisponible} = require('../controllers/docenteCargo.controller')
 const {postDocenteCargo} = require('../controllers/docenteCargo.controller')
 const {putBajaDocenteCargo_controller} = require('../controllers/docenteCargo.controller')
 var registredMiddelware = require('../middelware/registred.middelware')
@@ -24,7 +24,7 @@ router
         res.render("pages/cargo/cargoAlta")
     })
     .get('/:rowNumber/baja', sessionMiddelware, putBajaDocenteCargo_controller)
-    
+    .get('/siDisponible/:cargo',sessionMiddelware, getSiDisponible)//
 
 
 module.exports = router

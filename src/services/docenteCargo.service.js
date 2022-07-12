@@ -49,6 +49,22 @@ const getSiExiste = async (cursoAsignatura) => {
     return resultado
 }
 
+const getSiDisponible = async (cursoAsignatura) => {
+    const registros = await cargoSheet.getCargosTodos()
+    const resultados = registros.filter(row => row.cursoAsignatura === cursoAsignatura && row.fechaBaja == '') //&& row.fechaBaja
+    let resultadoFinal
+    try {
+        console.log("getSiExiste ",resultados[0].usuario," cursoAsignatura ",cursoAsignatura)
+        resultadoFinal = resultados[0].usuario
+    } catch (error) {
+        resultadoFinal = 'Disponible'
+        console.log("ERROR! ", error)
+    }
+    
+
+    return resultadoFinal
+}
+
 const putBajaDocenteCargo = async(rowNumber) => {
     const fechaBaja = new Date().toISOString()
     const resultado = await cargoSheet.putBajaDocenteCargo(rowNumber, fechaBaja)
@@ -62,5 +78,6 @@ module.exports = {
     postDocenteCargo: postDocenteCargo,
     getPorDocenteCargoCurso: getPorDocenteCargoCurso,
     putBajaDocenteCargo: putBajaDocenteCargo,
-    getSiExiste: getSiExiste
+    getSiExiste: getSiExiste,
+    getSiDisponible: getSiDisponible,
 } 
