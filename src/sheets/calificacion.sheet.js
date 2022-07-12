@@ -9,6 +9,7 @@ async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
     sheet_get = documento.sheetsById[1287807919]
+    sheet_getOrdenado = documento.sheetsById[1658063790]
     sheet = documento.sheetsById[1731131025]
     return documento
 }   
@@ -24,6 +25,14 @@ async function getCalificacion(){
 async function getCalificacionCrudas(){
     await obtenercredenciales()
     const registros =  await sheet.getRows()
+    //console.log("SHEETS Calificaciones = ", registros)
+    return registros
+    
+}
+
+async function getOrdenado(){
+    await obtenercredenciales()
+    const registros =  await sheet_getOrdenado.getRows()
     //console.log("SHEETS Calificaciones = ", registros)
     return registros
     
@@ -48,6 +57,7 @@ async function putCalificacion(objExistente, objNuevo) {
     console.log("objExistente ::   ", objExistente)
     return objExistente
 }
+
 
 async function put(pObjeto) {
     const documento = await obtenercredenciales()
@@ -82,5 +92,6 @@ module.exports = {
     postCalificacion: postCalificacion,
     put : put,
     del : del,
-    putCalificacion: putCalificacion
+    putCalificacion: putCalificacion,
+    getOrdenado:getOrdenado,
 }

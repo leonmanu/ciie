@@ -36,10 +36,20 @@ const getEstudiantePorAsignatura = async (asignatura, curso) => {
     return resultado
 }
 
+const getPorCursoAsignaturaOrden = async (asignatura, clave) => {
+    console.log("Asignatura ",asignatura," curso ",clave)
+    registros = await calificacionSheet.getOrdenado()
+    resultados = await registros.filter( row => row.asignatura == asignatura && row.curso == clave)
+    const resultadoJson = await utilidadesService.convertToJson(resultados)
+
+    return resultadoJson
+}
+
 const getEstudianteAsignatura = async (estudiante, asignatura) => { //para saber si existe estudiante con esa asignatura
     console.log("getSiExiteEstudianteAsignatura > ",estudiante," > ",asignatura)
     registros = await calificacionSheet.getCalificacionCruda()
     resultado = await registros.filter( row => row.estudiante === estudiante && row.asignatura === asignatura)
+
     return resultado
 }
 
@@ -94,7 +104,8 @@ const postCalificacion = async (jsonParse) => {
 module.exports = {
     postCalificacion: postCalificacion,
     getEstudiantePorAsignatura: getEstudiantePorAsignatura,
-    getEstudianteAsignatura: getEstudianteAsignatura
+    getEstudianteAsignatura: getEstudianteAsignatura,
+    getPorCursoAsignaturaOrden:getPorCursoAsignaturaOrden,
     // getCargosTodos : getCargosTodos,
     // getPorDocente: getPorDocente,
     

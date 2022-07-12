@@ -1,7 +1,12 @@
 const convertToJson = async (resultados) => {
-    var header = resultados[0]._sheet.headerValues
+
     i = 0
     var jsonArray = []
+    try{
+    var header = resultados[0]._sheet.headerValues
+   } catch {
+    console.log("Array vacío")
+   }
     resultados.forEach(s => {
 
         var varuser = {}
