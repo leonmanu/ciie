@@ -20,6 +20,14 @@ async function getTodo(){
     return registros
 }
 
+async function getAsignaturaCurso(){
+    await obtenercredenciales()
+    sheet = documento.sheetsById[1307028253]
+    const registros =  await sheet.getRows()
+    return registros
+}
+
 module.exports = {
-    getTodo: getTodo
+    getTodo: getTodo,
+    getAsignaturaCurso: getAsignaturaCurso,
 }
