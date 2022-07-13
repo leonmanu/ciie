@@ -9,9 +9,7 @@ var sessionMiddelware = require('../middelware/session.middelware')
 
 
 router
-    .get('/siExisteUsuario', function(req,res){
-        siExisteUsuario(req,res)
-    })
+    .get('/siExisteUsuario', siExisteUsuario)
     .post('/form', post)
     .get("/logout", (req,res) => {
         req.logout(function(err) {
