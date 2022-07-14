@@ -4,9 +4,8 @@
 </head>
 
 <body>
-  <div class="">
-    
-  </div>
+  <%- include ./estudiantes_navbar.ejs %>
+  
   <!-- ///////////////////////////////////////////////////////7 -->
 
   <div class="container p-0 my-3">
@@ -19,7 +18,14 @@
 
         <hr class="mb-0">
       </div>
-      
+      <div  class="container" >
+        <h5 id="lblFormAlta"  style="display: none;"><b></i>Alta de cargos</b></h5>
+        <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
+        <div id="divFormAlta" class="w3-ul w3-card-4 w3-white" style="display: none;">
+          <%- include ./estudiantes_form.ejs %>
+        </div>
+    
+      </div>
       <table id="estudiantes" class="table table-striped table-bordered responsive">
         <thead class="">
           <tr>

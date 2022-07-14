@@ -29,13 +29,14 @@ async function getTodoPorCurso(){
     return registros
 }
 
-async function post(pObjeto) {
+async function post(objeto) {
     const documento = await obtenercredenciales()
 
-    const sheet = documento.sheetsById[82786429]
-    await sheet.addRow(pObjeto)
-
-    console.log(pObjeto)
+    const sheet = documento.sheetsById[0]
+    await sheet.addRow(objeto)
+    console.log("se creó nuevo ",objeto)
+    return objeto
+    
 }
 
 async function put(cargo) {

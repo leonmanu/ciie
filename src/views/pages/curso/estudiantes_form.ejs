@@ -1,0 +1,92 @@
+<script src="/js/cursoEstudianteAlta.ajax.js"></script>
+<img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="22" height="22" />
+<div class="">
+  <form action="/estudiante/curso/alta" method="post" class="">
+    <div class="row">
+
+      <div class="col-md-4 mb-2">
+        <label for="dni" class="form-label">DNI</label>
+        <input id="dni" class="form-control" type="number" placeholder="N° de DNI" name="dni" required>
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <label for="apellido" class="form-label">Apellido/s</label>
+        <input id="apellido" class="form-control" type="text" placeholder="Apellido/s del/la estudiante" name="apellido" required>
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <label for="nombre" class="form-label">Nombre/s</label>
+        <input id="nombre" class="form-control" type="text" placeholder="Nombre/s del/la estudiante" name="nombre" required>
+      </div>
+    
+    </div>
+    <hr>
+    <div class="row">
+
+      <div class="col-md-4 mb-2">
+        <label for="nacimientoFecha" class="form-label">Fecha de Nac.</label>
+        <input id="nacimientoFecha" class="form-control" type="date" placeholder="Fecha de nacimiento del/la estudiante" name="nacimientoFecha" >
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <label for="nacimientoLugar" class="form-label">Lugar de Nac.</label>
+        <input id="nacimientoLugar" class="form-control" type="text" placeholder="Lugar de Nacimiento" name="nacimientoLugar" >
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <label for="nacionalidad" class="form-label">Nacionalidad</label>
+        <input id="nacionalidad" class="form-control" type="text" placeholder="Nacionalidad" name="nacionalidad" >
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+      
+      <div class="col-md-3 mb-2">
+        <label for="calle" class="form-label">Calle</label>
+        <input id="calle" class="form-control" type="text" placeholder="Nombre de la calle" name="calle" >
+      </div>
+
+      <div class="col-md-1 mb-2">
+        <label for="numero" class="form-label">N°</label>
+        <input id="numero" class="form-control" type="text" placeholder="Número del domicilio" name="numero">
+      </div>
+
+      <div class="col-md-3 mb-2">
+        <label for="localidad" class="form-label">Localidad</label>
+        <input id="localidad" class="form-control" type="text" placeholder="Localidad" name="localidad">
+      </div>
+
+      <div class="col-md-2 mb-2">
+        <label for="telefono1" class="form-label">Teléfono</label>
+        <input id="telefono1" class="form-control" type="tel" placeholder="Número de teléfono" name="telefono1">
+      </div>
+
+      <div class="col-md-3 mb-2">
+        <label for="mail" class="form-label">Email</label>
+        <input id="mail" class="form-control" type="email" placeholder="Correo electrónico" name="mail" >
+      </div>
+      
+    </div>
+    <input id="curso" name="curso" value="<%= clave %>" required hidden>
+    <br>
+    &#9642; <span id="disponibleMsg"> </span> <img class="pull-left" id="waitIconAsignatura2" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="22" height="22" />
+    <div class="btn-group  col-md-12">
+      <button id="btnEnviar" class="btn btn-outline-success" type="submit">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        Enviar solicitud
+      </button>
+      <button id="btnLimpar" class="btn btn-outline-primary " type="reset">
+        <i class="fa fa-eraser" aria-hidden="true"></i>
+        Limpiar
+      </button>
+      <button id="btnCancelar" class="btn btn-outline-warning" type="button">
+        <i class="fa fa-ban" aria-hidden="true"></i>
+        Cancelar
+      </button>
+    </div>
+  </form>
+  <hr>
+</div>
+
+

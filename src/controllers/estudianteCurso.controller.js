@@ -20,7 +20,6 @@ const getPorCursoAsignatura = async (req,res) =>{
     res.render('pages/estudiante/estudianteAsignatura', {user: req.user._json, registros})
 }
 
-
 const getOne = async (req, res) => {
     registros = await cursoSheet.get()
     res.render('pages/index', {registros})
@@ -35,9 +34,10 @@ const pintarForm = (req, res) => {
     res.render('pages/formulario')
 }
 
-const post = (req, res) => {
-    sheet.post(req.body)
-    res.redirect('/')
+const post = async(req, res) => {
+    const objeto = req.body
+    curso = await estudianteCursoService.postEstudianteCurso(objeto)
+    res.redirect(`/curso/${objeto.curso}/estudiantes`)//resolver al final
 }
 
 const putUno = async (req, res) => {
@@ -50,8 +50,7 @@ const del = async (req, res) => {
     registros = await sheet.del()
 }
 
-
-
 module.exports = {
+    post:post,
     putUno : putUno,
 } 

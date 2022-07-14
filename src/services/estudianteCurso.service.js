@@ -3,6 +3,7 @@ const { head } = require('request')
 const estudianteSheet =  require("../sheets/estudiante.sheet")
 const estudianteCursoSheet =require("../sheets/estudianteCurso.sheet")
 const cursoService = require('./curso.service')
+const estudianteService = require('./estudiante.service')
 const utilidadesService = require('./utilidades.service')
 
 async function putUno(objeto){
@@ -73,9 +74,28 @@ async function post(objeto){
     return objetoCreado
 }
 
+async function postEstudianteCurso(objeto){
+    const estudianteNuevo =  await estudianteService.post(objeto)
+    const curso = await cursoService.getPorClave(objeto.curso)
+
+    const ultimo = await this.getUltimo()
+    const idNuevo = (parseInt(ultimo.idEstudianteCurso)+1).toString()
+
+    const estudianteCurso = {
+        idEstudianteCurso: idNuevo,
+        estudiante: estudianteNuevo.id,
+        curso: curso.idCurso
+    }
+
+    const estudianteCursoNuevo = await this.post(estudianteCurso)
+    console.log("NUEVO:::::::: ", estudianteCursoNuevo)
+    return estudianteCursoNuevo
+}
+
 module.exports = {
     getUno: getUno,
     putUno: putUno,
     getUltimo: getUltimo,
-    post: post
+    post: post,
+    postEstudianteCurso: postEstudianteCurso
 } 

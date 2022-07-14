@@ -46,11 +46,27 @@ async function getPorCurso(clave){
     return resultadoJson
 }
 
+async function post(objeto){
+    const ultimo = await this.getUltimo()
+    objeto.id = (parseInt(ultimo.id)+1).toString()
+    const registro =  await estudianteSheet.post(objeto)
 
+    return registro
+}
+
+async function getUltimo(){
+    const registros =  await estudianteSheet.getTodo()
+    const indice = registros.length
+    const resultado = registros[indice - 1]
+
+    return resultado
+}
 
 module.exports = {
     getTodos : getTodos,
     getUno: getUno,
     getPorCursoAsignatura: getPorCursoAsignatura,
-    getPorCurso:getPorCurso
+    getPorCurso:getPorCurso,
+    post:post,
+    getUltimo:getUltimo
 } 
