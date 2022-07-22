@@ -30,6 +30,16 @@ async function getUno(id){
     
 }
 
+async function getPorDni(dni){
+    const registros =  await estudianteSheet.getEstudianteCurso()
+    const resultado = registros.filter(row => row.dni == dni)
+    const resultadoJson = await utilidadesService.convertToJson(resultado)
+    //console.log(resultadoJson[0])
+
+    return resultadoJson[0]
+    
+}
+
 async function getPorCursoAsignatura(req){
     console.log("getPorCurso: ", req.params.curso)
     const registros =  await estudianteSheet.getTodo()
@@ -68,5 +78,6 @@ module.exports = {
     getPorCursoAsignatura: getPorCursoAsignatura,
     getPorCurso:getPorCurso,
     post:post,
-    getUltimo:getUltimo
+    getUltimo:getUltimo,
+    getPorDni:getPorDni,
 } 

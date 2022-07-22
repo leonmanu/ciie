@@ -4,7 +4,8 @@ const router = Router()
 
 const {
     getCursoYAsignatura_controller,
-    getCursoAsignaturaInforme
+    getCursoAsignaturaInforme,
+    getPorDni
 } = require('../controllers/calificacion.controller')
 const {getEstudiantePorAsignatura_controller} = require('../controllers/calificacion.controller')
 const {postCalificacion_controller} = require('../controllers/calificacion.controller')
@@ -16,5 +17,6 @@ router
     .get('/curso:curso/asignatura:asignatura/estudiantes', getEstudiantePorAsignatura_controller)
     .get('/curso:curso/asignatura:asignatura/informe', getCursoAsignaturaInforme)
     .post('/post', postCalificacion_controller)
+    .post('/estudiante/valoracion', getPorDni)
     
 module.exports = router

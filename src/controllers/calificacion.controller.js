@@ -27,6 +27,16 @@ const getCursoAsignaturaInforme = async (req, res) => {
     res.render('pages/estudiante/calificacionInforme', {user: req.user._json, curso, asignatura, estudiantesPorCurso, estudiantesPorCalificaciones, calificacionCodigos})
 }
 
+const getEstudianteValoracion = async (req, res) => {// Inconcluso
+    const asignatura = await asignaturaService.getPorId(req.params.asignatura)
+    const estudiantesPorCurso = await estudianteService.getPorCurso(req.params.curso)
+    const estudiantesPorCalificaciones = await calificacionService.getEstudiantePorAsignatura(req.params.asignatura, req.params.curso)
+    const calificacionCodigos = await calificacionCodigoService.getTodo()
+    console.log("CURSO <<<<<<==>>>>>> ", curso)
+
+    res.render('pages/estudiante/calificacionInforme', {user: req.user._json, curso, asignatura, estudiantesPorCurso, estudiantesPorCalificaciones, calificacionCodigos})
+}
+
 const getEstudiantePorAsignatura = async (req, res) => {
     console.log(`Curso: ${req.body.curso} Asignatura: ${req.body.idAsignatura}`)
     const registros = await estudianteService.getPorCurso(req.params.curso)
@@ -82,10 +92,33 @@ const postCalificacion = async (req, res) => {
 //     res.send(calificacion)
 // }
 
+const getPorDni = async (req, res) => {//cambiar nombre de función
+    const dni = req.body.dni
+
+    //* calificacionService.getPorDni(dni) debería llamarse 'getPorEstudianteCursoCLectivo' o algo así
+    //* debería estar dento de get EstudianteCurso o estudianteService
+    //* debe devolver un sólo registro ya que solo debería haber una sola posiblidad estudiante-cLectivo
+    const estudiante = await calificacionService.getPorDni(dni)
+    const curso = estudiante.cursoClave
+    const asignaturas = await asignaturaService.getPorCurso(curso)
+    const registros = await calificacionService.getPorIdEstudiante(estudiante.estudiante)
+    
+    console.log("Resultados: ", registros)
+    const user = null
+    try{
+        user = req.user._json
+    } catch{
+        console.log("No se inició sesión")
+    }
+    res.render('pages/boletin/boletin', {user, asignaturas, registros, estudiante})
+}
+
 module.exports = {
     getEstudiantePorAsignatura_controller: getEstudiantePorAsignatura,
     getCursoYAsignatura_controller :getCursoYAsignatura,
     postCalificacion_controller: postCalificacion,
     getCursoAsignaturaInforme: getCursoAsignaturaInforme,
     getPorCursoAsignatura:getPorCursoAsignatura,
+    getEstudianteValoracion:getEstudianteValoracion,
+    getPorDni:getPorDni,
 } 

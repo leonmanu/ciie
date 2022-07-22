@@ -5,7 +5,7 @@ const convertToJson = async (resultados) => {
     try{
     var header = resultados[0]._sheet.headerValues
    } catch {
-    console.log("Array vacío")
+    console.log("Utilidades: Array vacío")
    }
     resultados.forEach(s => {
 

@@ -1,0 +1,389 @@
+<%- include ../../partials/parte1Superior.ejs %>
+<% let lineas = 12 - asignaturas.length %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css">
+
+</head>
+
+<body>
+
+  
+
+  <div class="container">
+    <div class="text-center mt-5">
+        <img src="/img/ees62-logo.png" width="70" height="70">
+  </div>
+  <h3 class="text-center m-5"><strong> Informe de Trayectoria Educativa '22 </strong></h3>
+  
+    <table class="table">
+      <tr>
+        <td>
+          <h4> <strong> Escuela de Educación Secundaria N° 62 </strong></h4>
+        </td>
+        <td>
+          <h4> <strong> Curso: <%= estudiante.cursoClave %> </strong></h4>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h4><%= estudiante.estudianteNombre %></h4>
+        </td>
+        <td>
+          <h4>DNI: <%= estudiante.dni %></h4>
+        </td>
+      </tr>
+    </table>
+  
+  <table class="table table-bordered bg-white" > 
+    <thead class="text-center">
+      <tr>
+        <th  rowspan="2" class="align-middle">Asignatura</th>
+        <th colspan="6" class="th-pad">Valoración / Período</th>
+      </tr>
+      <tr  class="text-center">
+        <th>1° <br> <small> mar-jul</small></th>
+        <th>2° <br> <small> ago-dic</small></th>
+        <th>3° <br> <small> int. dic</small></th>
+        <th>4° <br> <small> feb-mar</small></th>
+        <th class="align-middle">Anual</th>
+        <th class="align-middle">Final</th>
+      </tr>
+    </thead>
+  
+    <% asignaturas.forEach(function(asignatura) { %>
+      <tr class="">
+      <td class="align-middle"><h5 class="align-middle"> <%= asignatura.asignaturaNombre %></h5></td>
+      <td class="text-center">
+        <% registros.forEach(function(registro) { %>
+          <% if(asignatura.asignatura == registro.asignatura) { %>
+            <% switch (registro.riteCuatri1) {
+              case 'TEA' : %>
+              <span class="text-success">
+                      <% break;
+              
+              case 'TEP' : %>
+              <span class="text-warning">
+                      <% break;
+              
+              case 'TED' : %>
+                <span class="text-danger">
+                      <% break;
+              } %>
+              <%= registro.riteCuatri1 %></span>
+            <% } %>
+            
+          <% }) %>
+          
+      </td>
+      <td style="text-align: center;">
+        <% switch (asignatura[8]) {
+          case 'TEA' : %>
+          <strong class="text-success"><%= asignatura[8] %></strong>
+                  <% break;
+          
+          case 'TEP' : %>
+          <strong class="text-warning"><%= asignatura[8] %></strong>
+                  <% break;
+          
+          case 'TED' : %>
+            <strong class="text-danger"><%= asignatura[8] %></strong>
+                  <% break;
+          
+          } %>
+        
+      </td>
+        <%
+          if(asignatura[8]=='TEA'){%>
+            <td class="dark" style="text-align: center;">
+            ------->
+            <%} else{ %>
+              <td style="text-align: center;">
+                <% switch (asignatura[9]) {
+              case 'TEA' : %>
+              <strong class="text-success"><%= asignatura[9] %></strong>
+                      <% break;
+              
+              case 'TEP' : %>
+              <strong class="text-warning"><%= asignatura[9] %></strong>
+                      <% break;
+              
+              case 'TED' : %>
+                <strong class="text-danger"><%= asignatura[9] %></strong>
+                      <% break;
+              
+              }
+          }
+        %>
+        
+      </td>
+        <%
+          if(asignatura[8]=='TEA'||asignatura[9]=='TEA'){%>
+            <td class="dark" style="text-align: center;">
+            ------->
+            <%} else{ %>
+              <td style="text-align: center;">
+                <% 
+            switch (asignatura[10]) {
+              case 'TEA' : %>
+              <strong class="text-success"><%= asignatura[10] %></strong>
+                      <% break;
+              
+              case 'TEP' : %>
+              <strong class="text-warning"><%= asignatura[10] %></strong>
+                      <% break;
+              
+              case 'TED' : %>
+                <strong class="text-danger"><%= registro[10] %></strong>
+                      <% break;
+              
+              }
+          }
+        %>
+      </td>
+      <td style="text-align: center;">
+        <% switch (asignatura[11]) {
+          case 'TEA' : %>
+          <strong class="text-success"><%= asignatura[11] %></strong>
+                  <% break;
+          
+          case 'TEP' : %>
+          <strong class="text-warning"><%= asignatura[11] %></strong>
+                  <% break;
+          
+          case 'TED' : %>
+            <strong class="text-danger"><%= asignatura[11] %></strong>
+                  <% break;
+          
+                  default: %>
+                  <strong class=""><%= asignatura[11] %></strong>
+                  <% break;
+          
+          } %>
+      </td>
+      <td></td>
+    </tr>
+  <% }); %> 
+  <tr class="invisible">
+    <% for(var i=0; i<lineas; i++) {%>
+      <td >
+        <p class="blockquote ">|</p>
+     </td>
+   <% } %>
+    
+  </tr>
+  </table>
+  
+  <div >
+    <small>
+    <strong class="text-success"> TEA - Trayectoria Educativa Avanzada: </strong> 
+    
+    <ul>
+      <li>Alcanzaron los aprendizajes priorizados hasta el final del período.</li>
+      <li>Sostuvieron una buena vinculación pedagógica. </li>
+      <li>Realizaron la totalidad de las actividades propuestas por sus docentes.</li>
+    </ul>
+  </div>
+  <div>
+    <strong class="text-warning"> TEP - Trayectoria Educativa en Proceso:  </strong>
+    <ul>
+      <li>No alcanzaron la totalidad de los aprendizajes priorizados hasta el final del período</li>
+      <li>Sostuvieron una buena vinculación pedagógica. </li>
+      <li>Realizaron parcialmente las actividades propuestas por sus docentes.</li>
+    </ul>
+  </div>
+  <div>
+    <strong class="text-danger"> TED - Trayectoria Educativa Discontinua:  </strong>
+    <ul>
+      <li>No alcanzaron los aprendizajes priorizados durante el período. </li>
+      <li>No tuvieron una vinculación pedagógica.  </li>
+      <li>No realizaron las actividades propuestas por sus docentes.</li>
+    </ul>
+  </small>
+  </div>
+  
+  </div>
+  <hr>
+  <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;">Consultado: <%= new Intl.DateTimeFormat('es', { month: 'long', day: '2-digit',year: 'numeric'}).format(new Date()) %></div>
+  
+
+  <div class="container p-0">
+    <h2>Informe detallado</h2>
+    Escuela de Educación Secundaria N° 62 - Curso: <%= estudiante.cursoClave %> - Estudiante: <span class="blockquote"><%= estudiante.estudianteNombre %></span>, DNI: <%= estudiante.dni %>
+    <div class="">
+
+      <table class="table-bordered table-xs bg-white col-12" > 
+              
+        <% asignaturas.forEach(function(asignatura) { %>
+          <tr class="">
+            <thead>
+              <th class="col-12" colspan="2">
+               <h5 class="m-0"><%= asignatura.asignaturaNombre %></h5>
+              </th>
+              
+            </thead>
+          
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="2">
+              <strong>1° Período</strong>
+              <p class="m-0"></p>
+               <small> mar-jul: 
+              <% registros.forEach(function(registro) { %>
+                <% if(asignatura.asignatura == registro.asignatura) { %>
+                  <% switch (registro.riteCuatri1) {
+                    case 'TEA' : %>
+                    <span class="text-success">
+                            <% break;
+                    
+                    case 'TEP' : %>
+                    <span class="text-warning">
+                            <% break;
+                    
+                    case 'TED' : %>
+                      <span class="text-danger">
+                            <% break;
+                    } %>
+                    <%= registro.riteCuatri1 %></span></small>
+                  <% } %>
+                  
+                <% }) %>
+            </td>
+          
+          <td>
+            1° Bimestre:
+            <% registros.forEach(function(registro) { %>
+              <% if(asignatura.asignatura == registro.asignatura) { %>
+                <% switch (registro.rite1) {
+                  case 'TEA' : %>
+                  <span class="text-success">
+                          <% break;
+                  
+                  case 'TEP' : %>
+                  <span class="text-warning">
+                          <% break;
+                  
+                  case 'TED' : %>
+                    <span class="text-danger">
+                          <% break;
+                  } %>
+                  <%= registro.rite1 %></span>
+                  - <%= registro.informe1 %>
+                <% } %>
+              <% }) %>
+            
+          </td>
+        </tr>
+          <td>
+            2° Bimestre:
+            <% registros.forEach(function(registro) { %>
+              <% if(asignatura.asignatura == registro.asignatura) { %>
+                <% switch (registro.rite2) {
+                  case 'TEA' : %>
+                  <span class="text-success">
+                          <% break;
+                  
+                  case 'TEP' : %>
+                  <span class="text-warning">
+                          <% break;
+                  
+                  case 'TED' : %>
+                    <span class="text-danger">
+                          <% break;
+                  } %>
+                  <%= registro.rite2 %></span>
+                  - <%= registro.informe2 %>
+                <% } %>
+              <% }) %>
+              
+          </td>
+            
+        
+        </tr>
+        
+        <!-- 2° Período -->
+        <tr>
+          <td class="text-center" rowspan="2">
+            <strong>2° Período</strong>
+            <p class="m-0"></p>
+             <small> ago-dic: 
+            <% registros.forEach(function(registro) { %>
+              <% if(asignatura.asignatura == registro.asignatura) { %>
+                <% switch (registro.riteCuatri2) {
+                  case 'TEA' : %>
+                  <span class="text-success">
+                          <% break;
+                  
+                  case 'TEP' : %>
+                  <span class="text-warning">
+                          <% break;
+                  
+                  case 'TED' : %>
+                    <span class="text-danger">
+                          <% break;
+                  } %>
+                  <%= registro.riteCuatri2 %></span></small>
+                <% } %>
+                
+              <% }) %>
+          </td>
+        
+        <td>
+          3° Bimestre:
+          <% registros.forEach(function(registro) { %>
+            <% if(asignatura.asignatura == registro.asignatura) { %>
+              <% switch (registro.rite3) {
+                case 'TEA' : %>
+                <span class="text-success">
+                        <% break;
+                
+                case 'TEP' : %>
+                <span class="text-warning">
+                        <% break;
+                
+                case 'TED' : %>
+                  <span class="text-danger">
+                        <% break;
+                } %>
+                <%= registro.rite3 %></span>
+                - <%= registro.informe3 %>
+              <% } %>
+            <% }) %>
+          
+        </td>
+      </tr>
+        <td>
+          4° Bimestre:
+          <% registros.forEach(function(registro) { %>
+            <% if(asignatura.asignatura == registro.asignatura) { %>
+              <% switch (registro.rite4) {
+                case 'TEA' : %>
+                <span class="text-success">
+                        <% break;
+                
+                case 'TEP' : %>
+                <span class="text-warning">
+                        <% break;
+                
+                case 'TED' : %>
+                  <span class="text-danger">
+                        <% break;
+                } %>
+                <%= registro.rite4 %></span>
+                - <%= registro.informe4 %>
+              <% } %>
+            <% }) %>
+            
+        </td>
+          
+      
+      </tr>
+      <% }); %> 
+        
+      </table>
+
+    
+    </div>
+
+  </div>
+
+ 
+<%- include ../../partials/parte2Inferior.ejs %>

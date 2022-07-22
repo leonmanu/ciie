@@ -22,7 +22,6 @@ const getPorCurso = async (clave) => {
     const registros = await asignaturaSheet.getAsignaturaCurso()
     const filtrados = registros.filter(row => row.cursoClave == clave)
     const resultadoJson = await utilidadesService.convertToJson(filtrados)
-    console.log("Asigntarura por Clave de curso:: ", resultadoJson)
 
     return resultadoJson
 }

@@ -1,32 +1,8 @@
 const req = require('express/lib/request')
+const boletinSheet = require('../sheets/boletin.sheet')
 const calificacionSheet =  require("../sheets/calificacion.sheet")
+const estudianteSheet = require('../sheets/estudiante.sheet')
 const utilidadesService = require('./utilidades.service')
-
-// const getCargosTodos = async (req, res) => {
-//     resultado = await cargoSheet.getCargosTodos()
-//     return resultado
-// }
-
-// const getPorDocente = async (req, res) => {
-//     const registros = await cargoSheet.getCargosTodos()
-    
-//     const resultados = registros.filter(row => row ["idGoogleUsuario"] === req.user.id)
-//         registros.map((registro)=>{
-//     })
-//     //console.log("REQ: ", resultados)
-//     return resultados
-// }
-
-// const getPorDocenteCargoCurso = async (req, res) => {
-//     const registros = await cargoSheet.getCargosTodos()
-//     const resultados = registros.filter(row => row ["idGoogleUsuario"] === req.user.id && row.rol === "Pf")
-//         registros.map((registro)=>{
-//     })
-//     //console.log("REQ: ", resultados)
-//     return resultados
-// }
-
-// * Tengo que agregar el cLectivo
 
 const getEstudiantePorAsignatura = async (asignatura, curso) => {
     
@@ -69,36 +45,27 @@ const postCalificacion = async (jsonParse) => {
         const resultado = await calificacionSheet.postCalificacion(jsonParse)
         return resultado
     }
-    //console.log("calificacion.service:: ",jsonParse)
-    
-    //resultadoJson = utilidadesService.convertToJson(req.body.arr)
-    
     
 }
 
-// const postCalificacion = async (req, res) => {
-
-//     jsonStringfy = JSON.stringify(req.body.arr)
-//     jsonParse = JSON.parse(jsonStringfy)
-
-//     if ( jsonParse.rowNumber > 1) {
-//         console.log("EXISTE:: ",jsonParse.rowNumber)
-//         const resultado = await calificacionSheet.putCalificacion(jsonParse)
-//         return resultado
-//     } else {
-//         console.log("NO existe:: ",jsonParse.rowNumber)
-//         console.log("ESTUDIANTE: ",jsonParse)
-//         const resultado = await calificacionSheet.postCalificacion(jsonParse)
-//         return resultado
-//     }
-//     //console.log("calificacion.service:: ",jsonParse)
+const getPorIdEstudiante = async (id) => {
+    registros = await boletinSheet.getValoracion()
+    filtrados = await registros.filter( row => row.estudiante == id )
+    const resultadoJson = await utilidadesService.convertToJson(filtrados)
     
-//     //resultadoJson = utilidadesService.convertToJson(req.body.arr)
-    
-    
-// }
+    return resultadoJson
+}
 
 
+
+const getPorDni = async (dni) => {
+    console.log("DNI > ",dni)
+    registros = await estudianteSheet.getEstudianteCurso()
+    filtrados = await registros.filter( row => row.dni == dni )
+    const resultadoJson = await utilidadesService.convertToJson(filtrados)
+    
+    return resultadoJson[0]
+}
 
 
 module.exports = {
@@ -106,6 +73,8 @@ module.exports = {
     getEstudiantePorAsignatura: getEstudiantePorAsignatura,
     getEstudianteAsignatura: getEstudianteAsignatura,
     getPorCursoAsignaturaOrden:getPorCursoAsignaturaOrden,
+    getPorDni:getPorDni,
+    getPorIdEstudiante, getPorIdEstudiante,
     // getCargosTodos : getCargosTodos,
     // getPorDocente: getPorDocente,
     

@@ -2,21 +2,35 @@
 <%- include(rootPath + 'partials/parte1Superior') %>
 
   <!-- Header -->
-  <div class="container">
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-      <h5 class="text-center">
-        Para iniciar sesión, debe utilizar una cuenta  <strong>abc.gob.ar</strong>
-      </h5>
-      
-    </div>
-  </div>
 
-  <div class="container d-flex text-center">
+  <div class="container text-center">
     <div class="mt-4 p-5  jumbotron jumbotron-fluid bg-primary">
       <div class="container">
         <img src="/img/logoees62gris.png" width="200" height="200">
-        <h4 class="display-4">Escuela de Educación Secundaria N° 62</h4>
+        <h3 class="display-5">Escuela de Educación Secundaria N° 62</h3>
         <p class="lead">Bienvenidos al sistema de administración de nuestra escuela</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-center text-black">
+    <div class="mt-4 p-3  jumbotron  bg-secondary">
+      <div class="container">
+        <h2>Consulta de boletín</h2>
+          <p>Ingrese el número de DNI del estudiante sin puntos, comas o espacios.</p>
+        <div class="d-flex justify-content-center">
+                                                   
+          <form action="calificacion/estudiante/valoracion" class="row" method="post">
+
+            <div class="col-auto ">
+              <label for="dni" class="visually-hidden">DNI</label>
+              <input type="number" class="form-control" id="dni" placeholder="DNI" min="9999999" max="100000000" name="dni">
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary mb-3">Consultar</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
