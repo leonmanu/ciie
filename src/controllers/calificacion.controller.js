@@ -93,7 +93,7 @@ const postCalificacion = async (req, res) => {
 // }
 
 const getPorDni = async (req, res) => {//cambiar nombre de función
-    const dni = req.body.dni
+    const dni = req.query.dni
 
     //* calificacionService.getPorDni(dni) debería llamarse 'getPorEstudianteCursoCLectivo' o algo así
     //* debería estar dento de get EstudianteCurso o estudianteService

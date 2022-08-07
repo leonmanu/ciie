@@ -17,6 +17,6 @@ router
     .get('/curso:curso/asignatura:asignatura/estudiantes', getEstudiantePorAsignatura_controller)
     .get('/curso:curso/asignatura:asignatura/informe', getCursoAsignaturaInforme)
     .post('/post', postCalificacion_controller)
-    .post('/estudiante/valoracion', getPorDni)
+    .get('/estudiante/valoracion', getPorDni)
     
 module.exports = router
