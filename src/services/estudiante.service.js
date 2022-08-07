@@ -30,6 +30,14 @@ async function getUno(id){
     
 }
 
+async function getPorId(id){
+    const registros =  await estudianteSheet.getTodo()
+    const resultado = registros.filter(row => row.id == id)
+    //console.log(resultadoJson[0])
+
+    return resultado[0]
+}
+
 async function getPorDni(dni){
     const registros =  await estudianteSheet.getEstudianteCurso()
     const resultado = registros.filter(row => row.dni == dni)
@@ -64,6 +72,21 @@ async function post(objeto){
     return registro
 }
 
+async function put(objExistente, objNuevo){
+    console.log("estudianteService -> objExistente.length: ", objExistente._rowNumber)
+    if(objExistente._rowNumber > 0){
+        var header = objExistente._sheet.headerValues
+            header.forEach(r => {
+            console.log("header: foreach: ", r)
+            objExistente[r] = objNuevo[r]
+        })
+    }
+
+    resultado = await objExistente.save()
+    console.log("objExistente ::   ", objExistente)
+    return objExistente
+}
+
 async function getUltimo(){
     const registros =  await estudianteSheet.getTodo()
     const indice = registros.length
@@ -80,4 +103,6 @@ module.exports = {
     post:post,
     getUltimo:getUltimo,
     getPorDni:getPorDni,
+    getPorId: getPorId,
+    put: put,
 } 

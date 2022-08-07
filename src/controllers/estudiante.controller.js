@@ -19,6 +19,13 @@ const getPorCursoAsignatura = async (req,res) =>{
     res.render('pages/estudiante/estudianteAsignatura', {user: req.user._json, registros})
 }
 
+//acá consultamos al service por id de estudiante y abrimos la vista Editar
+const getPorId = async (req, res) => {
+    registro = await estudianteService.getUno(req.params.id)
+    estudiante = registro
+    console.log("Estudiante:: ", estudiante)
+    res.render('pages/estudiante/estudianteEditar', {estudiante, user: req.user._json})
+}
 
 const getOne = async (req, res) => {
     registros = await cursoSheet.get()
@@ -40,8 +47,11 @@ const post = (req, res) => {
 }
 
 const put = async (req, res) => {
-    registros = await sheet.put()
+    var objNuevo = req.body
+    var objExistente = await estudianteService.getPorId(objNuevo.id)
+    var resultado = await estudianteService.put(objExistente, objNuevo)
     
+    res.redirect('back');
 }
 
 const del = async (req, res) => {
@@ -57,5 +67,6 @@ module.exports = {
     pintarForm : pintarForm,
     post : post,
     put : put,
-    getPorCursoAsignatura: getPorCursoAsignatura
+    getPorCursoAsignatura: getPorCursoAsignatura,
+    getPorId: getPorId,
 } 

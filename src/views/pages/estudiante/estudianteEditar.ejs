@@ -1,0 +1,29 @@
+<%- include ../../partials/parte1Superior.ejs %>
+
+
+</head>
+
+<body>
+
+  <div class="container p-0 my-3">
+    <h3>
+      Editar estudiante 
+
+    </h3> 
+    <div class="">
+      <div>
+
+        <hr class="mb-0">
+      </div>
+      <div  class="container" >
+        
+        <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
+        <div id="divFormAlta" class="w3-ul w3-card-4 w3-white" >
+          <%- include ./estudiantes_form.ejs %>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+
+  <%- include ../../partials/parte2Inferior.ejs %>
