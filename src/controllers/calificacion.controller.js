@@ -74,6 +74,15 @@ const getPorCursoAsignatura = async (req, res) => {
     res.render('pages/asignatura/asignaturaCalificacion', {user: req.user._json, calificiones, clave})
 }
 
+const getInformesPorCurso = async (req, res) => {
+    const asignatura = req.params.asignatura.toString()
+    const clave = req.params.clave
+    const calificiones = await calificacionService.getPorCursoAsignaturaOrden(asignatura, clave)
+    console.log("CALIFACAS--->", calificiones)
+
+    res.render('pages/asignatura/asignaturaCalificacion', {user: req.user._json, calificiones, clave})
+}
+
 const postCalificacion = async (req, res) => {
     jsonStringfy = JSON.stringify(req.body.arr)
     jsonParse = JSON.parse(jsonStringfy)

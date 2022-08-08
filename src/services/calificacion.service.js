@@ -21,6 +21,15 @@ const getPorCursoAsignaturaOrden = async (asignatura, clave) => {
     return resultadoJson
 }
 
+const getPorCursoOrden = async (clave) => {
+    console.log(asignatura," curso ",clave)
+    registros = await calificacionSheet.getOrdenado()
+    resultados = await registros.filter( row => row.asignatura == asignatura && row.curso == clave)
+    const resultadoJson = await utilidadesService.convertToJson(resultados)
+
+    return resultadoJson
+}
+
 const getEstudianteAsignatura = async (estudiante, asignatura) => { //para saber si existe estudiante con esa asignatura
     console.log("getSiExiteEstudianteAsignatura > ",estudiante," > ",asignatura)
     registros = await calificacionSheet.getCalificacionCruda()
@@ -67,6 +76,14 @@ const getPorDni = async (dni) => {
     return resultadoJson[0]
 }
 
+const getPorCurso = async (clave) => {
+    registros = await boletinSheet.getValoracion()
+    filtrados = filtrados = await registros.filter( row => row.cursoClave == clave )
+    const resultadoJson = await utilidadesService.convertToJson(filtrados)
+    
+    return resultadoJson
+}
+
 
 module.exports = {
     postCalificacion: postCalificacion,
@@ -74,7 +91,8 @@ module.exports = {
     getEstudianteAsignatura: getEstudianteAsignatura,
     getPorCursoAsignaturaOrden:getPorCursoAsignaturaOrden,
     getPorDni:getPorDni,
-    getPorIdEstudiante, getPorIdEstudiante,
+    getPorIdEstudiante: getPorIdEstudiante,
+    getPorCurso: getPorCurso,
     // getCargosTodos : getCargosTodos,
     // getPorDocente: getPorDocente,
     

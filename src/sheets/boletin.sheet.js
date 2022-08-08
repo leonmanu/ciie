@@ -21,6 +21,7 @@ async function getValoracion(){
 }
 
 
+
 module.exports = {
     getValoracion: getValoracion,
 }

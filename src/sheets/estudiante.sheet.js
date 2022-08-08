@@ -37,6 +37,14 @@ async function getTodoPorCurso(){
     return registros
 }
 
+async function getTodoPorCurso(){
+    const documento = await obtenercredenciales()
+    sheet = documento.sheetsById[1585615507] // acá usé la query ordenada: EstudianteCurso_get
+    const registros =  await sheet.getRows()
+
+    return registros
+}
+
 async function post(objeto) {
     const documento = await obtenercredenciales()
 
