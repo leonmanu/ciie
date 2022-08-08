@@ -1,5 +1,4 @@
 <%- include ../../partials/parte1Superior.ejs %>
-<% let lineas = 12 - asignaturas.length %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css">
 
 </head>
@@ -163,14 +162,6 @@
             <td></td>
           </tr>
         <% }); %> 
-        <tr class="invisible">
-          <% for(var i=0; i<lineas; i++) {%>
-            <td >
-              <p class="blockquote ">|</p>
-           </td>
-         <% } %>
-          
-        </tr>
         </table>
         <div >
           <small>
