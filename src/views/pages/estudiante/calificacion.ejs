@@ -26,8 +26,8 @@
     <div class="">
       <div>
         <h5> <b><span id="spnCurso"> <%= curso.clave%> </span></b> - 
-          <span id="spnAsignatura"> <%= asignatura.asignatura%>
-          </span>
+          <span id="spnAsignatura"> <%= asignatura.asignatura%></span>
+          <p><small><%= estudiantesPorCurso.length %> estudiantes</small></p>
           <input id="spnIdAsignatura" value="<%= asignatura.idAsignatura%>" hidden>
             
         </h5>
@@ -140,7 +140,10 @@
                 <a href="#" class="w3-button w3-white w3-border w3-border-blue" row_id="'+row_id+'">Editar</a> 
               </span>
               <span class="btn_save" >
-                <a href="#" class="btn btn-outline-success" row_id="'+row_id+'"> Guardar </a>
+                <a href="#" class="btn btn-outline-success" row_id="'+row_id+'">
+                  <span id="">Guardar</span> 
+                  <img class="pull-right waitIconAsignatura" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
+                </a>
               </span>
               <span class="btn_cancel" hidden>
                 <a href="#" class="w3-button w3-white w3-border w3-border-red" row_id="'+row_id+'">Cancelar</a>

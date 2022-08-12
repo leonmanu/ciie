@@ -37,12 +37,31 @@ $( window ).on( "load", function() {
 		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
 		//alert(arr.rowNumber) 
 
-		$.post(`/calificacion/post`,{
-			arr
-		},
-		function (data, status) {
-			//alert("Se envió la calificación")
-		});
+		
+		//out put to show
+		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
+		//alert(arr.rowNumber) 
+		tbl_row.find('.waitIconAsignatura').css("display", "block");
+		$.ajax({
+			url: '/calificacion/post',
+			contentType: 'application/json',
+			method: 'POST',
+			data: JSON.stringify({arr:arr}),
+			dataType: 'text',
+			
+			success: function (response) {  
+				tbl_row.find('.waitIconAsignatura').css("display", "none");
+			}
+			
+		  });
+
+
+		// $.post(`/calificacion/post`,{
+		// 	arr
+		// },
+		// function (data, status) {
+		// 	//alert("Se envió la calificación")
+		// });
 	});
 	//--->save whole row entery > end
 

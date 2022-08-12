@@ -4,6 +4,7 @@ const asignaturaService = require('../services/asignatura.service')
 const cursoService = require('../services/curso.service')
 const calificacionService = require('../services/calificacion.service')
 const calificacionCodigoService = require('../services/calificacionCodigo.service')
+const utilidadesService = require('../services/utilidades.service')
 
 const getCursoYAsignatura = async (req, res) => {
     const curso = await cursoService.getPorClave(req.params.curso)
@@ -83,13 +84,14 @@ const getInformesPorCurso = async (req, res) => {
 }
 
 const postCalificacion = async (req, res) => {
-    jsonStringfy = JSON.stringify(req.body.arr)
-    jsonParse = JSON.parse(jsonStringfy)
-    console.log("Json: ", jsonParse)
+    jsonStringfy = req.body.arr
+    //jsonParse = JSON.parse(jsonStringfy)
+    console.log("Json: ", jsonStringfy)
     
-    resultado = await calificacionService.postCalificacion(jsonParse)
-
-    return {msg: "Hola"}
+    resultado = await calificacionService.postCalificacion(jsonStringfy)
+    //resultadoJson = await utilidadesService.convertToJson(resultado)
+    console.log("Resultados ")
+    res.send("resultadoJson")
 }
 
 //-------------esta servía
