@@ -5,14 +5,16 @@
 
 <body>
   <%- include ./estudiantes_navbar.ejs %>
-  
+  <% var i = 1 %>
   <!-- ///////////////////////////////////////////////////////7 -->
 
   <div class="container p-0 my-3">
     <h3>
       Curso <%= clave %>
-
     </h3> 
+    <h4>
+      Total de estudiantes: <%= estudiantes.length %>
+    </h4>
     <div class="">
       <div>
 
@@ -29,25 +31,33 @@
       <table id="estudiantes" class="table table-striped table-bordered responsive">
         <thead class="">
           <tr>
+            <th>N°</th>
             <th>Estudiante</th>
+            <th>DNI</th>
             <th>C. Lectivo</th>
-            <th></th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
           <% estudiantes.forEach(function(estudiante){ %>
           <tr row_id = '<%=estudiante.idEstudianteCurso%>'>
-           
+           <td>
+            <%= i %>
+           </td>
             <td>
-              <%=estudiante.estudianteNombre%>
+              <p class="m-0">
+                <%=estudiante.estudianteNombre%>
+              </p>
+            </td>
+            <td>
+              <p class="m-0">
+                <%=estudiante.dni%>
+              </p>
             </td>
             <td>
               <%=estudiante.cLectivo%>
             </td>
-            <td>
-              
-            </td>
+
 
             <!-- Botones de edición -->
             <td class="w3-padding-0">
@@ -64,7 +74,7 @@
 
           </tr>
           <!-- Modal -->
-
+          <% i++ %>
           <% }) %>
         </tbody>
 
@@ -80,7 +90,8 @@
           <div class="modal-body">
             
             <form action="/estudiante/curso/bajaFake" method="post">
-              <input class="form-group input-group-lg" id="estudianteId" disabled>
+              <h4 id="estudianteNombre"></h4>
+              <input class="form-group input-group-lg" id="estudianteId" hidden>
               <input type="text" id="rowId" name="rowId" hidden>
               <input type="text" id="cLectivo" name="cLectivo" hidden>
               <div class="form-group mb-2">
@@ -129,10 +140,12 @@
 		var tbl_row = $(this).closest('tr');
 		var row_id = tbl_row.attr('row_id');
     var row_estudiante = tbl_row.find("td:eq(0)").html()
-    var row_cLectivo = tbl_row.find("td:eq(1)").html()
+    var row_cLectivo = tbl_row.find("td:eq(3)").html()
+    var row_estudianteNombre = tbl_row.find("td:eq(1)").html()
     $('#estudianteId').val($.trim(row_estudiante));
     $('#cLectivo').val($.trim(row_cLectivo));
     $('#rowId').val(row_id);
+    $('#estudianteNombre').html(row_estudianteNombre);
 	});
 
   $('#slcMotivoBajaId').on('change', function () {

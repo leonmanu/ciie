@@ -36,14 +36,16 @@ const pintarForm = (req, res) => {
 
 const post = async(req, res) => {
     const objeto = req.body
-    curso = await estudianteCursoService.postEstudianteCurso(objeto)
+    respuesta = await estudianteCursoService.postEstudianteCurso(objeto)
+    console.log("Salió del post ",respuesta)
     res.redirect(`/curso/${objeto.curso}/estudiantes`)//resolver al final
 }
 
 const putUno = async (req, res) => {
-    curso = await estudianteCursoService.putUno(req.body)
-
-    res.redirect(req.get('referer'))
+    const objeto = req.body
+    callback = await estudianteCursoService.putUno(objeto)
+    console.log("Salió del controler putUno", callback)
+    res.redirect('back')//resolver al final
 }
 
 const del = async (req, res) => {

@@ -18,7 +18,7 @@ const getCursosTodos = async () => { //debería pasar la escuela por parámetro 
     registros = await cursoSheet.getTodos()
 
     const resultadoJson = await utilidadesService.convertToJson(registros)
-    console.log("Cursos TODOS: ", resultadoJson)
+    //console.log("Cursos TODOS: ", resultadoJson)
     return resultadoJson
 }
 

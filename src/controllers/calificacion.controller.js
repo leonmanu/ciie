@@ -75,7 +75,6 @@ const getPorCursoAsignatura = async (req, res) => {
 }
 
 const getInformesPorCurso = async (req, res) => {
-    const asignatura = req.params.asignatura.toString()
     const clave = req.params.clave
     const calificiones = await calificacionService.getPorCursoAsignaturaOrden(asignatura, clave)
     console.log("CALIFACAS--->", calificiones)
@@ -90,7 +89,7 @@ const postCalificacion = async (req, res) => {
     
     resultado = await calificacionService.postCalificacion(jsonParse)
 
-    return "Hola"
+    return {msg: "Hola"}
 }
 
 //-------------esta servía

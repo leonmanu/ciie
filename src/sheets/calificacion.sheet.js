@@ -58,7 +58,6 @@ async function putCalificacion(objExistente, objNuevo) {
     return objExistente
 }
 
-
 async function put(pObjeto) {
     const documento = await obtenercredenciales()
     

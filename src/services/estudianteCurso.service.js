@@ -7,8 +7,9 @@ const estudianteService = require('./estudiante.service')
 const utilidadesService = require('./utilidades.service')
 
 async function putUno(objeto){
-    const curso = await cursoService.getPorId(objeto.curso)
     const registro =  await this.getUno(objeto.rowId)
+    const curso = registro.cursoClave
+    let objetoEliminado
     registro.estudianteNombre = null
     registro.cursoClave = null
     const registroNuevo = registro
@@ -20,6 +21,7 @@ async function putUno(objeto){
         registro.observacion = 'Pasó a ' + curso.clave
         
         await registro.save()
+        console.log("Después del save()")
 
         registroNuevo.idEstudianteCurso = (parseInt(ultimo.idEstudianteCurso)+1).toString()
         registroNuevo.curso = objeto.curso
@@ -29,25 +31,20 @@ async function putUno(objeto){
         registroNuevo.fechaBaja = null
         registroNuevo.observacion = null
         
-        const objetoCreado = await this.post(registroNuevo)
-        console.log("NUEVO:::::::: ", objetoCreado)
+        const respuesta = await this.post(registroNuevo)
+        console.log("NUEVO:::::::: ", respuesta)
       } else {
         if (objeto.motivoBaja == 2) {
             registro.observacion = 'Salió a otra escuela'
         } else {
             registro.observacion = ''
         }
-        registro.save()
+        objetoEliminado = await registro.save()
+        console.log("Después del save() callback: ", registro.estudianteNombre)
       }
     
-    // console.log("Resultado:: ", registro)
-    // //const resultadoJson = await utilidadesService.convertToJson(resultado)
-    // console.log("Objeto rowId: "+objeto.rowId)
-    // console.log("Objeto fechaBaja: "+objeto.fechaBaja)
-    // console.log("Objeto motivoBaja: "+objeto.motivoBaja)
-    // console.log("Objeto curso: "+objeto.curso)
     
-    return curso.clave
+    return {msj: 'Se eliminó el estudianteCurso: '+registro.estudianteNombre}
 }
 
 
@@ -69,9 +66,9 @@ async function getUltimo(){
 }
 
 async function post(objeto){
-    const objetoCreado =  await estudianteCursoSheet.post(objeto)
+    const respuesta =  await estudianteCursoSheet.post(objeto)
 
-    return objetoCreado
+    return respuesta
 }
 
 async function postEstudianteCurso(objeto){
@@ -87,9 +84,10 @@ async function postEstudianteCurso(objeto){
         curso: curso.idCurso
     }
 
-    const estudianteCursoNuevo = await this.post(estudianteCurso)
-    console.log("NUEVO:::::::: ", estudianteCursoNuevo)
-    return estudianteCursoNuevo
+    const respuesta = await this.post(estudianteCurso)
+    console.log("NUEVO::::::::  ", respuesta)
+    console.log("Mensaje::::::::  ", respuesta)
+    return respuesta
 }
 
 module.exports = {

@@ -2,6 +2,7 @@ const { GoogleSpreadsheetRow } = require('google-spreadsheet')
 const { GoogleSpreadsheet } = require('google-spreadsheet')
 const credenciales = require('../json/credecialSheets.json')
 
+
 let googleId = "1d-cWeBzIPIdpzgZUpYs_zlnllEkERVdEqRfgJ31DO3U"
 let documento = new GoogleSpreadsheet(googleId)
 let sheet
@@ -49,9 +50,9 @@ async function getOne(){
 
 async function post(objeto) {
     const documento = await obtenercredenciales()
-    await sheet.addRow(objeto)
-
-    return objeto
+    objetoNuevo = await sheet.addRow(objeto)
+    console.log("estudianteCurso: ", objetoNuevo)
+    return {msj: 'Se creó el estudianteCurso: '+objetoNuevo}
 }
 
 async function put(pObjeto) {
