@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const path = require("path")
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -19,6 +20,8 @@ var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
 const LocalStrategy = require('passport-local').Strategy
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+
+require("dotenv").config()
 
 const app = express()
 var hour = 36000000;
@@ -51,6 +54,16 @@ app
 
 module.exports = app
 
+
+// mongo db conexión
+
+mongoose.connect(
+  process.env.MONGODB_URI
+)
+  .then(
+    ()=> console.log('Conectado!!')
+  )
+  .catch((err) => console.error(err))
 
 authUser = async (request, accessToken, refreshToken, profile, done)  => {
     return done(null,profile) //corregir para que se rompa la sesión si no está registrado

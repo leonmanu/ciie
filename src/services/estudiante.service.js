@@ -3,6 +3,7 @@ const { head } = require('request')
 const estudianteSheet =  require("../sheets/estudiante.sheet")
 const estudianteCursoSheet =require("../sheets/estudianteCurso.sheet")
 const utilidadesService = require('./utilidades.service')
+const estudianteSchema = require('../models/estudiante.schema')
 
 
 
@@ -17,6 +18,11 @@ const getTodos = async (req, res) => {
             jerarquia: registro.jerarqui
         })
     })
+    return resultado
+}
+
+const getTodosDb = async (req, res) => {
+    registros = await estudianteSheet.getTodoEstudiante_sheet()
     return resultado
 }
 

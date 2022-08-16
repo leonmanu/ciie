@@ -1,6 +1,7 @@
 let sheet = require('../sheets/estudiante.sheet')
 let cursoSheet = require('../sheets/curso.sheet')
 const estudianteService = require('../services/estudiante.service')
+const estudianteSchema = require('../models/estudiante.schema')
 
 
 const get = async (req, res) => {
@@ -10,7 +11,11 @@ const get = async (req, res) => {
    } else {
     res.render('pages/index', {user: null})
    }
-    
+}
+
+const getTodos = async (req, res) => {
+    registros = await estudianteService
+    res.render('pages/index', {registros})
 }
 
 const getPorCursoAsignatura = async (req,res) =>{
@@ -62,6 +67,7 @@ const del = async (req, res) => {
 
 module.exports = {
     get : get,
+    getTodos: getTodos,
     getOne : getOne,
     getInforme: getInforme,
     pintarForm : pintarForm,
