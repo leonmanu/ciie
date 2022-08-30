@@ -80,15 +80,16 @@ const getPorIdEstudiante = async (id) => {
     return resultadoJson
 }
 
-
-
 const getPorDni = async (dni) => {
     console.log("DNI > ",dni)
-    registros = await estudianteSheet.getEstudianteCurso()
+    registros = await estudianteSheet.getTodo()
     filtrados = await registros.filter( row => row.dni == dni )
-    const resultadoJson = await utilidadesService.convertToJson(filtrados)
+    //condicional si filtro.length > 0
+    estudianteCursos = await estudianteSheet.getEstudianteCurso2()
+    estudianteCurso = await estudianteCursos.filter(row => row.estudiante == filtrados[0].id)
+    const resultadoJson = await utilidadesService.convertToJson(estudianteCurso)
     
-    return resultadoJson[0]
+    return estudianteCurso[0]
 }
 
 const getPorCurso = async (clave) => {

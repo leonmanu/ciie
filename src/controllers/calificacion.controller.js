@@ -108,6 +108,7 @@ const getPorDni = async (req, res) => {//cambiar nombre de función
     //* debería estar dento de get EstudianteCurso o estudianteService
     //* debe devolver un sólo registro ya que solo debería haber una sola posiblidad estudiante-cLectivo
     const estudiante = await calificacionService.getPorDni(dni)
+    
     const curso = estudiante.cursoClave
     const asignaturas = await asignaturaService.getPorCurso(curso)
     const registros = await calificacionService.getPorIdEstudiante(estudiante.estudiante)

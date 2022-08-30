@@ -29,6 +29,7 @@ async function getEstudianteCurso(){
     return registros
 }
 
+
 async function getTodoPorCurso(){
     const documento = await obtenercredenciales()
     sheet = documento.sheetsById[1585615507] // acá usé la query ordenada: EstudianteCurso_get
@@ -37,11 +38,11 @@ async function getTodoPorCurso(){
     return registros
 }
 
-async function getTodoPorCurso(){
+async function getEstudianteCurso2(){
     const documento = await obtenercredenciales()
-    sheet = documento.sheetsById[1585615507] // acá usé la query ordenada: EstudianteCurso_get
+    sheet = documento.sheetsById[1287324365] // acá usé la query ordenada: EstudianteCurso
     const registros =  await sheet.getRows()
-
+ 
     return registros
 }
 
@@ -86,6 +87,7 @@ module.exports = {
     getTodo: getTodo,
     getTodoPorCurso: getTodoPorCurso,
     getEstudianteCurso:getEstudianteCurso,
+    getEstudianteCurso2:getEstudianteCurso2,
     post: post,
     put : put,
     del : del
