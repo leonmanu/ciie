@@ -1,5 +1,16 @@
-const express = require('express')
 const mongoose = require('mongoose')
+require("dotenv").config()
+
+mongoose.connect(
+  process.env.MONGODB_URI
+)
+  .then(
+    ()=> console.log('Conectado!!')
+  )
+  .catch((err) => console.error(err))
+
+const express = require('express')
+
 const path = require("path")
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -21,7 +32,7 @@ const usuarioController = require('./controllers/usuario.controller')
 const LocalStrategy = require('passport-local').Strategy
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 
-require("dotenv").config()
+
 
 const app = express()
 var hour = 36000000;
@@ -57,14 +68,6 @@ module.exports = app
 
 // mongo db conexión
 
-mongoose.connect(
-  process.env.MONGODB_URI
-)
-  .then(
-    ()=> console.log('Conectado!!')
-  )
-  .catch((err) => console.error(err))
-
 authUser = async (request, accessToken, refreshToken, profile, done)  => {
     return done(null,profile) //corregir para que se rompa la sesión si no está registrado
 }
@@ -72,8 +75,8 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 passport.use(new GoogleStrategy({
     clientID:   "460276808063-s47r0nb77ceta3a7lumqqk1ojaq8gigi.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
-    //callbackURL: "http://localhost:3000/auth/google/callback",
+    //callbackURL: "https://ees62.herokuapp.com/auth/google/callback",
+    callbackURL: "http://localhost:3000/auth/google/callback",
     passReqToCallback : true
   }, authUser
   

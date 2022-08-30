@@ -84,14 +84,13 @@ const getInformesPorCurso = async (req, res) => {
 }
 
 const postCalificacion = async (req, res) => {
-    jsonStringfy = req.body.arr
+    jsonStringfy = req.body.arrayJson
     //jsonParse = JSON.parse(jsonStringfy)
-    console.log("Json: ", jsonStringfy)
     
-    resultado = await calificacionService.postCalificacion(jsonStringfy)
+    resultado = await calificacionService.postArray(jsonStringfy)
     //resultadoJson = await utilidadesService.convertToJson(resultado)
-    console.log("Resultados ")
-    res.send("resultadoJson")
+    //console.log("Resultados ")
+    res.send(resultado.toString())
 }
 
 //-------------esta servía

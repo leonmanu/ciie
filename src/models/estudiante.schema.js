@@ -17,3 +17,5 @@ const estudianteSchema = mongoose.Schema({
         type: String
     }
 })
+
+module.exports = mongoose.model('estudiante',estudianteSchema)

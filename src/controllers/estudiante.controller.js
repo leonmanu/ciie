@@ -4,6 +4,7 @@ const estudianteService = require('../services/estudiante.service')
 const estudianteSchema = require('../models/estudiante.schema')
 
 
+
 const get = async (req, res) => {
    // registros = await cursoSheet.get()
    if (req.user) {
@@ -14,14 +15,15 @@ const get = async (req, res) => {
 }
 
 const getTodos = async (req, res) => {
-    registros = await estudianteService
-    res.render('pages/index', {registros})
+    registros = await estudianteService.getTodosDb()
+    
+    await res.render('pages/estudiante/estudiantesTodos', registros)
 }
 
 const getPorCursoAsignatura = async (req,res) =>{
     registros = await estudianteService.getPorCursoAsignatura(req,res)
     //console.log("ESTUDIANTE_CONTROLLER -> GetPorCurso: ", registros)
-    res.render('pages/estudiante/estudianteAsignatura', {user: req.user._json, registros})
+    res.render('pages/estudiante/estudiantesTodos', {user: req.user._json, registros})
 }
 
 //acá consultamos al service por id de estudiante y abrimos la vista Editar

@@ -5,6 +5,7 @@ const estudianteCursoSheet =require("../sheets/estudianteCurso.sheet")
 const utilidadesService = require('./utilidades.service')
 const estudianteSchema = require('../models/estudiante.schema')
 const estudianteDb = require('../db/estudiante.db')
+const usuarioDb = require('../db/usuario.db')
 
 
 
@@ -23,8 +24,8 @@ const getTodos = async (req, res) => {
 }
 
 const getTodosDb = async (req, res) => {
-    registros = await estudianteDb.getTodos()
-    console.log("Data: ",registros)
+    registros = await usuarioDb.getTodos()
+    console.log("Data: ",registros[0].cargo[0].rol)
     return registros
 }
 

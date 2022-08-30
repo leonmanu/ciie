@@ -42,20 +42,54 @@ async function postCalificacion(objetoInterface) {
     await obtenercredenciales()
     const resultado = await sheet.addRow(objetoInterface)
 
+    return null
     //console.log("resultado postSheet: ",resultado)
 }
 
 async function putCalificacion(objExistente, objNuevo) {
-
+    var modificar = false //son distintos? true si son distintos
     var header = objExistente._sheet.headerValues
     header.forEach(r => {
-        console.log("header: foreach: ", r)
+        //console.log("header: foreach: ", r)
+        if(objExistente[r] !== '' && typeof(objNuevo[r]) !== 'undefined' && objNuevo[r] !== ''&& objNuevo[r] !== null && objExistente[r] !== objNuevo[r]){
+            modificar = true
+            console.log(r+"**********objExistente[r]: "+objExistente[r] +  " <==> objNuevo[r]: " +objNuevo[r])
+        }
         objExistente[r] = objNuevo[r]
     })
+    if(modificar == true){
+        resultado = await objExistente.save()
+    }
+    
+    console.log("modifi ::   ", modificar)
+    return modificar
+}
 
-    resultado = await objExistente.save()
-    console.log("objExistente ::   ", objExistente)
-    return objExistente
+async function modificablesArray(objExistente, objNuevo) {
+    var modificar = false //son distintos? true si son distintos
+    var header = objExistente._sheet.headerValues
+    header.forEach(r => {
+        //console.log("header: foreach: ", r)
+        if(objExistente[r] !== '' && typeof(objNuevo[r]) !== 'undefined' && objNuevo[r] !== ''&& objNuevo[r] !== null && objExistente[r] !== objNuevo[r]){
+            modificar = true
+            console.log(r+"**********objExistente[r]: "+objExistente[r] +  " <==> objNuevo[r]: " +objNuevo[r])
+        }
+        objExistente[r] = objNuevo[r]
+    })
+    if(modificar == true){
+        return objExistente
+    }
+    else{
+        return null
+    }
+}
+
+async function putArray(array) {
+    array.forEach(r => {
+        r.save()
+    })
+    
+    return array.length
 }
 
 async function put(pObjeto) {
@@ -93,4 +127,6 @@ module.exports = {
     del : del,
     putCalificacion: putCalificacion,
     getOrdenado:getOrdenado,
+    modificablesArray:modificablesArray,
+    putArray:putArray,
 }

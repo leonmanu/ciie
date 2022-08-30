@@ -3,7 +3,7 @@ const passport = require('passport')
 const router = Router()
 
 const {getEstudiantes} = require('../controllers/curso.controller')
-const {siExisteUsuario,post} = require('../controllers/usuario.controller')
+const {siExisteUsuario,post,getTodos} = require('../controllers/usuario.controller')
 const { getOne } = require('../sheets/estudiante.sheet')
 var sessionMiddelware = require('../middelware/session.middelware')
 
@@ -18,6 +18,7 @@ router
             res.redirect('/')
           })
     })
+    .get('/todos', getTodos)
     
 
 

@@ -45,9 +45,13 @@
           <a id="periodo3" class="nav-link tabbtn btn btn-primary disabled" href="javascript:void(0)" >
             <div class="tablink nav-item">3° Perído</div>
           </a>
-          <a id="periodo4" class="nav-link tabbtn btn btn-primary disabled" href="javascript:void(0)">
+          <a id="periodo4" class="nav-link tabbtn btn btn-primary disabled mr-2" href="javascript:void(0)">
             <div class="tablink nav-item">4° Perído</div>
           </a>
+            <button href="#" class="m-2 btn btn-outline-success btn_save mt-0 mb-0" row_id="'+row_id+'">
+              <span id="">Guardar</span> 
+              <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
+            </button>
         </div>
       </div>
 
@@ -59,7 +63,6 @@
             <th>Informe (1)</th>
             <th>Valoración (2)</th>
             <th>Informe (2)</th>
-            <th>Acción</th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
@@ -132,22 +135,6 @@
             </td>
             <td>
               <input class="row_data form-control" edit_type="click" col_name="informe2" value="<%= informe2 %>" autofocus="off" autocorrect="off" autocapitalize="off"/>
-            </td>
-
-            <!-- Botones de edición -->
-            <td class="w3-padding-0">
-              <span class="btn_edit" hidden> 
-                <a href="#" class="w3-button w3-white w3-border w3-border-blue" row_id="'+row_id+'">Editar</a> 
-              </span>
-              <span class="btn_save" >
-                <a href="#" class="btn btn-outline-success" row_id="'+row_id+'">
-                  <span id="">Guardar</span> 
-                  <img class="pull-right waitIconAsignatura" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
-                </a>
-              </span>
-              <span class="btn_cancel" hidden>
-                <a href="#" class="w3-button w3-white w3-border w3-border-red" row_id="'+row_id+'">Cancelar</a>
-              </span>
             </td>
 
           </tr>

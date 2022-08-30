@@ -1,0 +1,45 @@
+<%- include ../../partials/parte1Superior.ejs %>
+
+
+    </head>
+    <body>
+
+    <div class="container">
+      <h5><b></i>Estudiantes</b></h5>
+      <div class="w3-container w3-card-4 w3-white  w3-padding-16">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Docente</th>
+            <th>Cargo</th>
+            <th>Asignatura</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% registros.forEach(function(registro){ %>
+            <tr>
+              
+              <td>
+                <%= registro.apellido%>, <%= registro.nombre%>
+              </td>
+              <td>
+                <ul>
+                  
+                    <% registro.cargo.forEach(function(c){ %>
+                      <li>
+                      <%= c.rol ? c.rol.nombre : '' %>
+                    </li>
+                    <% }); %>
+                  
+                </ul>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr>
+
+    <%- include ../../partials/parte2Inferior.ejs %>

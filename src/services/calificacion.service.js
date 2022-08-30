@@ -39,22 +39,37 @@ const getEstudianteAsignatura = async (estudiante, asignatura) => { //para saber
 }
 
 const postCalificacion = async (jsonParse) => {
-
     const calificacionExistente = await getEstudianteAsignatura(jsonParse.estudiante, jsonParse.asignatura)
     
     console.log("Calificción == ", calificacionExistente[0])
     
     if (calificacionExistente[0]) {
-        console.log("EXISTE:: ",calificacionExistente[0]._rowNumber)
-        const resultado = await calificacionSheet.putCalificacion(calificacionExistente[0], jsonParse)
+        //console.log("EXISTE:: ",calificacionExistente[0]._rowNumber)
+        const resultado = await calificacionSheet.modificablesArray(calificacionExistente[0], jsonParse)
         return resultado
     } else {
-        console.log("NO existe:: ",jsonParse.rowNumber)
-        console.log("ESTUDIANTE: ",jsonParse)
+        //console.log("NO existe:: ",jsonParse.rowNumber)
+        //console.log("ESTUDIANTE: ",jsonParse)
         const resultado = await calificacionSheet.postCalificacion(jsonParse)
         return resultado
     }
     
+}
+
+const postArray = async (jsonArray) => {
+    var i=0
+    var modificables = []
+    for (let index = 0; index < jsonArray.length; index++) {
+       
+        resultado = await postCalificacion(jsonArray[index])
+        if (resultado != null) {
+            modificables.push(resultado)
+            i++
+        }
+        console.log("indjsonArrayex: ", resultado)
+    }
+    await calificacionSheet.putArray(modificables)
+    return i
 }
 
 const getPorIdEstudiante = async (id) => {
@@ -93,6 +108,7 @@ module.exports = {
     getPorDni:getPorDni,
     getPorIdEstudiante: getPorIdEstudiante,
     getPorCurso: getPorCurso,
+    postArray: postArray,
     // getCargosTodos : getCargosTodos,
     // getPorDocente: getPorDocente,
     

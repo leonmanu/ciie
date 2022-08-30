@@ -1,5 +1,11 @@
+const usuarioService = require('../services/usuario.service')
 let usuarioSheet = require('../sheets/usuario.sheet')
 
+const getTodos = async (req, res) => {
+    registros = await usuarioService.getTodosDb()
+    
+    await res.render('pages/usuario/usuariosTodos', registros)
+}
 
 const getOne = async (usuario, req, res) => {
     //console.log("usuario.getOne: ", usuario.usuario.email)
@@ -53,6 +59,7 @@ const post = (req, res) => {
 
 
 module.exports = {
+    getTodos: getTodos,
     getOne : getOne,
     post: post,
     getOneByEmail: getOneByEmail,

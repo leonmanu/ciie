@@ -6,51 +6,40 @@ $( window ).on( "load", function() {
 
  
 	//--->save whole row entery > start	
-	$(document).on('click', '.btn_save', function(event) 
+	$(document).on('click', '.btn_save',async function(event) 
 	{
 		event.preventDefault();
-		var tbl_row = $(this).closest('tr');
-
-		var row_id = tbl_row.attr('row_id');
-		var rowNumber = tbl_row.attr('rowNumber');
-
-		tbl_row.find('.w3-select').prop("disabled", true);
-		tbl_row.find('.w3-input').prop("disabled", true);
-
-		//--->get row data > start
-		var arr = {}; 
-		tbl_row.find('.row_data').each(function(index, val) 
-		{   
-			var col_name = $(this).attr('col_name');  
-			var col_val  =  $(this).val();
-			arr[col_name] = col_val;
-		});
-
+		$('.btn_save').attr('disabled','disabled');
+		$('#waitIconAsignatura').css("display", "block");
+		var arrayJson = []
 		
+		$("table > tbody > tr").each(async function () {
+			let row_id = $(this).attr('row_id');
+			let rowNumber = $(this).attr('rowNumber');
+			let arr = {};
+			$(this).find('.row_data').each(function(index, val) 
+				{   
+					let col_name = $(this).attr('col_name')
+					let col_val  =  $(this).val()
+					arr[col_name] = col_val
+				})
+			$.extend(arr, {estudiante: row_id, asignatura: idAsignatura, rowNumber: rowNumber})
 
-		//--->get row data > end
-
-		//use the "arr"	object for your ajax call
-		$.extend(arr, {estudiante:row_id, asignatura:idAsignatura, rowNumber: rowNumber});
-
-		//out put to show
-		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
-		//alert(arr.rowNumber) 
-
-		
-		//out put to show
-		$('.post_msg').html( '<pre class="w3-green">'+JSON.stringify(arr, null, 2) +'</pre>')
-		//alert(arr.rowNumber) 
-		tbl_row.find('.waitIconAsignatura').css("display", "block");
+			arrayJson.push(arr)
+		})
+		//tbl_row.find('.waitIconAsignatura').css("display", "none");
 		$.ajax({
+			
 			url: '/calificacion/post',
 			contentType: 'application/json',
 			method: 'POST',
-			data: JSON.stringify({arr:arr}),
+			data: JSON.stringify({arrayJson}),
 			dataType: 'text',
 			
 			success: function (response) {  
-				tbl_row.find('.waitIconAsignatura').css("display", "none");
+				$('#waitIconAsignatura').css("display", "none");
+				$('.btn_save').prop('disabled', false);
+				alert("Se modificaron las calificaciones de "+ response + " estudiante/s")
 			}
 			
 		  });
