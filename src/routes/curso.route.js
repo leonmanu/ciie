@@ -5,7 +5,7 @@ const router = Router()
 const {cursoGetTodo, getCursosTodos, getEstudiantes, getBoletines} = require('../controllers/curso.controller')
 const {siExisteUsuario,post} = require('../controllers/usuario.controller')
 const {getPorCurso} = require('../controllers/asignatura.controller')
-const {getPorCursoAsignatura} = require('../controllers/calificacion.controller')
+const {getPorCursoAsignatura, getBoletinesPorCurso} = require('../controllers/calificacion.controller')
 var sessionMiddelware = require('../middelware/session.middelware')
 
 
@@ -23,7 +23,7 @@ router
     })
     .get('/todos', getCursosTodos)
     .get('/:clave/estudiantes', getEstudiantes)
-    .get('/:clave/boletines', getBoletines)
+    .get('/:clave/boletines', getBoletinesPorCurso)
     .get('/:clave/asignaturas', getPorCurso)
     .get('/:clave/asignatura/:asignatura/calificacion', getPorCursoAsignatura)
     

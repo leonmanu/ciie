@@ -22,11 +22,20 @@ const getCursosTodos = async () => { //debería pasar la escuela por parámetro 
     return resultadoJson
 }
 
-const getPorClave = async (claveCurso) => {
+// const getPorClave = async (claveCurso) => {
+//     const registros = await cursoSheet.getTodos()
+//     const resultados = await registros.filter(row => row.clave === claveCurso)
+//     const resultadoJson = await utilidadesService.convertToJson(resultados)
+//     return resultadoJson[0]
+// }
+
+const getPorClave = async (clave) => { //tiene que quedar, es el nuevo
+    const grado = clave.substr(0,1)
+    const division = clave.substr(2,1)
     const registros = await cursoSheet.getTodos()
-    const resultados = await registros.filter(row => row.clave === claveCurso)
-    const resultadoJson = await utilidadesService.convertToJson(resultados)
-    return resultadoJson[0]
+    const resultados = await registros.filter(row => row.grado == grado && row.division == division)
+    //const resultadoJson = await utilidadesService.convertToJson(resultados)
+    return resultados[0]
 }
 
 const getPorId = async (idCurso) => {

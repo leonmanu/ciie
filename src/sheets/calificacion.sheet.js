@@ -12,7 +12,13 @@ async function obtenercredenciales(){
     sheet_getOrdenado = documento.sheetsById[1658063790]
     sheet = documento.sheetsById[1731131025]
     return documento
-}   
+}
+
+const get = async () => {
+    await obtenercredenciales()
+    const registros =  await sheet.getRows()
+    return registros
+}
 
 async function getCalificacion(){
     await obtenercredenciales()
@@ -120,6 +126,7 @@ async function del(pObjeto) {
 }
 
 module.exports = {
+    get:get,
     getCalificacion: getCalificacion,
     getCalificacionCruda: getCalificacionCrudas,
     postCalificacion: postCalificacion,

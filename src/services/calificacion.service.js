@@ -4,6 +4,20 @@ const calificacionSheet =  require("../sheets/calificacion.sheet")
 const estudianteSheet = require('../sheets/estudiante.sheet')
 const utilidadesService = require('./utilidades.service')
 
+const get = async () => {
+    
+    registros = await calificacionSheet.getCalificacion()
+
+    return registros
+}
+
+const getUnique = async () => {
+    
+    registros = await calificacionSheet.getCalificacion()
+    
+    return registros
+}
+
 const getEstudiantePorAsignatura = async (asignatura, curso) => {
     
     registros = await calificacionSheet.getCalificacion()
@@ -72,8 +86,18 @@ const postArray = async (jsonArray) => {
     return i
 }
 
-const getPorIdEstudiante = async (id) => {
+//**********************>>>>>>>>>>>verificar si borrar
+
+/*const getPorIdEstudiante = async (id) => {
     registros = await boletinSheet.getValoracion()
+    filtrados = await registros.filter( row => row.estudiante == id )
+    const resultadoJson = await utilidadesService.convertToJson(filtrados)
+    
+    return resultadoJson
+}*/
+
+const getCrudaPorIdEstudiante = async (id) => {
+    registros = await boletinSheet.getValoracionCurda()
     filtrados = await registros.filter( row => row.estudiante == id )
     const resultadoJson = await utilidadesService.convertToJson(filtrados)
     
@@ -102,14 +126,16 @@ const getPorCurso = async (clave) => {
 
 
 module.exports = {
+    get:get,
     postCalificacion: postCalificacion,
     getEstudiantePorAsignatura: getEstudiantePorAsignatura,
     getEstudianteAsignatura: getEstudianteAsignatura,
     getPorCursoAsignaturaOrden:getPorCursoAsignaturaOrden,
     getPorDni:getPorDni,
-    getPorIdEstudiante: getPorIdEstudiante,
+    //getPorIdEstudiante: getPorIdEstudiante,
     getPorCurso: getPorCurso,
     postArray: postArray,
+    getCrudaPorIdEstudiante:getCrudaPorIdEstudiante,
     // getCargosTodos : getCargosTodos,
     // getPorDocente: getPorDocente,
     

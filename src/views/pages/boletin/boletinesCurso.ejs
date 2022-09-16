@@ -4,9 +4,7 @@
 </head>
 
 <body>
-
-  
-  
+ 
   <% estudiantes.forEach(function(estudiante){ %>
       <div class="container">
         <div class="text-center mt-5">
@@ -20,12 +18,12 @@
               <h4> <strong> Escuela de Educación Secundaria N° 62 </strong></h4>
             </td>
             <td>
-              <h4> <strong> Curso: <%= estudiante.cursoClave %> </strong></h4>
+              <h4> <strong> Curso: <%= curso.grado%>° <%= curso.division %>°  </strong></h4>
             </td>
           </tr>
           <tr>
             <td>
-              <h4><%= estudiante.estudianteNombre %></h4>
+              <h4><%= estudiante.apellido %>, <%= estudiante.nombre %></h4>
             </td>
             <td>
               <h4>DNI: <%= estudiante.dni %></h4>
@@ -51,46 +49,62 @@
         
           <% asignaturas.forEach(function(asignatura) { %>
             <tr class="">
-            <td class="align-middle"><h5 class="align-middle"> <%= asignatura.asignaturaNombre %></h5></td>
-            <td class="text-center">
-              <% registros.forEach(function(registro) { %>
-                <% if(asignatura.asignatura == registro.asignatura && registro.estudiante == estudiante.estudiante) { %>
-                  <% switch (registro.riteCuatri1) {
-                    case 'TEA' : %>
-                    <span class="text-info">
-                            <% break;
-                    
-                    case 'TEP' : %>
-                    <span class="text-success">
-                            <% break;
-                    
-                    case 'TED' : %>
-                      <span class="text-danger">
-                            <% break;
-                    } %>
-                    <%= registro.riteCuatri1 %></span>
+            <td class="align-middle"><h5 class="align-middle"> <%= asignatura.nombreCorto %></h5></td>
+            
+              <% calificaciones.forEach(function(calificacion) { %>
+                <% if(asignatura.idAsignatura == calificacion.asignatura && calificacion.estudiante == estudiante.id) { %>
+                  <%let promedio = Math.round((parseInt(calificacion.valoracion2) + parseInt(calificacion.valoracion1))/2) %>
+                  <td class="text-center">
+                  <% if( promedio <= 10 && promedio >= 7 ){%>
+                    <span class="text-info">TEA
+                      <% } %>
+      
+                  <% if( promedio <= 6 && promedio >= 4 ){%>
+                    <span class="text-success">TEP
+                      <% } %>
+      
+                  <% if( promedio <= 3 && promedio >= 0 ){%>
+                    <span class="text-danger">TED
+                      <% } %>
+                  </span>
+                </td>
+
+                <% promedio = Math.round((parseInt(calificacion.valoracion3) + parseInt(calificacion.valoracion4))/2) %>
+                  <td class="text-center">
+                  <% if( promedio <= 10 && promedio >= 7 ){%>
+                    <span class="text-info">TEA 
+                      <% } %>
+      
+                  <% if( promedio <= 6 && promedio >= 4 ){%>
+                    <span class="text-success">TEP
+                      <% } %>
+      
+                  <% if( promedio <= 3 && promedio >= 0 ){%>
+                    <span class="text-danger">TED
+                      <% } %>
+                  </span>
+                </td>
+
+                <% promedio = parseInt(calificacion.valoracion5) %>
+                  <td class="text-center">
+                  <% if( promedio <= 10 && promedio >= 7 ){%>
+                    <span class="text-info">TEA 
+                      <% } %>
+      
+                  <% if( promedio <= 6 && promedio >= 4 ){%>
+                    <span class="text-success">TEP
+                      <% } %>
+      
+                  <% if( promedio <= 3 && promedio >= 0 ){%>
+                    <span class="text-danger">TED
+                      <% } %>
+                  </span>
+                </td>
+
                   <% } %>
                   
                 <% }) %>
                 
-            </td>
-            <td style="text-align: center;">
-              <% switch (asignatura[8]) {
-                case 'TEA' : %>
-                <strong class="text-success"><%= asignatura[8] %></strong>
-                        <% break;
-                
-                case 'TEP' : %>
-                <strong class="text-warning"><%= asignatura[8] %></strong>
-                        <% break;
-                
-                case 'TED' : %>
-                  <strong class="text-danger"><%= asignatura[8] %></strong>
-                        <% break;
-                
-                } %>
-              
-            </td>
               <%
                 if(asignatura[8]=='TEA'){%>
                   <td class="dark" style="text-align: center;">
@@ -139,26 +153,7 @@
                 }
               %>
             </td>
-            <td style="text-align: center;">
-              <% switch (asignatura[11]) {
-                case 'TEA' : %>
-                <strong class="text-success"><%= asignatura[11] %></strong>
-                        <% break;
-                
-                case 'TEP' : %>
-                <strong class="text-warning"><%= asignatura[11] %></strong>
-                        <% break;
-                
-                case 'TED' : %>
-                  <strong class="text-danger"><%= asignatura[11] %></strong>
-                        <% break;
-                
-                        default: %>
-                        <strong class=""><%= asignatura[11] %></strong>
-                        <% break;
-                
-                } %>
-            </td>
+            
             <td></td>
           </tr>
         <% }); %> 

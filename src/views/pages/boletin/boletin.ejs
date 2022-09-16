@@ -20,12 +20,12 @@
           <h4> <strong> Escuela de Educación Secundaria N° 62 </strong></h4>
         </td>
         <td>
-          <h4> <strong> Curso: <%= estudiante.cursoClave %> </strong></h4>
+          <h4> <strong> Curso: <%= curso.grado%>° <%= curso.division %>° </strong></h4>
         </td>
       </tr>
       <tr>
         <td>
-          <h4><%= estudiante.estudianteNombre %></h4>
+          <h4><%= estudiante.apellido %>, <%= estudiante.nombre %></h4>
         </td>
         <td>
           <h4>DNI: <%= estudiante.dni %></h4>
@@ -51,29 +51,31 @@
   
     <% asignaturas.forEach(function(asignatura) { %>
       <tr class="">
-      <td class="align-middle"><h5 class="align-middle"> <%= asignatura.asignaturaNombre %></h5></td>
+      <td class="align-middle"><h5 class="align-middle"> <%= asignatura.nombreCorto %></h5></td>
+      <!-- Notas 1° período -->
       <td class="text-center">
         <% registros.forEach(function(registro) { %>
-          <% if(asignatura.asignatura == registro.asignatura) { %>
-            <% switch (registro.riteCuatri1) {
-              case 'TEA' : %>
-              <span class="text-info">
-                      <% break;
-              
-              case 'TEP' : %>
-              <span class="text-success">
-                      <% break;
-              
-              case 'TED' : %>
-                <span class="text-danger">
-                      <% break;
-              } %>
-              <%= registro.riteCuatri1 %></span>
+          <% if(asignatura.idAsignatura == registro.asignatura) { %>
+            <%let promedio = Math.round((parseInt(registro.valoracion2) + parseInt(registro.valoracion1))/2) %>
+
+            <% if( promedio <= 10 && promedio >= 7 ){%>
+              <span class="text-info">TEA
+                <% } %>
+
+            <% if( promedio <= 6 && promedio >= 4 ){%>
+              <span class="text-success">TEP
+                <% } %>
+
+            <% if( promedio <= 3 && promedio >= 0 ){%>
+              <span class="text-danger">TED
+                <% } %>
+            
             <% } %>
             
           <% }) %>
           
       </td>
+      <!-- Notas 2° período -->
       <td style="text-align: center;">
         <% switch (asignatura[8]) {
           case 'TEA' : %>
@@ -203,12 +205,12 @@
     <div class="">
 
       <table class="table-bordered table-xs bg-white col-12" > 
-              
+              <!-- ///////////// -->
         <% asignaturas.forEach(function(asignatura) { %>
           <tr class="">
             <thead>
               <th class="col-12" colspan="2">
-               <h5 class="m-0"><%= asignatura.asignaturaNombre %></h5>
+               <h5 class="m-0"><%= asignatura.nombreCorto %></h5>
               </th>
               
             </thead>
@@ -218,163 +220,143 @@
             <td class="text-center" rowspan="2">
               <strong>1° Período</strong>
               <p class="m-0"></p>
-               <small> mar-jul: 
+               <small> mar-jul: </small>
               <% registros.forEach(function(registro) { %>
-                <% if(asignatura.asignatura == registro.asignatura) { %>
-                  <% switch (registro.riteCuatri1) {
-                    case 'TEA' : %>
-                    <span class="text-success">
-                            <% break;
-                    
-                    case 'TEP' : %>
-                    <span class="text-warning">
-                            <% break;
-                    
-                    case 'TED' : %>
-                      <span class="text-danger">
-                            <% break;
-                    } %>
-                    <%= registro.riteCuatri1 %></span></small>
+                <% if(asignatura.idAsignatura == registro.asignatura) { %>
+                  <%let promedio = Math.round((parseInt(registro.valoracion2) + parseInt(registro.valoracion1))/2) %>
+                  <% if( promedio <= 10 && promedio >= 7 ){%>
+                    <small></small> <span class="text-info">TEA</span></small>
+                      <% } %>
+      
+                  <% if( promedio <= 6 && promedio ){%>
+                    <small>  <span class="text-success">TEP</span></small>
+                      <% } %>
+      
+                  <% if( promedio <= 3 && ppromedio >= 0 ){%>
+                    <small><span class="text-danger">TED</span></small>
+                  <% } %>
+              </td>
+                      <td>
+                        1° Bimestre:
+                            <% if( registro.valoracion1 <= 10 && registro.valoracion1 >= 7 ){%>
+                              <span class="text-info">TEA
+                                <% } %>
+                
+                            <% if( registro.valoracion1 <= 6 && registro.valoracion1 >= 4 ){%>
+                              <span class="text-success">TEP
+                                <% } %>
+                
+                            <% if( registro.valoracion1 <= 3 && registro.valoracion1 >= 1 ){%>
+                              <span class="text-danger">TED
+                                <% } %>
+                            </span>
+                              - <%= registro.informe1 %>
+                        
+                      </td>
+                      
+                    </tr>  
+                    <td>
+                      2° Bimestre:
+                      <% if( registro.valoracion2 <= 10 && registro.valoracion2 >= 7 ){%>
+                        <span class="text-info">TEA
+                          <% } %>
+          
+                      <% if( registro.valoracion2 <= 6 && registro.valoracion2 >= 4 ){%>
+                        <span class="text-success">TEP
+                          <% } %>
+          
+                      <% if( registro.valoracion2 <= 3 && registro.valoracion2 >= 1 ){%>
+                        <span class="text-danger">TED
+                          <% } %>
+                      </span>
+                        - <%= registro.informe2 %>
+                      
+                    </td>            
                   <% } %>
                   
                 <% }) %>
-            </td>
-          
-          <td>
-            1° Bimestre:
-            <% registros.forEach(function(registro) { %>
-              <% if(asignatura.asignatura == registro.asignatura) { %>
-                <% switch (registro.rite1) {
-                  case 'TEA' : %>
-                  <span class="text-success">
-                          <% break;
-                  
-                  case 'TEP' : %>
-                  <span class="text-warning">
-                          <% break;
-                  
-                  case 'TED' : %>
-                    <span class="text-danger">
-                          <% break;
-                  } %>
-                  <%= registro.rite1 %></span>
-                  - <%= registro.informe1 %>
-                <% } %>
-              <% }) %>
-            
-          </td>
-        </tr>
-          <td>
-            2° Bimestre:
-            <% registros.forEach(function(registro) { %>
-              <% if(asignatura.asignatura == registro.asignatura) { %>
-                <% switch (registro.rite2) {
-                  case 'TEA' : %>
-                  <span class="text-success">
-                          <% break;
-                  
-                  case 'TEP' : %>
-                  <span class="text-warning">
-                          <% break;
-                  
-                  case 'TED' : %>
-                    <span class="text-danger">
-                          <% break;
-                  } %>
-                  <%= registro.rite2 %></span>
-                  - <%= registro.informe2 %>
-                <% } %>
-              <% }) %>
-              
-          </td>
+      </tr>
             
         
-        </tr>
+    </tr>
         
         <!-- 2° Período -->
+
         <tr>
           <td class="text-center" rowspan="2">
             <strong>2° Período</strong>
             <p class="m-0"></p>
-             <small> ago-dic: 
+             <small> mar-jul: </small>
             <% registros.forEach(function(registro) { %>
-              <% if(asignatura.asignatura == registro.asignatura) { %>
-                <% switch (registro.riteCuatri2) {
-                  case 'TEA' : %>
-                  <span class="text-success">
-                          <% break;
-                  
-                  case 'TEP' : %>
-                  <span class="text-warning">
-                          <% break;
-                  
-                  case 'TED' : %>
-                    <span class="text-danger">
-                          <% break;
-                  } %>
-                  <%= registro.riteCuatri2 %></span></small>
+              <% if(asignatura.idAsignatura == registro.asignatura) { %>
+                <%let promedio = Math.round((parseInt(registro.valoracion4) + parseInt(registro.valoracion3))/2) %>
+                <% if( promedio <= 10 && promedio >= 7 ){%>
+                  <small></small> <span class="text-info">TEA</span></small>
+                    <% } %>
+    
+                <% if( promedio <= 6 && promedio ){%>
+                  <small>  <span class="text-success">TEP</span></small>
+                    <% } %>
+    
+                <% if( promedio <= 3 && ppromedio >= 1 ){%>
+                  <small><span class="text-danger">TED</span></small>
+                <% } %>
+            </td>
+            <td>
+            3° Bimestre:
+                <% if( registro.valoracion3 <= 10 && registro.valoracion3 >= 7 ){%>
+                  <span class="text-info">TEA
+                    <% } %>
+    
+                <% if( registro.valoracion3 <= 6 && registro.valoracion3 >= 4 ){%>
+                  <span class="text-success">TEP
+                    <% } %>
+    
+                <% if( registro.valoracion3 <= 3 && registro.valoracion3 >= 1 ){%>
+                  <span class="text-danger">TED
+                    <% } %>
+                </span>
+                  - <%= registro.informe4 %>
+            
+          </td>
+          
+        </tr>  
+        <td>
+          2° Bimestre:
+          <% if( registro.valoracion4 <= 10 && registro.valoracion4 >= 7 ){%>
+            <span class="text-info">TEA
+              <% } %>
+
+          <% if( registro.valoracion4 <= 6 && registro.valoracion4 >= 4 ){%>
+            <span class="text-success">TEP
+              <% } %>
+
+          <% if( registro.valoracion4 <= 3 && registro.valoracion4 >= 1 ){%>
+            <span class="text-danger">TED
+              <% } %>
+          </span>
+            - <%= registro.informe4 %>
+          
+        </td>     
                 <% } %>
                 
               <% }) %>
-          </td>
-        
-        <td>
-          3° Bimestre:
-          <% registros.forEach(function(registro) { %>
-            <% if(asignatura.asignatura == registro.asignatura) { %>
-              <% switch (registro.rite3) {
-                case 'TEA' : %>
-                <span class="text-success">
-                        <% break;
-                
-                case 'TEP' : %>
-                <span class="text-warning">
-                        <% break;
-                
-                case 'TED' : %>
-                  <span class="text-danger">
-                        <% break;
-                } %>
-                <%= registro.rite3 %></span>
-                - <%= registro.informe3 %>
-              <% } %>
-            <% }) %>
-          
-        </td>
-      </tr>
-        <td>
-          4° Bimestre:
-          <% registros.forEach(function(registro) { %>
-            <% if(asignatura.asignatura == registro.asignatura) { %>
-              <% switch (registro.rite4) {
-                case 'TEA' : %>
-                <span class="text-success">
-                        <% break;
-                
-                case 'TEP' : %>
-                <span class="text-warning">
-                        <% break;
-                
-                case 'TED' : %>
-                  <span class="text-danger">
-                        <% break;
-                } %>
-                <%= registro.rite4 %></span>
-                - <%= registro.informe4 %>
-              <% } %>
-            <% }) %>
-            
-        </td>
+    </tr>
           
       
-      </tr>
+  </tr>
+
+
+
+
+      
       <% }); %> 
         
       </table>
 
     
     </div>
-
+    
   </div>
 
  

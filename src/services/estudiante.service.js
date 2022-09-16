@@ -2,11 +2,15 @@ const req = require('express/lib/request')
 const { head } = require('request')
 const estudianteSheet =  require("../sheets/estudiante.sheet")
 const estudianteCursoSheet =require("../sheets/estudianteCurso.sheet")
+const estudianteCursoService =require("../services/estudianteCurso.service")
 const utilidadesService = require('./utilidades.service')
 const estudianteSchema = require('../models/estudiante.schema')
 const estudianteDb = require('../db/estudiante.db')
 
-
+const get = async () => { //este trae de la hoja estudiantes
+    registros = await estudianteSheet.getTodo()
+    return registros
+}
 
 const getTodos = async (req, res) => {
     registros = await estudianteSheet.getTodoEstudiante_sheet()
@@ -47,12 +51,12 @@ async function getPorId(id){
 }
 
 async function getPorDni(dni){
-    const registros =  await estudianteSheet.getEstudianteCurso()
+    const registros =  await estudianteSheet.getTodo()
     const resultado = registros.filter(row => row.dni == dni)
-    const resultadoJson = await utilidadesService.convertToJson(resultado)
-    //console.log(resultadoJson[0])
+    //const resultadoJson = await utilidadesService.convertToJson(resultado)
+    console.log(resultado[0])
 
-    return resultadoJson[0]
+    return resultado[0]
     
 }
 
@@ -64,13 +68,30 @@ async function getPorCursoAsignatura(req){
     return resultados
 }
 
-async function getPorCurso(clave){
+async function getPorCurso(clave){//1* anterior, próximo a borrar
     const registros =  await estudianteSheet.getTodoPorCurso()
     const resultados = await registros.filter(row => row.cursoClave == clave)
     const resultadoJson = await utilidadesService.convertToJson(resultados)
     
     return resultadoJson
 }
+
+async function getPorIdCurso(idCurso){//1* este debería reemplazar a getPorCurso()
+    console.log("idCurso: ", idCurso)
+    const estudianteCurso =  await estudianteCursoService.get()
+    const estudiantes = await this.get()
+    const filtrados = estudiantes.filter(({ id: id }) => estudianteCurso.some(({ estudiante: estudiante, curso: curso, fechaBaja }) => id == estudiante && curso == idCurso && fechaBaja == null));
+
+    return filtrados
+}
+
+// async function getPorIdCurso(clave){
+//     const registros =  await estudianteSheet.getTodoPorCurso()
+//     const resultados = await registros.filter(row => row.cursoClave == clave)
+//     const resultadoJson = await utilidadesService.convertToJson(resultados)
+    
+//     return resultadoJson
+// }
 
 async function post(objeto){
     const ultimo = await this.getUltimo()
@@ -104,6 +125,7 @@ async function getUltimo(){
 }
 
 module.exports = {
+    get:get,
     getTodos : getTodos,
     getUno: getUno,
     getPorCursoAsignatura: getPorCursoAsignatura,
@@ -114,4 +136,5 @@ module.exports = {
     getPorId: getPorId,
     put: put,
     getTodosDb:getTodosDb,
+    getPorIdCurso:getPorIdCurso,
 } 

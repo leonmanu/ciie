@@ -1,5 +1,6 @@
 const req = require('express/lib/request')
 const asignaturaSheet =  require("../sheets/asignatura.sheet")
+const cursoAsignaturaService = require('./cursoAsignatura.service')
 const utilidadesService = require('./utilidades.service')
 
 
@@ -26,8 +27,18 @@ const getPorCurso = async (clave) => {
     return resultadoJson
 }
 
+const getPorIdCurso = async (id) => {
+    const cursoAsignatura = await cursoAsignaturaService.getPorCurso(id)
+    const asignaturas = await asignaturaSheet.getTodo()
+    const filtrados = asignaturas.filter(({ idAsignatura: id1 }) => cursoAsignatura.some(({ asignatura: id2 }) => id2 == id1));
+    const resultado = filtrados.sort((a, b) => a.orden - b.orden) //esto ordena alfabéticamente
+
+    return resultado
+}
+
 module.exports = {
     getPorId : getPorId,
     getPorClave: getPorClave,
-    getPorCurso: getPorCurso
+    getPorCurso: getPorCurso,
+    getPorIdCurso:getPorIdCurso,
 } 

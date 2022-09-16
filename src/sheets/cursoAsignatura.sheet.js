@@ -1,3 +1,4 @@
+const { GoogleSpreadsheetRow } = require('google-spreadsheet')
 const { GoogleSpreadsheet } = require('google-spreadsheet')
 const credenciales = require('../json/credecialSheets.json')
 
@@ -8,29 +9,25 @@ let sheet
 async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
-    sheet = documento.sheetsById[932021048]
+    sheet = documento.sheetsById[1307028253]
     return documento
-}   
-
-async function getValoracion(){
-    await obtenercredenciales()
-    const registros =  await sheet.getRows()
-    //console.log("SHEETS Calificaciones = ", registros)
-    return registros
-    
 }
 
-async function getValoracionCurda(){
+async function getTodo(){
     await obtenercredenciales()
-    sheet = documento.sheetsById[1731131025]
+
     const registros =  await sheet.getRows()
-    //console.log("SHEETS Calificaciones = ", registros)
     return registros
 }
 
-
+async function getAsignaturaCurso(){
+    await obtenercredenciales()
+    sheet = documento.sheetsById[1307028253]
+    const registros =  await sheet.getRows()
+    return registros
+}
 
 module.exports = {
-    getValoracion: getValoracion,
-    getValoracionCurda:getValoracionCurda,
+    getTodo: getTodo,
+    getAsignaturaCurso: getAsignaturaCurso,
 }

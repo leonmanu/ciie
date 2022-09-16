@@ -4,7 +4,9 @@ const asignaturaService = require('../services/asignatura.service')
 const cursoService = require('../services/curso.service')
 const calificacionService = require('../services/calificacion.service')
 const calificacionCodigoService = require('../services/calificacionCodigo.service')
+const estudianteCursoService = require('../services/estudianteCurso.service')
 const utilidadesService = require('../services/utilidades.service')
+const cursoAsignaturaService = require('../services/cursoAsignatura.service')
 
 const getCursoYAsignatura = async (req, res) => {
     const curso = await cursoService.getPorClave(req.params.curso)
@@ -107,20 +109,30 @@ const getPorDni = async (req, res) => {//cambiar nombre de función
     //* calificacionService.getPorDni(dni) debería llamarse 'getPorEstudianteCursoCLectivo' o algo así
     //* debería estar dento de get EstudianteCurso o estudianteService
     //* debe devolver un sólo registro ya que solo debería haber una sola posiblidad estudiante-cLectivo
-    const estudiante = await calificacionService.getPorDni(dni)
     
-    const curso = estudiante.cursoClave
-    const asignaturas = await asignaturaService.getPorCurso(curso)
-    const registros = await calificacionService.getPorIdEstudiante(estudiante.estudiante)
-    
-    console.log("Resultados: ", registros)
+    const estudiante = await estudianteService.getPorDni(dni)
+    const estudinateCurso = await estudianteCursoService.getUnoPorIdEstudiante(estudiante.id)
+    const curso = await cursoService.getPorId(estudinateCurso.curso)
+    const asignaturas = await asignaturaService.getPorIdCurso(curso.idCurso)
+    const registros = await calificacionService.getCrudaPorIdEstudiante(estudiante.id)
+
     const user = null
     try{
         user = req.user._json
     } catch{
         console.log("No se inició sesión")
     }
-    res.render('pages/boletin/boletin', {user, asignaturas, registros, estudiante})
+    res.render('pages/boletin/boletin', {user, asignaturas, registros, estudiante, curso})
+}
+
+const getBoletinesPorCurso = async (req, res) => {//getBoletines PorCurso Este reemplaza a getBoletines() de curso.controller
+    const clave = req.params.clave
+    const curso = await cursoService.getPorClave(clave)
+    const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
+    const calificaciones = await calificacionService.get()
+    const asignaturas = await asignaturaService.getPorIdCurso(curso.idCurso)
+    console.log("califacas: ", calificaciones)
+    res.render("pages/boletin/boletinesCurso", {user: req.user, curso, estudiantes, calificaciones, asignaturas})
 }
 
 module.exports = {
@@ -131,4 +143,5 @@ module.exports = {
     getPorCursoAsignatura:getPorCursoAsignatura,
     getEstudianteValoracion:getEstudianteValoracion,
     getPorDni:getPorDni,
+    getBoletinesPorCurso: getBoletinesPorCurso,
 } 

@@ -6,6 +6,12 @@ const cursoService = require('./curso.service')
 const estudianteService = require('./estudiante.service')
 const utilidadesService = require('./utilidades.service')
 
+async function get(){
+    const registros =  await estudianteCursoSheet.get()
+
+    return registros
+}
+
 async function putUno(objeto){
     const registro =  await this.getUno(objeto.rowId)
     const curso = registro.cursoClave
@@ -47,10 +53,24 @@ async function putUno(objeto){
     return {msj: 'Se eliminó el estudianteCurso: '+registro.estudianteNombre}
 }
 
+async function getPorIdCurso(idCurso){//devuelve todos registros por id de curso
+    const registros = await estudianteCursoSheet.get()
+    const filtrados = registros.filter(row => row.curso == idCurso)
+    return filtrados
+}
 
 async function getUno(rowId){
     const registros =  await estudianteCursoSheet.get()
     const resultado = registros.filter(row => row.idEstudianteCurso === rowId)
+    //const resultadoJson = await utilidadesService.convertToJson(resultado)
+    //console.log(resultadoJson[0])
+
+    return resultado[0]
+}
+
+async function getUnoPorIdEstudiante(id){
+    const registros =  await estudianteCursoSheet.get()
+    const resultado = registros.filter(row => row.idEstudianteCurso === id)
     //const resultadoJson = await utilidadesService.convertToJson(resultado)
     //console.log(resultadoJson[0])
 
@@ -95,5 +115,8 @@ module.exports = {
     putUno: putUno,
     getUltimo: getUltimo,
     post: post,
-    postEstudianteCurso: postEstudianteCurso
+    postEstudianteCurso: postEstudianteCurso,
+    getUnoPorIdEstudiante:getUnoPorIdEstudiante,
+    getPorIdCurso:getPorIdCurso,
+    get:get,
 } 
