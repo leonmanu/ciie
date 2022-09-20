@@ -4,7 +4,16 @@ $( window ).on( "load", function() {
 	//AJAX	obtener estudiantes///////////////////////
 	var tbl = '';
 
- 
+
+	$('#estudiantes').change(function () {
+		var row = $(this).closest("tr");
+		// row.find('.hiddenName').val("Set value");
+		// row.find('.estu').val("Set value");
+		var customerId = $(this).closest('tr').find('td:first-child').html();   
+		alert(customerId)
+	});
+
+
 	//--->save whole row entery > start	
 	$(document).on('click', '.btn_save',async function(event) 
 	{
@@ -14,7 +23,7 @@ $( window ).on( "load", function() {
 		var arrayJson = []
 		
 		$("table > tbody > tr").each(async function () {
-			let row_id = $(this).attr('row_id');
+			let estudiante_id = $(this).attr('estudiante_id');
 			let rowNumber = $(this).attr('rowNumber');
 			let arr = {};
 			$(this).find('.row_data').each(function(index, val) 
@@ -23,10 +32,12 @@ $( window ).on( "load", function() {
 					let col_val  =  $(this).val()
 					arr[col_name] = col_val
 				})
-			$.extend(arr, {estudiante: row_id, asignatura: idAsignatura, rowNumber: rowNumber})
+			$.extend(arr, {estudiante: estudiante_id, asignatura: idAsignatura, rowNumber: rowNumber})
 
 			arrayJson.push(arr)
+			
 		})
+		alert(arrayJson)
 		//tbl_row.find('.waitIconAsignatura').css("display", "none");
 		$.ajax({
 			

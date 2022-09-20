@@ -1,7 +1,4 @@
 <%- include ../../partials/parte1Superior.ejs %>
-<% let valoracion1, valoracion2 %>
-<% let informe1, informe2 %>
-<% let rowNumber %>
 
 <script src="/js/estudianteAsignatura.ajax.js"></script>
 
@@ -26,8 +23,8 @@
     <div class="">
       <div>
         <h5> <b><span id="spnCurso"> <%= curso.clave%> </span></b> - 
-          <span id="spnAsignatura"> <%= asignatura.asignatura%></span>
-          <p><small><%= estudiantesPorCurso.length %> estudiantes</small></p>
+          <span id="spnAsignatura"> <%= asignatura.asignatura%>, id = <%= asignatura.idAsignatura%></span>
+          <p><small><%= estudiantes.length %> estudiantes</small></p>
           <input id="spnIdAsignatura" value="<%= asignatura.idAsignatura%>" hidden>
             
         </h5>
@@ -67,75 +64,60 @@
         </thead>
         <tbody class="tbl_user_data">
           
-          <% estudiantesPorCurso.forEach(function(estuPorCurso){ %>
-            <% rowNumber=''%>
-            <% valoracion1='' %>
-            <% valoracion2='' %>
-                  <% informe1='' %>
-                  <% informe2='' %>
-                  <% for (var l=estudiantesPorCalificaciones.length, i=0; i < l; i++) { %>
-                    <% estuPorCalificaciones = estudiantesPorCalificaciones[i]%>
-                    <% if( estuPorCurso.estudiante === estuPorCalificaciones.estudiante ){ %>
-                      <% valoracion1=estuPorCalificaciones.valoracion1%>
-                      <% valoracion2=estuPorCalificaciones.valoracion2%>
-                      <% informe1=estuPorCalificaciones.informe1%>
-                      <% informe2=estuPorCalificaciones.informe2%>
-                      <% rowNumber=estuPorCalificaciones._rowNumber%>
-                      <% break %>
-                    <% } %>
-      
-                  <% }; %>
-          <tr row_id='<%= estuPorCurso.estudiante%>' rowNumber="<%= rowNumber%>">
+          <% estudiantes.forEach(function(estudiante){ %>
+            
+          <tr estudiante_id='<%= estudiante.id %>'>
             <td>
-              <div class="" edit_type="click" col_name="nombre">
-                <%= estuPorCurso.estudianteNombre%>
+              <div class="estu" edit_type="click" col_name="nombre">
+                <%= estudiante.apellido %>, <%= estudiante.nombre %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock text-info" viewBox="0 0 16 16" style="display:none ;">
+                  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                </svg>
               </div>
             </td>
            
             
-            <!-- 1° Informe -->
-            <td>
-
-              <select class="row_data form-select" edit_type="click" col_name="valoracion1">
-                <option value="" disabled selected></option>
-                <% calificacionCodigos.forEach(function(calificacionCodigo){ %>
-                  <% if( valoracion1==calificacionCodigo.simbolo ){ %>
-                    <option value="<%=calificacionCodigo.simbolo%>" selected>
-                      <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
-                    </option>
-                  <% }else{ %>
-                    <option value="<%=calificacionCodigo.simbolo%>">
-                      <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
-                    </option>
-                  <% } %>
-                <% }); %>
-              </select>
-            </td>
-            <td>
-              <input  class="row_data form-control" edit_type="click" col_name="informe1" value="<%= informe1%>"/>
-            </td>
-
-            <!-- 2° Informe -->
-
-            <td>
-              <select class="row_data form-select" edit_type="click" col_name="valoracion2">
-                <option value="" disabled selected></option>
-                <% calificacionCodigos.forEach(function(calificacionCodigo){ %>
-                  <% if( valoracion2 == calificacionCodigo.simbolo ){ %>
-                    <option value="<%=calificacionCodigo.simbolo%>" selected>
-                      <%= calificacionCodigo.simbolo %> - <%= calificacionCodigo.letra %>
-                    </option>
-                  <% } else{ %>
-                    <option value="<%=calificacionCodigo.simbolo%>">
-                      <%= calificacionCodigo.simbolo %> - <%= calificacionCodigo.letra %>
-                    </option>
-                  <% } %>
-                <% }); %>
-              </select>
-            </td>
-            <td>
-              <input class="row_data form-control" edit_type="click" col_name="informe2" value="<%= informe2 %>" autofocus="off" autocorrect="off" autocapitalize="off"/>
-            </td>
+            
+            <% calificaciones.forEach(function(calificacion){ %>
+              <% if(estudiante.id == calificacion.estudiante && asignatura.idAsignatura == calificacion.asignatura) {%>
+                <!-- 1° Informe -->
+                
+                <td rowNumber = '<%= calificacion._rowNumber %>'>
+                  <%= calificacion._rowNumber %>
+                  <select class="row_data form-select" edit_type="click" col_name="valoracion1">
+                    <option value="" disabled selected></option>
+                    <% calificacionCodigos.forEach(function(calificacionCodigo){ 
+                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion1 ) ? "selected" : "";
+                    %>
+                      <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
+                        <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
+                      </option>
+                    <% }); %>
+                  </select>
+                </td>
+                <td>
+                  <input  class="row_data form-control" edit_type="click" col_name="informe2" value="<%= calificacion.informe2%>"/>
+                </td>
+                <!-- 2° Informe -->
+                <td>
+                  <select class="row_data form-select" edit_type="click" col_name="valoracion1">
+                    <option value="" disabled selected></option>
+                    <% calificacionCodigos.forEach(function(calificacionCodigo){ 
+                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion2 ) ? "selected" : "";
+                    %>
+                      <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
+                        <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
+                      </option>
+                    <% }); %>
+                  </select>
+                </td>
+                <td>
+                  <input  class="row_data form-control" edit_type="click" col_name="informe2" value="<%= calificacion.informe2%>"/>
+                </td>
+              <% } %>
+            <% }) %>
+            
 
           </tr>
           <% }); %>

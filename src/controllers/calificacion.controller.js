@@ -11,12 +11,11 @@ const cursoAsignaturaService = require('../services/cursoAsignatura.service')
 const getCursoYAsignatura = async (req, res) => {
     const curso = await cursoService.getPorClave(req.params.curso)
     const asignatura = await asignaturaService.getPorId(req.params.asignatura)
-    const estudiantesPorCurso = await estudianteService.getPorCurso(req.params.curso)
-    const estudiantesPorCalificaciones = await calificacionService.getEstudiantePorAsignatura(req.params.asignatura, req.params.curso)
+    const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
+    const calificaciones = await calificacionService.getEstudiantePorAsignatura(req.params.asignatura, req.params.curso)
     const calificacionCodigos = await calificacionCodigoService.getTodo()
-    console.log("CURSO == ", curso)
 
-    res.render('pages/estudiante/calificacion', {user: req.user._json, curso, asignatura, estudiantesPorCurso, estudiantesPorCalificaciones, calificacionCodigos})
+    res.render('pages/estudiante/calificacion', {user: req.user._json, curso, asignatura, estudiantes, calificaciones, calificacionCodigos})
 }
 
 const getCursoAsignaturaInforme = async (req, res) => {
