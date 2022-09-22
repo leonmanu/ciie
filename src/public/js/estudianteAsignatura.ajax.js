@@ -5,13 +5,16 @@ $( window ).on( "load", function() {
 	var tbl = '';
 
 
-	$('#estudiantes').change(function () {
-		var row = $(this).closest("tr");
-		// row.find('.hiddenName').val("Set value");
-		// row.find('.estu').val("Set value");
-		var customerId = $(this).closest('tr').find('td:first-child').html();   
-		alert(customerId)
-	});
+	$("table > tbody > tr").change(async function (event) {
+		event.preventDefault();
+		var tbl_row = await $(this).closest('tbody > tr');
+		//var row_id = tbl_row.attr('row_id');
+   		var row_estudiante = await  $(this).find(".estudiante").html()
+		await  $(this).find(".estudiante").html('*'+$(this).find(".estudiante").html())
+    	var row_cLectivo = tbl_row.find("td:eq(3)").html()
+    	var row_estudianteNombre = tbl_row.find("td:eq(0)").find('div').html()
+		alert(row_estudiante)
+	});  
 
 
 	//--->save whole row entery > start	
