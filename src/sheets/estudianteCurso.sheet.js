@@ -42,7 +42,7 @@ async function getOne(){
     const sheet = documento.sheetsById[82786429]
     const registros =  await sheet.getRows()
 
-    console.log(registros)
+    //console.log(registros)
 
     return registros
     
@@ -51,7 +51,7 @@ async function getOne(){
 async function post(objeto) {
     const documento = await obtenercredenciales()
     objetoNuevo = await sheet.addRow(objeto)
-    console.log("estudianteCurso: ", objetoNuevo)
+    //console.log("estudianteCurso: ", objetoNuevo)
     return {msj: 'Se creó el estudianteCurso: '+objetoNuevo}
 }
 
@@ -61,14 +61,14 @@ async function put(pObjeto) {
     const sheet = documento.sheetsById[82786429]
     const rows = await sheet.getRows()
 
-    console.log('lenght: ', rows.length)
+    //console.log('lenght: ', rows.length)
 
     rows[5].Estudiante = 'Sergio el Bailador'
     await rows[5].save()
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index].Estudiante;
-        console.log('Registro: ', element)
+        //console.log('Registro: ', element)
     }
 
 }
@@ -81,7 +81,7 @@ async function del(pObjeto) {
     const sheet = documento.sheetsById[82786429]
     await sheet.addRow(pObjeto)
 
-    console.log(pObjeto)
+    //console.log(pObjeto)
 }
 
 module.exports = {

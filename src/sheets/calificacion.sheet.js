@@ -111,7 +111,7 @@ async function put(pObjeto) {
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index].Estudiante;
-        console.log('Registro: ', element)
+        //console.log('Registro: ', element)
     }
 
 }

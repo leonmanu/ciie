@@ -73,18 +73,41 @@ const postCalificacion = async (jsonParse) => {
 const postArray = async (jsonArray) => {
     var i=0
     var modificables = []
+    var agregables = []
+    console.log("primer elemento: ",jsonArray[0].rowNumber)
     for (let index = 0; index < jsonArray.length; index++) {
        
-        resultado = await postCalificacion(jsonArray[index])
-        if (resultado != null) {
-            modificables.push(resultado)
+        //resultado = await postCalificacion(jsonArray[index])
+        if (typeof  jsonArray[i] !== 'undefined') {
+            console.log("ROW-NUMBBER existe: ",jsonArray[i].rowNumber)
+            //modificables.push(agregables)
             i++
+        } else{
+            //agregables.push(agregables)
+            console.log("ROW-NUMBBER no: ",resultado.rowNumber)
         }
         console.log("indjsonArrayex: ", resultado)
     }
-    await calificacionSheet.putArray(modificables)
+    
     return i
 }
+
+// const postArray = async (jsonArray) => {
+//     var i=0
+//     var modificables = []
+//     for (let index = 0; index < jsonArray.length; index++) {
+       
+//         resultado = await postCalificacion(jsonArray[index])
+//         if (resultado != null) {
+//             modificables.push(resultado)
+//             i++
+//         }
+//         console.log("indjsonArrayex: ", resultado)
+//     }
+
+//     await calificacionSheet.putArray(modificables)
+//     return i
+// }
 
 //**********************>>>>>>>>>>>verificar si borrar
 

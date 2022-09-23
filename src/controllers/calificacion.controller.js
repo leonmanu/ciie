@@ -44,10 +44,10 @@ const getEstudiantePorAsignatura = async (req, res) => {
     const registros = await estudianteService.getPorCurso(req.params.curso)
     const asignatura = await asignaturaService.getPorId(req.params.idAsignatura)
     const resultado = []
-    console.log("EstudianteRegistro: ", registros)
+    //console.log("EstudianteRegistro: ", registros)
     await registros.forEach(async registro => {
         const estudiante = await estudianteService.getUno(registro.estudiante)
-        console.log("estudiante: ", estudiante)
+        //console.log("estudiante: ", estudiante)
         resultado.push(estudiante)
     } )
     // await registros.forEach( registro => {
@@ -71,7 +71,7 @@ const getPorCursoAsignatura = async (req, res) => {
     const asignatura = req.params.asignatura.toString()
     const clave = req.params.clave
     const calificiones = await calificacionService.getPorCursoAsignaturaOrden(asignatura, clave)
-    console.log("CALIFACAS--->", calificiones)
+    //console.log("CALIFACAS--->", calificiones)
 
     res.render('pages/asignatura/asignaturaCalificacion', {user: req.user._json, calificiones, clave})
 }

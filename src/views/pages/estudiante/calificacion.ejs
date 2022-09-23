@@ -23,7 +23,7 @@
     <div class="">
       <div>
         <h5> <b><span id="spnCurso"> <%= curso.clave%> </span></b> - 
-          <span id="spnAsignatura"> <%= asignatura.asignatura%>, id = <%= asignatura.idAsignatura%></span>
+          <span id="spnAsignatura"> <%= asignatura.asignatura%></span>
           <p><small><%= estudiantes.length %> estudiantes</small></p>
           <input id="spnIdAsignatura" value="<%= asignatura.idAsignatura%>" hidden>
             
@@ -67,9 +67,10 @@
           <% estudiantes.forEach(function(estudiante){ %>
             
           <tr estudiante_id='<%= estudiante.id %>'>
-            <td class="change" style="display:none ;">
-              
+            <td class="row_data change" col_name="change" style="display:none ;">
+              false
             </td>
+
             <td class="estudiante" col_name="nombre">
                 <%= estudiante.apellido %>, <%= estudiante.nombre %>
             </td>
@@ -79,9 +80,10 @@
             <% calificaciones.forEach(function(calificacion){ %>
               <% if(estudiante.id == calificacion.estudiante && asignatura.idAsignatura == calificacion.asignatura) {%>
                 <!-- 1° Informe -->
-                
-                <td rowNumber = '<%= calificacion._rowNumber %>'>
+                <td class="rowNumber">
                   <%= calificacion._rowNumber %>
+                </td>
+                <td rowNumber = '<%= calificacion._rowNumber %>'>
                   <select class="row_data form-select" edit_type="click" col_name="valoracion1">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 

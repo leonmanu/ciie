@@ -10,10 +10,10 @@ $( window ).on( "load", function() {
 		var tbl_row = await $(this).closest('tbody > tr');
 		//var row_id = tbl_row.attr('row_id');
    		var row_estudiante = await  $(this).find(".estudiante").html()
-		await  $(this).find(".estudiante").html('*'+$(this).find(".estudiante").html())
+		await  $(this).find(".estudiante").css('font-weight', 'bold')
+		await  $(this).find(".change").html('true')
     	var row_cLectivo = tbl_row.find("td:eq(3)").html()
     	var row_estudianteNombre = tbl_row.find("td:eq(0)").find('div').html()
-		alert(row_estudiante)
 	});  
 
 
@@ -26,19 +26,22 @@ $( window ).on( "load", function() {
 		var arrayJson = []
 		
 		$("table > tbody > tr").each(async function () {
-			let estudiante_id = $(this).attr('estudiante_id');
-			let rowNumber = $(this).attr('rowNumber');
-			let arr = {};
-			$(this).find('.row_data').each(function(index, val) 
-				{   
-					let col_name = $(this).attr('col_name')
-					let col_val  =  $(this).val()
-					arr[col_name] = col_val
-				})
-			$.extend(arr, {estudiante: estudiante_id, asignatura: idAsignatura, rowNumber: rowNumber})
+			if ($(this).find(".change").html() == 'true') {
+				let estudiante_id = $(this).attr('estudiante_id');
+				let rowNumber = $.trim($(this).find('.rowNumber').html()) ;
+				let arr = {};
+				$(this).find('.row_data').each(function(index, val) 
+					{   
+						let col_name = $(this).attr('col_name')
+						let col_val  =  $(this).val()
+						arr[col_name] = col_val
+					})
+				
+				$.extend(arr, {estudianteId: estudiante_id, asignatura: idAsignatura, rowNumber: rowNumber})
 
-			arrayJson.push(arr)
-			
+				arrayJson.push(arr)
+				alert(arr.estudianteId)
+			}			
 		})
 		alert(arrayJson)
 		//tbl_row.find('.waitIconAsignatura').css("display", "none");

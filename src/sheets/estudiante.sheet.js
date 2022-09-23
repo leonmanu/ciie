@@ -51,7 +51,7 @@ async function post(objeto) {
 
     const sheet = documento.sheetsById[0]
     await sheet.addRow(objeto)
-    console.log("se creó nuevo ",objeto)
+    //console.log("se creó nuevo ",objeto)
     return objeto
     
 }
@@ -62,14 +62,14 @@ async function put(cargo) {
     const sheet = documento.sheetsById[82786429]
     const rows = await sheet.getRows()
 
-    console.log('lenght: ', rows.length)
+    //console.log('lenght: ', rows.length)
 
     rows[5].Estudiante = 'Sergio el Bailador'
     await rows[5].save()
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index].Estudiante;
-        console.log('Registro: ', element)
+        //console.log('Registro: ', element)
     }
 
 }
