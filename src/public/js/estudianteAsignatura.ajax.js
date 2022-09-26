@@ -26,6 +26,7 @@ $( window ).on( "load", function() {
 		var arrayJson = []
 		
 		$("table > tbody > tr").each(async function () {
+			
 			if ($(this).find(".change").html() == 'true') {
 				let estudiante_id = $(this).attr('estudiante_id');
 				let rowNumber = $.trim($(this).find('.rowNumber').html()) ;
@@ -37,14 +38,12 @@ $( window ).on( "load", function() {
 						arr[col_name] = col_val
 					})
 				
-				$.extend(arr, {estudianteId: estudiante_id, asignatura: idAsignatura, rowNumber: rowNumber})
+				$.extend(arr, {estudiante: estudiante_id, asignatura: idAsignatura, rowNumber: rowNumber})
 
 				arrayJson.push(arr)
-				alert(arr.estudianteId)
+
 			}			
 		})
-		alert(arrayJson)
-		//tbl_row.find('.waitIconAsignatura').css("display", "none");
 		$.ajax({
 			
 			url: '/calificacion/post',
@@ -56,11 +55,14 @@ $( window ).on( "load", function() {
 			success: function (response) {  
 				$('#waitIconAsignatura').css("display", "none");
 				$('.btn_save').prop('disabled', false);
-				alert("Se modificaron las calificaciones de "+ response + " estudiante/s")
+				$('#myModal').modal('show')
+				$('#cant').html(arrayJson.length);
 			}
 			
 		  });
-
+		  $(document).ajaxStop(function(){
+			window.location.reload();
+		});
 
 		// $.post(`/calificacion/post`,{
 		// 	arr

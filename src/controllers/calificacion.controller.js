@@ -12,7 +12,7 @@ const getCursoYAsignatura = async (req, res) => {
     const curso = await cursoService.getPorClave(req.params.curso)
     const asignatura = await asignaturaService.getPorId(req.params.asignatura)
     const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
-    const calificaciones = await calificacionService.getEstudiantePorAsignatura(req.params.asignatura, req.params.curso)
+    const calificaciones = await calificacionService.getPorAsignatura(req.params.asignatura)
     const calificacionCodigos = await calificacionCodigoService.getTodo()
 
     res.render('pages/estudiante/calificacion', {user: req.user._json, curso, asignatura, estudiantes, calificaciones, calificacionCodigos})
@@ -24,7 +24,7 @@ const getCursoAsignaturaInforme = async (req, res) => {
     const estudiantesPorCurso = await estudianteService.getPorCurso(req.params.curso)
     const estudiantesPorCalificaciones = await calificacionService.getEstudiantePorAsignatura(req.params.asignatura, req.params.curso)
     const calificacionCodigos = await calificacionCodigoService.getTodo()
-    console.log("CURSO <<<<<<==>>>>>> ", curso)
+    //console.log("CURSO <<<<<<==>>>>>> ", curso)
 
     res.render('pages/estudiante/calificacionInforme', {user: req.user._json, curso, asignatura, estudiantesPorCurso, estudiantesPorCalificaciones, calificacionCodigos})
 }
@@ -34,13 +34,13 @@ const getEstudianteValoracion = async (req, res) => {// Inconcluso
     const estudiantesPorCurso = await estudianteService.getPorCurso(req.params.curso)
     const estudiantesPorCalificaciones = await calificacionService.getEstudiantePorAsignatura(req.params.asignatura, req.params.curso)
     const calificacionCodigos = await calificacionCodigoService.getTodo()
-    console.log("CURSO <<<<<<==>>>>>> ", curso)
+    //console.log("CURSO <<<<<<==>>>>>> ", curso)
 
     res.render('pages/estudiante/calificacionInforme', {user: req.user._json, curso, asignatura, estudiantesPorCurso, estudiantesPorCalificaciones, calificacionCodigos})
 }
 
 const getEstudiantePorAsignatura = async (req, res) => {
-    console.log(`Curso: ${req.body.curso} Asignatura: ${req.body.idAsignatura}`)
+    //console.log(`Curso: ${req.body.curso} Asignatura: ${req.body.idAsignatura}`)
     const registros = await estudianteService.getPorCurso(req.params.curso)
     const asignatura = await asignaturaService.getPorId(req.params.idAsignatura)
     const resultado = []
@@ -86,11 +86,8 @@ const getInformesPorCurso = async (req, res) => {
 
 const postCalificacion = async (req, res) => {
     jsonStringfy = req.body.arrayJson
-    //jsonParse = JSON.parse(jsonStringfy)
-    
     resultado = await calificacionService.postArray(jsonStringfy)
-    //resultadoJson = await utilidadesService.convertToJson(resultado)
-    //console.log("Resultados ")
+
     res.send(resultado.toString())
 }
 
@@ -130,7 +127,7 @@ const getBoletinesPorCurso = async (req, res) => {//getBoletines PorCurso Este r
     const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
     const calificaciones = await calificacionService.get()
     const asignaturas = await asignaturaService.getPorIdCurso(curso.idCurso)
-    console.log("califacas: ", calificaciones)
+    //console.log("califacas: ", calificaciones)
     res.render("pages/boletin/boletinesCurso", {user: req.user, curso, estudiantes, calificaciones, asignaturas})
 }
 

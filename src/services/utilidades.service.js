@@ -20,6 +20,7 @@ const convertToJson = async (resultados) => {
     
     return jsonArray
 }
+
 module.exports = {
     convertToJson: convertToJson
 } 

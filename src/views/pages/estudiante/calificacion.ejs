@@ -22,7 +22,7 @@
     </h3> 
     <div class="">
       <div>
-        <h5> <b><span id="spnCurso"> <%= curso.clave%> </span></b> - 
+        <h5> <b><span id="spnCurso"> <%= curso.grado %>° <%= curso.division %>° </span></b> - 
           <span id="spnAsignatura"> <%= asignatura.asignatura%></span>
           <p><small><%= estudiantes.length %> estudiantes</small></p>
           <input id="spnIdAsignatura" value="<%= asignatura.idAsignatura%>" hidden>
@@ -76,11 +76,12 @@
             </td>
            
             
-            
+            <% var count = 0 %>
             <% calificaciones.forEach(function(calificacion){ %>
+              
               <% if(estudiante.id == calificacion.estudiante && asignatura.idAsignatura == calificacion.asignatura) {%>
                 <!-- 1° Informe -->
-                <td class="rowNumber">
+                <td class="rowNumber" style="display:none ;">
                   <%= calificacion._rowNumber %>
                 </td>
                 <td rowNumber = '<%= calificacion._rowNumber %>'>
@@ -96,11 +97,11 @@
                   </select>
                 </td>
                 <td>
-                  <input  class="row_data form-control" edit_type="click" col_name="informe2" value="<%= calificacion.informe2%>"/>
+                  <input  class="row_data form-control" edit_type="click" col_name="informe1" value="<%= calificacion.informe2%>"/>
                 </td>
                 <!-- 2° Informe -->
                 <td>
-                  <select class="row_data form-select" edit_type="click" col_name="valoracion1">
+                  <select class="row_data form-select" edit_type="click" col_name="valoracion2">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion2 ) ? "selected" : "";
@@ -114,9 +115,45 @@
                 <td>
                   <input  class="row_data form-control" edit_type="click" col_name="informe2" value="<%= calificacion.informe2%>"/>
                 </td>
+                <%- count++ %>
               <% } %>
+                
+
+              
             <% }) %>
-            
+            <% if(count == 0) {%>
+              <td>
+                <select class="row_data form-select" edit_type="click" col_name="valoracion1">
+                  <option value="" disabled selected></option>
+                  <% calificacionCodigos.forEach(function(calificacionCodigo){ 
+                    var selected = "";
+                  %>
+                    <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
+                      <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
+                    </option>
+                  <% }); %>
+                </select>
+              </td>
+              <td>
+                <input  class="row_data form-control" edit_type="click" col_name="informe1"/>
+              </td>
+              <!-- 2° Informe -->
+              <td>
+                <select class="row_data form-select" edit_type="click" col_name="valoracion2">
+                  <option value="" disabled selected></option>
+                  <% calificacionCodigos.forEach(function(calificacionCodigo){ 
+                    var selected = "";
+                  %>
+                    <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
+                      <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
+                    </option>
+                  <% }); %>
+                </select>
+              </td>
+              <td>
+                <input  class="row_data form-control" edit_type="click" col_name="informe2" />
+              </td>
+            <% } %>
 
           </tr>
           <% }); %>
@@ -127,7 +164,30 @@
 
   </div>
   <hr>
- 
+
+  <div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" >
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Mensaje</h4>
+          </div>
+          <div class="modal-body">
+            <p>Se están modificando <span id="cant"></span> estudiante, por favor espere.<img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' width="30" height="30" /></p>
+            
+          </div>
+          <div class="modal-footer">
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
   <script type="text/javascript">
     // $(document).ready(function() {
     //   document.getElementsByClassName("tabbtn")[0].className += " active";

@@ -2,6 +2,7 @@ const req = require('express/lib/request')
 const boletinSheet = require('../sheets/boletin.sheet')
 const calificacionSheet =  require("../sheets/calificacion.sheet")
 const estudianteSheet = require('../sheets/estudiante.sheet')
+const { getUnoPorIdEstudiante } = require('./estudianteCurso.service')
 const utilidadesService = require('./utilidades.service')
 
 const get = async () => {
@@ -9,6 +10,13 @@ const get = async () => {
     registros = await calificacionSheet.getCalificacion()
 
     return registros
+}
+
+const getUnoEstudianteAsignatura = async (elemento) => {
+    
+    registros = await calificacionSheet.getCalificacion()
+    resultado = await registros.filter(row => row.estudiante === elemento.estudiante && row.asignatura === elemento.asignatura)
+    return resultado[0]
 }
 
 const getUnique = async () => {
@@ -22,7 +30,15 @@ const getEstudiantePorAsignatura = async (asignatura, curso) => {
     
     registros = await calificacionSheet.getCalificacion()
     resultado = await registros.filter( row => row.asignatura === asignatura && row.curso === curso)
+    console.log("curso: ",curso)
+    return resultado
+}
 
+const getPorAsignatura = async (asignatura) => {
+    
+    registros = await calificacionSheet.getCalificacion()
+    resultado = await registros.filter( row => row.asignatura === asignatura)
+    //console.log("curso: ",asignatura)
     return resultado
 }
 
@@ -72,52 +88,33 @@ const postCalificacion = async (jsonParse) => {
 
 const postArray = async (jsonArray) => {
     var i=0
-    var modificables = []
-    var agregables = []
-    console.log("primer elemento: ",jsonArray[0].rowNumber)
-    for (let index = 0; index < jsonArray.length; index++) {
-       
-        //resultado = await postCalificacion(jsonArray[index])
-        if (typeof  jsonArray[i] !== 'undefined') {
-            console.log("ROW-NUMBBER existe: ",jsonArray[i].rowNumber)
-            //modificables.push(agregables)
+     for (let index = 0; index < jsonArray.length; index++) {
+        let elemento = jsonArray[index]
+        if (elemento.rowNumber !== '') {
+            put(elemento)
             i++
         } else{
-            //agregables.push(agregables)
-            console.log("ROW-NUMBBER no: ",resultado.rowNumber)
+            post(elemento)
+            i++
         }
-        console.log("indjsonArrayex: ", resultado)
     }
     
     return i
 }
 
-// const postArray = async (jsonArray) => {
-//     var i=0
-//     var modificables = []
-//     for (let index = 0; index < jsonArray.length; index++) {
-       
-//         resultado = await postCalificacion(jsonArray[index])
-//         if (resultado != null) {
-//             modificables.push(resultado)
-//             i++
-//         }
-//         console.log("indjsonArrayex: ", resultado)
-//     }
+const post = async (elemento) => {
+    const resultado = await calificacionSheet.post(elemento)
 
-//     await calificacionSheet.putArray(modificables)
-//     return i
-// }
+    return resultado
+}
 
-//**********************>>>>>>>>>>>verificar si borrar
-
-/*const getPorIdEstudiante = async (id) => {
-    registros = await boletinSheet.getValoracion()
-    filtrados = await registros.filter( row => row.estudiante == id )
-    const resultadoJson = await utilidadesService.convertToJson(filtrados)
-    
-    return resultadoJson
-}*/
+const put = async (elemento) => {
+    const existente = await getUnoEstudianteAsignatura(elemento)
+    const existeModificado = await emparejar(existente,elemento)
+    resultado = await calificacionSheet.save(existeModificado)
+    console.log("resultado ", resultado)
+    return resultado
+}
 
 const getCrudaPorIdEstudiante = async (id) => {
     registros = await boletinSheet.getValoracionCurda()
@@ -147,9 +144,21 @@ const getPorCurso = async (clave) => {
     return resultadoJson
 }
 
+async function emparejar(objExistente, objNuevo) {
+    var header = objExistente._sheet.headerValues
+    header.forEach(r => {
+        objExistente[r] = objNuevo[r]
+    })
+
+    return objExistente
+}
+
 
 module.exports = {
     get:get,
+    getUnoEstudianteAsignatura:getUnoEstudianteAsignatura,
+    post: post,
+    put: put,
     postCalificacion: postCalificacion,
     getEstudiantePorAsignatura: getEstudiantePorAsignatura,
     getEstudianteAsignatura: getEstudianteAsignatura,
@@ -159,6 +168,8 @@ module.exports = {
     getPorCurso: getPorCurso,
     postArray: postArray,
     getCrudaPorIdEstudiante:getCrudaPorIdEstudiante,
+    getPorAsignatura:getPorAsignatura,
+    emparejar:emparejar,
     // getCargosTodos : getCargosTodos,
     // getPorDocente: getPorDocente,
     

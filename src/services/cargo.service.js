@@ -22,7 +22,7 @@ const getCargoPorRol = async(req, res) => {
     await filtrados.forEach( registro => {
         resultado.push({ id: registro.id, asignatura: registro.rolNombre})
     })
-    console.log("Resultado: ",resultado)
+    //console.log("Resultado: ",resultado)
     return resultado
 }
 

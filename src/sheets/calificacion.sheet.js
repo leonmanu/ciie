@@ -22,14 +22,6 @@ const get = async () => {
 
 async function getCalificacion(){
     await obtenercredenciales()
-    const registros =  await sheet_get.getRows()
-    //console.log("SHEETS Calificaciones = ", registros)
-    return registros
-    
-}
-
-async function getCalificacionCrudas(){
-    await obtenercredenciales()
     const registros =  await sheet.getRows()
     //console.log("SHEETS Calificaciones = ", registros)
     return registros
@@ -44,6 +36,17 @@ async function getOrdenado(){
     
 }
 
+async function post(elemento) {
+    await obtenercredenciales()
+    const resultado = await sheet.addRow(elemento,(err) => {
+        if (err) rej(err);
+        else res(true);
+      })
+    console.log("Resultado: ", resultado)
+    return resultado
+    //console.log("resultado postSheet: ",resultado)
+}
+
 async function postCalificacion(objetoInterface) {
     await obtenercredenciales()
     const resultado = await sheet.addRow(objetoInterface)
@@ -52,42 +55,21 @@ async function postCalificacion(objetoInterface) {
     //console.log("resultado postSheet: ",resultado)
 }
 
-async function putCalificacion(objExistente, objNuevo) {
-    var modificar = false //son distintos? true si son distintos
-    var header = objExistente._sheet.headerValues
-    header.forEach(r => {
-        //console.log("header: foreach: ", r)
-        if(objExistente[r] !== '' && typeof(objNuevo[r]) !== 'undefined' && objNuevo[r] !== ''&& objNuevo[r] !== null && objExistente[r] !== objNuevo[r]){
-            modificar = true
-            console.log(r+"**********objExistente[r]: "+objExistente[r] +  " <==> objNuevo[r]: " +objNuevo[r])
-        }
-        objExistente[r] = objNuevo[r]
-    })
-    if(modificar == true){
-        resultado = await objExistente.save()
-    }
+async function save(elemento) {
+    resultado = await elemento.save((err) => {
+        if (err) rej(err);
+            else res(true);
+        })
     
-    console.log("modifi ::   ", modificar)
-    return modificar
+    return resultado
 }
 
 async function modificablesArray(objExistente, objNuevo) {
-    var modificar = false //son distintos? true si son distintos
     var header = objExistente._sheet.headerValues
     header.forEach(r => {
-        //console.log("header: foreach: ", r)
-        if(objExistente[r] !== '' && typeof(objNuevo[r]) !== 'undefined' && objNuevo[r] !== ''&& objNuevo[r] !== null && objExistente[r] !== objNuevo[r]){
-            modificar = true
-            console.log(r+"**********objExistente[r]: "+objExistente[r] +  " <==> objNuevo[r]: " +objNuevo[r])
-        }
         objExistente[r] = objNuevo[r]
     })
-    if(modificar == true){
-        return objExistente
-    }
-    else{
-        return null
-    }
+    return objExistente
 }
 
 async function putArray(array) {
@@ -128,12 +110,12 @@ async function del(pObjeto) {
 module.exports = {
     get:get,
     getCalificacion: getCalificacion,
-    getCalificacionCruda: getCalificacionCrudas,
+    post:post,
     postCalificacion: postCalificacion,
     put : put,
     del : del,
-    putCalificacion: putCalificacion,
     getOrdenado:getOrdenado,
     modificablesArray:modificablesArray,
     putArray:putArray,
+    save:save,
 }
