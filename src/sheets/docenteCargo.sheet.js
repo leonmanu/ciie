@@ -11,8 +11,16 @@ async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
     sheet = documento.sheetsById[483612079]
-    sheet_get = documento.sheetsById[1292811399]
+    sheet_get = documento.sheetsById[1292811399]// hay que borrar
     return documento
+}
+
+async function get(){
+    await obtenercredenciales()
+    
+    const registros =  await sheet.getRows()
+    //console.log("Cargo por docente::::::::::::.. ", registros)
+    return registros
 }
 
 async function getCargosTodos(){
@@ -45,6 +53,7 @@ async function putBajaDocenteCargo(rowNumber, fechaBaja) {
 }
 
 module.exports = {
+    get:get,
     getCargosTodos: getCargosTodos,
     postDocenteCargo:postDocenteCargo,
     putBajaDocenteCargo: putBajaDocenteCargo

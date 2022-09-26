@@ -1,21 +1,24 @@
 const req = require('express/lib/request')
+const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
 const cargoSheet =  require("../sheets/docenteCargo.sheet")
 const utilidadesService = require('./utilidades.service')
 
+
+const get = async () => {
+    resultados = await docenteCargoSheet.get()
+    return resultados
+}
 
 const getCargosTodos = async (req, res) => {
     resultado = await cargoSheet.getCargosTodos()
     return resultado
 }
 
-const getPorDocente = async (req, res) => {//este es el que manda los cargos por docentes
-    const registros = await cargoSheet.getCargosTodos()
+const getPorDocente = async (req) => {//este es el que manda los cargos por docentes
+    const registros = await cargoSheet.get()
+    const filtrados = registros.filter(row => row.idGoogleUsuario === req.user.id && !row.fechaBaja)
     
-    const resultados = registros.filter(row => row ["idGoogleUsuario"] === req.user.id && !row.fechaBaja)
-        registros.map((registro)=>{
-    })
-
-    return resultados
+    return filtrados
 }
 
 const getPorDocenteCargoCurso = async (req, res) => {
@@ -73,6 +76,7 @@ const putBajaDocenteCargo = async(rowNumber) => {
 
 
 module.exports = {
+    get:get,
     getCargosTodos : getCargosTodos,
     getPorDocente: getPorDocente,
     postDocenteCargo: postDocenteCargo,

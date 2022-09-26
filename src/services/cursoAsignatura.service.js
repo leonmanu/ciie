@@ -4,8 +4,16 @@ const cursoAsignaturaSheet = require('../sheets/cursoAsignatura.sheet')
 const utilidadesService = require('./utilidades.service')
 
 
-const getPorId = async (asignaturaId) => {
-    
+const get = async () => {
+    const registros = await cursoAsignaturaSheet.get()
+}
+
+const getPorDocenteCargo = async (docenteCargos) => {
+    const registros = await cursoAsignaturaSheet.get()
+    //const filtrados = registros.filter(({ id }) => docenteCargos.some(({ cursoAsignatura }) => id === cursoAsignatura ))
+    const filtrados = docenteCargos.filter(({ cursoAsignatura }) => registros.some(({ id }) => id === cursoAsignatura ))
+    console.log("docenteCargos: ", docenteCargos[0].cursoAsignatura," registros: ",registros[0].id)
+    return filtrados
 }
 
 const getPorClave = async (asignaturaClave) => {
@@ -21,7 +29,8 @@ const getPorCurso = async (idCurso) => {
 }
 
 module.exports = {
-    getPorId : getPorId,
+    get : get,
     getPorClave: getPorClave,
-    getPorCurso: getPorCurso
+    getPorCurso: getPorCurso,
+    getPorDocenteCargo:getPorDocenteCargo,
 } 
