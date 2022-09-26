@@ -2,6 +2,10 @@ const req = require('express/lib/request')
 const rolSheet =  require("../sheets/rol.sheet")
 const { RolDto } = require('../models/rol.class')
 
+const get = async () => {
+    registros = await rolSheet.getTodos()
+    return registros
+}
 
 const getTodos = async (req, res) => {
     registros = await rolSheet.getTodos()
@@ -18,5 +22,6 @@ const getTodos = async (req, res) => {
 }
 
 module.exports = {
+    get:get,
     getTodos : getTodos
 } 

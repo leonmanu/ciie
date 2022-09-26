@@ -1,6 +1,11 @@
 const req = require('express/lib/request')
 const cargoSheet =  require("../sheets/cargo.sheet")
 
+const get = async () => {
+    const resultado = cargoSheet.get()
+    return resultado
+}
+
 //Dedería llamarse getTodosPorCurso o algo de Asignaturas
 const getTodos = async (req, res) => {
     console.log("PARAM: ", req.params.id)
@@ -11,6 +16,13 @@ const getTodos = async (req, res) => {
         resultado.push({ id: registro.id, asignatura: registro.asignaturaNombre})
     })
     return resultado
+}
+
+const getPorDocenteCargo = async (docenteCargos) => {
+    const cargo = await get()
+    const filtrados = await cargo.filter(({ id }) => docenteCargos.some(({ cursoAsignatura }) => id == cursoAsignatura ))
+    //console.log("getPorDocenteCargo: ", filtrados)
+    return filtrados
 }
 
 const getCargoPorRol = async(req, res) => {
@@ -28,6 +40,8 @@ const getCargoPorRol = async(req, res) => {
 
 
 module.exports = {
+    get:get,
     getTodos : getTodos,
-    getCargoPorRol: getCargoPorRol
+    getCargoPorRol: getCargoPorRol,
+    getPorDocenteCargo:getPorDocenteCargo,
 } 

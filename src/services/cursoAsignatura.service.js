@@ -8,11 +8,10 @@ const get = async () => {
     const registros = await cursoAsignaturaSheet.get()
 }
 
-const getPorDocenteCargo = async (docenteCargos) => {
-    const registros = await cursoAsignaturaSheet.get()
-    //const filtrados = registros.filter(({ id }) => docenteCargos.some(({ cursoAsignatura }) => id === cursoAsignatura ))
-    const filtrados = docenteCargos.filter(({ cursoAsignatura }) => registros.some(({ id }) => id === cursoAsignatura ))
-    console.log("docenteCargos: ", docenteCargos[0].cursoAsignatura," registros: ",registros[0].id)
+const getPorDocenteCargo = async (cargos) => {
+    const cursoAsignaturas = await cursoAsignaturaSheet.get()
+    const filtrados = cursoAsignaturas.filter(({ id }) => cargos.some(({ cursoAsignatura }) => id == cursoAsignatura ))
+
     return filtrados
 }
 

@@ -13,7 +13,14 @@ async function obtenercredenciales(){
     return documento
 }
 
-async function getTodos(){
+async function get(){
+    await obtenercredenciales()
+    const registros =  await sheet.getRows()
+    return registros
+    
+}
+
+async function getTodos(){//hay que borrar
     await obtenercredenciales()
     const registros =  await sheet.getRows()
     return registros
@@ -72,6 +79,7 @@ async function getTodos(){
 // }
 
 module.exports = {
+    get:get,
     getTodos: getTodos,
     // getOne: getOne,
     // post: post,

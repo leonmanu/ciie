@@ -1,6 +1,6 @@
 const req = require('express/lib/request')
 const docenteCargoService =  require("../services/docenteCargo.service")
-const cargoService =  require("../services/docenteCargo.service")
+const cargoService =  require("../services/cargo.service")
 const cursoService = require('../services/curso.service')
 const rolService = require('../services/rol.service')
 const revistaService = require('../services/revista.service')
@@ -15,10 +15,13 @@ const getCargosTodos = async (req, res) => {
 
 const getPorDocente = async (req, res) => {
     const docenteCargos = await docenteCargoService.getPorDocente(req)
-    const cargoAsignaturas = await cursoAsignaturaService.getPorDocenteCargo(docenteCargos)
-    console.log("getPorDocente->cargoAsignaturas:",cargoAsignaturas)
-    cursos = await cursoService.getTodos()
-    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos: cargos})
+    const cargos = await cargoService.getPorDocenteCargo(docenteCargos)
+    const roles = await rolService.get()
+    const cursos = await cursoService.get()
+    const cursoAsignaturas = await cursoAsignaturaService.getPorDocenteCargo(cargos)
+    console.log("cursoAsignaturas: ",cursoAsignaturas)
+
+    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos,roles,cursos,cursoAsignaturas})
 }
 
 const getCargoCursoPorDocente = async (req, res) => {

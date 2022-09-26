@@ -2,6 +2,11 @@ const req = require('express/lib/request')
 const cursoSheet =  require("../sheets/curso.sheet")
 const utilidadesService = require('./utilidades.service')
 
+const get = async () => {
+    registros = await cursoSheet.getTodos()
+    
+    return registros
+}
 
 const getTodos = async (req, res) => {
     registros = await cursoSheet.getTodos()
@@ -46,6 +51,7 @@ const getPorId = async (idCurso) => {
 }
 
 module.exports = {
+    get: get,
     getTodos : getTodos,
     getCursosTodos: getCursosTodos,
     getPorClave: getPorClave,

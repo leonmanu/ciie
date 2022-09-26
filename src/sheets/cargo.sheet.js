@@ -12,7 +12,14 @@ async function obtenercredenciales(){
     return documento
 }
 
-async function getTodos(){
+async function get(){
+    await obtenercredenciales()
+    
+    const registros =  await sheet.getRows()
+    return registros
+}
+
+async function getTodos(){//esta hace lo mismo que get
     await obtenercredenciales()
     
     const registros =  await sheet.getRows()
@@ -20,5 +27,6 @@ async function getTodos(){
 }
 
 module.exports = {
+    get:get,
     getTodos: getTodos
 }
