@@ -19,6 +19,14 @@ const getPorClave = async (asignaturaClave) => {
     return resultadoJson[0]
 }
 
+const getPorCursoAsignatura = async (cursoAsignatura) => {
+    const asignaturas = await asignaturaSheet.getTodo()
+    const filtrados = asignaturas.filter(({ idAsignatura }) => cursoAsignatura.some(({ asignatura }) => idAsignatura == asignatura ))
+    //console.log("asignaturaService.getProClave: ",resultadoJson[0])
+    
+    return filtrados
+}
+
 const getPorCurso = async (clave) => {
     const registros = await asignaturaSheet.getAsignaturaCurso()
     const filtrados = registros.filter(row => row.cursoClave == clave)
@@ -41,4 +49,5 @@ module.exports = {
     getPorClave: getPorClave,
     getPorCurso: getPorCurso,
     getPorIdCurso:getPorIdCurso,
+    getPorCursoAsignatura:getPorCursoAsignatura,
 } 

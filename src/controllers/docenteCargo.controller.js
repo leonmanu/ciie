@@ -5,6 +5,7 @@ const cursoService = require('../services/curso.service')
 const rolService = require('../services/rol.service')
 const revistaService = require('../services/revista.service')
 const cursoAsignaturaService = require('../services/cursoAsignatura.service')
+const asignaturaService = require('../services/asignatura.service')
 
 
 const getCargosTodos = async (req, res) => {
@@ -16,12 +17,13 @@ const getCargosTodos = async (req, res) => {
 const getPorDocente = async (req, res) => {
     const docenteCargos = await docenteCargoService.getPorDocente(req)
     const cargos = await cargoService.getPorDocenteCargo(docenteCargos)
+    const cursoAsignaturas = await cursoAsignaturaService.getPorDocenteCargo(cargos)
     const roles = await rolService.get()
     const cursos = await cursoService.get()
-    const cursoAsignaturas = await cursoAsignaturaService.getPorDocenteCargo(cargos)
-    console.log("cursoAsignaturas: ",cursoAsignaturas)
+    const asignaturas = await asignaturaService.getPorCursoAsignatura(cursoAsignaturas)
+    console.log("cursos: ",asignaturas)
 
-    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos,roles,cursos,cursoAsignaturas})
+    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos,roles,cursos,cursoAsignaturas,asignaturas})
 }
 
 const getCargoCursoPorDocente = async (req, res) => {
