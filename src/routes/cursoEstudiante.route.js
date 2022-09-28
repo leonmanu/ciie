@@ -9,5 +9,5 @@ var sessionMiddelware = require('../middelware/session.middelware')
 router
     .post('/alta',sessionMiddelware, post)//
     .post('/bajaFake',sessionMiddelware, putUno)//
-    
+     
 module.exports = router

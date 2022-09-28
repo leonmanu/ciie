@@ -40,13 +40,21 @@
         </thead>
         <tbody class="tbl_user_data">
           <% estudiantes.forEach(function(estudiante){ %>
-          <tr row_id = '<%=estudiante.idEstudianteCurso%>'>
+            <% let rowid = "" %>
+            <% let cLectivo %>
+            <% estudianteCursos.forEach(function(estudianteCurso){ %>
+              <% if(estudiante.id == estudianteCurso.estudiante) {%>
+                <% rowid = estudianteCurso._rowNumber %>
+                <% cLectivo = estudianteCurso.cLectivo %>
+              <% } %>
+            <% }) %>
+          <tr row_id = '<%= rowid%>'>
            <td>
             <%= i %>
            </td>
             <td>
               <p class="m-0">
-                <%=estudiante.estudianteNombre%>
+                <%= estudiante.apellido%>, <%= estudiante.nombre%>
               </p>
             </td>
             <td>
@@ -55,7 +63,7 @@
               </p>
             </td>
             <td>
-              <%=estudiante.cLectivo%>
+              <%=cLectivo%>
             </td>
 
 
@@ -114,7 +122,7 @@
                 <select id="inputCurso"  class="form-select" type="text" placeholder="Ingrese su/s apellido/s" name="curso">
                   <option value="" disabled selected>Seleccione un curso</option>
                   <% cursos.forEach(function(curso){ %>
-                    <option value="<%= curso.idCurso %>"><%= curso.clave%> - <%= curso.turnoNombre%></option>
+                    <option value="<%= curso.idCurso %>"><%= curso.grado %>°<%= curso.division %>° </option>
                   <% }); %>
                 </select>
               </div>

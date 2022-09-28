@@ -46,7 +46,7 @@ const putUno = async (req, res) => {
     callback = await estudianteCursoService.putUno(objeto)
     console.log("Salió del controler putUno", callback)
     res.redirect('back')//resolver al final
-}
+} 
 
 const del = async (req, res) => {
     registros = await sheet.del()

@@ -20,7 +20,7 @@ const getPorClave = async (asignaturaClave) => {
 }
 
 const getPorCurso = async (idCurso) => {
-    const registros = await cursoAsignaturaSheet.getTodo()
+    const registros = await cursoAsignaturaSheet.get()
     const filtrados = await registros.filter(row => row.curso == idCurso)
     //const resultadoJson = await utilidadesService.convertToJson(filtrados)
 

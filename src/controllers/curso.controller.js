@@ -19,10 +19,21 @@ const getCursosTodos = async (req, res) => {
 }
 
 const getEstudiantes = async (req, res) => {
-    const clave = req.params.clave
-    registros = await estudianteService.getPorCurso(clave)
-    res.render("pages/curso/cursoEstudiantes", {user: req.user, clave, estudiantes: registros})
+    const clave = await req.params.clave
+    const curso = await cursoService.getPorClave(clave)
+    const cursos = await cursoService.getCursosTodos()
+    const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
+    const estudianteCursos = await estudianteCursoService.getPorIdCurso(curso.idCurso)
+    //console.log("estudianteCursos: ", estudianteCursos)
+
+    res.render("pages/curso/cursoEstudiantes", {user: req.user, clave, estudiantes, curso, cursos, estudianteCursos})
 }
+
+// const getEstudiantes = async (req, res) => {
+//     const clave = req.params.clave
+//     registros = await estudianteService.getPorCurso(clave)
+//     res.render("pages/curso/cursoEstudiantes", {user: req.user, clave, estudiantes: registros})
+// }
 
 module.exports = {
     cursoGetTodo: cursoGetTodo,
