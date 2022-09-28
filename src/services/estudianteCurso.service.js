@@ -13,11 +13,11 @@ async function get(){
 }
 
 async function putUno(objeto){
+    console.log("Objeto: ", objeto)
     const registro =  await this.getUno(objeto.rowId)
-    const curso = registro.cursoClave
+    console.log("registro: ", registro)
+    const curso = await cursoService.getPorClave(objeto.cursoClave)
     let objetoEliminado
-    registro.estudianteNombre = null
-    registro.cursoClave = null
     const registroNuevo = registro
     registro.fechaBaja = objeto.fechaBaja
     
@@ -31,11 +31,7 @@ async function putUno(objeto){
 
         registroNuevo.idEstudianteCurso = (parseInt(ultimo.idEstudianteCurso)+1).toString()
         registroNuevo.curso = objeto.curso
-        registroNuevo.estudianteNombre = null
-        registroNuevo.cursoClave = null
         registroNuevo.fechaAlta = objeto.fechaBaja
-        registroNuevo.fechaBaja = null
-        registroNuevo.observacion = null
         
         const respuesta = await this.post(registroNuevo)
         console.log("NUEVO:::::::: ", respuesta)
@@ -61,11 +57,12 @@ async function getPorIdCurso(idCurso){//devuelve todos registros por id de curso
 
 async function getUno(rowId){
     const registros =  await estudianteCursoSheet.get()
-    const resultado = registros.filter(row => row._rowNumber === rowId)
+    console.log("Registro[0]",registros[0] )
+    const resultado = await registros.filter(row => row._rowNumber === rowId)
     //const resultadoJson = await utilidadesService.convertToJson(resultado)
-    //console.log(resultadoJson[0])
+    console.log(resultado[0] )
 
-    return resultado[0]
+    return resultado[0] 
 }
 
 async function getUnoPorIdEstudiante(id){
