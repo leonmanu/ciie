@@ -16,15 +16,15 @@ async function putUno(objeto){
     console.log("Objeto: ", objeto)
     const registro =  await this.getUno(objeto.rowId)
     console.log("registro: ", registro)
-    const curso = await cursoService.getPorClave(objeto.cursoClave)
+    const curso = await cursoService.getPorId(objeto.cursoId)
     let objetoEliminado
     const registroNuevo = registro
     registro.fechaBaja = objeto.fechaBaja
     
     if (objeto.motivoBaja == 1 || objeto.motivoBaja == 3) {
         const ultimo = await this.getUltimo()
-        
-        registro.observacion = 'Pasó a ' + curso.clave
+        console.log("Pasó a: ",objeto.cursoClave)
+        registro.observacion = 'Pasó a ' + curso.grado +"°"+ curso.division +"°"
         
         await registro.save()
         console.log("Después del save()")
@@ -32,6 +32,8 @@ async function putUno(objeto){
         registroNuevo.idEstudianteCurso = (parseInt(ultimo.idEstudianteCurso)+1).toString()
         registroNuevo.curso = objeto.curso
         registroNuevo.fechaAlta = objeto.fechaBaja
+        registroNuevo.fechaBaja = ""
+        registroNuevo.observacion = 'Viene de ' + objeto.cursoAnterior
         
         const respuesta = await this.post(registroNuevo)
         console.log("NUEVO:::::::: ", respuesta)
@@ -57,8 +59,7 @@ async function getPorIdCurso(idCurso){//devuelve todos registros por id de curso
 
 async function getUno(rowId){
     const registros =  await estudianteCursoSheet.get()
-    console.log("Registro[0]",registros[0] )
-    const resultado = await registros.filter(row => row._rowNumber === rowId)
+    const resultado = await registros.filter(row => row._rowNumber == rowId)
     //const resultadoJson = await utilidadesService.convertToJson(resultado)
     console.log(resultado[0] )
 
