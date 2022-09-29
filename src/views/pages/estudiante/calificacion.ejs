@@ -56,6 +56,7 @@
         <thead class="">
           <tr>
             <th>Estudiante</th>
+            <th>Form</th>
             <th>Valoración (1)</th>
             <th>Informe (1)</th>
             <th>Valoración (2)</th>
@@ -74,7 +75,12 @@
             <td class="estudiante" col_name="nombre">
                 <%= estudiante.apellido %>, <%= estudiante.nombre %>
             </td>
-           
+            <td >
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary modalEdit" data-toggle="modal" data-target="#exampleModalCenter">
+                Calif
+              </button>
+            </td>
             
             <% var count = 0 %>
             <% calificaciones.forEach(function(calificacion){ %>
@@ -85,7 +91,7 @@
                   <%= calificacion._rowNumber %>
                 </td>
                 <td rowNumber = '<%= calificacion._rowNumber %>'>
-                  <select class="row_data form-select" edit_type="click" col_name="valoracion1">
+                  <select id="valoracion1" class="row_data form-select" edit_type="click" col_name="valoracion1">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion1 ) ? "selected" : "";
@@ -212,6 +218,41 @@
     //         $('td:nth-child(3),th:nth-child(3)').hide();
     //     });
     // });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $('.modalEdit').on('click', function(event){
+		event.preventDefault();
+    $('#divValoracion1').html('')
+    var tbl_row = $(this).closest('tr');
+    var original = tbl_row.find('#valoracion1');
+    var valor = original.find('select').val();
+    var clon = original.clone().appendTo('#divValoracion1');
+    clon.find('select').val(valor);
+		// 
+		// var row_id = tbl_row.attr('row_id');
+    // var row_estudiante = tbl_row.find("td:eq(0)").html()
+    // var row_cLectivo = tbl_row.find("td:eq(3)").html()
+    // var row_estudianteNombre = tbl_row.find("td:eq(1)").html()
+    // $('#estudianteId').val($.trim(row_estudiante));
+    // $('#cLectivo').val($.trim(row_cLectivo));
+    // $('#rowId').val(row_id);
+    // $('#estudianteNombre').html(row_estudianteNombre);
+	});
+
+  $('#slcMotivoBajaId').on('change', function () {
+    var selector = $(this).val();
+    if (selector == 1 || selector == 3) {
+      $('#divCursoId').attr('hidden', false);
+      $('#inputCurso').prop('required',true);
+    } else {
+      $('#inputCurso').val('').prop('required',false);
+      $('#divCursoId').attr('hidden', true);
+    }
+  })
+  
+  });
 </script>
 
 <script>
