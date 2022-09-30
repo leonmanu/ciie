@@ -2,6 +2,7 @@ let sheet = require('../sheets/estudiante.sheet')
 let cursoSheet = require('../sheets/curso.sheet')
 const estudianteService = require('../services/estudiante.service')
 const estudianteCursoService = require('../services/estudianteCurso.service')
+const cursoService = require('../services/curso.service')
 
 
 const get = async (req, res) => {
@@ -36,7 +37,10 @@ const pintarForm = (req, res) => {
 
 const post = async(req, res) => {
     const objeto = req.body
-    respuesta = await estudianteCursoService.postEstudianteCurso(objeto)
+    const estudianteNuevo = await estudianteService.post(objeto)
+    const curso = await cursoService.getPorClave(objeto.curso)
+
+    respuesta = await estudianteCursoService.postEstudianteCurso(estudianteNuevo, curso)
     console.log("Salió del post ",respuesta)
     res.redirect(`/curso/${objeto.curso}/estudiantes`)//resolver al final
 }

@@ -89,16 +89,15 @@ async function post(objeto){
     return respuesta
 }
 
-async function postEstudianteCurso(objeto){
-    const estudianteNuevo =  await estudianteService.post(objeto)
-    const curso = await cursoService.getPorClave(objeto.curso)
+async function postEstudianteCurso(estudiante, curso){
+    
 
     const ultimo = await this.getUltimo()
     const idNuevo = (parseInt(ultimo.idEstudianteCurso)+1).toString()
 
     const estudianteCurso = {
         idEstudianteCurso: idNuevo,
-        estudiante: estudianteNuevo.id,
+        estudiante: estudiante.id,
         curso: curso.idCurso
     }
 
