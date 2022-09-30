@@ -230,11 +230,9 @@
     var arrayModal = $('.modal_data')
     let i = 0
     arrayRow.each(async function(){
-      
-      let elementoModalId = arrayModal.eq(i).attr('id')
-      alert(arrayModal.eq(i).attr('id'))
+      arrayModal.eq(i).html('')
       let valor = $(this).val()
-      let clon = $(this).clone().appendTo("'#"+arrayModal.eq(i).attr('id')+"'")
+      let clon = $(this).clone().appendTo(arrayModal.eq(i))
       clon.val(valor);
       i++
     })
