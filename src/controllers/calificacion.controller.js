@@ -50,17 +50,6 @@ const getEstudiantePorAsignatura = async (req, res) => {
         //console.log("estudiante: ", estudiante)
         resultado.push(estudiante)
     } )
-    // await registros.forEach( registro => {
-    //     estudiante = calificacionService.getEstudiantePorAsignatura(registro.estudiante, req.body.idAsignatura)
-    //     if(estudiante){
-            
-    //         resultado.push(estudiante)
-    //         console.log("controller.Calificacion entró", estudiante)
-    //     }else{
-    //         resultado.push(registro)
-    //     }
-           
-    // })
 
     console.log("controller.Calificacion entró")
 
