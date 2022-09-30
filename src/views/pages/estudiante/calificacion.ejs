@@ -224,12 +224,26 @@
   $(document).ready(function () {
     $('.modalEdit').on('click', function(event){
 		event.preventDefault();
-    $('#divValoracion1').html('')
+
     var tbl_row = $(this).closest('tr');
-    var original = tbl_row.find('#valoracion1');
-    var valor = original.find('select').val();
-    var clon = original.clone().appendTo('#divValoracion1');
-    clon.find('select').val(valor);
+    var arrayRow = tbl_row.find('.row_data')
+    var arrayModal = $('.modal_data')
+    let i = 0
+    arrayRow.each(async function(){
+      
+      let elementoModalId = arrayModal.eq(i).attr('id')
+      alert(arrayModal.eq(i).attr('id'))
+      let valor = $(this).val()
+      let clon = $(this).clone().appendTo("'#"+arrayModal.eq(i).attr('id')+"'")
+      clon.val(valor);
+      i++
+    })
+    // $('#divValoracion1').html('')
+    // var tbl_row = $(this).closest('tr');
+    // var original = tbl_row.find('#valoracion1');
+    // var valor = original.find('select').val();
+    // var clon = original.clone().appendTo('#divValoracion1');
+    // clon.find('select').val(valor);
 		// 
 		// var row_id = tbl_row.attr('row_id');
     // var row_estudiante = tbl_row.find("td:eq(0)").html()
