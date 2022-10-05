@@ -30,7 +30,7 @@ const getPorCursoAsignatura = async (req,res) =>{
 const getPorId = async (req, res) => {
     registro = await estudianteService.getUno(req.params.id)
     estudiante = registro
-    //console.log("Estudiante:: ", estudiante)
+    console.log("Estudiante:: ", estudiante)
     res.render('pages/estudiante/estudianteEditar', {estudiante, user: req.user._json})
 }
 
