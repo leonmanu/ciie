@@ -26,7 +26,7 @@
         <select id="inputCurso"  class="form-select" type="text" placeholder="Ingrese su/s apellido/s" name="curso" required>
           <option value="" disabled selected>Seleccione un curso</option>
           <% cursos.forEach(function(curso){ %>
-          <option value="<%= curso.idCurso %>"><%= curso.clave%> - <%= curso.turnoNombre%></option>
+          <option value="<%= curso.idCurso %>"><%= curso.grado%>°<%= curso.division%>°</option>
            <% }); %>
         </select>
       </div>

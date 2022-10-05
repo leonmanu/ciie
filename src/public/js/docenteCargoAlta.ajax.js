@@ -157,8 +157,6 @@ $(document).ready(function () {
       }
       });
 
-
-
       var slcAsignatura = $('#inputAsignatura');
 
     }
@@ -166,13 +164,13 @@ $(document).ready(function () {
 
   //== CUANDO SE SELECCIONA CURSO  =========================================
   $('#inputCurso').on('change', function () {
-      var selector = $(this).val();
+      var idCurso = $(this).val();
       $("#waitIconAsignatura").css("display", "block");
       $.ajax({
-          url: '/cargo/'+selector,
+          url: '/curso/'+idCurso+'/asignaturasAjax',
           contentType: 'application/json',
           method: 'GET',
-          data: JSON.stringify({ name: selector }),
+          data: JSON.stringify({ idCurso }),
           dataType: 'text',
           success: function (response) {
               console.log("RESPONSE",response)
@@ -184,7 +182,7 @@ $(document).ready(function () {
               slcAsignatura.append("<option value='' selected='' disabled=''>Seleccione una asignatura</option>\ ");
               
               jsonResponser.forEach(function (m) {
-                slcAsignatura.append("<option value='"+m.id+"' > " + m.asignatura + " </option>\ ");
+                slcAsignatura.append("<option value='"+m.idAsignatura+"' > " + m.asignatura + " </option>\ ");
                   console.log(m.nombre);
               })
               $("#waitIconAsignatura").css("display", "none");

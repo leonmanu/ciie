@@ -1,6 +1,7 @@
 const req = require('express/lib/request')
 const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
 const cargoSheet =  require("../sheets/docenteCargo.sheet")
+const cursoService = require('./curso.service')
 const utilidadesService = require('./utilidades.service')
 
 
@@ -52,9 +53,9 @@ const getSiExiste = async (cursoAsignatura) => {
     return resultado
 }
 
-const getSiDisponible = async (cursoAsignatura) => {
-    const registros = await cargoSheet.getCargosTodos()
-    const resultados = registros.filter(row => row.cursoAsignatura === cursoAsignatura && row.fechaBaja == '') //&& row.fechaBaja
+const getSiDisponible = async (idCargo) => {
+    const cargo = await cursoService.getPorId(idCargo)
+    const resultados = await registros.filter(row => row.cursoAsignatura === cursoAsignatura && row.fechaBaja == '') //&& row.fechaBaja
     let resultadoFinal
     try {
         console.log("getSiExiste ",resultados[0].usuario," cursoAsignatura ",cursoAsignatura)
@@ -64,7 +65,6 @@ const getSiDisponible = async (cursoAsignatura) => {
         console.log("ERROR! ", error)
     }
     
-
     return resultadoFinal
 }
 

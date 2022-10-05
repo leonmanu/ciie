@@ -2,7 +2,14 @@ const req = require('express/lib/request')
 const cargoSheet =  require("../sheets/cargo.sheet")
 
 const get = async () => {
-    const resultado = cargoSheet.get()
+    const resultado = await cargoSheet.get()
+    return resultado
+}
+
+const getPorId = async (idCargo) => {
+    const registros = await cargoSheet.get()
+    const filtrados = await registros.filter(row => row.id == idCargo)
+    resultado = filtrados[0]
     return resultado
 }
 
@@ -42,6 +49,7 @@ const getCargoPorRol = async(req, res) => {
 module.exports = {
     get:get,
     getTodos : getTodos,
+    getPorId : getPorId,
     getCargoPorRol: getCargoPorRol,
     getPorDocenteCargo:getPorDocenteCargo,
 } 
