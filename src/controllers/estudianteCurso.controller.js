@@ -41,14 +41,14 @@ const post = async(req, res) => {
     const curso = await cursoService.getPorClave(objeto.curso)
 
     respuesta = await estudianteCursoService.postEstudianteCurso(estudianteNuevo, curso)
-    console.log("Salió del post ",respuesta)
+    //console.log("Salió del post ",respuesta)
     res.redirect(`/curso/${objeto.curso}/estudiantes`)//resolver al final
 }
 
 const putUno = async (req, res) => {
     const objeto = req.body
     callback = await estudianteCursoService.putUno(objeto)
-    console.log("Salió del controler putUno", callback)
+    //console.log("Salió del controler putUno", callback)
     res.redirect('back')//resolver al final
 } 
 

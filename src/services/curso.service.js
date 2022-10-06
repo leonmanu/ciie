@@ -3,7 +3,7 @@ const cursoSheet =  require("../sheets/curso.sheet")
 const utilidadesService = require('./utilidades.service')
 
 const get = async () => {
-    registros = await cursoSheet.getTodos()
+    registros = await cursoSheet.get()
     
     return registros
 }

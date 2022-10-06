@@ -2,6 +2,8 @@ let sheet = require('../sheets/estudiante.sheet')
 let cursoSheet = require('../sheets/curso.sheet')
 const estudianteService = require('../services/estudiante.service')
 const estudianteSchema = require('../models/estudiante.schema')
+const cursoService = require('../services/curso.service')
+const estudianteCursoService = require('../services/estudianteCurso.service')
 
 
 
@@ -18,7 +20,7 @@ const getTodos = async (req, res) => {
     registros = await estudianteService.getTodosDb()
     
     await res.render('pages/estudiante/estudiantesTodos', registros)
-}
+} 
 
 const getPorCursoAsignatura = async (req,res) =>{
     registros = await estudianteService.getPorCursoAsignatura(req,res)
@@ -30,8 +32,25 @@ const getPorCursoAsignatura = async (req,res) =>{
 const getPorId = async (req, res) => {
     registro = await estudianteService.getUno(req.params.id)
     estudiante = registro
-    console.log("Estudiante:: ", estudiante)
+    //console.log("Estudiante:: ", estudiante)
     res.render('pages/estudiante/estudianteEditar', {estudiante, user: req.user._json})
+}
+
+const getTodosLista = async (req, res) => {
+    const estudiantesArray = []
+    const cursos = await cursoService.get()
+    const estudiantes = await estudianteService.get()
+    const estudianteCursos = await estudianteCursoService.get()
+    await estudiantes.forEach(estudiante=>{
+        estudianteCursos.forEach(estudianteCurso=>{
+            if (estudianteCurso.estudiante == estudiante.id && estudianteCurso.fechaBaja == null) {
+                estudiantesArray.push({estudiante: estudiante,estudianteCurso: estudianteCurso})
+            }
+        })
+    })
+    console.log("estudianteCursos: ", estudiantesArray[0])
+
+    res.render("pages/estudiante/todosLista", {user: req.user, estudiantesArray,cursos})
 }
 
 const getOne = async (req, res) => {
@@ -77,4 +96,5 @@ module.exports = {
     put : put,
     getPorCursoAsignatura: getPorCursoAsignatura,
     getPorId: getPorId,
+    getTodosLista: getTodosLista
 } 

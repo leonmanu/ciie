@@ -201,7 +201,7 @@ $(document).ready(function () {
         method: 'GET',
         data: JSON.stringify({ cargo: selector }),
         dataType: 'text',
-        success: function (response) {
+        success: function (response) { 
 
             //var jsonResponser = JSON.parse(response);
             if (response == 'Disponible') {
