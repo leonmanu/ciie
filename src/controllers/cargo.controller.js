@@ -1,5 +1,6 @@
 const req = require('express/lib/request')
 const cargoService = require('../services/cargo.service')
+const rolService = require('../services/rol.service')
 //const cargoSheet = require('../sheets/cargo.sheet')
 
 const getTodos = async (req, res) => {
@@ -8,9 +9,15 @@ const getTodos = async (req, res) => {
 }
 
 const getCargoPorRol = async (req, res) => {
-    registros = await cargoService.getCargoPorRol(req, res)
-    //console.log("getCargoPorRol: ",registros)
-    res.send(registros)
+    const rolCargos = []
+    const idRol = req.body.idRol
+    const rol = await rolService.getPorId(idRol)
+    const cargos = await cargoService.getCargoPorRol(idRol)
+    // await cargos.forEach(cargo => {
+    //     rolCargos.push({rol: rol, cargo: cargo})
+    // });
+    console.log("getCargoPorRol: ",cargos)
+    res.send(cargos)
 }
 
 module.exports = {

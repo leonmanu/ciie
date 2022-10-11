@@ -7,6 +7,13 @@ const get = async () => {
     return registros
 }
 
+const getPorId = async (idRol) => {
+    const registros = await rolSheet.get()
+    const filtrados = await registros.filter(row => row.id == idRol)
+
+    return filtrados[0]
+}
+
 const getTodos = async (req, res) => {
     registros = await rolSheet.getTodos()
     resultado = []
@@ -23,5 +30,6 @@ const getTodos = async (req, res) => {
 
 module.exports = {
     get:get,
-    getTodos : getTodos
+    getTodos : getTodos,
+    getPorId: getPorId,
 } 

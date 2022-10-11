@@ -126,7 +126,7 @@ $(document).ready(function () {
       $('#inputAsignatura').prop("disabled", true);
       
       slcCurso.removeAttr('disabled');
-            $("#waitIconCurso").css("display", "none");
+      $("#waitIconCurso").css("display", "none");
 
     } else {
       

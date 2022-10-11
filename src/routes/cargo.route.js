@@ -11,7 +11,7 @@ var sessionMiddelware = require('../middelware/session.middelware')
 
 router
     .get('/:id', getTodos)
-    .post('/rol', getCargoPorRol)
+    .post('/rol', getCargoPorRol)//ajax
     .get('/alta', function(req,res){
         res.render("pages/cargo/cargoAlta")
     })
