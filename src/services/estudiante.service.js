@@ -53,9 +53,9 @@ async function getPorId(id){
 async function getPorDni(dni){
     const registros =  await estudianteSheet.getTodo()
     const resultado = registros.filter(row => row.dni == dni)
-    //const resultadoJson = await utilidadesService.convertToJson(resultado)
-    console.log(resultado[0])
 
+    //const resultadoJson = await utilidadesService.convertToJson(resultado)
+    
     return resultado[0]
     
 }
