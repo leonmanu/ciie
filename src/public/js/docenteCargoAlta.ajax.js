@@ -149,9 +149,8 @@ $(document).ready(function () {
           slcAsignatura.attr('selected', false);
           slcAsignatura.append("<option value='' selected='' disabled=''>Seleccione un cargo</option>\ ");
           
-          jsonResponser.forEach(function (m) {
-            slcAsignatura.append("<option value='"+m.id+"' > " + m.asignatura + " </option>\ ");
-              console.log(m.nombre);
+          jsonResponser.forEach(function (cargo) {
+            slcAsignatura.append("<option value='"+cargo.id+"' > " + cargo.rol.nombre + " - "+cargo.turno.nombre+" </option>\ ");
           })
           $("#waitIconAsignatura").css("display", "none");
       }

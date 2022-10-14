@@ -55,8 +55,8 @@ const getSiExiste = async (cursoAsignatura) => {
 
 const getSiDisponible = async (idCargo) => {
     const cargo = await cursoService.getPorId(idCargo)
-    const docenteCargos = await this.get()
-    const resultados = await docenteCargos.filter(row => row.cursoAsignatura === cursoAsignatura && row.fechaBaja == '') //&& row.fechaBaja
+    const docenteCargos = await get()
+    const resultados = await docenteCargos.filter(row => row.cursoAsignatura === idCargo && row.fechaBaja == '') //&& row.fechaBaja
     let resultadoFinal
     try {
         console.log("getSiExiste ",resultados[0].usuario," cursoAsignatura ",cursoAsignatura)

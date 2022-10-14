@@ -34,8 +34,8 @@ const getPorDocenteCargo = async (docenteCargos) => {
 
 const getCargoPorRol = async(idRol) => {
     const cargos = await cargoSheet.get()
-    const filtrados = await cargos.filter(row => row.id == idRol)
-
+    const filtrados = await cargos.filter(row => row.rol == idRol)
+    //console.log("CargosFiltrados: ", filtrados)
     return filtrados
 }
 

@@ -1,6 +1,7 @@
 const req = require('express/lib/request')
 const rolSheet =  require("../sheets/rol.sheet")
 const { RolDto } = require('../models/rol.class')
+const utilidadesService = require('./utilidades.service')
 
 const get = async () => {
     registros = await rolSheet.getTodos()
@@ -10,8 +11,9 @@ const get = async () => {
 const getPorId = async (idRol) => {
     const registros = await rolSheet.get()
     const filtrados = await registros.filter(row => row.id == idRol)
+    const rolesJson = await utilidadesService.convertToJson(filtrados)
 
-    return filtrados[0]
+    return rolesJson[0]
 }
 
 const getTodos = async (req, res) => {

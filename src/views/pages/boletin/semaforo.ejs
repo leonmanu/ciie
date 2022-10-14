@@ -1,0 +1,168 @@
+<%- include ../../partials/parte1Superior.ejs %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css">
+
+</head>
+
+<body>
+ 
+      <% let i = 1 %>
+      <div class="container">
+        <div class="text-center mt-5">
+            <img src="/img/ees62-logo.png" width="70" height="70">
+      </div>
+      <h3 class="text-center m-5"><strong> Informe de Trayectoria Educativa '22 </strong></h3>
+      
+        <table class="table">
+          <tr>
+            <td>
+              <h4> <strong> Escuela de Educación Secundaria N° 62 </strong></h4>
+            </td>
+            <td>
+              <h4> <strong> Curso: <%= curso.grado%>° <%= curso.division %>°  </strong></h4>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>, </h4>
+            </td>
+            <td>
+              <h4>DNI: </h4>
+            </td>
+          </tr>
+        </table>
+
+        <table class="table table-bordered bg-white" > 
+          <thead class="text-center">
+            <tr>
+              <th  rowspan="2" class="align-middle">N°</th>
+              <th colspan="6" class="th-pad">Estudiante</th>
+              <% asignaturas.forEach(function(asignatura) { %>
+                <th class="vertical"><%= asignatura.nombreCorto %></th>
+              <% }) %> 
+            </tr>
+
+          </thead>
+          <tbody>
+            <% estudiantes.forEach(function(estudiante){ %>
+              <tr class="">
+                <td><%= i++ %></td>
+                <td class="align-middle"><h5 class="align-middle"> <%= estudiante.apellido %>, <%= estudiante.nombre %></h5></td>
+                  <% asignaturas.forEach(function(asignatura) { %>
+                    <% calificaciones.forEach(function(calificacion) { %>
+                      <% if(asignatura.idAsignatura == calificacion.asignatura && calificacion.estudiante == estudiante.id) { %>
+                        <%let promedio = Math.round((parseInt(calificacion.valoracion2) + parseInt(calificacion.valoracion1))/2) %>
+                        <td class="text-center">
+                        <% if( promedio <= 10 && promedio >= 7 ){%>
+                          <span class="text-info">TEA
+                        <% } %>
+
+                        <% if( promedio <= 6 && promedio >= 4 ){%>
+                          <span class="text-success">TEP
+                        <% } %>
+
+                        <% if( promedio <= 3 && promedio >= 0 ){%>
+                          <span class="text-danger">TED
+                        <% } %>
+                        </span>                     
+                </td>
+
+                <% promedio = Math.round((parseInt(calificacion.valoracion3) + parseInt(calificacion.valoracion4))/2) %>
+                  <th class="text-center">
+                  <% if( promedio <= 10 && promedio >= 7 ){%>
+                    <span class="text-info">TEA 
+                      <% } %>
+      
+                  <% if( promedio <= 6 && promedio >= 4 ){%>
+                    <span class="text-success">TEP
+                      <% } %>
+      
+                  <% if( promedio <= 3 && promedio >= 0 ){%>
+                    <span class="text-danger">TED
+                      <% } %>
+                  </span>
+                </th>
+
+                <% promedio = parseInt(calificacion.valoracion5) %>
+                  <td class="text-center">
+                  <% if( promedio <= 10 && promedio >= 7 ){%>
+                    <span class="text-info">TEA 
+                      <% } %>
+      
+                  <% if( promedio <= 6 && promedio >= 4 ){%>
+                    <span class="text-success">TEP
+                      <% } %>
+      
+                  <% if( promedio <= 3 && promedio >= 0 ){%>
+                    <span class="text-danger">TED
+                      <% } %>
+                  </span>
+                </td>
+
+                  <% } %>
+                  
+                <% }) %>
+                
+              <% if(asignatura[8]=='TEA'){%>
+                  <td class="dark" style="text-align: center;">
+                  ------->
+                  <%} else{ %>
+                    <td style="text-align: center;">
+                      <% switch (asignatura[9]) {
+                    case 'TEA' : %>
+                    <strong class="text-success"><%= asignatura[9] %></strong>
+                            <% break;
+                    
+                    case 'TEP' : %>
+                    <strong class="text-warning"><%= asignatura[9] %></strong>
+                            <% break;
+                    
+                    case 'TED' : %>
+                      <strong class="text-danger"><%= asignatura[9] %></strong>
+                            <% break;
+                    
+                    }
+                }
+              %>
+              
+            </td>
+              <%
+                if(asignatura[8]=='TEA'||asignatura[9]=='TEA'){%>
+                  <td class="dark" style="text-align: center;">
+                  ------->
+                  <%} else{ %>
+                    <td style="text-align: center;">
+                      <% 
+                  switch (asignatura[10]) {
+                    case 'TEA' : %>
+                    <strong class="text-success"><%= asignatura[10] %></strong>
+                            <% break;
+                    
+                    case 'TEP' : %>
+                    <strong class="text-warning"><%= asignatura[10] %></strong>
+                            <% break;
+                    
+                    case 'TED' : %>
+                      <strong class="text-danger"><%= registro[10] %></strong>
+                            <% break;
+                    
+                    }
+                }
+              %>
+            </td>
+            
+            <td></td>
+          </tr>
+        <% }); %> 
+      </tbody>
+        </table>
+      
+        
+      </div>
+      <br>
+      <hr>
+      <div style="background-color:#e5e5e5;text-align:center;padding:10px;margin-top:7px;page-break-after: always;">Consultado: <%= new Intl.DateTimeFormat('es', { month: 'long', day: '2-digit',year: 'numeric'}).format(new Date()) %></div>
+  <% }) %>
+  
+  
+ 
+<%- include ../../partials/parte2Inferior.ejs %>

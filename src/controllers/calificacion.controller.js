@@ -120,6 +120,16 @@ const getBoletinesPorCurso = async (req, res) => {//getBoletines PorCurso Este r
     res.render("pages/boletin/boletinesCurso", {user: req.user, curso, estudiantes, calificaciones, asignaturas})
 }
 
+const getSemaforoPorCurso = async (req, res) => {//getBoletines PorCurso Este reemplaza a getBoletines() de curso.controller
+    const clave = req.params.clave
+    const curso = await cursoService.getPorClave(clave)
+    const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
+    const calificaciones = await calificacionService.get()
+    const asignaturas = await asignaturaService.getPorIdCurso(curso.idCurso)
+    //console.log("califacas: ", calificaciones)
+    res.render("pages/boletin/semaforo", {user: req.user, curso, estudiantes, calificaciones, asignaturas})
+}
+
 module.exports = {
     getEstudiantePorAsignatura_controller: getEstudiantePorAsignatura,
     getCursoYAsignatura_controller :getCursoYAsignatura,
@@ -129,4 +139,5 @@ module.exports = {
     getEstudianteValoracion:getEstudianteValoracion,
     getPorDni:getPorDni,
     getBoletinesPorCurso: getBoletinesPorCurso,
+    getSemaforoPorCurso: getSemaforoPorCurso,
 } 
