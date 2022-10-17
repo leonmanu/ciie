@@ -1,5 +1,20 @@
 .vertical {
     transform: rotate(-90deg);
-
-    margin-left: 70px;
+    overflow: hidden;
   }
+  .headt {
+    min-width: 235px;
+    height: 120px;
+  }
+  .line-container {
+    width: 200px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.single-line {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre;
+}
