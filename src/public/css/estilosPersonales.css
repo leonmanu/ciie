@@ -18,7 +18,3 @@
     overflow: hidden;
     white-space: pre;
 }
-
-div .page {
-  writing-mode: tb-rl;
-}
