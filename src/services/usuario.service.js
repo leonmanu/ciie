@@ -6,8 +6,29 @@ const utilidadesService = require('./utilidades.service')
 const estudianteSchema = require('../models/estudiante.schema')
 const estudianteDb = require('../db/estudiante.db')
 const usuarioDb = require('../db/usuario.db')
+const usuarioSheet = require('../sheets/usuario.sheet')
 
 
+const getPorEmail = async (email) => {
+    const usuarios = await usuarioSheet.get()
+    console.log("Usuario.Sheet getById: ", email)
+    const resultado = await usuarios.filter(row => row.email == email)
+    try{
+        var usuarioInterface = {
+            id: resultado[0].id,
+            rol: resultado[0].rol,
+            idGoogle: resultado[0].idGoogle,
+            email: resultado[0].email,
+            apellido: resultado[0].apellido,
+            nombre: resultado[0].nombre
+        }
+
+        return usuarioInterface
+        }catch(e){
+            console.error(e.message," no se encontró objeto, devuelvo 'null' ");
+        return resultado[0] = {email: null}
+        }
+}
 
 const getTodos = async (req, res) => {
     registros = await estudianteSheet.getTodoEstudiante_sheet()
@@ -115,4 +136,5 @@ module.exports = {
     getPorId: getPorId,
     put: put,
     getTodosDb:getTodosDb,
+    getPorEmail:getPorEmail,
 } 

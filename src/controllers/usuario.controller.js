@@ -18,15 +18,16 @@ const getOne = async (usuario, req, res) => {
 
 const siExisteUsuario = async (req, res) => {
    
-    const resultado = await usuarioSheet.getOneByEmail(req.user.email)
+    const resultado = await usuarioService.getPorEmail(req.user.email)
     console.log("USUARIO: ",req.user.email)
     if(req.user._json.domain === 'abc.gob.ar'){
         if(req.user.email == resultado.email){
-            res.render('pages/index', {user: req.user._json})
+           
+            res.redirect("/docente/cargo")
        } else {
             res.redirect("/usuarioAlta")
        }
-    }
+    } 
      else {
         req.logout(function(err) {
             if (err) { return next(err) }

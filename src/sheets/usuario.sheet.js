@@ -45,7 +45,6 @@ async function getOneByEmail(email){
     const registros =  await sheet.getRows()
     const resultado = await registros.filter(row => row.email == email)
     try{
-        //console.log("User sheet ok: ",resultado[0].email)
         var usuarioInterface = {
             id: resultado[0].id,
             rol: resultado[0].rol,
@@ -54,7 +53,7 @@ async function getOneByEmail(email){
             apellido: resultado[0].apellido,
             nombre: resultado[0].nombre
         }
-        //console.log("usuarioInterface ok: ",usuarioInterface)
+
         return usuarioInterface
         }catch(e){
             console.error(e.message," no se encontró objeto, devuelvo 'null' ");
