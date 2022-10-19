@@ -1,4 +1,6 @@
-<%- include ../../partials/parte1Superior.ejs %>
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/estilosPersonales.css">
 
 </head>
 
@@ -12,10 +14,11 @@
               <h4> <strong> Escuela de Educación Secundaria N° 62 </strong></h4>
             </td>
             <td>
+              <h4> <strong> 2° Cuatrimestre 2022 </strong></h4>
+            </td>
+            <td>
               <h4> <strong> Curso: <%= curso.grado%>° <%= curso.division %>°  </strong></h4>
             </td>
-          </tr>
-
         </table>
 
         <table class="table-bordered bg-white" > 
@@ -29,7 +32,7 @@
             </tr>
             <tr>
               <% asignaturas.forEach(function(asignatura) { %>
-                <th colspan="2">Cuatri</th>
+                <th colspan="2">Periodo</th>
                 <th class="vertical" rowspan="2">Final</th>
               <% }) %> 
             </tr>
