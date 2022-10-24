@@ -23,10 +23,10 @@ const getEstudiantes = async (req, res) => {
     const curso = await cursoService.getPorClave(clave)
     const cursos = await cursoService.getCursosTodos()
     const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
-    const estudianteCursos = await estudianteCursoService.getPorIdCurso(curso.idCurso)
+    //const estudianteCursos = await estudianteCursoService.getPorIdCurso(curso.idCurso)
     //console.log("estudianteCursos: ", estudianteCursos)
 
-    res.render("pages/curso/cursoEstudiantes", {user: req.user, clave, estudiantes, curso, cursos, estudianteCursos})
+    res.render("pages/curso/cursoEstudiantes", {user: req.user, clave, estudiantes, curso, cursos})
 }
 
 // const getEstudiantes = async (req, res) => {

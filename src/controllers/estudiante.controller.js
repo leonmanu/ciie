@@ -48,7 +48,7 @@ const getTodosLista = async (req, res) => {
             }
         })
     })
-    console.log("estudianteCursos: ", estudiantesArray[0])
+   // console.log("estudianteCursos: ", estudiantesArray[0])
 
     res.render("pages/estudiante/todosLista", {user: req.user, estudiantesArray,cursos})
 }

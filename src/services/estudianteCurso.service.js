@@ -30,7 +30,7 @@ async function putUno(objeto){
         console.log("Después del save()")
 
         registroNuevo.idEstudianteCurso = (parseInt(ultimo.idEstudianteCurso)+1).toString()
-        registroNuevo.curso = objeto.curso
+        registroNuevo.curso = objeto.cursoId
         registroNuevo.fechaAlta = objeto.fechaBaja
         registroNuevo.fechaBaja = ""
         registroNuevo.observacion = 'Viene de ' + objeto.cursoAnterior

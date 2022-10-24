@@ -21,7 +21,7 @@
         <hr class="mb-0">
       </div>
       <div  class="container" >
-        <h5 id="lblFormAlta"  style="display: none;"><b></i>Alta de cargos</b></h5>
+        <h5 id="lblFormAlta"  style="display: none;"><b></i>Alta de estudiante</b></h5>
         <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
         <div id="divFormAlta" class="w3-ul w3-card-4 w3-white" style="display: none;">
           <%- include ./estudiantes_form.ejs %>
@@ -40,21 +40,17 @@
         </thead>
         <tbody class="tbl_user_data">
           <% estudiantes.forEach(function(estudiante){ %>
+            <%= estudiante.id %>
             <% let rowid = "" %>
             <% let cLectivo %>
-            <% estudianteCursos.forEach(function(estudianteCurso){ %>
-              <% if(estudiante.id == estudianteCurso.estudiante) {%>
-                <% rowid = estudianteCurso._rowNumber %>
-                <% cLectivo = estudianteCurso.cLectivo %>
-              <% } %>
-            <% }) %>
+            
           <tr row_id = '<%= rowid%>'>
            <td>
             <%= i %>
            </td>
             <td>
               <p class="m-0">
-                <%= estudiante.apellido%>, <%= estudiante.nombre%>
+                <%= estudiante.estudiante.apellido%>, <%= estudiante.estudiante.nombre%>
               </p>
             </td>
             <td>

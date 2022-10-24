@@ -77,11 +77,23 @@ async function getPorCurso(clave){//1* anterior, próximo a borrar
 }
 
 async function getPorIdCurso(idCurso){//1* este debería reemplazar a getPorCurso()
-    const estudianteCurso =  await estudianteCursoService.get()
+    const estudiantesArray = []
     const estudiantes = await this.get()
-    const filtrados = estudiantes.filter(({ id: id }) => estudianteCurso.some(({ estudiante: estudiante, curso: curso, fechaBaja }) => id == estudiante && curso == idCurso && fechaBaja == null));
-    const resultado = filtrados.sort((a, b) => a.apellido.localeCompare(b.apellido)) //esto ordena alfabéticamente
-    //console.log("RESULTADO: ",resultado)
+    const estudianteCursos = await estudianteCursoService.get()
+    await estudiantes.forEach(estudiante=>{
+        estudianteCursos.forEach(estudianteCurso=>{
+            if (estudianteCurso.estudiante == estudiante.id && estudianteCurso.curso == idCurso && (estudianteCurso.fechaBaja == null || estudianteCurso.fechaBaja == '')) {
+                estudiantesArray.push({estudiante: estudiante,estudianteCurso: estudianteCurso})
+            }
+        })
+    })
+    
+    const resultado = estudiantesArray.sort((a, b) => a.estudiante.apellido.localeCompare(b.estudiante.apellido)) //esto ordena alfabéticamente
+ 
+    
+    // const filtrados = estudiantes.filter(({ id }) => estudianteCurso.some(({ estudiante, curso, fechaBaja }) => id == estudiante && curso == idCurso && fechaBaja == null));
+    // const resultado = filtrados.sort((a, b) => a.apellido.localeCompare(b.apellido)) //esto ordena alfabéticamente
+    // console.log("RESULTADO: ",resultado)
     return resultado
 }
 
