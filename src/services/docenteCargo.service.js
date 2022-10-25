@@ -2,6 +2,7 @@ const req = require('express/lib/request')
 const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
 const cargoSheet =  require("../sheets/docenteCargo.sheet")
 const cursoService = require('./curso.service')
+const usuarioService = require('./usuario.service')
 const utilidadesService = require('./utilidades.service')
 
 
@@ -48,19 +49,27 @@ const postDocenteCargo = async (req, res) => {
 
 const getSiExiste = async (cursoAsignatura) => {
     const registros = await cargoSheet.getCargosTodos()
-    const resultado = registros.filter(row => row.cursoAsignatura === cursoAsignatura && row.fechaBaja == '') //&& row.fechaBaja
+    
+    const resultado = registros.filter(row => row.cursoAsignatura === cursoAsignatura && !row.fechaBaja) //&& row.fechaBaja
     console.log("getSiExiste ",resultado," cursoAsignatura ",cursoAsignatura)
     return resultado
 }
 
 const getSiDisponible = async (idCargo) => {
-    const cargo = await cursoService.getPorId(idCargo)
+    console.log("idCargo: ", idCargo)
+
     const docenteCargos = await get()
-    const resultados = await docenteCargos.filter(row => row.cursoAsignatura === idCargo && row.fechaBaja == '') //&& row.fechaBaja
+    const resultados = await docenteCargos.filter(row => row.cursoAsignatura == idCargo && !row.fechaBaja) //&& row.fechaBaja
+    //console.log("docenteCargos:: ", docenteCargos)
+    console.log("resultados:: ", resultados)
     let resultadoFinal
     try {
-        console.log("getSiExiste ",resultados[0].usuario," cursoAsignatura ",cursoAsignatura)
-        resultadoFinal = resultados[0].usuario
+        console.log("getSiExiste ",resultados[0].idGoogleUsuario)
+        const idGoogle = resultados[0].idGoogleUsuario
+        console.log("idGoogle: ", idGoogle)
+        const usuario = await usuarioService.getPorIdGoogle(idGoogle)
+        console.log("Usuario: ", usuario)
+        resultadoFinal = usuario.apellido+", "+usuario.nombre
     } catch (error) {
         resultadoFinal = 'Disponible'
         console.log("ERROR! ", error)

@@ -68,6 +68,15 @@ async function getPorId(id){
     return resultado[0]
 }
 
+async function getPorIdGoogle(id){
+    const registros =  await usuarioSheet.get()
+    const resultado = registros.filter(row => row.idGoogle == id)
+    console.log("resultado: ID> ",id)
+    console.log("resultado:> ",resultado)
+
+    return resultado[0]
+}
+
 async function getPorDni(dni){
     const registros =  await estudianteSheet.getEstudianteCurso()
     const resultado = registros.filter(row => row.dni == dni)
@@ -134,6 +143,7 @@ module.exports = {
     getUltimo:getUltimo,
     getPorDni:getPorDni,
     getPorId: getPorId,
+    getPorIdGoogle: getPorIdGoogle,
     put: put,
     getTodosDb:getTodosDb,
     getPorEmail:getPorEmail,
