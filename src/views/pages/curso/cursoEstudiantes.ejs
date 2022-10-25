@@ -40,17 +40,22 @@
         </thead>
         <tbody class="tbl_user_data">
           <% estudiantes.forEach(function(estudiante){ %>
-            <%= estudiante.id %>
             <% let rowid = "" %>
             <% let cLectivo %>
-            
+            <% estudianteCursos.forEach(function(estudianteCurso){ %>
+              
+              <% if(estudiante.id == estudianteCurso.estudiante) {%>
+                <% rowid = estudianteCurso._rowNumber %>
+                <% cLectivo = estudianteCurso.cLectivo %>
+              <% } %>
+            <% }) %>
           <tr row_id = '<%= rowid%>'>
            <td>
             <%= i %>
            </td>
             <td>
               <p class="m-0">
-                <%= estudiante.estudiante.apellido%>, <%= estudiante.estudiante.nombre%>
+                <%= estudiante.apellido%>, <%= estudiante.nombre%>
               </p>
             </td>
             <td>
