@@ -18,7 +18,7 @@ const getCargoPorRol = async (req, res) => {
     const turnos = await turnoService.get()
     const cargosJson = await utilidadesService.convertToJson(cargos)
     const turnosJson = await utilidadesService.convertToJson(turnos)
-
+    
     cargosJson.forEach(cargo => {
         cargo.rol = rol
         turnosJson.forEach(turno => {
@@ -27,8 +27,17 @@ const getCargoPorRol = async (req, res) => {
             }
         })
      });
-    
+     console.log("cargosJson: ", cargosJson)
     res.send(cargosJson)
+}
+
+const getPorIdCursoAjax = async (req, res) => {
+    const idCurso = await req.params.idCurso
+    console.log("idCurso: ",idCurso)
+    //const curso = await cursoService.getPorId
+    const asignaturas = await asignaturaService.getPorIdCurso(idCurso)
+    const toJson = await utilidadesService.convertToJson(asignaturas)
+    res.send(toJson) 
 }
 
 module.exports = {

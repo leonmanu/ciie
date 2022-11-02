@@ -21,7 +21,7 @@ const getPorDocente = async (req, res) => {
     const roles = await rolService.get()
     const cursos = await cursoService.get()
     const asignaturas = await asignaturaService.getPorCursoAsignatura(cursoAsignaturas)
-    console.log("cursos: ",asignaturas)
+    //console.log("cursos: ",asignaturas)
 
     res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos,roles,cursos,cursoAsignaturas,asignaturas})
 }
@@ -52,10 +52,12 @@ const postDocenteCargo = async (req, res) => {
 }
 
 const getSiDisponible = async (req, res) => {
-    const resultado = await docenteCargoService.getSiDisponible(req.params.cargo)
+    const cargo = req.body.jsonObjet
+    console.log("cargoAJAX:: ", cargo)
+    const resultado = await docenteCargoService.getSiDisponible(cargo)
     console.log("docenteCargo.Controller:: ", resultado)
     res.send(resultado)
-}
+} 
 
 const putBajaDocenteCargo = async(req, res) => {
     resultado = await docenteCargoService.putBajaDocenteCargo(req.params.rowNumber)

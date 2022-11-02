@@ -140,8 +140,9 @@ $(document).ready(function () {
         data: JSON.stringify({ idRol: selector }),
         dataType: 'text',
         success: function (response) {
-          console.log("RESPONSE",response)
+          
           var jsonResponser = JSON.parse(response);
+          alert("RESPONSE",jsonResponser[0])
           var slcAsignatura = $('#inputAsignatura');
           
           slcAsignatura.html('');
@@ -191,14 +192,18 @@ $(document).ready(function () {
 
   //== CUANDO SE SELECCIONA CARGO===============
   $('#inputAsignatura').on('change', function () {
-    var selector = $(this).val();
-
+    var jsonObjet = {
+      idCargo: $(this).val(),
+      idCurso: $('#inputCurso').val(),
+      idRol: $('#inputRol').val()
+    }
+    alert("idCargo: " + jsonObjet.idCargo + ", idCurso: " + jsonObjet.idCurso + ", idRol: " + jsonObjet.idRol)
     $("#waitIconAsignatura2").css("display", "block");
     $.ajax({
-        url: '/docente/cargo/siDisponible/'+selector,
+        url: '/docente/cargo/siDisponible/',
         contentType: 'application/json',
-        method: 'GET',
-        data: JSON.stringify({ cargo: selector }),
+        method: 'POST',
+        data: JSON.stringify({ jsonObjet }),
         dataType: 'text',
         success: function (response) { 
 

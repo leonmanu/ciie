@@ -24,7 +24,7 @@ router
         res.render("pages/cargo/cargoAlta")
     })
     .get('/:rowNumber/baja', sessionMiddelware, putBajaDocenteCargo_controller)
-    .get('/siDisponible/:cargo',sessionMiddelware, getSiDisponible)//
+    .post('/siDisponible',sessionMiddelware, getSiDisponible)//
 
 
 module.exports = router
