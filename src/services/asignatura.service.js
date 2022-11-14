@@ -1,5 +1,6 @@
 const req = require('express/lib/request')
 const asignaturaSheet =  require("../sheets/asignatura.sheet")
+const cargoService = require('./cargo.service')
 const cursoAsignaturaService = require('./cursoAsignatura.service')
 const utilidadesService = require('./utilidades.service')
 
@@ -42,10 +43,41 @@ const getPorCurso = async (clave) => {
 }
 
 const getPorIdCurso = async (id) => {
-    const cursoAsignatura = await cursoAsignaturaService.getPorCurso(id)
+    const cursoAsignaturas = await cursoAsignaturaService.getPorCurso(id)
     const asignaturas = await asignaturaSheet.getTodo()
-    const filtrados = await asignaturas.filter(({ idAsignatura: id1 }) => cursoAsignatura.some(({ asignatura: id2 }) => id2 == id1));
-    const resultados = await filtrados.sort((a, b) => a.orden - b.orden) //esto ordena alfabéticamente
+    const cargos = await cargoService.get()
+
+    const resultado = []
+
+    await cursoAsignaturas.forEach(cursoAsignatura => {
+        let objetoNuevo = {
+            nombre: String,
+            nombreCorto: String,
+            idCargo: String
+        }
+        asignaturas.forEach(asignatura => {
+            if (cursoAsignatura.asignatura == asignatura.idAsignatura) {
+                objetoNuevo.nombre = asignatura.asignatura
+                objetoNuevo.nombreCorto = asignatura.nombreCorto
+            }
+        })
+
+        cargos.forEach(cargo =>{
+            if (cursoAsignatura.id == cargo.cursoAsignatura) {
+                objetoNuevo.idCargo = cargo.id
+            }
+        })
+        resultado.push(objetoNuevo)
+    })
+
+    console.log("///////:: ", resultado)
+
+    //const filtrados = await asignaturas.filter(({ idAsignatura }) => cursoAsignaturas.some(({ asignatura }) => idAsignatura == asignatura));
+
+    //const asignaturasJson = await utilidadesService.convertToJson(asignaturas)
+
+    const resultados = await resultado.sort((a, b) => a.orden - b.orden) //esto ordena alfabéticamente
+    //const resultadosJson = await utilidadesService.convertToJson(resultados)
     //console.log("Asignaturas: ", resultados)
     return resultados
 }

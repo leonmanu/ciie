@@ -16,8 +16,9 @@ const getPorIdCursoAjax = async (req, res) => {
     console.log("idCurso: ",idCurso)
     //const curso = await cursoService.getPorId
     const asignaturas = await asignaturaService.getPorIdCurso(idCurso)
-    const toJson = await utilidadesService.convertToJson(asignaturas)
-    res.send(toJson) 
+    console.log("Asignaturas:::::>>>> ", asignaturas)
+    //const asignaturasJson = await utilidadesService.convertToJson(asignaturas)
+    res.send(asignaturas)
 }
 
 module.exports = {

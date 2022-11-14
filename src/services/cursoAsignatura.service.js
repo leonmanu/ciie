@@ -6,6 +6,8 @@ const utilidadesService = require('./utilidades.service')
 
 const get = async () => {
     const registros = await cursoAsignaturaSheet.get()
+
+    return registros
 }
 
 const getPorDocenteCargo = async (cargos) => {
@@ -28,7 +30,7 @@ const getPorCurso = async (idCurso) => {
 }
 
 module.exports = {
-    get : get,
+    get : get, 
     getPorClave: getPorClave,
     getPorCurso: getPorCurso,
     getPorDocenteCargo:getPorDocenteCargo,

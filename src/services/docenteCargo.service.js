@@ -58,19 +58,19 @@ const getSiExiste = async (cursoAsignatura) => {
 }
 
 const getSiDisponible = async (cargo) => {
-    //console.log("idCargo: ", cargo) 
-    const cursoAsignatura = await cursoAsignaturaService.get()
-    const cursoAsignaturaFiltrado = cursoAsignatura.filter(row => row.curso == curso && row.asignatura == cargo)
-    console.log("cursoAsignatrua:: ", cursoAsignaturaFiltrado)
+    console.log("idCargo: ", cargo) 
+    // const cursoAsignatura = await cursoAsignaturaService.get()
+    // const cursoAsignaturaFiltrado = cursoAsignatura.filter(row.asignatura == cargo)
+    // console.log("cursoAsignatrua:: ", cursoAsignaturaFiltrado)
     
     const docenteCargos = await get()
-    const resultados = await docenteCargos.filter(row => !row.fechaBaja) //&& row.fechaBaja
+    const filtrados = await docenteCargos.filter(row => !row.fechaBaja && row.cursoAsignatura == cargo.idCargo) //&& row.fechaBaja
 
-    console.log("resultados:: ", resultados)
+    console.log("resultados:: ", filtrados)
     let resultadoFinal
     try {
-        console.log("getSiExiste ",resultados[0].idGoogleUsuario)
-        const idGoogle = resultados[0].idGoogleUsuario
+        console.log("getSiExiste ",filtrados[0].idGoogleUsuario)
+        const idGoogle = filtrados[0].idGoogleUsuario
         console.log("idGoogle: ", idGoogle)
         const usuario = await usuarioService.getPorIdGoogle(idGoogle)
         console.log("Usuario: ", usuario)

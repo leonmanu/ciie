@@ -182,7 +182,7 @@ $(document).ready(function () {
               slcAsignatura.append("<option value='' selected='' disabled=''>Seleccione una asignatura</option>\ ");
               
               jsonResponser.forEach(function (m) {
-                slcAsignatura.append("<option value='"+m.idAsignatura+"' > " + m.asignatura + " </option>\ ");
+                slcAsignatura.append("<option value='"+m.idCargo+"' > " + m.nombre + " </option>\ ");
                   console.log(m.nombre);
               })
               $("#waitIconAsignatura").css("display", "none");
