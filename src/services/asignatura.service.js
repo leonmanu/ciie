@@ -70,7 +70,7 @@ const getPorIdCurso = async (id) => {
         resultado.push(objetoNuevo)
     })
 
-    console.log("///////:: ", resultado)
+    //console.log("///////:: ", resultado)
 
     //const filtrados = await asignaturas.filter(({ idAsignatura }) => cursoAsignaturas.some(({ asignatura }) => idAsignatura == asignatura));
 
@@ -82,6 +82,15 @@ const getPorIdCurso = async (id) => {
     return resultados
 }
 
+const getAsignaturasPorIdCurso = async (id) => {
+    const cursoAsignatura = await cursoAsignaturaService.getPorCurso(id)
+    const asignaturas = await asignaturaSheet.getTodo()
+    const filtrados = await asignaturas.filter(({ idAsignatura: id1 }) => cursoAsignatura.some(({ asignatura: id2 }) => id2 == id1));
+    const resultados = await filtrados.sort((a, b) => a.orden - b.orden) //esto ordena alfabéticamente
+    console.log("Asignaturas: ", resultados)
+    return resultados
+}
+
 module.exports = {
     getPorId : getPorId,
     getPorCodigo:getPorCodigo,
@@ -89,4 +98,5 @@ module.exports = {
     getPorCurso: getPorCurso,
     getPorIdCurso:getPorIdCurso,
     getPorCursoAsignatura:getPorCursoAsignatura,
+    getAsignaturasPorIdCurso:getAsignaturasPorIdCurso,
 } 

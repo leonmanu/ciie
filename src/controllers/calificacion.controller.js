@@ -98,7 +98,7 @@ const getPorDni = async (req, res) => {//cambiar nombre de función
     const estudiante = await estudianteService.getPorDni(dni)
     const estudinateCurso = await estudianteCursoService.getUnoPorIdEstudiante(estudiante.id)
     const curso = await cursoService.getPorId(estudinateCurso.curso)
-    const asignaturas = await asignaturaService.getPorIdCurso(curso.idCurso)
+    const asignaturas = await asignaturaService.getAsignaturasPorIdCurso(curso.idCurso)
     const registros = await calificacionService.getCrudaPorIdEstudiante(estudiante.id)
 
     const user = null
@@ -115,7 +115,7 @@ const getBoletinesPorCurso = async (req, res) => {//getBoletines PorCurso Este r
     const curso = await cursoService.getPorClave(clave)
     const estudiantes = await estudianteService.getPorIdCurso(curso.idCurso)
     const calificaciones = await calificacionService.get()
-    const asignaturas = await asignaturaService.getPorIdCurso(curso.idCurso)
+    const asignaturas = await asignaturaService.getAsignaturasPorIdCurso(curso.idCurso)
     //console.log("califacas: ", calificaciones)
     res.render("pages/boletin/boletinesCurso", {user: req.user, curso, estudiantes, calificaciones, asignaturas})
 }

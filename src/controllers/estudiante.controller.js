@@ -38,7 +38,7 @@ const getPorId = async (req, res) => {
 
 const getTodosLista = async (req, res) => {
     const estudiantesArray = []
-    const cursos = await cursoService.get()
+    const cursos = await cursoService.get() 
     const estudiantes = await estudianteService.get()
     const estudianteCursos = await estudianteCursoService.get()
     await estudiantes.forEach(estudiante=>{
