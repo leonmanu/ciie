@@ -32,21 +32,41 @@
       </div>
       
       <div class="sticky-top mb-3 bg-primary pt-1 pb-1 mt-0">
-            <button href="#" class="m-2 btn btn-outline-success btn_save mt-0 mb-0" row_id="'+row_id+'">
+            <button id="periodo1" class="btn btn-primary">1# Cuatri</button>
+            <button id="periodo2" class="btn btn-primary">2# Cuatri</button>
+            <button id="periodo3" class="btn btn-primary">Cierre de año</button>
+            <button href="#" class="m-2 btn btn-outline-success btn_save mt-0 mb-0 float-end" row_id="'+row_id+'">
               <span id="">Guardar</span> 
               <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
             </button>
       </div>
-      <div class="table-responsive">   
-      <table id="estudiantes" class="table table-striped table-bordered table-responsive">
-        <thead class="">
-          <tr>
-            <th>Estudiante</th>
-            <th>Form</th>
-            <th>Valoración (1)</th>
-            <th>Informe (1)</th>
-            <th>Valoración (2)</th>
-            <th>Informe (2)</th>
+      <div class="table-responsive-lg">   
+      <table id="estudiantes" class="table  table-sm table-striped table-bordered ">
+        <thead class="text-center align-middle">
+          <tr class="">
+            <th rowspan = '3'>Estudiante</th>
+            <th rowspan = '3'>Form</th>
+            <th colspan="4" class="cuatri1">1# Cuatrimestre</th>
+            <th colspan="4" class="cuatri2">2# Cuatrimestre</th>
+            <th>Cierre de año</th>
+          </tr>
+          <tr class="">
+            <th colspan="2" class="cuatri1">1° Bimestre</th>
+            <th colspan="2" class="cuatri1">2° Bimestre</th>
+            <th colspan="2" class="cuatri2">3° Bimestre</th>
+            <th colspan="2" class="cuatri2">4° Bimestre</th>
+            <th>Anual</th>
+          </tr>
+          <tr class="">
+            <th class="cuatri1">Nota (1)</th>
+            <th class="cuatri1">Informe (1)</th>
+            <th class="cuatri1">Nota (2)</th>
+            <th class="cuatri1">Informe (2)</th>
+            <th class="cuatri2">Nota (3)</th>
+            <th class="cuatri2">Informe (3)</th>
+            <th class="cuatri2">Nota (4)</th>
+            <th class="cuatri2">Informe (4)</th>
+            <th>Nota</th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
@@ -58,13 +78,16 @@
               false
             </td>
 
-            <td class="estudiante" col_name="nombre">
+            <td class="estudiante align-middle" col_name="nombre">
                 <%= estudiante.apellido %>, <%= estudiante.nombre %>
             </td>
             <td >
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary modalEdit " data-toggle="modal" data-target="#exampleModalCenter">
-                Form
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
+                  <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                  <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+                </svg>
               </button>
             </td>
             
@@ -72,11 +95,13 @@
             <% calificaciones.forEach(function(calificacion){ %>
               
               <% if(estudiante.id == calificacion.estudiante && asignatura.idAsignatura == calificacion.asignatura) {%>
-                <!-- 1° Informe -->
+                
                 <td class="rowNumber" style="display:none ;">
                   <%= calificacion._rowNumber %>
                 </td>
-                <td rowNumber = '<%= calificacion._rowNumber %>'>
+                <!-- 1° CUATRIMESTRE -->
+                <!-- 1° Informe -->
+                <td rowNumber = '<%= calificacion._rowNumber %>' class="cuatri1">
                   <select id="valoracion1" class="row_data clone_data form-select" edit_type="click" col_name="valoracion1">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
@@ -88,11 +113,11 @@
                     <% }); %>
                   </select>
                 </td>
-                <td>
+                <td class="cuatri1">
                   <input  class="row_data clone_data form-control" edit_type="click" col_name="informe1" value="<%= calificacion.informe2%>"/>
                 </td>
                 <!-- 2° Informe -->
-                <td>
+                <td class="cuatri1">
                   <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion2">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
@@ -104,9 +129,56 @@
                     <% }); %>
                   </select>
                 </td>
-                <td>
+                <td class="cuatri1">
                   <input  class="row_data clone_data form-control" edit_type="click" col_name="informe2" value="<%= calificacion.informe2%>"/>
                 </td>
+                <!-- 3° Informe -->
+                <td class="cuatri2">
+                  <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion3">
+                    <option value="" disabled selected></option>
+                    <% calificacionCodigos.forEach(function(calificacionCodigo){ 
+                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion3 ) ? "selected" : "";
+                    %>
+                      <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
+                        <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
+                      </option>
+                    <% }); %>
+                  </select>
+                </td>
+                <td class="cuatri2">
+                  <input  class="row_data clone_data form-control" edit_type="click" col_name="informe3" value="<%= calificacion.informe3%>"/>
+                </td>
+
+                <!-- 4° Informe -->
+                <td class="cuatri2">
+                  <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion4">
+                    <option value="" disabled selected></option>
+                    <% calificacionCodigos.forEach(function(calificacionCodigo){ 
+                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion4 ) ? "selected" : "";
+                    %>
+                      <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
+                        <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
+                      </option>
+                    <% }); %>
+                  </select>
+                </td>
+                <td class="cuatri2">
+                  <input  class="row_data clone_data form-control" edit_type="click" col_name="informe4" value="<%= calificacion.informe4%>"/>
+                </td>
+                <!-- anual Informe (5°) -->
+                <td>
+                  <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion5">
+                    <option value="" disabled selected></option>
+                    <% calificacionCodigos.forEach(function(calificacionCodigo){ 
+                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion5 ) ? "selected" : "";
+                    %>
+                      <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
+                        <%=calificacionCodigo.simbolo%> - <%=calificacionCodigo.letra%>
+                      </option>
+                    <% }); %>
+                  </select>
+                </td>
+
                 <% count++ %>
               <% } %>
                 
@@ -184,33 +256,37 @@
     </div>
     
   </div>
-  <script type="text/javascript">
-    // $(document).ready(function() {
-    //   document.getElementsByClassName("tabbtn")[0].className += " active";
-    //   $('td:nth-child(4),th:nth-child(4)').hide();
-    //         $('td:nth-child(5),th:nth-child(5)').hide();
-    //     $('#periodo1').click(function() {
-    //         //$('td:nth-child(2)').hide();
-    //         // if your table has header(th), use this
-    //         $('td:nth-child(2),th:nth-child(2)').show();
-    //         $('td:nth-child(3),th:nth-child(3)').show();
-    //         $('td:nth-child(4),th:nth-child(4)').hide();
-    //         $('td:nth-child(5),th:nth-child(5)').hide();
-    //     });
-    //     $('#periodo2').click(function() {
-    //         //$('td:nth-child(2)').hide();
-    //         // if your table has header(th), use this
-    //         $('td:nth-child(4),th:nth-child(4)').show();
-    //         $('td:nth-child(5),th:nth-child(5)').show();
-    //         $('td:nth-child(2),th:nth-child(2)').hide();
-    //         $('td:nth-child(3),th:nth-child(3)').hide();
-    //     });
-    // });
-</script>
+  <!-- <script>
+    $(document).ready(function() {
+      $('#periodo1').click(async function(event){
+      event.preventDefault();
+      alert('ok')
+      
+    })
+      // $('td:nth-child(4),th:nth-child(4)').hide();
+      //       $('td:nth-child(5),th:nth-child(5)').hide();
+      //   $('#periodo1').click(function() {
+      //       //$('td:nth-child(2)').hide();
+      //       // if your table has header(th), use this
+      //       $('td:nth-child(2),th:nth-child(2)').show();
+      //       $('td:nth-child(3),th:nth-child(3)').show();
+      //       $('td:nth-child(4),th:nth-child(4)').hide();
+      //       $('td:nth-child(5),th:nth-child(5)').hide();
+      //   });
+      //   $('#periodo2').click(function() {
+      //       //$('td:nth-child(2)').hide();
+      //       // if your table has header(th), use this
+      //       $('td:nth-child(4),th:nth-child(4)').show();
+      //       $('td:nth-child(5),th:nth-child(5)').show();
+      //       $('td:nth-child(2),th:nth-child(2)').hide();
+      //       $('td:nth-child(3),th:nth-child(3)').hide();
+      //   });
+    });
+</script> -->
 
 <script>
   $(document).ready(function () {
-
+    $('.cuatri1').addClass('d-none')//invicibilizo el 1er cuatri
     var tbl_row
     var numeroElementos
     var totalElementos = $('#totalElementos')
@@ -262,7 +338,7 @@
     }
 
     function rellenarInputModal(tbl_row){
-
+      
       var arrayRow = tbl_row.find('.clone_data')
       var arrayModal = $('.modal_data')
       var estudiante = $('#estudiante')
@@ -299,18 +375,33 @@
         clon.val(valor)
         i++
       })
-  }
-
-  $('#slcMotivoBajaId').on('change', function () {
-    var selector = $(this).val();
-    if (selector == 1 || selector == 3) {
-      $('#divCursoId').attr('hidden', false);
-      $('#inputCurso').prop('required',true);
-    } else {
-      $('#inputCurso').val('').prop('required',false);
-      $('#divCursoId').attr('hidden', true);
     }
-  })
+
+    $('#slcMotivoBajaId').on('change', function () {
+      var selector = $(this).val();
+      if (selector == 1 || selector == 3) {
+        $('#divCursoId').attr('hidden', false);
+        $('#inputCurso').prop('required',true);
+      } else {
+        $('#inputCurso').val('').prop('required',false);
+        $('#divCursoId').attr('hidden', true);
+      }
+    })
+
+    $('#periodo1').on('click', async function(){
+      $('.cuatri2').addClass('d-none')
+      $('.cuatri1').removeClass('d-none')
+    })
+
+    $('#periodo2').on('click', async function(){
+      $('.cuatri1').addClass('d-none')
+      $('.cuatri2').removeClass('d-none')
+    })
+
+    $('#periodo3').on('click', async function(){
+      $('.cuatri1').addClass('d-none')
+      $('.cuatri2').removeClass('d-none')
+    })
   
   });
 </script>
