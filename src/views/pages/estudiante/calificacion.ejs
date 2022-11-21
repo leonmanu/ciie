@@ -64,7 +64,7 @@
             <td >
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary modalEdit " data-toggle="modal" data-target="#exampleModalCenter">
-                Calif
+                Form
               </button>
             </td>
             
@@ -77,7 +77,7 @@
                   <%= calificacion._rowNumber %>
                 </td>
                 <td rowNumber = '<%= calificacion._rowNumber %>'>
-                  <select id="valoracion1" class="row_data form-select" edit_type="click" col_name="valoracion1">
+                  <select id="valoracion1" class="row_data clone_data form-select" edit_type="click" col_name="valoracion1">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion1 ) ? "selected" : "";
@@ -89,11 +89,11 @@
                   </select>
                 </td>
                 <td>
-                  <input  class="row_data form-control" edit_type="click" col_name="informe1" value="<%= calificacion.informe2%>"/>
+                  <input  class="row_data clone_data form-control" edit_type="click" col_name="informe1" value="<%= calificacion.informe2%>"/>
                 </td>
                 <!-- 2° Informe -->
                 <td>
-                  <select class="row_data form-select" edit_type="click" col_name="valoracion2">
+                  <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion2">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion2 ) ? "selected" : "";
@@ -105,9 +105,9 @@
                   </select>
                 </td>
                 <td>
-                  <input  class="row_data form-control" edit_type="click" col_name="informe2" value="<%= calificacion.informe2%>"/>
+                  <input  class="row_data clone_data form-control" edit_type="click" col_name="informe2" value="<%= calificacion.informe2%>"/>
                 </td>
-                <%- count++ %>
+                <% count++ %>
               <% } %>
                 
 
@@ -115,7 +115,7 @@
             <% }) %>
             <% if(count == 0) {%>
               <td>
-                <select class="row_data form-select" edit_type="click" col_name="valoracion1">
+                <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion1">
                   <option value="" disabled selected></option>
                   <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                     var selected = "";
@@ -127,11 +127,11 @@
                 </select>
               </td>
               <td>
-                <input  class="row_data form-control" edit_type="click" col_name="informe1"/>
+                <input  class="row_data clone_data form-control" edit_type="click" col_name="informe1"/>
               </td>
               <!-- 2° Informe -->
               <td>
-                <select class="row_data form-select" edit_type="click" col_name="valoracion2">
+                <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion2">
                   <option value="" disabled selected></option>
                   <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                     var selected = "";
@@ -143,11 +143,12 @@
                 </select>
               </td>
               <td>
-                <input  class="row_data form-control" edit_type="click" col_name="informe2" />
+                <input  class="row_data clone_data form-control" edit_type="click" col_name="informe2" />
               </td>
             <% } %>
 
           </tr>
+
           <% }); %>
         </tbody>
 
@@ -209,36 +210,96 @@
 
 <script>
   $(document).ready(function () {
-    $('.modalEdit').on('click', function(event){
-		event.preventDefault();
 
-    var tbl_row = $(this).closest('tr');
-    var arrayRow = tbl_row.find('.row_data')
-    var arrayModal = $('.modal_data')
-    let i = 0
-    arrayRow.each(async function(){
-      arrayModal.eq(i).html('')
-      let valor = $(this).val()
-      let clon = $(this).clone().appendTo(arrayModal.eq(i))
-      clon.val(valor);
-      i++
+    var tbl_row
+    var numeroElementos
+    var totalElementos = $('#totalElementos')
+
+    $('.modalEdit').on('click', async function(event){
+      event.preventDefault()
+      tbl_row = await $(this).closest('tr')
+      numeroElementos = $(this).closest('table').find('tr').length - 1
+      totalElementos.html( numeroElementos )
+      await rellenarInputModal(tbl_row)
+	  });
+
+    $('.btn_form').on('click', async function(event){
+      event.preventDefault();
+      if ($('#form_change').html()=='true') {
+        await actualizarTabla()
+      }
     })
-    // $('#divValoracion1').html('')
-    // var tbl_row = $(this).closest('tr');
-    // var original = tbl_row.find('#valoracion1');
-    // var valor = original.find('select').val();
-    // var clon = original.clone().appendTo('#divValoracion1');
-    // clon.find('select').val(valor);
-		// 
-		// var row_id = tbl_row.attr('row_id');
-    // var row_estudiante = tbl_row.find("td:eq(0)").html()
-    // var row_cLectivo = tbl_row.find("td:eq(3)").html()
-    // var row_estudianteNombre = tbl_row.find("td:eq(1)").html()
-    // $('#estudianteId').val($.trim(row_estudiante));
-    // $('#cLectivo').val($.trim(row_cLectivo));
-    // $('#rowId').val(row_id);
-    // $('#estudianteNombre').html(row_estudianteNombre);
-	});
+
+    $('#estudianteSiguiente').on('click', async function(event){
+      event.preventDefault();
+      tbl_row = await tbl_row.next()
+      await rellenarInputModal(tbl_row)
+    })
+
+    $('#estudianteAnterior').on('click', async function(event){
+      event.preventDefault();
+      tbl_row = await tbl_row.prev()
+      await rellenarInputModal(tbl_row)
+    })
+
+    $('.modal_data').change( async function(){
+      $('#form_change').html('true')
+    } )
+
+    function actualizarTabla(){
+      var arrayData = $('.data_inverse')
+      var arrayRow = tbl_row.find('.clone_data')
+      let j = 0
+
+      arrayData.each(async function(callback){
+        arrayRow[j].value = arrayData[j].value
+        j++
+      })
+      tbl_row.find("td:eq(1)").addClass('text-success')
+      tbl_row.find("td:eq(0)").html('true')
+      $('#form_change').html('false')
+      rellenarInputModal(tbl_row)
+    }
+
+    function rellenarInputModal(tbl_row){
+
+      var arrayRow = tbl_row.find('.clone_data')
+      var arrayModal = $('.modal_data')
+      var estudiante = $('#estudiante')
+      var index = $('#index')
+
+      estudiante.html(tbl_row.find('.estudiante').html())
+      index.html(tbl_row.index()+1)
+
+      if (index.html() == 1) {
+        $('#estudianteAnterior').addClass('btn-disabled')
+        $('#estudianteAnterior').removeClass('btn-info')
+        $('#estudianteAnterior').attr('disabled', 'disabled');
+      } else {
+        $('#estudianteAnterior').addClass('btn-info')
+        $('#estudianteAnterior').removeClass('btn-disabled')
+        $('#estudianteAnterior').removeAttr('disabled');
+      }
+
+      if (index.html() == numeroElementos) {
+        $('#estudianteSiguiente').addClass('btn-disabled')
+        $('#estudianteSiguiente').removeClass('btn-info')
+        $('#estudianteSiguiente').attr('disabled', 'disabled');
+      } else {
+        $('#estudianteSiguiente').addClass('btn-info')
+        $('#estudianteSiguiente').removeClass('btn-disabled')
+        $('#estudianteSiguiente').removeAttr('disabled');
+      }
+
+      let i = 0
+      arrayRow.each(async function(){
+        await arrayModal.html('')
+        let valor = $(this).val()
+        let clon = $(this).clone().appendTo(arrayModal.eq(i)).addClass('data_inverse')
+        clon.val(valor)
+        i++
+      })
+  }
 
   $('#slcMotivoBajaId').on('change', function () {
     var selector = $(this).val();

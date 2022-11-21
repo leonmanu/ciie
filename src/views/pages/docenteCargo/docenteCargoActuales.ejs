@@ -98,13 +98,30 @@
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+      </div>  
       <div class="modal-body">
-        Está seguro que desea borrar el cargo de <%= cargo.rol%>: <%= cargo.asignatura%> ?
+        Está seguro que desea borrar el cargo de 
+        <% roles.forEach(function(rol){ %>
+          <% if(cargo.rol == rol.id){%>
+            <%= rol.codigo%>
+          <% } %>
+        <% }) %>: 
+        <% cursoAsignaturas.forEach(function(cursoAsignatura){ %>
+          <% if(cargo.cursoAsignatura == cursoAsignatura.id){%>
+            
+            <% asignaturas.forEach(function(asignatura){ %>
+              <% if(asignatura.idAsignatura == cursoAsignatura.asignatura) {%>
+                <% asignaturaId = asignatura.idAsignatura %>
+                <%= asignatura.nombreCorto %>
+              <% } %>
+            <% }) %>
+          <% } %>
+        <% }) %>
+        ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a href="/docente/cargo/<%= cargo._rowNumber%>/baja" type="button" class="btn btn-danger">Confirmar</a>
+        <a href="/docente/cargo/<%= cargo.id%>/baja" type="button" class="btn btn-danger">Confirmar</a>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 const req = require('express/lib/request')
 const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
 const cargoSheet =  require("../sheets/docenteCargo.sheet")
+const cargoService = require('./cargo.service')
 const cursoService = require('./curso.service')
 const cursoAsignaturaService = require('./cursoAsignatura.service')
 const rolService = require('./rol.service')
@@ -34,9 +35,20 @@ const getPorDocenteCargoCurso = async (req, res) => {
     return resultados
 }
 
-const postDocenteCargo = async (req, res) => {
+const postDocenteCargo = async (req) => {
     //habría que verificar si la combinación es válida (si ya existe o si puede solicitarla)
     //const fechaAlta = new Date().toISOString
+
+    const cargo = await cargoService.getPorId(req.body.cursoAsignatura)
+    console.log("Cargo::", cargo)
+    if (cargo) {
+        console.log('El cargo existe ')
+    }
+    else{
+        
+        console.log("cargo no encontrado")
+    }
+
     const objetoInterface = {
         id: req.body.cursoAsignatura+"_"+req.user.id,
         cursoAsignatura: req.body.cursoAsignatura,
@@ -83,10 +95,15 @@ const getSiDisponible = async (cargo) => {
     return resultadoFinal
 }
 
-const putBajaDocenteCargo = async(rowNumber) => {
+const putBajaDocenteCargo = async(id, userId) => {
     const fechaBaja = new Date().toISOString()
-    const resultado = await cargoSheet.putBajaDocenteCargo(rowNumber, fechaBaja)
-    return resultado
+    const docenteCargos = await docenteCargoSheet.get()
+    const docenteCargo = await docenteCargos.filter(row => row.cursoAsignatura == id && row.idGoogleUsuario == userId && row.fechaBaja == null)
+    console.log("DocenteCargos", docenteCargo)
+    docenteCargo[0].fechaBaja = fechaBaja
+    docenteCargo[0].save()
+    //const resultado = await cargoSheet.putBajaDocenteCargo(rowNumber, fechaBaja)
+    return docenteCargo[0]
 }
 
 

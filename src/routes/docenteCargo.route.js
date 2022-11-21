@@ -23,7 +23,7 @@ router
     .get('/alta', sessionMiddelware, function(req,res){
         res.render("pages/cargo/cargoAlta")
     })
-    .get('/:rowNumber/baja', sessionMiddelware, putBajaDocenteCargo_controller)
+    .get('/:id/baja', sessionMiddelware, putBajaDocenteCargo_controller)
     .post('/siDisponible',sessionMiddelware, getSiDisponible)//
 
 

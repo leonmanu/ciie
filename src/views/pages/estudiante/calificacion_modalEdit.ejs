@@ -6,50 +6,70 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <p class="modal-title" id="exampleModalLongTitle">Calificación: estudiante  <span id="index"></span>/<span id="totalElementos"></span></p>
+
       </div>
       <div id="modalId" class="modal-body">
-        <div class="modal_data" id=""></div>
-        <div class="text-white mb-3 m-0">
-          <h5>1° Cuatrimestre</h5>
-        <div class="">
-          <div class="card-header">&ensp;1° Bimestre</div>
-          <div class="row">
-            <div class="col-4" id="">
-              <label for="divValoracion1">Valoración</label>
-              <div class="modal_data" id="divValoracion1"></div>
+        <div class="row mb-3 bg-dark">
+          <div class="col-sm-2 positivo"><button id="estudianteAnterior" class="btn btn-info btn_form"><<</button></div>
+          <div class="col-sm-8 text-center pt-2"> <h5 id="estudiante"> nomb_estudiante <span id="index"></span></h5> </div>
+          <div class="col-sm-2 positivo"><button id="estudianteSiguiente" class="btn btn-info btn_form">>></button></div>
+        </div>
+        <div>
+          
+          <div id="form_change" style="display:none ;">false</div>
+          <div id="accordion">
+            <div class="card">
+                <a class="btn card-header" data-bs-toggle="collapse" href="#collapseOne">
+                  <h4>1# Cuatrimestre</h4>
+                </a>
+              <div id="collapseOne" class="collapse bg-dark" data-bs-parent="#accordion">
+                <div class="card-body">
+                  <div class="">
+                    <div class="card-header">&ensp;1° Bimestre</div>
+                    <div class="row">
+                      <div class="col-4" id="">
+                        <label for="divValoracion1">Valoración</label>
+                        <div class="modal_data" id=""></div>
+                      </div>
+                      <div class="col" id="">
+                        <label for="divInforme1">Informe</label>
+                        <div class="modal_data" id=""></div>
+                      </div>
+                    </div>
+                    <div class="card-header mt-3">&ensp;2° Bimestre</div>
+                  <div class="row">
+                    <div class="col-4" id="">
+                      <label for="divValoracion2">Valoración</label>
+                      <div class="modal_data" id="divValoracion2"></div>
+                    </div>
+                    <div class="col" id="">
+                      <label for="divInforme2">Informe</label>
+                      <div class="modal_data" id="divInforme2"></div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col" id="">
-              <label for="divInforme1">Informe</label>
-              <div class="modal_data" id="divInforme1"></div>
+            <div class="card">
+                <a class="collapsed btn card-header" data-bs-toggle="collapse" href="#collapseTwo">
+                  <h4>2# Cuatrimestre</h4>
+              </a>
+              <div id="collapseTwo" class="collapse show" data-bs-parent="#accordion">
+                <div class="card-body">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="card-header mt-3">&ensp;2° Bimestre</div>
-        <div class="row">
-          <div class="col-4" id="">
-            <label for="divValoracion2">Valoración</label>
-            <div class="modal_data" id="divValoracion2"></div>
-          </div>
-          <div class="col" id="">
-            <label for="divInforme2">Informe</label>
-            <div class="modal_data" id="divInforme2"></div>
+
           </div>
         </div>
-        </div>
-        <br />
-        </div>
-        <hr />
         
-        
-        <br />
-        <h2>2° Cuatrimestre</h2>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button  id="aceptar_form" type="button" class="btn btn-info btn_form" data-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>

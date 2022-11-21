@@ -6,7 +6,7 @@ const utilidadesService = require('../services/utilidades.service')
 const getPorCurso = async (req, res) => {
     const clave = await req.params.clave
     const curso = await cursoService.getPorClave(clave)
-    const asignaturas = await asignaturaService.getPorIdCurso(curso.idCurso)
+    const asignaturas = await asignaturaService.getAsignaturasPorIdCurso(curso.idCurso)
 
     res.render('pages/curso/cursoAsignaturas', {user: req.user._json, asignaturas, clave})
 }

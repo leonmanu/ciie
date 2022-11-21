@@ -37,18 +37,10 @@ const post = (req, res) => {
 }
 
 const postDocenteCargo = async (req, res) => {
-    console.log("docenteCargo.controller::: ", req.body)
-    const cargoAsignatura = await docenteCargoService.getSiExiste(req.body.cursoAsignatura)
-    if (cargoAsignatura.length > 0 ) {
-        console.log("cargoAsignatura: ",cargoAsignatura[0].usuario)
-        res.send('El cargo fue soliciatod por: ' + cargoAsignatura[0].usuario)
-        await res.redirect('/docente/cargo')
-    }
-    else{
-        resultado = await docenteCargoService.postDocenteCargo(req, res)
-        console.log("cargoAsignatura: cargoAsignatura.length",cargoAsignatura.length)
+    //const cargoAsignatura = await docenteCargoService.getSiExiste(req.body.cursoAsignatura)
+    const cargoAsignatura = await docenteCargoService.postDocenteCargo(req)
+    
     await res.redirect('/docente/cargo')
-    }
 }
 
 const getSiDisponible = async (req, res) => {
@@ -60,7 +52,8 @@ const getSiDisponible = async (req, res) => {
 } 
 
 const putBajaDocenteCargo = async(req, res) => {
-    resultado = await docenteCargoService.putBajaDocenteCargo(req.params.rowNumber)
+    console.log("BBAAJJAA:: ",req.params.id,"|||",req.user.id)
+    resultado = await docenteCargoService.putBajaDocenteCargo(req.params.id,req.user.id)
     await res.redirect('/docente/cargo')
 }
 

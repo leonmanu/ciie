@@ -197,7 +197,7 @@ $(document).ready(function () {
       idCurso: $('#inputCurso').val(),
       idRol: $('#inputRol').val()
     }
-    alert("idCargo: " + jsonObjet.idCargo + ", idCurso: " + jsonObjet.idCurso + ", idRol: " + jsonObjet.idRol)
+   // alert("idCargo: " + jsonObjet.idCargo + ", idCurso: " + jsonObjet.idCurso + ", idRol: " + jsonObjet.idRol)
     $("#waitIconAsignatura2").css("display", "block");
     $.ajax({
         url: '/docente/cargo/siDisponible/',
