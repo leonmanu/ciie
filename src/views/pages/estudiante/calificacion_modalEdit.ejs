@@ -3,17 +3,17 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header p-2">
         <p class="modal-title" id="exampleModalLongTitle">Calificación: estudiante  <span id="index"></span>/<span id="totalElementos"></span></p>
-
       </div>
-      <div id="modalId" class="modal-body">
-        <div class="row mb-3 bg-dark">
-          <div class="col-sm-2 positivo"><button id="estudianteAnterior" class="btn btn-info btn_form"><<</button></div>
-          <div class="col-sm-8 text-center pt-2"> <h5 id="estudiante"> nomb_estudiante <span id="index"></span></h5> </div>
-          <div class="col-sm-2 positivo"><button id="estudianteSiguiente" class="btn btn-info btn_form">>></button></div>
+      <div id="modalId" class="">
+        
+        <div class="row m-1 bg-dark">
+          <button id="estudianteAnterior" class="col-2 btn btn-info"><<</button>
+          <h5 id="estudiante" class="col-8 text-center mt-2 overflow-hidden"> nomb_estudiante <span id="index"></span></h5> 
+          <button id="estudianteSiguiente" class="col-2 btn btn-info float-end">>></button>
         </div>
         <div>
           

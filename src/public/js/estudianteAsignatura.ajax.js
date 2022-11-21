@@ -10,7 +10,7 @@ $( window ).on( "load", function() {
 		var tbl_row = await $(this).closest('tbody > tr');
 		//var row_id = tbl_row.attr('row_id');
    		var row_estudiante = await  $(this).find(".estudiante").html()
-		await  $(this).find(".estudiante").css('font-weight', 'bold')
+		await  $(this).find(".estudiante").addClass('text-success')
 		await  $(this).find(".change").html('true')
     	var row_cLectivo = tbl_row.find("td:eq(3)").html()
     	var row_estudianteNombre = tbl_row.find("td:eq(0)").find('div').html()
