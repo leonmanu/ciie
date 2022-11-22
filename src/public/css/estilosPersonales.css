@@ -23,8 +23,8 @@ table{
   table-layout: fixed;
 }
 
-.miTablaPersonalizada th{
-  width: 230px;
+.thPeronal{
+  width: 330px;
   overflow: auto;
   border: 1px solid;
 }
