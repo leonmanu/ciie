@@ -27,20 +27,20 @@
         <hr class="mb-0">
       </div>
       
-      <div class="sticky-top mb-3 bg-primary pt-1 pb-1 mt-0">
-            <button id="periodo1" class="btn btn-primary">1# Cuatri</button>
-            <button id="periodo2" class="btn btn-primary">2# Cuatri</button>
-            <button id="periodo3" class="btn btn-primary">Cierre</button>
-            <button href="#" class="m-2 btn btn-outline-success btn_save mt-0 mb-0 float-end" row_id="'+row_id+'">
-              <span id="">Guardar</span> 
-              <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
-            </button>
+      <div class="sticky-top col-12 mb-3 bg-primary p-2 btn-group">
+        <button id="periodo1" class="btn btn-primary">1# Cuatri</button>
+        <button id="periodo2" class="btn btn-primary">2# Cuatri</button>
+        <button id="periodo3" class="btn btn-primary">Cierre</button>
+        <button href="#" class="m-2 btn btn-outline-success btn_save mt-0 mb-0 float-end" row_id="'+row_id+'">
+          <span id="">Guardar</span> 
+          <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
+        </button>
       </div>
       <div class="table-responsive">
       <table id="estudiantes" class="table  table-sm table-striped table-bordered ">
         <thead class="text-center align-middle">
-          <tr>
-            <th rowspan = '3'>Estudiante</th>
+          <tr class="miTablaPersonalizada">
+            <th rowspan = '3' class="mithPersonalizado">Estudiante</th>
             <th colspan="4" class="cuatri1">1# Cuatrimestre</th>
             <th colspan="4" class="cuatri2">2# Cuatrimestre</th>
             <th class="cierre">Cierre de año</th>
@@ -53,15 +53,15 @@
             <th class="cierre">Anual</th>
           </tr>
           <tr class="">
-            <th class="cuatri1 thPeronal">Nota (1)</th>
-            <th class="cuatri1 thPeronal">Informe (1)</th>
-            <th class="cuatri1 thPeronal">Nota (2)</th>
-            <th class="cuatri1 thPeronal">Informe (2)</th>
-            <th class="cuatri2 thPeronal">Nota (3)</th>
-            <th class="cuatri2 thPeronal">Informe (3)</th>
-            <th class="cuatri2 thPeronal">Nota (4)</th>
-            <th class="cuatri2 thPeronal">Informe (4)</th>
-            <th class="cierre thPeronal">Nota</th>
+            <th class="cuatri1">Nota (1)</th>
+            <th class="cuatri1">Informe (1)</th>
+            <th class="cuatri1">Nota (2)</th>
+            <th class="cuatri1">Informe (2)</th>
+            <th class="cuatri2">Nota (3)</th>
+            <th class="cuatri2">Informe (3)</th>
+            <th class="cuatri2">Nota (4)</th>
+            <th class="cuatri2">Informe (4)</th>
+            <th class="cierre">Nota</th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
