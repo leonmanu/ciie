@@ -40,7 +40,7 @@
               <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
             </button>
       </div>
-      <div class="table-responsive-lg">   
+      <div class="table-responsive">   
       <table id="estudiantes" class="table  table-sm table-striped table-bordered ">
         <thead class="text-center align-middle">
           <tr class="">
@@ -96,7 +96,7 @@
                 <!-- 1° CUATRIMESTRE -->
                 <!-- 1° Informe -->
                 <td rowNumber = '<%= calificacion._rowNumber %>' class="cuatri1">
-                  <select id="valoracion1" class="row_data clone_data" edit_type="click" col_name="valoracion1">
+                  <select id="valoracion1" class="row_data clone_data form-select" edit_type="click" col_name="valoracion1">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion1 ) ? "selected" : "";
@@ -112,7 +112,7 @@
                 </td>
                 <!-- 2° Informe -->
                 <td class="cuatri1">
-                  <select class="row_data clone_data" edit_type="click" col_name="valoracion2">
+                  <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion2">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion2 ) ? "selected" : "";
