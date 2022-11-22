@@ -20,17 +20,14 @@
 }
 
 table{
-  table-layout: fixed;
+
+  overflow: auto;
 }
 
-.miTablaPersonalizada th{
-  width: 330px;
-
-  border: 1px solid;
+.tdNota{
+  min-width: 120px;
 }
 
-.mithPersonalizado{
-  width: 1px;
-
-  border: 1px solid;
+.tdInf{
+  min-width: 200px;
 }

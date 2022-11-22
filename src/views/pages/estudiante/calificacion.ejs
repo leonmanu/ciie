@@ -30,7 +30,7 @@
       <div class="sticky-top col-12 mb-3 bg-primary p-2 btn-group">
         <button id="periodo1" class="btn btn-primary">1# Cuatri</button>
         <button id="periodo2" class="btn btn-primary">2# Cuatri</button>
-        <button id="periodo3" class="btn btn-primary">Cierre</button>
+        <!-- <button id="periodo3" class="btn btn-primary">Cierre</button> -->
         <button href="#" class="m-2 btn btn-outline-success btn_save mt-0 mb-0 float-end" row_id="'+row_id+'">
           <span id="">Guardar</span> 
           <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
@@ -39,11 +39,11 @@
       <div class="table-responsive">
       <table id="estudiantes" class="table  table-sm table-striped table-bordered ">
         <thead class="text-center align-middle">
-          <tr class="miTablaPersonalizada">
+          <tr>
             <th rowspan = '3' class="mithPersonalizado">Estudiante</th>
-            <th colspan="4" class="cuatri1">1# Cuatrimestre</th>
-            <th colspan="4" class="cuatri2">2# Cuatrimestre</th>
-            <th class="cierre">Cierre de año</th>
+            <th colspan="4" class="cuatri1"><h4> 1# Cuatrimestre</h4></th>
+            <th colspan="4" class="cuatri2"><h4>2# Cuatrimestre</h4></th>
+            <th class="cierre">Cierre</th>
           </tr>
           <tr class="">
             <th colspan="2" class="cuatri1">1° Bimestre</th>
@@ -53,15 +53,15 @@
             <th class="cierre">Anual</th>
           </tr>
           <tr class="">
-            <th class="cuatri1">Nota (1)</th>
-            <th class="cuatri1">Informe (1)</th>
-            <th class="cuatri1">Nota (2)</th>
-            <th class="cuatri1">Informe (2)</th>
-            <th class="cuatri2">Nota (3)</th>
-            <th class="cuatri2">Informe (3)</th>
-            <th class="cuatri2">Nota (4)</th>
-            <th class="cuatri2">Informe (4)</th>
-            <th class="cierre">Nota</th>
+            <th class="cuatri1 tdNota">Valoración</th>
+            <th class="cuatri1 tdInf">Informe</th>
+            <th class="cuatri1 tdNota">Valoración</th>
+            <th class="cuatri1 tdInf">Informe</th>
+            <th class="cuatri2 tdNota">Valoración</th>
+            <th class="cuatri2 tdInf">Informe</th>
+            <th class="cuatri2 tdNota">Valoración</th>
+            <th class="cuatri2 tdInf">Informe</th>
+            <th class="cierre tdNota">Valoración</th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
@@ -277,7 +277,7 @@
 <script>
   $(document).ready(function () {
     $('.cuatri1').addClass('d-none')//invicibilizo el 1er cuatri
-    $('.cierre').addClass('d-none')//invicibilizo el 1er cuatri
+    //$('.cierre').addClass('d-none')//invicibilizo el 1er cuatri
     var tbl_row
     var numeroElementos
     var totalElementos = $('#totalElementos')
@@ -381,20 +381,20 @@
 
     $('#periodo1').on('click', async function(){
       $('.cuatri2').addClass('d-none')
-      $('.cierre').addClass('d-none')
+      //$('.cierre').addClass('d-none')
       $('.cuatri1').removeClass('d-none')
     })
 
     $('#periodo2').on('click', async function(){
       $('.cuatri1').addClass('d-none')
-      $('.cierre').addClass('d-none')
+      //$('.cierre').addClass('d-none')
       $('.cuatri2').removeClass('d-none')
     })
 
     $('#periodo3').on('click', async function(){
       $('.cuatri1').addClass('d-none')
       $('.cuatri2').addClass('d-none')
-      $('.cierre').removeClass('d-none')
+      //$('.cierre').removeClass('d-none')
     })
   
   });
