@@ -47,14 +47,14 @@
             <th rowspan = '3'>Estudiante</th>
             <th colspan="4" class="cuatri1">1# Cuatrimestre</th>
             <th colspan="4" class="cuatri2">2# Cuatrimestre</th>
-            <th>Cierre de año</th>
+            <th class="cierre">Cierre de año</th>
           </tr>
           <tr class="">
             <th colspan="2" class="cuatri1">1° Bimestre</th>
             <th colspan="2" class="cuatri1">2° Bimestre</th>
             <th colspan="2" class="cuatri2">3° Bimestre</th>
             <th colspan="2" class="cuatri2">4° Bimestre</th>
-            <th>Anual</th>
+            <th class="cierre">Anual</th>
           </tr>
           <tr class="">
             <th class="cuatri1">Nota (1)</th>
@@ -65,7 +65,7 @@
             <th class="cuatri2">Informe (3)</th>
             <th class="cuatri2">Nota (4)</th>
             <th class="cuatri2">Informe (4)</th>
-            <th>Nota</th>
+            <th class="cierre">Nota</th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
@@ -160,7 +160,7 @@
                   <input  class="row_data clone_data form-control" edit_type="click" col_name="informe4" value="<%= calificacion.informe4%>"/>
                 </td>
                 <!-- anual Informe (5°) -->
-                <td>
+                <td  class="cierre">
                   <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion5">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
@@ -281,6 +281,7 @@
 <script>
   $(document).ready(function () {
     $('.cuatri1').addClass('d-none')//invicibilizo el 1er cuatri
+    $('.cierre').addClass('d-none')//invicibilizo el 1er cuatri
     var tbl_row
     var numeroElementos
     var totalElementos = $('#totalElementos')
@@ -384,17 +385,20 @@
 
     $('#periodo1').on('click', async function(){
       $('.cuatri2').addClass('d-none')
+      $('.cierre').addClass('d-none')
       $('.cuatri1').removeClass('d-none')
     })
 
     $('#periodo2').on('click', async function(){
       $('.cuatri1').addClass('d-none')
+      $('.cierre').addClass('d-none')
       $('.cuatri2').removeClass('d-none')
     })
 
     $('#periodo3').on('click', async function(){
       $('.cuatri1').addClass('d-none')
-      $('.cuatri2').removeClass('d-none')
+      $('.cuatri2').addClass('d-none')
+      $('.cierre').removeClass('d-none')
     })
   
   });
