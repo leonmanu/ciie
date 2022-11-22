@@ -19,3 +19,12 @@
     white-space: pre;
 }
 
+table{
+  table-layout: fixed;
+}
+
+.miTablaPersonalizada th{
+  width: 330px;
+  overflow: auto;
+  border: 1px solid;
+}
