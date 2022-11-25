@@ -31,9 +31,9 @@
         <button id="periodo1" class="btn btn-primary">1# Cuatri</button>
         <button id="periodo2" class="btn btn-primary">2# Cuatri</button>
         <!-- <button id="periodo3" class="btn btn-primary">Cierre</button> -->
-        <button href="#" class="m-2 btn btn-outline-success btn_save mt-0 mb-0 float-end" row_id="'+row_id+'">
+        <button href="#" class="m-2 btn btn-outline btn_save mt-0 mb-0 float-end" row_id="'+row_id+'" disabled>
           <span id="">Guardar</span> 
-          <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
+          <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:block ;" width="22" height="22" />
         </button>
       </div>
       <div class="table-responsive">
@@ -69,14 +69,14 @@
           <% estudiantes.forEach(function(estudiante){ %>
             
           <tr estudiante_id='<%= estudiante.id %>'>
-            <td class="row_data change" col_name="change" style="display:none ;">
+            <td class="row_data change" col_name="change" style="display:block ;">
               false
             </td>
 
             <td class=" align-middle" col_name="nombre">
-              <a type="button" class="estudiante modalEdit " data-toggle="modal" data-target="#exampleModalCenter">
+              <p type="button" class="estudiante modalEdit " data-toggle="modal" data-target="#exampleModalCenter">
                 <%= estudiante.apellido %>, <%= estudiante.nombre %>
-              </a>
+              </p>
                 
             </td>
 
@@ -323,6 +323,8 @@
         j++
       })
       tbl_row.find("td:eq(1)").addClass('text-success')
+      $('.btn_save').prop('disabled', false)
+      $('.btn_save').addClass('btn-outline-success')
       tbl_row.find("td:eq(0)").html('true')
       $('#form_change').html('false')
       rellenarInputModal(tbl_row)

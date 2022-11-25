@@ -12,6 +12,8 @@ $( window ).on( "load", function() {
    		var row_estudiante = await  $(this).find(".estudiante").html()
 		await  $(this).find(".estudiante").addClass('text-success')
 		await  $(this).find(".change").html('true')
+		$('.btn_save').prop('disabled', false)
+		$('.btn_save').addClass('btn-outline-success')
     	var row_cLectivo = tbl_row.find("td:eq(3)").html()
     	var row_estudianteNombre = tbl_row.find("td:eq(0)").find('div').html()
 	});  
