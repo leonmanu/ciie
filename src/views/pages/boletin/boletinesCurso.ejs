@@ -6,6 +6,7 @@
 <body>
  
   <% estudiantes.forEach(function(estudiante){ %>
+    <% var valoracion5, valoracion6, valoracion7, valoracion8 %>
       <div class="container">
         <div class="text-center mt-5">
             <img src="/img/ees62-logo.png" width="70" height="70">
@@ -40,16 +41,16 @@
             <tr  class="text-center">
               <th>1° <br> <small> mar-jul</small></th>
               <th>2° <br> <small> ago-dic</small></th>
+              <th class="align-middle">Cierre <br> anual</th>
               <th>3° <br> <small> int. dic</small></th>
               <th>4° <br> <small> feb-mar</small></th>
-              <th class="align-middle">Anual</th>
               <th class="align-middle">Final</th>
             </tr>
           </thead>
-        
+          
           <% asignaturas.forEach(function(asignatura) { %>
             <tr class="">
-            <td class="align-middle"><h5 class="align-middle"> <%= asignatura.nombreCorto %></h5></td>
+            <td class=""><strong> <%= asignatura.nombreCorto %></strong></td>
             
               <% calificaciones.forEach(function(calificacion) { %>
                 <% if(asignatura.idAsignatura == calificacion.asignatura && calificacion.estudiante == estudiante.id) { %>
@@ -84,73 +85,84 @@
                       <% } %>
                   </span>
                 </td>
-
-                <% promedio = parseInt(calificacion.valoracion5) %>
+                <!-- Anual -->
+                <% valoracion5 = parseInt(calificacion.valoracion5) %>
+                <% valoracion6 =  parseInt(calificacion.valoracion6) %>
+                <% valoracion7 =  parseInt(calificacion.valoracion7) %>
+                <% valoracion8 =  parseInt(calificacion.valoracion8) %>
                   <td class="text-center">
-                  <% if( promedio <= 10 && promedio >= 7 ){%>
-                    <span class="text-info">TEA 
+                  <% if( valoracion5 <= 10 && valoracion5 >= 7 ){%>
+                    <span class="text-info"> 
                       <% } %>
       
-                  <% if( promedio <= 6 && promedio >= 4 ){%>
-                    <span class="text-success">TEP
+                  <% if( valoracion5 <= 6 && valoracion5 >= 4 ){%>
+                    <span class="text-success">
                       <% } %>
       
-                  <% if( promedio <= 3 && promedio >= 0 ){%>
-                    <span class="text-danger">TED
+                  <% if( valoracion5 <= 3 && valoracion5 >= 0 ){%>
+                    <span class="text-danger">
                       <% } %>
+                  <% if(valoracion5) { %>
+                    <strong><%= valoracion5 %></strong> 
+                  <% } %>
                   </span>
-                </td>
+                  </td>
 
                   <% } %>
                   
                 <% }) %>
                 
               <%
-                if(asignatura[8]=='TEA'){%>
+                if(valoracion5 >= 7){%>
                   <td class="dark" style="text-align: center;">
                   ------->
                   <%} else{ %>
-                    <td style="text-align: center;">
-                      <% switch (asignatura[9]) {
-                    case 'TEA' : %>
-                    <strong class="text-success"><%= asignatura[9] %></strong>
-                            <% break;
-                    
-                    case 'TEP' : %>
-                    <strong class="text-warning"><%= asignatura[9] %></strong>
-                            <% break;
-                    
-                    case 'TED' : %>
-                      <strong class="text-danger"><%= asignatura[9] %></strong>
-                            <% break;
-                    
-                    }
-                }
+                    <td class="text-center">
+                      <% if( valoracion6 <= 10 && valoracion6 >= 7 ){%>
+                        <span class="text-info"> 
+                          <% } %>
+          
+                      <% if( valoracion6 <= 6 && valoracion6 >= 4 ){%>
+                        <span class="text-success">
+                          <% } %>
+          
+                      <% if( valoracion6 <= 3 && valoracion6 >= 0 ){%>
+                        <span class="text-danger">
+                          <% } %>
+                      <% if(valoracion6) { %>
+                        <strong><%= valoracion6 %></strong> 
+                      <% } %>
+                      </span>
+                      </td>
+    
+                      <% } %>
               %>
               
-            </td>
+              </td>
               <%
-                if(asignatura[8]=='TEA'||asignatura[9]=='TEA'){%>
+                if( valoracion5 >= 7 || valoracion6 >= 7){%>
                   <td class="dark" style="text-align: center;">
                   ------->
                   <%} else{ %>
-                    <td style="text-align: center;">
-                      <% 
-                  switch (asignatura[10]) {
-                    case 'TEA' : %>
-                    <strong class="text-success"><%= asignatura[10] %></strong>
-                            <% break;
-                    
-                    case 'TEP' : %>
-                    <strong class="text-warning"><%= asignatura[10] %></strong>
-                            <% break;
-                    
-                    case 'TED' : %>
-                      <strong class="text-danger"><%= registro[10] %></strong>
-                            <% break;
-                    
-                    }
-                }
+                    <td class="text-center">
+                      <% if( valoracion6 <= 10 && valoracion6 >= 7 ){%>
+                        <span class="text-info"> 
+                          <% } %>
+          
+                      <% if( valoracion6 <= 6 && valoracion6 >= 4 ){%>
+                        <span class="text-success">
+                          <% } %>
+          
+                      <% if( valoracion6 <= 3 && valoracion6 >= 0 ){%>
+                        <span class="text-danger">
+                          <% } %>
+                      <% if(valoracion6) { %>
+                        <strong><%= valoracion6 %></strong> 
+                      <% } %>
+                      </span>
+                      </td>
+    
+                      <% } %>
               %>
             </td>
             

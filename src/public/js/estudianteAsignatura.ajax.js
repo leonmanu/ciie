@@ -76,4 +76,167 @@ $( window ).on( "load", function() {
 	//--->save whole row entery > end
 
 
-}); 
+	$('.cuatri1').addClass('d-none')//invicibilizo el 1er cuatri
+	$('.cierre').addClass('d-none')//invicibilizo el 1er cuatri
+	//$('.cierre').addClass('d-none')//invicibilizo el 1er cuatri
+	var tbl_row
+	var numeroElementos
+	var totalElementos = $('#totalElementos')
+
+	$('.modalEdit').on('click', async function(event){
+		event.preventDefault()
+		tbl_row = await $(this).closest('tr')
+		numeroElementos = $(this).closest('table').find('tr').length - 1
+		totalElementos.html( numeroElementos )
+		await rellenarInputModal(tbl_row)
+	});
+
+	$('.btn_form').on('click', async function(event){
+		event.preventDefault();
+		if ($('#form_change').html()=='true') {
+		await actualizarTabla()
+		}
+	})
+
+	$('#estudianteSiguiente').on('click', async function(event){
+		event.preventDefault();
+		tbl_row = await tbl_row.next()
+		await rellenarInputModal(tbl_row)
+	})
+
+	$('#estudianteAnterior').on('click', async function(event){
+		event.preventDefault();
+		tbl_row = await tbl_row.prev()
+		await rellenarInputModal(tbl_row)
+	})
+
+	$('.modal_data').change( async function(){
+		$('#form_change').html('true')
+	} )
+
+	function actualizarTabla(){
+		var arrayData = $('.data_inverse')
+		var arrayRow = tbl_row.find('.clone_data')
+		let j = 0
+
+		arrayData.each(async function(callback){
+		arrayRow[j].value = arrayData[j].value
+		j++
+		})
+		tbl_row.find("td:eq(1)").addClass('text-success')
+		$('.btn_save').prop('disabled', false)
+		$('.btn_save').addClass('btn-outline-success')
+		tbl_row.find("td:eq(0)").html('true')
+		$('#form_change').html('false')
+		rellenarInputModal(tbl_row)
+	}
+
+	function rellenarInputModal(tbl_row){
+		
+		var arrayRow = tbl_row.find('.clone_data')
+		var arrayModal = $('.modal_data')
+		var estudiante = $('#estudiante')
+		var index = $('#index')
+
+		estudiante.html(tbl_row.find('.estudiante').html())
+		index.html(tbl_row.index()+1)
+
+		if (index.html() == 1) {
+		$('#estudianteAnterior').addClass('btn-disabled')
+		$('#estudianteAnterior').removeClass('btn-info')
+		$('#estudianteAnterior').attr('disabled', 'disabled');
+		} else {
+		$('#estudianteAnterior').addClass('btn-info')
+		$('#estudianteAnterior').removeClass('btn-disabled')
+		$('#estudianteAnterior').removeAttr('disabled');
+		}
+
+		if (index.html() == numeroElementos) {
+		$('#estudianteSiguiente').addClass('btn-disabled')
+		$('#estudianteSiguiente').removeClass('btn-info')
+		$('#estudianteSiguiente').attr('disabled', 'disabled');
+		} else {
+		$('#estudianteSiguiente').addClass('btn-info')
+		$('#estudianteSiguiente').removeClass('btn-disabled')
+		$('#estudianteSiguiente').removeAttr('disabled');
+		}
+
+		let i = 0
+		arrayRow.each(async function(){
+		await arrayModal.html('')
+		let valor = $(this).val()
+		let clon = $(this).clone().appendTo(arrayModal.eq(i)).addClass('data_inverse')
+		clon.val(valor)
+		i++
+		})
+	}
+
+	$('#slcMotivoBajaId').on('change', function () {
+		var selector = $(this).val();
+		if (selector == 1 || selector == 3) {
+		$('#divCursoId').attr('hidden', false);
+		$('#inputCurso').prop('required',true);
+		} else {
+		$('#inputCurso').val('').prop('required',false);
+		$('#divCursoId').attr('hidden', true);
+		}
+	})
+
+	$('#periodo1').on('click', async function(){
+		$('.cuatri2').addClass('d-none')
+		$('.cierre').addClass('d-none')
+		$('.cuatri1').removeClass('d-none')
+	})
+
+	$('#periodo2').on('click', async function(){
+		$('.cuatri1').addClass('d-none')
+		$('.cierre').addClass('d-none')
+		$('.cuatri2').removeClass('d-none')
+	})
+
+	$('#periodoFinal').on('click', async function(){
+		$('.cuatri1').addClass('d-none')
+		$('.cuatri2').addClass('d-none')
+		$('.cierre').removeClass('d-none')
+	})
+
+	$('.valoracion3').on('change', async function(event){
+		event.preventDefault()
+		var currentRow = $(this).closest("tr")
+		promedio2(currentRow)
+	});
+
+	$('.valoracion4').on('change', async function(event){
+		event.preventDefault()
+		var currentRow = $(this).closest("tr")
+		promedio2(currentRow)
+	});
+
+
+	async function promedio2 (currentRow){
+		var val3 = currentRow.find(".valoracion3")
+		var val4 = currentRow.find(".valoracion4")
+		var val5 = currentRow.find(".valoracion5")
+		var num3 = parseInt(val3.val())
+		var num4 = parseInt(val4.val())
+		var promedio
+		if (val4.val() && val3.val()) {
+			promedio = (num3 + num4)/2
+			val5.val(promedio.toFixed(0)) 
+		}
+
+		
+	}
+
+	function openCity(evt, cityName) {
+		var i, tablinks;
+	  
+		tabbtns = document.getElementsByClassName("tabbtn");
+		for (i = 0; i < tabbtns.length; i++) {
+		  tabbtns[i].className = tabbtns[i].className.replace(" active", "");
+		}
+		evt.currentTarget.className += " active";
+		//evt.currentTarget.firstElementChild.className += " text-success";
+	  }
+
+});
