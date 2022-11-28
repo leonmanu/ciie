@@ -36,7 +36,10 @@ $( window ).on( "load", function() {
 				$(this).find('.row_data').each(function(index, val) 
 					{   
 						let col_name = $(this).attr('col_name')
-						let col_val  =  $(this).val()
+						let col_val  =  ""
+						if ($(this).val()) {
+							col_val = $(this).val()
+						}
 						arr[col_name] = col_val
 					})
 				
@@ -212,17 +215,105 @@ $( window ).on( "load", function() {
 		promedio2(currentRow)
 	});
 
+	$('.valoracion5').on('change', async function(event){
+		event.preventDefault()
+		var currentRow = $(this).closest("tr")
+		var val5 = currentRow.find(".valoracion5")
+		var val6 = currentRow.find(".valoracion6")
+		var val7 = currentRow.find(".valoracion7")
+		var val8 = currentRow.find(".valoracion8")
+		var num5 = parseInt(val5.val())
+		if (num5 >= 7) {
+			val6.val(0)
+			val6.addClass('bg-secondary')
+			val6.prop('disabled', true)
+
+			val7.val(0)
+			val7.addClass('bg-secondary')
+			val7.prop('disabled', true)
+
+			val8.val(num5)
+		}
+		else {
+			val6.removeClass('bg-secondary')
+			val6.prop('disabled', false)
+
+			val7.removeClass('bg-secondary')
+			val7.prop('disabled', false)
+
+			val8.val(" ")
+		}
+	});
+
+	$('.valoracion6').on('change', async function(event){
+		event.preventDefault()
+		var currentRow = $(this).closest("tr")
+		var val6 = currentRow.find(".valoracion6")
+		var val7 = currentRow.find(".valoracion7")
+		var val8 = currentRow.find(".valoracion8")
+		var num6 = parseInt(val6.val())
+		if (num6 >= 4) {
+			val7.val(0)
+			val7.addClass('bg-secondary')
+			val7.prop('disabled', true)
+
+			val8.val(num6)
+		}
+		else {
+			val7.removeClass('bg-secondary')
+			val7.prop('disabled', false)
+
+			val8.val(" ")
+		}
+	});
+
+	$('.valoracion7').on('change', async function(event){
+		event.preventDefault()
+		var currentRow = $(this).closest("tr")
+		var val7 = currentRow.find(".valoracion7")
+		var val8 = currentRow.find(".valoracion8")
+		var num7 = parseInt(val7.val())
+		if (num7 >= 4) {
+			val8.val(num7)
+		}
+		else {
+			val8.val(" ")
+		}
+	});
+
+
 
 	async function promedio2 (currentRow){
 		var val3 = currentRow.find(".valoracion3")
 		var val4 = currentRow.find(".valoracion4")
 		var val5 = currentRow.find(".valoracion5")
+		var val6 = currentRow.find(".valoracion6")
+		var val7 = currentRow.find(".valoracion7")
+		var val8 = currentRow.find(".valoracion8")
 		var num3 = parseInt(val3.val())
 		var num4 = parseInt(val4.val())
 		var promedio
 		if (val4.val() && val3.val()) {
 			promedio = (num3 + num4)/2
-			val5.val(promedio.toFixed(0)) 
+			val5.val(promedio.toFixed(0))
+			if (promedio >= 7) {
+				val8.val(promedio.toFixed(0))
+				val6.val(0)
+				val6.addClass('bg-secondary')
+				val6.prop('disabled', true)
+
+				val7.val(16)
+				val7.addClass('bg-secondary')
+				val7.prop('disabled', true)
+			} else {
+				val6.removeClass('bg-secondary')
+				val6.prop('disabled', false)
+
+				val7.removeClass('bg-secondary')
+				val7.prop('disabled', false)
+
+				val8.val(" ")
+			}
 		}
 
 		

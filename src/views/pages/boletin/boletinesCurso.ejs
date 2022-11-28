@@ -145,19 +145,19 @@
                   ------->
                   <%} else{ %>
                     <td class="text-center">
-                      <% if( valoracion6 <= 10 && valoracion6 >= 7 ){%>
+                      <% if( valoracion7 <= 10 && valoracion7 >= 7 ){%>
                         <span class="text-info"> 
                           <% } %>
           
-                      <% if( valoracion6 <= 6 && valoracion6 >= 4 ){%>
+                      <% if( valoracion7 <= 6 && valoracion7 >= 4 ){%>
                         <span class="text-success">
                           <% } %>
           
-                      <% if( valoracion6 <= 3 && valoracion6 >= 0 ){%>
+                      <% if( valoracion7 <= 3 && valoracion7 >= 0 ){%>
                         <span class="text-danger">
                           <% } %>
-                      <% if(valoracion6) { %>
-                        <strong><%= valoracion6 %></strong> 
+                      <% if(valoracion7) { %>
+                        <strong><%= valoracion7 %></strong> 
                       <% } %>
                       </span>
                       </td>
@@ -166,7 +166,11 @@
               %>
             </td>
             
-            <td></td>
+            <td  class="text-center">
+              <% if(valoracion8) {%>
+                <strong><%= valoracion8 %></strong>
+                <% } %>
+            </td>
           </tr>
         <% }); %> 
         </table>

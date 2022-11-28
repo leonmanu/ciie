@@ -178,7 +178,7 @@
                   <select id="valoracion6" class="row_data clone_data form-select valoracion6" edit_type="click" col_name="valoracion6">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
-                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion6 ) ? "selected" : "";
+                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion6 && calificacion.valoracion5 < 7) ? "selected" : "";
                     %>
                       <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
                         <%=calificacionCodigo.simbolo%>
@@ -192,7 +192,7 @@
                   <select id="valoracion7" class="row_data clone_data form-select valoracion7" edit_type="click" col_name="valoracion7">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
-                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion7 ) ? "selected" : "";
+                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion7  && calificacion.valoracion5 < 7) ? "selected" : "";
                     %>
                       <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
                         <%=calificacionCodigo.simbolo%>
@@ -202,18 +202,11 @@
                 </td>
 
                 <!-- FINAL -->
-                <td  class="cierre">
-                  <select id="valoracion7" class="clone_data form-select valoracion7" edit_type="click" col_name="valoracion7">
-                    <option value="" disabled selected></option>
-                    <% calificacionCodigos.forEach(function(calificacionCodigo){ 
-                      var selected = ( calificacionCodigo.simbolo == calificacion.valoracion7 ) ? "selected" : "";
-                    %>
-                      <option value="<%=calificacionCodigo.simbolo%>" <%= selected %>>
-                        <%=calificacionCodigo.simbolo%>
-                      </option>
-                    <% }); %>
-                  </select>
-                </td>
+                <th  class="cierre">
+                  <strong>
+                  <input  class="row_data clone_data form-control valoracion8 disabled" col_name="valoracion8" value="<%= calificacion.valoracion8%>" disabled/>
+                </strong>
+                </th>
 
                 <% count++ %>
               <% } %>
