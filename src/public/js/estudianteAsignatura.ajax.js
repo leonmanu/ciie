@@ -294,10 +294,10 @@ $( window ).on( "load", function() {
 		var num4 = parseInt(val4.val())
 		var promedio
 		if (val4.val() && val3.val()) {
-			promedio = (num3 + num4)/2
-			val5.val(promedio.toFixed(0))
+			promedio = Math.ceil((num3 + num4)/2)
+			val5.val(promedio)
 			if (promedio >= 7) {
-				val8.val(promedio.toFixed(0))
+				val8.val(promedio)
 				val6.val(0)
 				val6.addClass('bg-secondary')
 				val6.prop('disabled', true)

@@ -189,7 +189,14 @@
 
                 <!-- Intensicicación feb -->
                 <td  class="cierre">
-                  <select id="valoracion7" class="row_data clone_data form-select valoracion7" edit_type="click" col_name="valoracion7">
+                  <% 
+                    var disabled
+
+                    if( calificacion.valoracion5 >= 7){
+                      disabled = "disabled"
+                    }
+                  %>
+                  <select id="valoracion7" class="row_data clone_data form-select valoracion7" edit_type="click" col_name="valoracion7" <%= disabled %>>
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion7  && calificacion.valoracion5 < 7) ? "selected" : "";
@@ -199,6 +206,7 @@
                       </option>
                     <% }); %>
                   </select>
+                  
                 </td>
 
                 <!-- FINAL -->
