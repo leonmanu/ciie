@@ -223,7 +223,7 @@
               
             <% }) %>
             <% if(count == 0) {%>
-              <td>
+              <td  class="cuatri1">
                 <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion1">
                   <option value="" disabled selected></option>
                   <% calificacionCodigos.forEach(function(calificacionCodigo){ 
@@ -235,11 +235,11 @@
                   <% }); %>
                 </select>
               </td>
-              <td>
+              <td  class="cuatri1">
                 <input  class="row_data clone_data form-control" edit_type="click" col_name="informe1"/>
               </td>
               <!-- 2° Informe -->
-              <td>
+              <td  class="cuatri1">
                 <select class="row_data clone_data form-select" edit_type="click" col_name="valoracion2">
                   <option value="" disabled selected></option>
                   <% calificacionCodigos.forEach(function(calificacionCodigo){ 
@@ -251,8 +251,11 @@
                   <% }); %>
                 </select>
               </td>
-              <td>
+              <td  class="cuatri1">
                 <input  class="row_data clone_data form-control" edit_type="click" col_name="informe2" />
+              </td>
+              <td colspan="5">
+                Debe completar y guardar el 1# Cuatrimestre
               </td>
             <% } %>
 
