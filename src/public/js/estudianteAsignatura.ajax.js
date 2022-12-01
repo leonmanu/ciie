@@ -81,6 +81,8 @@ $( window ).on( "load", function() {
 
 	$('.cuatri1').addClass('d-none')//invicibilizo el 1er cuatri
 	$('.cierre').addClass('d-none')//invicibilizo el 1er cuatri
+	$('#periodo2').removeClass('btn-primary')
+	$('#periodo2').addClass('btn-dark')
 	//$('.cierre').addClass('d-none')//invicibilizo el 1er cuatri
 	var tbl_row
 	var numeroElementos
@@ -189,18 +191,36 @@ $( window ).on( "load", function() {
 		$('.cuatri2').addClass('d-none')
 		$('.cierre').addClass('d-none')
 		$('.cuatri1').removeClass('d-none')
+		$('#periodo2').removeClass('btn-dark')
+		$('#periodo2').addClass('btn-primary')
+		$('#periodoFinal').removeClass('btn-dark')
+		$('#periodoFinal').addClass('btn-primary')
+		$( this ).removeClass('btn-primary')
+		$( this ).addClass('btn-dark')
 	})
 
 	$('#periodo2').on('click', async function(){
 		$('.cuatri1').addClass('d-none')
 		$('.cierre').addClass('d-none')
 		$('.cuatri2').removeClass('d-none')
+		$('#periodo1').removeClass('btn-dark')
+		$('#periodo1').addClass('btn-primary')
+		$('#periodoFinal').removeClass('btn-dark')
+		$('#periodoFinal').addClass('btn-primary')
+		$( this ).removeClass('btn-primary')
+		$( this ).addClass('btn-dark')
 	})
 
 	$('#periodoFinal').on('click', async function(){
 		$('.cuatri1').addClass('d-none')
 		$('.cuatri2').addClass('d-none')
 		$('.cierre').removeClass('d-none')
+		$('#periodo2').removeClass('btn-dark')
+		$('#periodo2').addClass('btn-primary')
+		$('#periodo1').removeClass('btn-dark')
+		$('#periodo1').addClass('btn-primary')
+		$( this ).removeClass('btn-primary')
+		$( this ).addClass('btn-dark')
 	})
 
 	$('.valoracion3').on('change', async function(event){

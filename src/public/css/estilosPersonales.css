@@ -31,3 +31,7 @@ table{
 .tdInf{
   min-width: 200px;
 }
+
+[type='radio'] {
+  display: none; 
+  }

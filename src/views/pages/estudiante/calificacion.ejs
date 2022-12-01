@@ -16,6 +16,7 @@
       </a>
       
     </h3> 
+    <% var disabled, clase %>
     <div class="">
       <div>
         <h5> <b><span id="spnCurso"> <%= curso.grado %>° <%= curso.division %>° </span></b> - 
@@ -30,7 +31,7 @@
       <div class="sticky-top col-12 mb-3 bg-primary p-2 btn-group">
         <button id="periodo1" class="btn btn-primary">1# Cuatri</button>
         <button id="periodo2" class="btn btn-primary">2# Cuatri</button>
-        <button id="periodoFinal" class="btn btn-primary"># Final</button>
+        <button id="periodoFinal" class="btn btn-primary"># Intens.</button>
         <button href="#" class="m-2 btn btn-outline btn_save mt-0 mb-0 float-end" row_id="'+row_id+'" disabled>
           <span id="">Guardar</span> 
           <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
@@ -43,7 +44,8 @@
             <th rowspan = '3' class="mithPersonalizado">Estudiante</th>
             <th colspan="4" class="cuatri1"><h4> 1# Cuatrimestre</h4></th>
             <th colspan="4" class="cuatri2"><h4>2# Cuatrimestre</h4></th>
-            <th rowspan="2" colspan="4" class="final"><h4># Final</h4></th>
+            <th rowspan="2" colspan="2" class="final bg-primary"><h4># Final</h4></th>
+            <th rowspan="2" colspan="2" class="cierre"><h4># Intens.</h4></th>
           </tr>
           <tr class="">
             <th colspan="2" class="cuatri1">1° Bimestre</th>
@@ -60,10 +62,10 @@
             <th class="cuatri2 tdInf">Informe</th>
             <th class="cuatri2 tdNota">Valoración</th>
             <th class="cuatri2 tdInf">Informe</th>
-            <th rowspan="2" class="anual tdNota">Valoración <br> anual</th>
+            <th rowspan="2" class="anual tdNota  bg-primary">Valoración <br> anual</th>
+            <th class="anual tdNota  bg-primary" >Valoración <br> Final </th>
             <th class="cierre tdNota">int. dic</th>
             <th class="cierre tdNota">feb-mar</th>
-            <th class="cierre tdNota">Valoración <br> Final </th>
           </tr>
         </thead>
         <tbody class="tbl_user_data">
@@ -76,7 +78,8 @@
             </td>
 
             <td class=" align-middle" col_name="nombre">
-              <p type="button" class="estudiante modalEdit " data-toggle="modal" data-target="#exampleModalCenter">
+              <p type="button" class="estudiante modalEdit " data-toggle="modal">
+                <!-- <p type="button" class="estudiante modalEdit " data-toggle="modal" data-target="#exampleModalCenter"> -->
                 <%= estudiante.apellido %>, <%= estudiante.nombre %>
               </p>
                 
@@ -159,8 +162,9 @@
                 <td class="cuatri2">
                   <input  class="row_data clone_data form-control" edit_type="click" col_name="informe4" value="<%= calificacion.informe4%>"/>
                 </td>
+
                 <!-- anual Informe (5°) -->
-                <td  class="anual">
+                <td  class="anual col-1">
                   <select id="valoracion5" class="row_data clone_data form-select valoracion5" edit_type="click" col_name="valoracion5">
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
@@ -173,9 +177,23 @@
                   </select>
                 </td>
 
+                 <!-- FINAL -->
+                 <td  class="anual col-1">
+                    <input  class="row_data clone_data form-control valoracion8 disabled" col_name="valoracion8" value="<%= calificacion.valoracion8%>" style="font-weight:bold;" disabled/>
+                </td>
+
                 <!-- Intensicicación dic -->
                 <td  class="cierre">
-                  <select id="valoracion6" class="row_data clone_data form-select valoracion6" edit_type="click" col_name="valoracion6">
+                  <% 
+                    if( calificacion.valoracion5 >= 7){
+                      disabled = "disabled"
+                      clase = "bg-secondary"
+                    }else{
+                      disabled = ""
+                      clase = ""
+                    }
+                  %>
+                  <select id="valoracion6" class="row_data clone_data form-select valoracion6 <%= clase %>" edit_type="click" col_name="valoracion6" <%= disabled %>>
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion6 && calificacion.valoracion5 < 7) ? "selected" : "";
@@ -190,13 +208,15 @@
                 <!-- Intensicicación feb -->
                 <td  class="cierre">
                   <% 
-                    var disabled
-
-                    if( calificacion.valoracion5 >= 7){
+                    if( calificacion.valoracion5 >= 7 || calificacion.valoracion6 >= 7){
                       disabled = "disabled"
+                      clase = "bg-secondary"
+                    }else{
+                      disabled = ""
+                      clase = ""
                     }
                   %>
-                  <select id="valoracion7" class="row_data clone_data form-select valoracion7" edit_type="click" col_name="valoracion7" <%= disabled %>>
+                  <select id="valoracion7" class="row_data clone_data form-select valoracion7 <%= clase %>" edit_type="click" col_name="valoracion7" <%= disabled %>>
                     <option value="" disabled selected></option>
                     <% calificacionCodigos.forEach(function(calificacionCodigo){ 
                       var selected = ( calificacionCodigo.simbolo == calificacion.valoracion7  && calificacion.valoracion5 < 7) ? "selected" : "";
@@ -209,12 +229,7 @@
                   
                 </td>
 
-                <!-- FINAL -->
-                <th  class="cierre">
-                  <strong>
-                  <input  class="row_data clone_data form-control valoracion8 disabled" col_name="valoracion8" value="<%= calificacion.valoracion8%>" disabled/>
-                </strong>
-                </th>
+                
 
                 <% count++ %>
               <% } %>
@@ -284,7 +299,7 @@
             <h4 class="modal-title">Mensaje</h4>
           </div>
           <div class="modal-body">
-            <p>Se están modificando <span id="cant"></span> estudiante, por favor espere.<img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' width="30" height="30" /></p>
+            <p>Se está/n modificando <span id="cant"></span> estudiante/s, por favor espere.<img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' width="30" height="30" /></p>
             
           </div>
           <div class="modal-footer">
