@@ -99,7 +99,8 @@ const getPorDni = async (req, res) => {//cambiar nombre de función
     const estudinateCurso = await estudianteCursoService.getUnoPorIdEstudiante(estudiante.id)
     const curso = await cursoService.getPorId(estudinateCurso.curso)
     const asignaturas = await asignaturaService.getAsignaturasPorIdCurso(curso.idCurso)
-    const registros = await calificacionService.getCrudaPorIdEstudiante(estudiante.id)
+    const calificaciones = await calificacionService.getCrudaPorIdEstudiante(estudiante.id)
+    //const calificaciones = await calificacionService.getPorDni(dni)
 
     const user = null
     try{
@@ -107,7 +108,7 @@ const getPorDni = async (req, res) => {//cambiar nombre de función
     } catch{
         console.log("No se inició sesión")
     }
-    res.render('pages/boletin/boletin', {user, asignaturas, registros, estudiante, curso})
+    res.render('pages/boletin/boletin', {user, asignaturas, calificaciones, estudiante, curso})
 }
 
 const getBoletinesPorCurso = async (req, res) => {//getBoletines PorCurso Este reemplaza a getBoletines() de curso.controller
