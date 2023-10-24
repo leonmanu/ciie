@@ -2,7 +2,6 @@ const { GoogleSpreadsheetRow } = require('google-spreadsheet')
 const { GoogleSpreadsheet } = require('google-spreadsheet')
 const credenciales = require('../json/credecialSheets.json')
 
-
 let googleId = "1Pq0bh9zDZXtd1F0kAcikS_NYTquFQWYm5Dsggkkztng"
 let documento = new GoogleSpreadsheet(googleId)
 let sheet
@@ -10,11 +9,11 @@ let sheet
 async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
-    sheet = documento.sheetsById[1287324365]
+    sheet = documento.sheetsById[0]
     return documento
 }
 
-async function getPersona(){
+async function getTodo(){
     await obtenercredenciales()
     const registros =  await sheet.getRows()
 
@@ -22,28 +21,42 @@ async function getPersona(){
     
 }
 
-async function getPorCurso(id){
+async function getEstudianteCurso(){
     const documento = await obtenercredenciales()
+    sheet = documento.sheetsById[1585615507] // acá usé la query ordenada: EstudianteCurso_get
     const registros =  await sheet.getRows()
 
-    const resultados = registros.filter(row => row.curso === id)
-    // registros.map((registro)=>{
-
-    // })
+    return registros
+}
 
 
-    return resultados
-    
+async function getTodoPorCurso(){
+    const documento = await obtenercredenciales()
+    sheet = documento.sheetsById[1585615507] // acá usé la query ordenada: EstudianteCurso_get
+    const registros =  await sheet.getRows()
+
+    return registros
+}
+
+async function getPorCurso(){
+    const documento = await obtenercredenciales()
+    sheet = documento.sheetsById[1287324365] // acá usé la query ordenada: EstudianteCurso
+    const registros =  await sheet.getRows()
+ 
+    return registros
 }
 
 async function post(objeto) {
     const documento = await obtenercredenciales()
-    objetoNuevo = await sheet.addRow(objeto)
-    //console.log("estudianteCurso: ", objetoNuevo)
-    return {msj: 'Se creó la persona: '+objetoNuevo}
+
+    const sheet = documento.sheetsById[0]
+    await sheet.addRow(objeto)
+    //console.log("se creó nuevo ",objeto)
+    return objeto
+    
 }
 
-async function put(pObjeto) {
+async function put(cargo) {
     const documento = await obtenercredenciales()
     
     const sheet = documento.sheetsById[82786429]
@@ -61,20 +74,19 @@ async function put(pObjeto) {
 
 }
 
-
-
 async function del(pObjeto) {
     const documento = await obtenercredenciales()
 
     const sheet = documento.sheetsById[82786429]
-    await sheet.addRow(pObjeto)
+    await sheet.
 
-    //console.log(pObjeto)
+    console.log(pObjeto)
 }
 
 module.exports = {
-    getPersona: getPersona,
-    //getOne: getOne,
+    getTodo: getTodo,
+    getTodoPorCurso: getTodoPorCurso,
+    getEstudianteCurso:getEstudianteCurso,
     getPorCurso:getPorCurso,
     post: post,
     put : put,

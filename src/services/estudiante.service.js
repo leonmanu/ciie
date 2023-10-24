@@ -80,7 +80,7 @@ async function getPorIdCurso(idCurso){//1* este debería reemplazar a getPorCurs
     const estudianteCurso =  await estudianteCursoService.get()
     const estudiantes = await this.get()
     const filtrados = estudiantes.filter(({ id }) => estudianteCurso.some(({ estudiante, curso, fechaBaja }) => id == estudiante && curso == idCurso && (fechaBaja == null || fechaBaja == '')));
-    const resultado = filtrados.sort((a, b) => a.apellido.localeCompare(b.apellido)) //esto ordena alfabéticamente
+    const resultado = filtrados//filtrados.sort((a, b) => a.apellido.localeCompare(b.apellido)) //esto ordena alfabéticamente
     console.log("RESULTADO: ",resultado)
     return resultado
 }
