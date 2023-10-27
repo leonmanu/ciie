@@ -14,6 +14,14 @@ async function obtenercredenciales(){
     return documento
 }
 
+async function get(){
+    await obtenercredenciales()
+    const registros =  await sheet.getRows()
+
+    return registros
+    
+}
+
 async function getPersona(){
     await obtenercredenciales()
     const registros =  await sheet.getRows()
@@ -75,6 +83,7 @@ async function del(pObjeto) {
 module.exports = {
     getPersona: getPersona,
     //getOne: getOne,
+    get:get,
     getPorCurso:getPorCurso,
     post: post,
     put : put,
