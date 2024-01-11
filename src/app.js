@@ -70,8 +70,8 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 passport.use(new GoogleStrategy({
     clientID:   "460276808063-s47r0nb77ceta3a7lumqqk1ojaq8gigi.apps.googleusercontent.com",
     clientSecret: "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",
-    //callbackURL: "https://ciie06902.onrender.com/auth/google/callback",//bien
-    callbackURL: "http://localhost:3000/auth/google/callback",
+    callbackURL: "https://ciie06902.onrender.com/auth/google/callback",//bien
+    //callbackURL: "http://localhost:3000/auth/google/callback",
     passReqToCallback : true
   }, authUser
   
