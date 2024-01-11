@@ -1,13 +1,7 @@
 const mongoose = require('mongoose')
 require("dotenv").config()
 
-// mongoose.connect(
-//   process.env.MONGODB_URI
-// )
-//   .then(
-//     ()=> console.log('Conectado!!')
-//   )
-//   .catch((err) => console.error(err))
+
 
 const express = require('express')
 
