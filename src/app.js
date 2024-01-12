@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 require("dotenv").config()
 
-
-
 const express = require('express')
 
 const path = require("path")
@@ -15,6 +13,7 @@ const usuarioRouter = require('./routes/usuario.route')
 const cursoRouter = require('./routes/curso.route')
 const docenteCargoRouter = require('./routes/docenteCargo.route')
 const cargoRouter = require('./routes/cargo.route')
+const capacitacionRouter = require('./routes/capacitacion.route')
 const rolRouter = require('./routes/rol.route')
 const revistaRouter = require('./routes/revista.route')
 const estudianteRouter = require('./routes/estudiante.route')
@@ -51,6 +50,7 @@ app
     .use("/curso", cursoRouter)
     .use("/docente/cargo", docenteCargoRouter)
     .use("/cargo", cargoRouter)
+    .use("/capacitacion", capacitacionRouter)
     .use("/rol", rolRouter)
     .use("/revista", revistaRouter)
     .use("/estudiante", estudianteRouter)
@@ -70,9 +70,11 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 passport.use(new GoogleStrategy({
     clientID:   "180376312249-9mrtilgi2lsj75qkp2cl17rse7splodo.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://ciie06902.onrender.com/auth/google/callback",//bien
-    //callbackURL: "http://localhost:3000/auth/google/callback",
-    passReqToCallback : true
+    //callbackURL: "https://ciie06902.onrender.com/auth/google/callback",//bien
+    callbackURL: process.env.NODE_ENV === 'production'
+    ? 'https://ciie06902.onrender.com/auth/google/callback'
+    : 'http://localhost:3000/auth/google/callback',
+  passReqToCallback: true
   }, authUser
   
 ))
