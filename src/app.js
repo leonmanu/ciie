@@ -66,25 +66,24 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
     return done(null,profile) //corregir para que se rompa la sesión si no está registrado
 }
 
-
-passport.use(new GoogleStrategy({
-    clientID:   "180376312249-9mrtilgi2lsj75qkp2cl17rse7splodo.apps.googleusercontent.com",
-    clientSecret: "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",
-    //callbackURL: "https://ciie06902.onrender.com/auth/google/callback",//bien
-    callbackURL: process.env.NODE_ENV === 'production'
-    ? 'https://ciie06902.onrender.com/auth/google/callback'
-    : 'http://localhost:3000/auth/google/callback',
-  passReqToCallback: true
-  }, authUser
-  
-))
+passport.use(
+  new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.NODE_ENV === 'production'
+      ? 'https://ciie06902.onrender.com/auth/google/callback'
+      : 'http://localhost:3000/auth/google/callback',
+  passReqToCallback: true,
+}, 
+authUser));
 
 passport.serializeUser( (user, done) => {
     done(null, user)
  })
+
  passport.deserializeUser((user, done) => {
     done (null, user)
-  })
+ })
 passport.authenticate()
 
 
