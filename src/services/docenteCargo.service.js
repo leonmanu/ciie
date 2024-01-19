@@ -1,12 +1,14 @@
 const req = require('express/lib/request')
 const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
 const cargoSheet =  require("../sheets/docenteCargo.sheet")
-const cargoService = require('./cargo.service')
+
 const cursoService = require('./curso.service')
 const cursoAsignaturaService = require('./cursoAsignatura.service')
 const rolService = require('./rol.service')
 const usuarioService = require('./usuario.service')
 const utilidadesService = require('./utilidades.service')
+const { v4: uuidv4 } = require('uuid');
+const cargoService = require('./cargo.service')
 
 
 const get = async () => {
@@ -19,9 +21,11 @@ const getCargosTodos = async (req, res) => {
     return resultado
 }
 
-const getPorDocente = async (req) => {//este es el que manda los cargos por docentes
+const getPorDocente = async (user) => {//este es el que manda los cargos por docentes
+    const usuario = await usuarioService.getPorIdGoogle(user.id)
+    const docenteCargos = await get()
     const registros = await cargoSheet.get()
-    const filtrados = registros.filter(row => row.idGoogleUsuario === req.user.id && !row.fechaBaja)
+    const filtrados = registros.filter(row => row.idUsuario === usuario.id && !row.fechaBaja)
     
     return filtrados
 }
@@ -35,25 +39,18 @@ const getPorDocenteCargoCurso = async (req, res) => {
     return resultados
 }
 
-const postDocenteCargo = async (req) => {
+const postDocenteCargo = async (objeto, user) => {
     //habría que verificar si la combinación es válida (si ya existe o si puede solicitarla)
     //const fechaAlta = new Date().toISOString
-
-    const cargo = await cargoService.getPorId(req.body.cursoAsignatura)
-    console.log("Cargo::", cargo)
-    if (cargo) {
-        console.log('El cargo existe ')
-    }
-    else{
-        
-        console.log("cargo no encontrado")
-    }
-
+    //const usuario = usuarioService.getPorIdGoogle(user.id)
+    const usuario = await usuarioService.getPorIdGoogle(user.id)
+    console.log("USUARIO encontrado::: (id)--->  " + usuario.id)
+    let nuevoId = uuidv4()
     const objetoInterface = {
-        id: req.body.cursoAsignatura+"_"+req.user.id,
-        cursoAsignatura: req.body.cursoAsignatura,
-        idGoogleUsuario: req.user.id,
-        revista: req.body.revista,
+        id: nuevoId,
+        idUsuario: usuario.id,
+        idCargo: objeto.cargo,
+        idRevista: objeto.revista,
         estado: 3,
     }
     objetoInterface.fechaAlta = new Date().toISOString()
@@ -71,22 +68,18 @@ const getSiExiste = async (cursoAsignatura) => {
 
 const getSiDisponible = async (cargo) => {
     console.log("idCargo: ", cargo) 
-    // const cursoAsignatura = await cursoAsignaturaService.get()
-    // const cursoAsignaturaFiltrado = cursoAsignatura.filter(row.asignatura == cargo)
-    // console.log("cursoAsignatrua:: ", cursoAsignaturaFiltrado)
     
     const docenteCargos = await get()
-    const filtrados = await docenteCargos.filter(row => !row.fechaBaja && row.cursoAsignatura == cargo.idCargo) //&& row.fechaBaja
-
-    console.log("resultados:: ", filtrados)
+    const filtrados = await docenteCargos.filter(row => !row.fechaBaja && row.idCargo == cargo.idCargo) //&& row.fechaBaja
+    const cargoFiltrado = filtrados[0]
     let resultadoFinal
     try {
-        console.log("getSiExiste ",filtrados[0].idGoogleUsuario)
-        const idGoogle = filtrados[0].idGoogleUsuario
-        console.log("idGoogle: ", idGoogle)
-        const usuario = await usuarioService.getPorIdGoogle(idGoogle)
+        console.log("getSiExiste ",cargoFiltrado.idUsuario)
+        const idUsuario = cargoFiltrado.idUsuario
+        console.log("idGoogle: ", idUsuario)
+        const usuario = await usuarioService.getPorId(idUsuario)
         console.log("Usuario: ", usuario)
-        resultadoFinal = usuario.apellido+", "+usuario.nombre
+        resultadoFinal = usuario.email
     } catch (error) {
         resultadoFinal = 'Disponible'
         console.log("ERROR! ", error)

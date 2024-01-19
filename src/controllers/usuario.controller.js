@@ -20,6 +20,7 @@ const siExisteUsuario = async (req, res) => {
    
     const resultado = await usuarioService.getPorEmail(req.user.email)
     console.log("USUARIO: ",req.user.email)
+    // creo que este if debería ir en el service
     if(req.user._json.domain === 'abc.gob.ar'){
         if(req.user.email == resultado.email){
            
@@ -54,7 +55,7 @@ const fromularioAlta = (req, res) => {
 }
 
 const post = (req, res) => {
-    const resultado = usuarioSheet.post(req)
+    const resultado = usuarioService.post(req.body)
     res.redirect("/")
 }
 

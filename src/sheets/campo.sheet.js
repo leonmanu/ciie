@@ -7,7 +7,7 @@ let sheet
 async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
-    sheet = documento.sheetsByTitle['persona']
+    sheet = documento.sheetsByTitle['campo']
     return documento
 }
 

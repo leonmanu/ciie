@@ -11,24 +11,10 @@ const getTodos = async (req, res) => {
 }
 
 const getCargoPorRol = async (req, res) => {
-    const rolCargos = []
     const idRol = req.body.idRol
-    const rol = await rolService.getPorId(idRol)
     const cargos = await cargoService.getCargoPorRol(idRol)
-    const turnos = await turnoService.get()
-    const cargosJson = await utilidadesService.convertToJson(cargos)
-    const turnosJson = await utilidadesService.convertToJson(turnos)
     
-    cargosJson.forEach(cargo => {
-        cargo.rol = rol
-        turnosJson.forEach(turno => {
-            if (cargo.turno == turno.id) {
-                cargo.turno = turno
-            }
-        })
-     });
-     console.log("cargosJson: ", cargosJson)
-    res.send(cargosJson)
+    res.send(cargos)
 }
 
 const getPorIdCursoAjax = async (req, res) => {

@@ -1,0 +1,46 @@
+<!-- Parte de arriba -->
+<%- include('../../layout/partTop.ejs') %>
+
+
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-dashboard"></i> Asistencia </b></h5>
+  </header>
+
+  <div class="w3-container">
+    <table class="w3-table-all w3-hoverable">
+      <thead>
+        <tr class="w3-light-grey">
+          <th>Cursante</th>
+          <th>DNI</th>
+          <th>1°</th>
+          <th>2°</th>
+          <th>3°</th>
+        </tr>
+      </thead>
+      <% registros.forEach(function(registro){ %>
+        <tr>
+          <td> 
+            <%= registro['Apellido/s'] %>,  <%= registro['Nombre/s'] %>
+          </td>
+          <td>
+            <%= registro['Número de DNI'] %>
+          </td>
+          <td>
+            <%= registro['Encuentro 1'] %>
+          </td>
+          <td>
+            <%= registro['Encuentro 2'] %>
+          </td>
+          <td>
+            <%= registro['Encuentro 3'] %>
+          </td>
+        </tr>
+        <% }) %>
+    </table>
+  </div>
+
+  <!-- Parte de abajo -->
+  <%- include('../../layout/partBotton.ejs') %>
+ 

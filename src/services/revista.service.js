@@ -1,6 +1,10 @@
 const req = require('express/lib/request')
 const revistaSheet =  require("../sheets/revista.sheet")
 
+const get = async () => {
+    registros = await revistaSheet.get()
+    return registros
+}
 
 const revistaGetTodos_Json = async (req, res) => {
     registros = await revistaSheet.revistaGetTodos()
@@ -13,5 +17,6 @@ const revistaGetTodos_Json = async (req, res) => {
 }
 
 module.exports = {
+    get,
     revistaGetTodos_Json : revistaGetTodos_Json
 } 

@@ -3,7 +3,8 @@ $(document).ready(function () {
   var slcRevista = $('#inputRevista');
   var slcCurso = $('#inputCurso');
   var slcAsignatura = $('#inputAsignatura');
-  var btnAlta = $('#btnDocenteCargoAlta')
+  var btnAlta = $('#btnDocenteCargoAlta');
+  var btnBaja = $('#btnDocenteCargoBaja');
 
 
   
@@ -37,8 +38,36 @@ $(document).ready(function () {
       }
       
     });
+    
+    //carga cargos cuando se selecciona el rol
+  
+      $.ajax({
+        url: '/cargo/rol',
+        contentType: 'application/json',
+        method: 'POST',
+        data: JSON.stringify({ idRol: 5 }),
+        dataType: 'text',
+        success: function (response) {
+          
+          var jsonResponser = JSON.parse(response);
+          var slcAsignatura = $('#inputAsignatura');
+          
+          slcAsignatura.html('');
+          $('#inputAsignatura').removeAttr('disabled');
+          slcAsignatura.attr('selected', false);
+          slcAsignatura.append("<option value='' selected='' disabled=''>Seleccione un campo</option>\ ");
+          
+          jsonResponser.forEach(function (cargo) {
+            slcAsignatura.append("<option value='"+cargo.id+"' > " + cargo.campo + " </option>\ ");
+          })
+          $("#waitIconAsignatura").css("display", "none");
+      }
+      });
 
-//Rellena input revista
+      var slcAsignatura = $('#inputAsignatura');
+
+  
+    //Rellena input revista
     $.ajax({
       url: '/revista',
       contentType: 'application/json',
@@ -61,34 +90,6 @@ $(document).ready(function () {
 
     });
     
-    
-    //fin función cargar roles
-    //carga de cursos
-
-    //carga curso cuando se carga la vista el rol
-//   $.ajax({
-//     url: '/curso',
-//     contentType: 'application/json',
-//     method: 'POST',
-//     data: JSON.stringify({ id: selector }),
-//     dataType: 'text',
-//     success: function (response) {
-//         var jsonResponser = JSON.parse(response);
-//         //var slcCurso = $('#inputCurso');
-//         slcCurso.html('');
-//         slcCurso.removeAttr('disabled');
-//        slcCurso.attr('selected', false);
-//        slcCurso.append("<option value='' selected='' disabled=''>Seleccione un curso</option>\ ");
-        
-//         jsonResponser.forEach(function (m) {
-//           slcCurso.append("<option value='"+m.idCurso+"' > " + m.clave + " - " + m.turnoNombre + " </option>\ ");
-//             console.log(m.nombre);
-//         })
-//         slcCurso.removeAttr('disabled')
-//         $("#waitIconCurso").css("display", "none");
-//     }
-// });
-
   })
 
   //Botón limpiar
@@ -116,79 +117,7 @@ $(document).ready(function () {
     btnAlta.prop("disabled", false);
   })
 
-  //carga curso cuando se selecciona el rol
-  $('#inputRol').on('change', function () {
-    var selector = $(this).val();
-    slcRevista.removeAttr('disabled');
-    if (selector == 6) {
-      $("#waitIconCurso").css("display", "block");
-      $('#inputAsignatura').val("");
-      $('#inputAsignatura').prop("disabled", true);
-      
-      slcCurso.removeAttr('disabled');
-      $("#waitIconCurso").css("display", "none");
-
-    } else {
-      
-      $("#waitIconAsignatura").css("display", "block");
-      slcCurso.val("");
-      slcCurso.prop("disabled", true);
-      $.ajax({
-        url: '/cargo/rol',
-        contentType: 'application/json',
-        method: 'POST',
-        data: JSON.stringify({ idRol: selector }),
-        dataType: 'text',
-        success: function (response) {
-          
-          var jsonResponser = JSON.parse(response);
-          alert("RESPONSE",jsonResponser[0])
-          var slcAsignatura = $('#inputAsignatura');
-          
-          slcAsignatura.html('');
-          $('#inputAsignatura').removeAttr('disabled');
-          slcAsignatura.attr('selected', false);
-          slcAsignatura.append("<option value='' selected='' disabled=''>Seleccione un cargo</option>\ ");
-          
-          jsonResponser.forEach(function (cargo) {
-            slcAsignatura.append("<option value='"+cargo.id+"' > " + cargo.rol.nombre + " - "+cargo.turno.nombre+" </option>\ ");
-          })
-          $("#waitIconAsignatura").css("display", "none");
-      }
-      });
-
-      var slcAsignatura = $('#inputAsignatura');
-
-    }
-  });
-
-  //== CUANDO SE SELECCIONA CURSO  =========================================
-  $('#inputCurso').on('change', function () {
-      var idCurso = $(this).val();
-      $("#waitIconAsignatura").css("display", "block");
-      $.ajax({
-          url: '/curso/'+idCurso+'/asignaturasAjax',
-          contentType: 'application/json',
-          method: 'GET',
-          data: JSON.stringify({ idCurso }),
-          dataType: 'text',
-          success: function (response) {
-              console.log("RESPONSE",response)
-              var jsonResponser = JSON.parse(response);
-              var slcAsignatura = $('#inputAsignatura');
-              slcAsignatura.html('');
-              $('#inputAsignatura').removeAttr('disabled');
-              slcAsignatura.attr('selected', false);
-              slcAsignatura.append("<option value='' selected='' disabled=''>Seleccione una asignatura</option>\ ");
-              
-              jsonResponser.forEach(function (m) {
-                slcAsignatura.append("<option value='"+m.idCargo+"' > " + m.nombre + " </option>\ ");
-                  console.log(m.nombre);
-              })
-              $("#waitIconAsignatura").css("display", "none");
-          }
-      });
-  });
+  
 
   //== CUANDO SE SELECCIONA CARGO===============
   $('#inputAsignatura').on('change', function () {
@@ -224,13 +153,29 @@ $(document).ready(function () {
 });
 
 
-  //prueba la concección con el js
-    // $(document).ready(function(){
-    //   $("button").click(function(){
-    //     alert("hola");
-    //     $.ajax({url: "demo_test.txt", success: function(result){
-    //       $("#div1").html(result);
-    //     }});
-    //   });
-    // });
+  //Cuando se tocal el botón de baja de usuario [-]
+  btnBaja.on('click', async function () {
+    btnBaja.prop("disabled", true);
+    var nombreCargo = $(this).data('clave');
+
+    // Mostrar cuadro de diálogo de confirmación
+    Swal.fire({
+      title: 'Confirmación',
+      text: '¿Está seguro que desea desvincularse del cargo *' + nombreCargo +'* ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, realiza la solicitud AJAX
+        await darDeBajaUsuario();
+      } else {
+        // Si el usuario cancela, reactiva el botón de baja
+        btnBaja.prop("disabled", false);
+      }
+    });
+  });
 }); 

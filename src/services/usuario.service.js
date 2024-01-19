@@ -7,6 +7,8 @@ const estudianteSchema = require('../models/estudiante.schema')
 const estudianteDb = require('../db/estudiante.db')
 const usuarioDb = require('../db/usuario.db')
 const usuarioSheet = require('../sheets/usuario.sheet')
+const personaService = require('./persona.service')
+const { v4: uuidv4 } = require('uuid');
 
 
 const getPorEmail = async (email) => {
@@ -24,10 +26,10 @@ const getPorEmail = async (email) => {
         }
 
         return usuarioInterface
-        }catch(e){
-            console.error(e.message," no se encontró objeto, devuelvo 'null' ");
+    }catch(e){
+        console.error(e.message," no se encontró objeto, devuelvo 'null' ");
         return resultado[0] = {email: null}
-        }
+    }
 }
 
 const getTodos = async (req, res) => {
@@ -61,9 +63,8 @@ async function getUno(id){
 }
 
 async function getPorId(id){
-    const registros =  await estudianteSheet.getTodo()
+    const registros =  await usuarioSheet.get()
     const resultado = registros.filter(row => row.id == id)
-    //console.log(resultadoJson[0])
 
     return resultado[0]
 }
@@ -104,9 +105,23 @@ async function getPorCurso(clave){
 }
 
 async function post(objeto){
-    const ultimo = await this.getUltimo()
-    objeto.id = (parseInt(ultimo.id)+1).toString()
-    const registro =  await estudianteSheet.post(objeto)
+    let nuevoId = uuidv4()
+    objeto.id = nuevoId
+    
+    var persona = await personaService.getPorCuil(objeto.cuil)
+    
+    if (!persona.cuil) {
+        objetoPersona = objeto
+        let nuevoId = uuidv4()
+        objetoPersona.id = objeto.idPersona = nuevoId
+        objetoPersona.idUsuario =  objeto.id
+        await personaService.post(objetoPersona)
+    } else {
+        console.log("Persona Existe anterior: ", persona)
+        objeto.idPersona = persona.id
+    }
+
+    const registro =  await usuarioSheet.post(objeto)
 
     return registro
 }
@@ -142,7 +157,7 @@ module.exports = {
     post:post,
     getUltimo:getUltimo,
     getPorDni:getPorDni,
-    getPorId: getPorId,
+    getPorId,
     getPorIdGoogle: getPorIdGoogle,
     put: put,
     getTodosDb:getTodosDb,

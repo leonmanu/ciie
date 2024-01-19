@@ -2,24 +2,22 @@ const { GoogleSpreadsheetRow } = require('google-spreadsheet')
 const { GoogleSpreadsheet } = require('google-spreadsheet')
 const credenciales = require('../json/credecialSheets.json')
 
-let googleId = "1Pq0bh9zDZXtd1F0kAcikS_NYTquFQWYm5Dsggkkztng"
-let documento = new GoogleSpreadsheet(googleId)
+//let googleId = "1Pq0bh9zDZXtd1F0kAcikS_NYTquFQWYm5Dsggkkztng"
+let documento = new GoogleSpreadsheet(process.env.SPREADSHEET_ID)
+let sheet
 
 async function obtenercredenciales(){
     await documento.useServiceAccountAuth(credenciales)
     await documento.loadInfo()
+    sheet = documento.sheetsByTitle['usuario']
     return documento
 }
 
 async function get(){
     const documento = await obtenercredenciales()
-    let sheet = documento.sheetsById[431811914]
+    
     
     const registros =  await sheet.getRows()
-    //const resultados = registros.filter(row => row ['apellido'] === 'Carruega')
-    // registros.map((registro)=>{
-
-    // })
 
     return registros
     
@@ -39,7 +37,6 @@ async function getPorCurso(curso){
 
 async function getOneByEmail(email){
     const documento = await obtenercredenciales()
-    let sheet = documento.sheetsById[431811914]
 
     console.log("Usuario.Sheet getById: ", email)
     const registros =  await sheet.getRows()
@@ -57,14 +54,13 @@ async function getOneByEmail(email){
         return usuarioInterface
         }catch(e){
             console.error(e.message," no se encontró objeto, devuelvo 'null' ");
-        return resultado[0] = {email: null}
+            return resultado[0] = {email: null}
         }
     
 }
 
 async function getUsuarioById(id){
     const documento = await obtenercredenciales()
-    let sheet = documento.sheetsById[431811914]
 
     console.log("Usuario.Sheet getById: ", id)
     const registros =  await sheet.getRows()
@@ -78,35 +74,16 @@ async function getUsuarioById(id){
     
 }
 
-async function post(req, res) {
+async function post(objeto) {
     const documento = await obtenercredenciales()
-    const sheet = documento.sheetsById[431811914]
 
-    var usuario = this.getOneByEmail(req.body.email)
-    if (req.body.email == usuario) {
-        return null
-    } else {
-        var usuarioInterface = {
-            id: sheet.rowCount,
-            idGoogle: req.body.idGoogle,
-            email: req.body.email,
-            apellido: req.body.apellido,
-            nombre: req.body.nombre,
-            cuil: req.body.cuil,
-            fechanac: req.body.fechanac
-        }
-    
-        await sheet.addRow(usuarioInterface)
-        return usuarioInterface
-    }
-    
-
+    await sheet.addRow(objeto)
+    return objeto
 }
 
 async function put(pObjeto) {
     const documento = await obtenercredenciales()
     
-    const sheet = documento.sheetsById[82786429]
     const rows = await sheet.getRows()
 
     console.log('lenght: ', rows.length)
@@ -124,7 +101,6 @@ async function put(pObjeto) {
 async function del(pObjeto) {
     const documento = await obtenercredenciales()
 
-    const sheet = documento.sheetsById[82786429]
     await sheet.addRow(pObjeto)
 
     console.log(pObjeto)

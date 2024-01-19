@@ -1,137 +1,94 @@
-<%- include ../../partials/parte1Superior.ejs %>
+<!-- Parte de arriba -->
+<%- include('../../layout/partTop.ejs') %>
 <%- include ./docenteCargo_navbar.ejs %>
 
-
-    </head>
-    <body>
-      <br>
-    <div  class="container" >
-      <h5 id="lblFormAlta"  style="display: none;"><b></i>Alta de cargos</b></h5>
-      <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
-      <div id="divFormAlta" class="w3-ul w3-card-4 w3-white" style="display: none;">
-        <%- include ./docenteCargo_form.ejs %>
-      </div>
-      
-    </div>
-    <div class="container p-0 my-3">
-      <h5 id="lblFormAlta"  style="display: block;"><b></i>Cargos actuales</b></h5>
-        <table class="table table-hover table-responsive">
-          <thead>
-          <tr>
-            <th>Cargo</th>
-            <th>Curso</th>
-            <th>Asignatura</th>
-            <th>Eliminar</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-          <% cargos.forEach(function(cargo){ %>
-            <% let cursoClave %>
-            <% let asignaturaId %>
-            <tr>
-              
-              <td>
-                <% roles.forEach(function(rol){ %>
-                  <% if(cargo.rol == rol.id){%>
-                    <%= rol.codigo%>
-                  <% } %>
-                <% }) %>
-              </td>
-              <td>
-                <% cursoAsignaturas.forEach(function(cursoAsignatura){ %>
-                  <% if(cargo.cursoAsignatura == cursoAsignatura.id){%>
-                    <% cursos.forEach(function(curso){ %>
-                      <% if(curso.idCurso == cursoAsignatura.curso) {%>
-                        <% cursoClave = curso.grado+"°"+curso.division+"°" %>
-                        <%= curso.grado %>°<%= curso.division %>°
-                      <% } %>
-                    <% }) %>
-                  <% } %>
-                <% }) %>
-              </td>
-              <td>
-                <% cursoAsignaturas.forEach(function(cursoAsignatura){ %>
-                  <% if(cargo.cursoAsignatura == cursoAsignatura.id){%>
-                    <% asignaturas.forEach(function(asignatura){ %>
-                      <% if(asignatura.idAsignatura == cursoAsignatura.asignatura) {%>
-                        <% asignaturaId = asignatura.idAsignatura %>
-                        <%= asignatura.nombreCorto %>
-                      <% } %>
-                    <% }) %>
-                  <% } %>
-                <% }) %>
-              </td>
-              <td class="">
-
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%= cargo.cursoAsignatura%>">
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </button>
-                  
-                 
-              </td>
-              <td class="">
-                <% if(cargo.rol != 6){ %>
-                  <a href="/curso/todos" class="btn btn-outline-info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-easel" viewBox="0 0 16 16">
-                      <path d="M8 0a.5.5 0 0 1 .473.337L9.046 2H14a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1.85l1.323 3.837a.5.5 0 1 1-.946.326L11.092 11H8.5v3a.5.5 0 0 1-1 0v-3H4.908l-1.435 4.163a.5.5 0 1 1-.946-.326L3.85 11H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h4.954L7.527.337A.5.5 0 0 1 8 0zM2 3v7h12V3H2z"/>
-                    </svg>
-                  </a>
-                  <% } else { %>
-                <a href="/calificacion/curso<%= cursoClave%>/asignatura<%= asignaturaId%>" class="btn btn-outline-success" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-easel2-fill" viewBox="0 0 16 16">
-                    <path d="M8.447.276a.5.5 0 0 0-.894 0L7.19 1H2.5A1.5 1.5 0 0 0 1 2.5V10h14V2.5A1.5 1.5 0 0 0 13.5 1H8.809L8.447.276Z"/>
-                    <path fill-rule="evenodd" d="M.5 11a.5.5 0 0 0 0 1h2.86l-.845 3.379a.5.5 0 0 0 .97.242L3.89 14h8.22l.405 1.621a.5.5 0 0 0 .97-.242L12.64 12h2.86a.5.5 0 0 0 0-1H.5Zm3.64 2 .25-1h7.22l.25 1H4.14Z"/>
-                  </svg>
-                </a>
-                <% } %>
-              </td>
-
-            </tr>
-
-<!-- Button trigger modal -->
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal<%= cargo.cursoAsignatura%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>  
-      <div class="modal-body">
-        Está seguro que desea borrar el cargo de 
-        <% roles.forEach(function(rol){ %>
-          <% if(cargo.rol == rol.id){%>
-            <%= rol.codigo%>
-          <% } %>
-        <% }) %>: 
-        <% cursoAsignaturas.forEach(function(cursoAsignatura){ %>
-          <% if(cargo.cursoAsignatura == cursoAsignatura.id){%>
-            
-            <% asignaturas.forEach(function(asignatura){ %>
-              <% if(asignatura.idAsignatura == cursoAsignatura.asignatura) {%>
-                <% asignaturaId = asignatura.idAsignatura %>
-                <%= asignatura.nombreCorto %>
-              <% } %>
-            <% }) %>
-          <% } %>
-        <% }) %>
-        ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a href="/docente/cargo/<%= cargo.id%>/baja" type="button" class="btn btn-danger">Confirmar</a>
-      </div>
+ <!-- Header -->
+ <header class="w3-container" style="padding-top:22px">
+  <div class="w3-container w3-card-4 w3-white">
+    <h5 id="lblFormAlta" class="w3-bar-item w3-left" style="display: none;"><b>Alta de cargos</b></h5>
+    <img class="w3-bar-item w3-left" id="waitIconLblAltaCargo" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="30" height="30" />
+  
+    <div id="divFormAlta" style="display: none;">
+      <% include ./docenteCargo_form.ejs %>
     </div>
   </div>
-</div>
+  
+  
+      <div class="container p-0 my-3">
+         <!-- Header -->
+    <header class="w3-container" >
+      <h5><b><i class="fa fa-dashboard"></i> Cargos actuales </b></h5>
+    </header>
+          <table class="w3-table-all w3-hoverable">
+            <thead>
+            <tr>
+              <th>Rol</th>
+              <th>Campo</th>
+              <th>Revista</th>
+              <th>Eliminar</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+            <% cargos.forEach(function(cargo){ %>
+              <% let cursoClave %>
+              <% let asignaturaId %>
+              <tr>
+                
+                <td>
+                  <% roles.forEach(function(rol){ %>
+                    <% if(cargo.idRol == rol.id){%>
+                      <%= rol.nombre%>
+                    <% } %>
+                  <% }) %>
+                </td>
+                <td>
+                  <% campos.forEach(function(campo){ %>
+                    <% if(cargo.idCampo == campo.id){%>
+                      <%= campo.nombre%>
+                    <% } %>
+                  <% }) %>
+                </td>
+                <td>
+                  <% revistas.forEach(function(revista){ %>
+                    <% if(cargo.idRevista == revista.id){%>
+                      <%= revista.nombre%>
+                    <% } %>
+                  <% }) %>
+                </td>
+                <td class="">
+  
+                  <button type="button" id="btnDocenteCargoBaja" class="w3-button w3-border w3-round w3-red" data-bs-toggle="modal" data-clave= "<%= cargo.rol%>">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </button>
+               
+                </td>
+                <td class="">
+                  <% if(cargo.rol != 6){ %>
+                    <a href="/curso/todos" class="btn btn-outline-info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-easel" viewBox="0 0 16 16">
+                        <path d="M8 0a.5.5 0 0 1 .473.337L9.046 2H14a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1.85l1.323 3.837a.5.5 0 1 1-.946.326L11.092 11H8.5v3a.5.5 0 0 1-1 0v-3H4.908l-1.435 4.163a.5.5 0 1 1-.946-.326L3.85 11H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h4.954L7.527.337A.5.5 0 0 1 8 0zM2 3v7h12V3H2z"/>
+                      </svg>
+                    </a>
+                    <% } else { %>
+                  <a href="/calificacion/curso<%= cursoClave%>/asignatura<%= asignaturaId%>" class="btn btn-outline-success" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-easel2-fill" viewBox="0 0 16 16">
+                      <path d="M8.447.276a.5.5 0 0 0-.894 0L7.19 1H2.5A1.5 1.5 0 0 0 1 2.5V10h14V2.5A1.5 1.5 0 0 0 13.5 1H8.809L8.447.276Z"/>
+                      <path fill-rule="evenodd" d="M.5 11a.5.5 0 0 0 0 1h2.86l-.845 3.379a.5.5 0 0 0 .97.242L3.89 14h8.22l.405 1.621a.5.5 0 0 0 .97-.242L12.64 12h2.86a.5.5 0 0 0 0-1H.5Zm3.64 2 .25-1h7.22l.25 1H4.14Z"/>
+                    </svg>
+                  </a>
+                  <% } %>
+                </td>
+  
+              </tr>
+  
+              <% }); %>
+  
+          </table>
+  
+      </div>
+      <hr>
+</header>
 
-            <% }); %>
 
-        </table>
-
-    </div>
-    <hr>
-
-    <%- include ../../partials/parte2Inferior.ejs %>
+ <!-- Parte de abajo -->
+ <%- include('../../layout/partBotton.ejs') %>

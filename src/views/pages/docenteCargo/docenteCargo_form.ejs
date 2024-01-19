@@ -1,58 +1,41 @@
 <script src="/js/docenteCargoAlta.ajax.js"></script>
 
-<div class="">
-  <form action="/docente/cargo/alta" method="post" class=""> 
+<div class="w3-container">
+  <form action="/docente/cargo/alta" method="post" class="w3-container"> 
 
-    <div class="row">
+    <div class="w3-row-padding">
 
-      <div class="col-md-3">
-        <label for="inputRol" class="form-label">Rol</label>
-        <select id="inputRol"  class="form-select" type="text" placeholder="Ingrese su/s apellido/s" name="rol" required>
-          <option value="" disabled>Seleccione un rol</option>
-          <option value="6" selected>Profesor/a</option>
+      <div class="w3-col m3">
+        <label for="inputAsignatura" class="w3-text-white">Campo</label>
+        <img class="w3-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="22" height="22" />
+        <select id="inputAsignatura" class="w3-select inputAsignatura" name="cargo" required disabled>
+          <option value="" disabled selected>Seleccione un campo</option>
         </select>
       </div>
 
-      <div class="col-md-3">
-        <label for="inputRevista" class="form-label">S. de Revista</label>
-        <select id="inputRevista"  class="form-select" type="text" placeholder="Ingrese su Situación de Revista" name="revista" required>
+      <div class="w3-col m3">
+        <label for="inputRevista" class="w3-text-white">S. de Revista</label>
+        <select id="inputRevista" class="w3-select" type="text" placeholder="Ingrese su Situación de Revista" name="revista" required>
           <option value="" disabled selected>Seleccione una s. de revista</option>
         </select>
       </div>
 
-      <div class="col-md-3">
-        <label for="inputCurso" class="form-label">Curso</label>
-        <img class="w3-bar-item w3-right" id="waitIconCurso" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="22" height="22" />
-        <select id="inputCurso"  class="form-select" type="text" placeholder="Ingrese su/s apellido/s" name="curso" required>
-          <option value="" disabled selected>Seleccione un curso</option>
-          <% cursos.forEach(function(curso){ %>
-          <option value="<%= curso.idCurso %>"><%= curso.grado%>°<%= curso.division%>°</option>
-           <% }); %>
-        </select>
-      </div>
-      
-      <div class="col-md-3">
-        <label for="inputAsignatura" class="form-label">Cargo/Asignatura</label>
-        <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="22" height="22" />
-        <select id="inputAsignatura"  class="form-select inputAsignatura" name="cursoAsignatura"  required disabled >
-          <option value="" disabled selected>Seleccione una asignatura</option>
-        </select>
-      </div>
+       
 
     </div>
     
     <br>
-    &#9642; <span id="disponibleMsg"> </span> <img class="pull-left" id="waitIconAsignatura2" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="22" height="22" />
-    <div class="btn-group  col-md-12">
-      <button id="btnEnviar" class="btn btn-outline-success" type="submit" disabled>
+    &#9642; <span id="disponibleMsg"> </span> <img class="w3-left" id="waitIconAsignatura2" src='/img/whiteIconGrisSegmentos.gif' style="display:none" width="22" height="22" />
+    <div class="w3-btn-group w3-col m12">
+      <button id="btnEnviar" class="w3-btn w3-green" type="submit" disabled>
         <i class="fa fa-paper-plane" aria-hidden="true"></i>
         Enviar solicitud
       </button>
-      <button id="btnLimpar" class="btn btn-outline-primary " type="button">
+      <button id="btnLimpar" class="w3-btn w3-blue" type="button">
         <i class="fa fa-eraser" aria-hidden="true"></i>
         Limpiar
       </button>
-      <button id="btnCancelar" class="btn btn-outline-warning" type="button">
+      <button id="btnCancelar" class="w3-btn w3-orange" type="button">
         <i class="fa fa-ban" aria-hidden="true"></i>
         Cancelar
       </button>
@@ -60,5 +43,3 @@
   </form>
   <hr>
 </div>
-
-
