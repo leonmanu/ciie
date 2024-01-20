@@ -32,7 +32,16 @@
           <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
             <td>
               <% encuentro = 'Encuentro'+j %>
-              <%= registro[encuentro] %>
+              <% if(registro[encuentro] == 'TRUE'){ %>
+                <button class="w3-button w3-round-large w3-border w3-border-indigo">
+                  <strong>Presente</strong>
+                </button>
+              <% } else { %>
+                <button class="w3-button w3-round-large w3-border w3-border-red">
+                  Ausente
+                </button>
+              <% } %>
+              
             </td>
          <% } %>
           
