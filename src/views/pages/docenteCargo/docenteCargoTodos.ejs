@@ -1,0 +1,72 @@
+<!-- Parte de arriba -->
+<%- include('../../layout/partTop.ejs') %>
+
+ <!-- Header -->
+
+    <header class="w3-container" >
+      <h5><b><i class="fa fa-dashboard"></i> Capacitaciones </b></h5>
+    </header>
+    <table class="w3-table-all w3-hoverable">
+      <thead>
+        <tr>
+          <th>Rol</th>
+          <th>Campo</th>
+          <th>Revista</th>
+          <th>Eliminar</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <% docenteCargos.forEach(function(docenteCargo){ %>
+        <% let docenteCargoId %>
+        <% let rolNombre %>
+        <% let campoClave %>
+        <% cargos.forEach(function(cargo){ %>
+          <% if(docenteCargo.idCargo == cargo.id && cargo.idRol == 5){ %>
+            <% roles.forEach(function(rol){ %>
+              <% if(cargo.idRol == rol.id){ %>
+            <tr>
+              <td>
+                
+                    <%= rol.nombre %>
+                    <% rolNombre = rol.nombre %>
+                  
+              </td>
+              <td>
+                <% campos.forEach(function(campo){ %>
+                  <% if(cargo.idCampo == campo.id){ %>
+                    <%= campo.nombre %>
+                    <% campoClave = campo.clave %>
+                  <% } %>
+                <% }) %>
+              </td>
+              <td>
+                <% revistas.forEach(function(revista){ %>
+                  <% if(docenteCargo.idRevista == revista.id){ %>
+                    <%= revista.nombre %>
+                  <% } %>
+                <% }) %>
+              </td>
+              
+                  <td class="">
+                    <button type="button" id="btnDocenteCargoBaja" class="w3-button w3-border w3-round w3-red btnDocenteCargoBaja" data-bs-toggle="modal" data-clave="<%= campoClave %>">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                  <td class="">
+                  <a href="/" class="w3-button w3-light-blue" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                  </a>
+                  </td>
+
+            </tr>
+            <% } %>
+                <% }) %>
+          <% } %>
+        <% }); %>
+      <% }); %>
+    </table>
+    
+      <br>
+
+ <!-- Parte de abajo -->
+ <%- include('../../layout/partBotton.ejs') %>

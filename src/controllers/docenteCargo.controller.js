@@ -15,6 +15,17 @@ const getCargosTodos = async (req, res) => {
     res.render("pages/cargo/cargoActuales", {cargos: cargos, cursos: cursos})
 }
 
+const get = async (req, res) => {
+    const docenteCargos = await docenteCargoService.get()
+    const cargos = await cargoService.get()
+    const roles = await rolService.get()
+    const campos = await campoService.get()
+    const revistas = await revistaService.get()
+
+
+    res.render("pages/docenteCargo/docenteCargoTodos", {user: req.user, docenteCargos, cargos,roles,campos,revistas})
+}
+
 const getPorDocente = async (req, res) => {
     const docenteCargos = await docenteCargoService.getPorDocente(req.user)
     const cargos = await cargoService.get()
@@ -57,6 +68,7 @@ const putBajaDocenteCargo = async(req, res) => {
 }
 
 module.exports = {
+    get,
     getCargosTodos : getCargosTodos,
     getPorDocente:getPorDocente,
     postDocenteCargo: postDocenteCargo,
