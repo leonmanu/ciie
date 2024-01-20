@@ -1,38 +1,36 @@
-<% var rootPath = '../'; %>
-<%- include(rootPath + 'partials/parte1Superior') %>
+<%- include('../layout/partTop.ejs') %>
 
   <!-- Header -->
+  <header class="w3-center">
+    <img class="w3-image" src="/img/banerciie.jpg" alt="Banner CIIE">
+    <h3 class="display-5">Cursos oficiales, gratuitos, con puntaje de la DGCyE para docentes</h3>
+  </header>
 
-  <div class="container text-center">
-    <div class="mt-4 p-5  jumbotron jumbotron-fluid bg-primary">
-      <div class="container">
-        <img src="/img/logoees62gris.png" width="200" height="200">
-        <h3 class="display-5">Escuela de Educación Secundaria N° 62</h3>
-        <p class="lead">Bienvenidos al sistema de administración de nuestra escuela</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="container text-center text-black">
-    <div class="mt-4 p-3  jumbotron  bg-secondary">
-      <div class="container">
-        <h2>Consulta de boletín</h2>
-          <p>Ingrese el número de DNI del estudiante sin puntos, comas o espacios.</p>
-        <div class="d-flex justify-content-center">
-                                                   
-          <form action="calificacion/estudiante/valoracion" class="row" method="get">
-
-            <div class="col-auto ">
-              <label for="dni" class="visually-hidden">DNI</label>
-              <input type="number" class="form-control" id="dni" placeholder="DNI" min="9999999" max="100000000" name="dni">
+  <div class="w3-margin-top">
+    <div class="w3-row-padding w3-margin-bottom">
+      <% campos.forEach(function(campo){ %>
+        <div class="w3-col s12 m6 l4"> <!-- Se muestra en 1 columna en móviles, 2 en tablets y 3 en pantallas grandes -->
+          <div class="w3-border w3-white" style="margin-bottom: 20px;">
+            <header class="w3-light-grey w3-container">
+              <strong><%= campo.nombre %></strong>
+              <br>
+              <span>Nivel: <%= campo.nivel %></span>
+            </header>
+            <div class="w3-container w3-light-white">
+              <p>1 new friend request</p>
+              <hr>
+              <img src="img_avatar3.png" alt="Avatar" class="w3-left w3-circle">
+              <p>Detalles...</p>
             </div>
-            <div class="col-auto">
-              <button type="submit" class="btn btn-primary mb-3">Consultar</button>
-            </div>
-          </form>
+            <button class="w3-button w3-block w3-dark-grey">Ver +</button>
+          </div>
         </div>
-      </div>
+      <% }) %>
     </div>
   </div>
+  
 
-    <%- include(rootPath + 'partials/parte2Inferior') %>
+ 
+  
+  <!-- Parte de abajo -->
+  <%- include('../layout/partBotton.ejs') %>

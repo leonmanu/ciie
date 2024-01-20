@@ -3,16 +3,17 @@ let cursoSheet = require('../sheets/curso.sheet')
 const estudianteService = require('../services/estudiante.service')
 const estudianteSchema = require('../models/estudiante.schema')
 const cursoService = require('../services/curso.service')
+const campoService = require('../services/campo.service')
 const estudianteCursoService = require('../services/estudianteCurso.service')
 
 
 
 const get = async (req, res) => {
-   // registros = await cursoSheet.get()
+   const campos = await campoService.get()
    if (req.user) {
-    res.render('pages/index', {user: req.user._json})
+    res.render('pages/index', {user: req.user._json, campos})
    } else {
-    res.render('pages/index', {user: null})
+    res.render('pages/index', {user: null, campos})
    }
 }
 

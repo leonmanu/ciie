@@ -1,4 +1,4 @@
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;margin-top:0px" id="mySidebar"><br>
     
   <%if(typeof(user) == "undefined"){%>
     <div class="w3-container w3-row">
@@ -18,22 +18,19 @@
     
   <%} else {%>
 
-    <div class="w3-container w3-row">
-      <div class="w3-col s4">
-        <img src="<%= user.picture %>" class="w3-circle w3-margin-right" style="width:46px">
-      </div>
-      <div class="w3-col s8 w3-bar">
-        <span><strong><%= user.given_name %> <%= user.family_name %></strong></span><br>
-        <a href="/docente/cargo" class="w3-bar-item w3-button"><i class="fa fa-briefcase"></i>  </a>
-        <a href="/usuario/logout" class="w3-bar-item w3-button" ><i class="fa fa-sign-out" ></i> </a>
-      </div>
+    <!-- Profile -->
+    <div class="w3-center">
+       <img src="<%= user.picture %>" class="w3-circle w3-margin-right" style="width:46px">
+       <br>
+       <strong><%= user.given_name %> <%= user.family_name %></strong>
+       <a href="/docente/cargo" class="w3-bar-item w3-button"><i class="fa fa-briefcase"></i>  </a>
+       <a href="/usuario/logout" class="w3-bar-item w3-button" ><i class="fa fa-sign-out" ></i> </a>
     </div>
 
-    
+   
     
   <%}%>
   <%}%>
-    <hr>
     <div class="w3-container">
       <h5>Dashboard</h5>
     </div>
