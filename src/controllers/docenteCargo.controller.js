@@ -16,14 +16,14 @@ const getCargosTodos = async (req, res) => {
 }
 
 const getPorDocente = async (req, res) => {
-    
-    const cargos = await cargoService.getPorDocente(req.user)
+    const docenteCargos = await docenteCargoService.getPorDocente(req.user)
+    const cargos = await cargoService.get()
     const roles = await rolService.get()
     const campos = await campoService.get()
     const revistas = await revistaService.get()
 
 
-    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, cargos,roles,campos,revistas})
+    res.render("pages/docenteCargo/docenteCargoActuales", {user: req.user, docenteCargos, cargos,roles,campos,revistas})
 }
 
 const getCargoCursoPorDocente = async (req, res) => {

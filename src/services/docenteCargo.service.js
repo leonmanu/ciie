@@ -24,9 +24,7 @@ const getCargosTodos = async (req, res) => {
 const getPorDocente = async (user) => {//este es el que manda los cargos por docentes
     const usuario = await usuarioService.getPorIdGoogle(user.id)
     const docenteCargos = await get()
-    const registros = await cargoSheet.get()
-    const filtrados = registros.filter(row => row.idUsuario === usuario.id && !row.fechaBaja)
-    
+    const filtrados = await docenteCargos.filter(row => row.idUsuario == usuario.id)
     return filtrados
 }
 
