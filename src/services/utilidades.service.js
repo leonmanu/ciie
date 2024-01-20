@@ -21,8 +21,16 @@ const convertToJson = async (resultados) => {
         console.log(`Error en convertToJson: ${error.message}`);
         return [];
     }
-};
+}
+
+async function getUltimo(registros){
+    const indice = registros.length
+    const resultado = registros[indice - 1]
+
+    return resultado
+}
 
 module.exports = {
     convertToJson: convertToJson,
+    getUltimo,
 };

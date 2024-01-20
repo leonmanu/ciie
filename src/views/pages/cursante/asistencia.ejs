@@ -5,42 +5,39 @@
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> <%= paramCampo %>/ Asistencia </b></h5>
+    <h5><b><i class="fa fa-dashboard"></i> <%= paramCampo %>/ Asistencia / <%= cohorteUltima.clave %></b></h5>
   </header>
 
   <div class="w3-container">
     <table class="w3-table-all w3-hoverable">
       <thead>
         <tr class="w3-light-grey">
-          <th>Cursante (<%= registros.length + 1%>)</th>
+          <th>Cursante (<%= cursantes.length%>)</th>
           <th>DNI</th>
           <th>1°</th>
           <th>2°</th>
           <th>3°</th>
-          <th>campoClave</th>
         </tr>
       </thead>
-      <% registros.forEach(function(registro){ %>
+      <% let i = 1 %>
+      <% let encuentro %>
+      <% cursantes.forEach(function(registro){ %>
         <tr>
           <td> 
-            <%= registro['Apellido/s'] %>,  <%= registro['Nombre/s'] %>
+           <%= i %> | <%= registro['Apellido/s'] %>,  <%= registro['Nombre/s'] %>
           </td>
           <td>
             <%= registro['Número de DNI'] %>
           </td>
-          <td>
-            <%= registro['Encuentro 1'] %>
-          </td>
-          <td>
-            <%= registro['Encuentro 2'] %>
-          </td>
-          <td>
-            <%= registro['Encuentro 3'] %>
-          </td>
-          <td>
-            <%= registro['campoClave'] %>
-          </td>
+          <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
+            <td>
+              <% encuentro = 'Encuentro'+j %>
+              <%= registro[encuentro] %>
+            </td>
+         <% } %>
+          
         </tr>
+        <% i++ %>
         <% }) %>
     </table>
   </div>

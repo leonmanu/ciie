@@ -8,9 +8,11 @@ const get = async () => {
     return registros
 }
 
-const getPorCampo = async (campoClave) => {
+const getPorCampo = async (campoClave, cohorte) => {
+   console.log("COHORTE -- > " + cohorte)
     const cursantes = await get();
-    const filtrados = await cursantes.filter(cursante => cursante.campoClave === campoClave && cursante.Apto == 'TRUE')
+    const filtrados = await cursantes.filter(cursante => cursante.campoClave === campoClave && cursante.Apto == 'TRUE' && cursante.cohorte.toLowerCase() == cohorte.toLowerCase())
+
     // Ordenar por apellido
     const resultados = await filtrados.sort((a, b) => {
       const apellidoA = a['Apellido/s'].toLowerCase();
@@ -23,9 +25,11 @@ const getPorCampo = async (campoClave) => {
       } else {
         return 0;
       }
-    });
-  
-    //console.log("Resultado Ordenado :--> ", resultados);
+    })
+    
+    // resultados.forEach(async result => {
+    //   console.log("cursante: ", result['Apellido/s'])
+    // } )
     return resultados;
   };
 
