@@ -1,28 +1,40 @@
 <!-- Parte de arriba -->
 <%- include('../../layout/partTop.ejs') %>
 
-
+<!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
 
   <!-- Header -->
-  <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> <%= paramCampo %>/ Asistencia / <%= cohorteUltima.clave %></b></h5>
+  <header class="w3-container w3-bar sticky-top" style="padding-top:22px; display: flex; align-items: center;">
+    <h5 style="margin-right: auto;"><b><i class="fa fa-dashboard"></i> <%= paramCampo %>/ Asistencia / <%= cohorteUltima.clave %></b></h5>
+    <button href="#" class="btn_save w3-button w3-teal " row_id="'+row_id+'" disabled>
+      <span id="">Guardar</span> 
+      <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
+    </button>
   </header>
 
   <div class="w3-container">
-    <table class="w3-table-all w3-hoverable">
+    <table class="w3-table-all">
       <thead>
-        <tr class="w3-light-grey">
-          <th>Cursante (<%= cursantes.length%>)</th>
-          <th>DNI</th>
-          <th>1°</th>
-          <th>2°</th>
-          <th>3°</th>
+        <tr class="w3-light-grey" style="border: 1px solid #ddd;">
+          <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Cursante (<%= cursantes.length %>)</th>
+          <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">DNI</th>
+          <th colspan="3" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Encuentros</th>
+          <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Valoración</th>
+        </tr>
+        <tr class="w3-light-grey" style="border: 1px solid #ddd;">
+          <th style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">1°</th>
+          <th style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">2°</th>
+          <th style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">3°</th>
         </tr>
       </thead>
+      
       <% let i = 1 %>
       <% let encuentro %>
       <% cursantes.forEach(function(registro){ %>
-        <tr>
+        <tr  rowNumber='<%= registro._rowNumber %>' >
+          <td class="modified" style="display:none ;" col_name="change">
+            false
+          </td>
           <td> 
            <%= i %> | <%= registro['Apellido/s'] %>,  <%= registro['Nombre/s'] %>
           </td>
@@ -30,27 +42,143 @@
             <%= registro['Número de DNI'] %>
           </td>
           <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
-            <td>
-              <% encuentro = 'Encuentro'+j %>
+            <% encuentro = 'Encuentro'+j %>
+            <td class="" style="text-align: center; vertical-align: middle;" >
+              
               <% if(registro[encuentro] == 'TRUE'){ %>
-                <button class="w3-button w3-round-large w3-border w3-border-indigo">
-                  <strong>Presente</strong>
-                </button>
+                <button class="row_data btnChange w3-button w3-round-large w3-border w3-border-indigo" col_name = "<%= encuentro %>"><strong>Presente</strong></button>
               <% } else { %>
-                <button class="w3-button w3-round-large w3-border w3-border-red">
-                  Ausente
-                </button>
+                <button class="row_data btnChange w3-button w3-round-large w3-border w3-border-red" col_name = "<%= encuentro %>">Ausente</button>
               <% } %>
               
             </td>
          <% } %>
-          
+         <td class="" >
+          <select class="row_data w3-select  w3-border slcChange" name="calificacion" col_name = "Valoracion">
+            <option style="display:none"> Seleccione </option>
+            <% calificaciones.forEach(function(calificacion){ %>
+              <option value="<%= calificacion.nombre %>"><%= calificacion.nombre %></option>
+            <% }) %>
+          </select>
+        </td>
         </tr>
         <% i++ %>
         <% }) %>
     </table>
   </div>
+  <script>
+    $("table button.btnChange").click(async function (event) {
+      event.preventDefault();
+      
+      var button = $(this);
+      var tr = button.closest('tr');
+      
+      // Obtén el valor actual del botón y cambia al estado contrario
+      var isPresente = button.hasClass('w3-border-indigo');
+      button.removeClass('w3-border-indigo w3-border-red');
+      
+      if (isPresente) {
+        button.addClass('w3-border-red').html('Ausente');
+      } else {
+        button.addClass('w3-border-indigo').html('<strong>Presente</strong>');
+      }
 
+      // También puedes realizar otras acciones aquí, como guardar el estado en algún lugar.
+  
+      // Ejemplo de obtener la información de la fila
+      var rowNumber = tr.attr('rowNumber');
+      //var rowNumber = tr.find("td:eq(0)").html();
+      await  tr.find(".modified").html('true')
+      var encuentros = [];
+      $('.btn_save').prop('disabled', false)
+		  $('.btn_save').addClass('btn-outline-success')
+    });
+
+    $("table select.slcChange").change(async function (event) {
+      event.preventDefault();
+      
+      var select = $(this);
+      var tr = select.closest('tr');
+      
+      var rowNumber = tr.attr('rowNumber');
+      //var rowNumber = tr.find("td:eq(0)").html();
+      switch (parseInt(select.val())) {
+        case 1:
+          select.removeClass('w3-border-red w3-border-black').addClass('w3-border-blue');
+          break;
+        case 2:
+          select.removeClass('w3-border-blue w3-border-black').addClass('w3-border-red');
+          break;
+        case 3:
+          select.removeClass('w3-border-red w3-border-blue').addClass('w3-border-black');
+          break;
+      }
+      await  tr.find(".modified").html('true')
+      var encuentros = [];
+      $('.btn_save').prop('disabled', false)
+		$('.btn_save').addClass('btn-outline-success')
+    });
+
+
+    //--->save whole row entery > start	
+	$(document).on('click', '.btn_save',async function(event) 
+	{
+		event.preventDefault();
+		$('.btn_save').attr('disabled','disabled');
+		$('#waitIconAsignatura').css("display", "block");
+		var arrayJson = []
+		$("table > tbody > tr").each(async function () {
+			//await  tr.find(".modified").html('true')
+			if ($(this).find(".modified").html() == 'true') {
+
+				let rowNumber = $(this).attr('rowNumber');
+        
+				let arr = {};
+				$(this).find('.row_data').each(function(index, val) 
+					{   
+						let col_name = $(this).attr('col_name')
+						let col_val  =  ($(this).val() || $(this).text())
+            
+						arr[col_name] = col_val
+					})
+				
+				$.extend(arr, {rowNumber: rowNumber})
+
+				arrayJson.push(arr)
+
+			}			
+		})
+		$.ajax({
+			
+			url: '/calificacion/post',
+			contentType: 'application/json',
+			method: 'POST',
+			data: JSON.stringify({arrayJson}),
+			dataType: 'text',
+			
+			success: function (response) {  
+				$('#waitIconAsignatura').css("display", "none");
+				$('.btn_save').prop('disabled', false);
+				$('#myModal').modal('show')
+				$('#cant').html(arrayJson.length);
+			}
+			
+		  });
+		  $(document).ajaxStop(function(){
+			window.location.reload();
+		});
+
+
+	});
+ 
+  </script>
+  <style>
+    .sticky-top {
+      position: sticky;
+      top: 20px;
+      z-index: 1000;
+    }
+  </style>
   <!-- Parte de abajo -->
   <%- include('../../layout/partBotton.ejs') %>
  

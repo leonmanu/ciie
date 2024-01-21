@@ -11,7 +11,7 @@ const get = async () => {
 const getPorCampo = async (campoClave, cohorte) => {
    console.log("COHORTE -- > " + cohorte)
     const cursantes = await get();
-    const filtrados = await cursantes.filter(cursante => cursante.campoClave === campoClave && cursante.Apto == 'TRUE' && cursante.cohorte.toLowerCase() == cohorte.toLowerCase())
+    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].includes(campoClave) && cursante['Seleccione su/s curso/s'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
 
     // Ordenar por apellido
     const resultados = await filtrados.sort((a, b) => {
@@ -33,7 +33,13 @@ const getPorCampo = async (campoClave, cohorte) => {
     return resultados;
   };
 
+  async function put(objeto) {
+    resultado = await cursanteSheet.put(objeto)
+    return resultado
+}
+
 module.exports = {
     get,
     getPorCampo,
+    put,
 } 

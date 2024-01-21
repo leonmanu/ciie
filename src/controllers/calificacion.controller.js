@@ -74,10 +74,10 @@ const getInformesPorCurso = async (req, res) => {
 }
 
 const postCalificacion = async (req, res) => {
-    jsonStringfy = req.body.arrayJson
-    resultado = await calificacionService.postArray(jsonStringfy)
+    arrayJson = req.body.arrayJson
+    resultado = await calificacionService.putArray(arrayJson)
 
-    res.send(resultado.toString())
+    //res.send(resultado.toString())
 }
 
 //-------------esta servía

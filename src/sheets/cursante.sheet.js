@@ -19,6 +19,21 @@ async function get(){
     
 }
 
+async function put(objeto) {
+    let i = objeto.rowNumber - 2
+    const registros = await get()
+    registros[i].cohorte = ""
+    registros[i].campoClave = ""
+    registros[i].Encuentro1 = true
+    await registros[i].save()
+    
+    console.log("registros[i]: ", objeto.rowNumber)
+    //console.log('lenght: ', registros.length)
+    return i
+}
+
+
 module.exports = {
-    get:get
+    get,
+    put,
 }

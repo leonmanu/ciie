@@ -5,7 +5,7 @@ $( window ).on( "load", function() {
 	var tbl = '';
 
 
-	$("table > tbody > tr").change(async function (event) {
+	$("table > tbody > tr").click(async function (event) {
 		event.preventDefault();
 		var tbl_row = await $(this).closest('tbody > tr');
 		//var row_id = tbl_row.attr('row_id');
