@@ -38,8 +38,42 @@ const getPorCampo = async (campoClave, cohorte) => {
     return resultado
 }
 
+async function putEmparejar(json, cursante){
+  if (json.length === 0) { //verifica eque arrayJson no esté vacío, si está vacío, es lo que devuelve
+    return [];
+  }
+  headers = await utilidadesService.getHeaders(json)
+  headers.forEach(head => {
+    cursante[head] = json[head]
+  })
+  
+  return cursante
+  //resultado = await objExistente.save()
+  //console.log("objExistente ::   ", objExistente)
+  //return objExistente
+}
+
+const putArray = async (arrayJson) => {
+  let resultado
+  cursantes = await get()
+  for (const json of arrayJson) {
+    let rn = json.rowNumber;
+    emparejado = await putEmparejar(json, cursantes[rn]);
+    resultado = await cursanteSheet.put(emparejado);
+  }
+  
+  //const resultado = await cursanteSheet.put(arrayJson[0])
+  return resultado
+}
+
+const cambiarValores = async () => {
+  registros = await cursanteSheet.get()
+  return registros
+}
+
 module.exports = {
     get,
     getPorCampo,
     put,
+    putArray,
 } 

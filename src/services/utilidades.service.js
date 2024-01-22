@@ -30,7 +30,16 @@ async function getUltimo(registros){
     return resultado
 }
 
+const getHeaders = async (json) => {
+  if (json.length === 0) { // Verifica si el arreglo no está vacío
+    return [];
+  }
+  const headers = Object.keys(json);// Obtiene las claves del primer objeto del arreglo (suponiendo que todos los objetos tienen las mismas claves)
+  return headers;
+}
+
 module.exports = {
     convertToJson: convertToJson,
     getUltimo,
+    getHeaders,
 };

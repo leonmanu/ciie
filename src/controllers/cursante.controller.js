@@ -17,7 +17,15 @@ const getPorCapacitacion = async (req,res) => {
     res.render("pages/cursante/asistencia", {user: req.user, cursantes, paramCampo, cohorteUltima, calificaciones})
 }
 
+const putArray = async (req, res) => {
+    arrayJson = req.body.arrayJson
+    resultado = await cursanteService.putArray(arrayJson)
+
+    res.send(resultado.toString())
+}
+
 module.exports = {
     get,
-    getPorCapacitacion
+    getPorCapacitacion,
+    putArray,
 }

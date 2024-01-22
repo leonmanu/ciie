@@ -14,13 +14,13 @@ const postArray = async (jsonParse) => {
     return jsonParse
 }
 
-const putArray = async (arrayJson) => {
-    console.log("Calificción == ", arrayJson)
-    const resultado = await cursanteSheet.put(arrayJson[0])
-    return resultado
-}
+// const putArray = async (arrayJson) => {
+//     console.log("Calificción == ", arrayJson)
+//     const resultado = await cursanteSheet.put(arrayJson[0])
+//     return resultado
+// }
 
 module.exports = {
     get,
-    putArray,
+    // putArray,
 } 

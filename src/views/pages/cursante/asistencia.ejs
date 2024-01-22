@@ -55,9 +55,13 @@
          <% } %>
          <td class="" >
           <select class="row_data w3-select  w3-border slcChange" name="calificacion" col_name = "Valoracion">
-            <option style="display:none"> Seleccione </option>
+            <option value="Seleccione"  style="display:none"> Seleccione </option>
             <% calificaciones.forEach(function(calificacion){ %>
-              <option value="<%= calificacion.nombre %>"><%= calificacion.nombre %></option>
+              <% let selected %>
+              <% if(registro['Valoracion'] == calificacion.nombre) { %>
+                <% selected = "selected" %>
+              <% }%>
+              <option <%= selected %> value="<%= calificacion.nombre %>"><%= calificacion.nombre %></option>
             <% }) %>
           </select>
         </td>
@@ -134,15 +138,29 @@
 				let rowNumber = $(this).attr('rowNumber');
         
 				let arr = {};
-				$(this).find('.row_data').each(function(index, val) 
-					{   
-						let col_name = $(this).attr('col_name')
-						let col_val  =  ($(this).val() || $(this).text())
-            
-						arr[col_name] = col_val
-					})
+				$(this).find('.row_data').each(function(index, val) {   
+          let col_name = $(this).attr('col_name')
+          let col_val = ($(this).val() || $(this).text())
+
+          // Utiliza switch para mapear los valores
+          switch (col_val) {
+              case "Presente":
+                  arr[col_name] = 'TRUE';
+                  break;
+              case "Ausente":
+                  arr[col_name] = 'FALSE';
+                  break;
+              case "Seleccione":
+                  arr[col_name] = '';
+                  break;
+              default:
+                  // Otros casos, asigna el valor tal cual
+                  arr[col_name] = col_val;
+                  break;
+    }
+      });
 				
-				$.extend(arr, {rowNumber: rowNumber})
+				$.extend(arr, {rowNumber: rowNumber-2})
 
 				arrayJson.push(arr)
 
@@ -150,9 +168,9 @@
 		})
 		$.ajax({
 			
-			url: '/calificacion/post',
+			url: '/cursante/put',
 			contentType: 'application/json',
-			method: 'POST',
+			method: 'PUT',
 			data: JSON.stringify({arrayJson}),
 			dataType: 'text',
 			

@@ -18,7 +18,7 @@ async function get(){
     return registros
     
 }
-
+/*
 async function put(objeto) {
     let i = objeto.rowNumber - 2
     const registros = await get()
@@ -31,6 +31,18 @@ async function put(objeto) {
     //console.log('lenght: ', registros.length)
     return i
 }
+*/
+async function put(objeto) {
+    try {
+        await objeto.save();
+        console.log("Modificación exitosa");
+        return "Modificación exitosa";
+    } catch (error) {
+        console.error("Error al modificar:", error);
+        throw new Error("Error al modificar");
+    }
+}
+
 
 
 module.exports = {
