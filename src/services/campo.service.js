@@ -16,7 +16,14 @@ const getPorId = async (idRol) => {
     return rolesJson[0]
 }
 
+const getPorClave = async (clave) => {
+    const registros = await get()
+    const filtrados = await registros.filter(row => row.clave == clave)
+    return filtrados[0]
+}
+
 module.exports = {
     get:get,
     getPorId: getPorId,
+    getPorClave,
 } 

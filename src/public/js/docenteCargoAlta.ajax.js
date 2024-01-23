@@ -4,7 +4,7 @@ $(document).ready(function () {
   var slcCurso = $('#inputCurso');
   var slcAsignatura = $('#inputAsignatura');
   var btnAlta = $('#btnDocenteCargoAlta');
-  var btnBaja = $('.btnDocenteCargoBaja');
+  var btnBaja = $('#btnDocenteCargoBaja');
 
 
   

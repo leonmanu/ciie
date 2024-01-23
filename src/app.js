@@ -20,6 +20,7 @@ const revistaRouter = require('./routes/revista.route')
 const estudianteRouter = require('./routes/estudiante.route')
 const cursoEstudianteRouter = require('./routes/cursoEstudiante.route')
 const calificacionRouter = require('./routes/calificacion.route')
+const encuentroFechaRouter = require('./routes/encuentroFecha.route')
 
 var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
@@ -58,6 +59,7 @@ app
     .use("/estudiante", estudianteRouter)
     .use("/estudiante/curso", cursoEstudianteRouter)
     .use("/calificacion", calificacionRouter)
+    .use("/encuentroFecha", encuentroFechaRouter)
 
 module.exports = app
 

@@ -19,8 +19,15 @@ const getTodos = async (req, res) => {
     return rolesJson
 }
 
+const getPorClave = async (clave) => {
+    const registros = await get()
+    const filtrados = await registros.filter(row => row.clave == clave)
+    return filtrados[0]
+}
+
 module.exports = {
     get:get,
     getTodos : getTodos,
     getUltimo,
+    getPorClave,
 } 

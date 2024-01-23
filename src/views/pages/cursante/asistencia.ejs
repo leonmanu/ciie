@@ -1,31 +1,45 @@
 <!-- Parte de arriba -->
 <%- include('../../layout/partTop.ejs') %>
 <!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
-<p id="temp" style="display: none;"></p>
 <% let i = 1 %>
       <% let encuentro %>
   <!-- Header -->
   <header class="w3-container w3-bar sticky-top" style="padding-top:22px; display: flex; align-items: center;">
-    <h5 style="margin-right: auto;"><b><i class="fa fa-dashboard"></i> <%= paramCampo %>/ Asistencia / <%= cohorteUltima.clave %></b></h5>
+    <h5 style="margin-right: auto;"><b><i class="fa fa-dashboard"></i><span id="campoClave"><%= paramCampo %></span>/ Asistencia / <span id="cohorteClave"><%= cohorteUltima.clave %></span></b></h5>
     <button href="#" class="btn_save w3-button w3-teal " row_id="'+row_id+'" disabled>
       <span id="">Guardar</span> 
       <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
     </button>
   </header>
 
+  <div id="modalFechaEcuentros" class="w3-modal modal">
+    <div class="w3-modal-content">        
+          <div>
+            <% include ./fechaEncuentros_form.ejs %>
+          </div>
+    </div>
+  </div>
+
   <div class="w3-container">
     <table class="w3-table-all">
       <thead>
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
-          <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Cursante (<%= cursantes.length %>)</th>
+          <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
+            <button id="btnBack" class=" w3-button w3-teal" disabled><i class="fa fa-reply-all" aria-hidden="true"></i></button>
+            Cursante (<%= cursantes.length %>)
+          </th>
           <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">DNI</th>
-          <th class="ocultable2" colspan="<%= cohorteUltima.nroEncuentros %>" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Encuentros</th>
+          <th class="ocultable2" colspan="<%= cohorteUltima.nroEncuentros %>" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Encuentros
+            <button id="btnFechaEncuentros" href="#" class="btn_save w3-button w3-teal">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <img class="pull-right" id="waitIconFecha" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
+          </button></th>
           <th class="ocultable" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Valoración</th>
         </tr>
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
           <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
-            <% encuentro = 'Encuentro'+j %>
-          <th class="ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"><%= j %>°</th>
+            <% encuentro = 'encuentro'+j %>
+          <th class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"><%= j %>°</th>
           <% } %>
         </tr>
       </thead>
@@ -70,6 +84,7 @@
         <% }) %>
     </table>
   </div>
+
   <script>
 
 $("th").click(async function (event) {
@@ -86,25 +101,26 @@ $("th").click(async function (event) {
       var cantCol = ($("td").length) / ($("tr").length - 2) - 1
       var btnShow= $('<button id="mostrarTodo" class="w3-button w3-black"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>');
       var temp = $('#temp')
+      var btnBack = $('#btnBack')
+
       ocultable.hide() 
       switch (head) {
         case "1°": case "2°": case "3°": case "4°" : case "5°" :
              
             $('td:nth-child('+tdIndex+')').show()
             $('th:nth-child('+colIndex+')').show()
-            temp.text(col.text())
-            col.prepend(' << ')
+            btnBack.prop("disabled", false);
           break;
         case ("Valoración"):
           $('td:nth-child(7),th:nth-child(4)').show();
           ocultable2.hide()
-          temp.text(col.text())
-            col.prepend(' << ')
+          btnBack.prop("disabled", false);
+          
           break;
         default:
             ocultable.show()
             ocultable2.show()
-            col.text(temp.text())
+            btnBack.prop("disabled", true);
             break;
         
       }

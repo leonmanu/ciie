@@ -35,11 +35,25 @@ const getHeaders = async (json) => {
     return [];
   }
   const headers = Object.keys(json);// Obtiene las claves del primer objeto del arreglo (suponiendo que todos los objetos tienen las mismas claves)
+  console.log("header : " + headers)
   return headers;
 }
+
+async function emparejar(nuevo, anterior){
+    if (nuevo.length === 0) { //verifica eque arrayJson no esté vacío, si está vacío, es lo que devuelve
+      return [];
+    }
+    headers = await getHeaders(nuevo)
+    headers.forEach(head => {
+        anterior[head] = nuevo[head]
+    })
+    
+    return anterior
+  }
 
 module.exports = {
     convertToJson: convertToJson,
     getUltimo,
     getHeaders,
+    emparejar,
 };
