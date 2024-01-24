@@ -36,10 +36,12 @@
           <th class="ocultable" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Valoración</th>
         </tr>
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
-          <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
+          <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) { %>
             <% encuentro = 'encuentro'+j %>
-            
-          <th class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"><%= j %>° : <%= String(encuentroFecha[encuentro]).substring(5,10) %></th>
+            <% let fechaSubstring = (encuentroFecha[encuentro] !== undefined && encuentroFecha[encuentro] !== '') ? String(encuentroFecha[encuentro]).substring(8,10) + "/" + String(encuentroFecha[encuentro]).substring(5,7)  : '' %>
+            <th class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
+              <%= j %>° : <%= fechaSubstring %>
+            </th>
           <% } %>
         </tr>
       </thead>
@@ -56,7 +58,7 @@
             <%= registro['Número de DNI'] %>
           </td>
           <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
-            <% encuentro = 'Encuentro'+j %>
+            <% encuentro = 'encuentro'+j %>
             <td class="ocultable" style="text-align: center; vertical-align: middle;" >
               
               <% if(registro[encuentro] == 'TRUE'){ %>
@@ -68,8 +70,8 @@
             </td>
          <% } %>
          <td class="ocultable" >
-          <select class="row_data w3-select  w3-border slcChange" name="calificacion" col_name = "Valoracion">
-            <option value="Seleccione"  style="display:none"> Seleccione </option>
+          <select class="row_data w3-select  w3-border w3-leftbar slcChange" name="calificacion" col_name = "Valoracion">
+            <option value="seleccione"  style="display:none"> seleccione </option>
             <% calificaciones.forEach(function(calificacion){ %>
               <% let selected %>
               <% if(registro['Valoracion'] == calificacion.nombre) { %>

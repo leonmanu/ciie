@@ -4,13 +4,19 @@ $(document).ready(function () {
   var mdlFenc = $('#modalFechaEcuentros');
   var campoClave = $('#campoClave').text();
   var cohorteClave = $('#cohorteClave').text();
+  var selectAll = $('.slcChange')
+  selectAll.each(function( index ) {
+    slcCss($( this ))
+  });
   //Cuando se tocal el botón de fechaEncuentros
   btnOpenModal.on('click', async function () {
     btnOpenModal.prop("disabled", true);
     //mdlFenc.show()
     $('#lblFormAlta').show('slow')
-    $("#waitIconFecha").css("display", "block");
-    //Inicio función cargar roles
+    $('.modal').show()
+    //$("#waitIconFecha").css("display", "block");
+    //Inicio función que trae la fecha de los encuentros
+    /* lo comento por si lo necesite más adelante
     $.ajax({
       url: '/encuentroFecha/get',
       contentType: 'application/json',
@@ -50,7 +56,7 @@ $(document).ready(function () {
       }
       
     });
-        
+      */
   })
   
   function formatDate(fecha) {
@@ -116,14 +122,12 @@ $(document).ready(function () {
     var ocultable = $('.ocultable')
     var ocultable2 = $('.ocultable2')
     var cantCol = ($("td").length) / ($("tr").length - 2) - 1
-    var btnShow= $('<button id="mostrarTodo" class="w3-button w3-black"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>');
-    var temp = $('#temp')
 
     
     switch (head.substring(0,2)) {
       case "1°": case "2°": case "3°": case "4°" : case "5°" :
           ocultable.hide() 
-          
+          $('table tr:eq(0) th:eq(2)').show()
           $('td:nth-child('+tdIndex+')').show()
           $('th:nth-child('+colIndex+')').show()
           col.prepend('<<- ')
@@ -171,6 +175,21 @@ $(document).ready(function () {
     $('.btn_save').addClass('btn-outline-success')
   });
 
+
+  function slcCss(select){
+    switch (select.val()) {
+      case "aprobado":
+        select.removeClass('w3-border-red w3-border-orange').addClass('w3-border-green');
+        break;
+      case "ausente":
+        select.removeClass('w3-border-blue w3-border-orange').addClass('w3-border-red');
+        break;
+      case "desaprobado":
+        select.removeClass('w3-border-red w3-border-blue').addClass('w3-border-orange');
+        break;
+    }
+  }
+
   $("table select.slcChange").change(async function (event) {
     event.preventDefault();
     
@@ -179,17 +198,7 @@ $(document).ready(function () {
     
     var rowNumber = tr.attr('rowNumber');
     //var rowNumber = tr.find("td:eq(0)").html();
-    switch (parseInt(select.val())) {
-      case 1:
-        select.removeClass('w3-border-red w3-border-black').addClass('w3-border-blue');
-        break;
-      case 2:
-        select.removeClass('w3-border-blue w3-border-black').addClass('w3-border-red');
-        break;
-      case 3:
-        select.removeClass('w3-border-red w3-border-blue').addClass('w3-border-black');
-        break;
-    }
+    slcCss(select)
     await  tr.find(".modified").html('true')
     var encuentros = [];
     $('.btn_save').prop('disabled', false)
