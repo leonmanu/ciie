@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const convertToJson = async (resultados) => {
     try {
         if (!resultados[0] || !resultados[0]._sheet || !resultados[0]._sheet.headerValues) {
@@ -51,9 +53,15 @@ async function emparejar(nuevo, anterior){
     return anterior
   }
 
+async function crearId(){
+    let nuevoId = uuidv4()
+    return nuevoId
+}
+
 module.exports = {
     convertToJson: convertToJson,
     getUltimo,
     getHeaders,
     emparejar,
+    crearId,
 };

@@ -30,17 +30,18 @@ const getPorCampoCohorte = async (campoClave, cohorteClave) => {
     cohorte = await cohorteService.getPorClave(cohorteClave)
     registros = await get()
     const filtrados = await registros.filter(row => row.idCampo == campo.id && row.idCohorte == cohorte.id)
-    const resultadoJson = await utilidadesService.convertToJson(filtrados)
+    if(filtrados.length > 0){
+        const resultadoJson = await utilidadesService.convertToJson(filtrados)
     //const resultado = resultadoJson[0]
-    return resultadoJson[0]
+        return resultadoJson[0]
+    } else {
+        return null
+    }
 }
 
 async function siExiste(objeto) {
-    
     let rn = parseInt(objeto.rowNumber) - 2
-    console.log("rn : " + rn)
     if(parseInt(objeto.rowNumber) > 0){
-        console.log("prSi " + rn)
         anteriores = await get()
         emparejado = await utilidadesService.emparejar(objeto, anteriores[rn]);
         resultado = await encuentroFechaSheet.put(emparejado);
@@ -48,7 +49,14 @@ async function siExiste(objeto) {
         return resultado
 
     } else {
-        console.log("prNo " + rn)
+        const campoClave = await objeto.campoClave
+        const cohorteClave = await objeto.cohorteClave
+        const campo = await campoService.getPorClave(campoClave)
+        const cohorte = await cohorteService.getPorClave(cohorteClave)
+        const nuevoId = await utilidadesService.crearId()
+        objeto.id = await nuevoId
+        objeto.idCampo = await campo.id
+        objeto.idCohorte = await cohorte.id
         return await post(objeto)
     }
 }

@@ -32,7 +32,7 @@ async function put(objeto) {
         return "Modificación exitosa";
     } catch (error) {
         console.error("Error al modificar:", error);
-        throw new Error("Error al modificar");
+        return null
     }
 }
 

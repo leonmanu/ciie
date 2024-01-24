@@ -18,8 +18,8 @@ $(document).ready(function () {
       data: JSON.stringify({ campoClave: campoClave, cohorteClave: cohorteClave }),
       dataType: 'text',
       success: await function (response) {  
+        if (response) {
         var jsonResponser = JSON.parse(response);
-        $('#waitIconFecha').css("display", "none");
 
         $('#efRowNumber').val(jsonResponser._rowNumber)
 
@@ -38,8 +38,15 @@ $(document).ready(function () {
         fechaFormateada = formatDate(jsonResponser.encuentro5)
         $('#encuentro5').val(fechaFormateada)
 
-				btnOpenModal.prop('disabled', false);
+        } else {
+          $('#efRowNumber').val(0)
+          alert("nulaso")
+        }
+        
+        btnOpenModal.prop('disabled', false);
         $('.modal').show()
+        $('#waitIconFecha').css("display", "none");
+        
       }
       
     });

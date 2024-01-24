@@ -9,8 +9,8 @@ const getPorCampoCohorte = async (req, res) => {
     res.send(resultado)
 }
 
-const post = (req, res) => {
-    resultado = encuentroFechaeService.siExiste(req.body)
+const post = async (req, res) => {
+    resultado = await encuentroFechaeService.siExiste(req.body)
     res.redirect('/')
 }
 
