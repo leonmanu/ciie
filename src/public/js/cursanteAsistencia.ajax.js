@@ -76,40 +76,6 @@ $(document).ready(function () {
 
   })
 
-  
-
-  //== CUANDO SE SELECCIONA CARGO===============
-  $('#inputAsignatura').on('change', function () {
-    var jsonObjet = {
-      idCargo: $(this).val(),
-      idCurso: $('#inputCurso').val(),
-      idRol: $('#inputRol').val()
-    }
-   // alert("idCargo: " + jsonObjet.idCargo + ", idCurso: " + jsonObjet.idCurso + ", idRol: " + jsonObjet.idRol)
-    $("#waitIconAsignatura2").css("display", "block");
-    $.ajax({
-        url: '/docente/cargo/siDisponible/',
-        contentType: 'application/json',
-        method: 'POST',
-        data: JSON.stringify({ jsonObjet }),
-        dataType: 'text',
-        success: function (response) { 
-
-            //var jsonResponser = JSON.parse(response);
-            if (response == 'Disponible') {
-              $('#disponibleMsg').attr('class', 'text-success')
-              $('#disponibleMsg').text('Cargo ' + response)
-              $('#btnEnviar').removeAttr("disabled");
-            } else {
-              $('#disponibleMsg').attr('class', 'text-danger')
-              $('#disponibleMsg').text('Cargo ocupado por: ' + response)
-              $('#btnEnviar').prop("disabled", true);
-            }
-            
-            $("#waitIconAsignatura2").css("display", "none");
-        }
-    });
-});
 
 
   //Cuando se tocal el botón de baja de usuario [-]
@@ -137,4 +103,162 @@ $(document).ready(function () {
       }
     });
   });
+
+  $("th").click(async function (event) {
+    event.preventDefault();
+    var row = $(this).parent();
+    var col = $(this);
+    var colIndex = col.index() + 1
+    var tdIndex = colIndex + 3
+    var head = col.text()
+    var td = $("td")
+    var tdParent = td.parent();
+    var ocultable = $('.ocultable')
+    var ocultable2 = $('.ocultable2')
+    var cantCol = ($("td").length) / ($("tr").length - 2) - 1
+    var btnShow= $('<button id="mostrarTodo" class="w3-button w3-black"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>');
+    var temp = $('#temp')
+
+    
+    switch (head.substring(0,2)) {
+      case "1°": case "2°": case "3°": case "4°" : case "5°" :
+          ocultable.hide() 
+          
+          $('td:nth-child('+tdIndex+')').show()
+          $('th:nth-child('+colIndex+')').show()
+          col.prepend('<<- ')
+        break;
+      case ("Va"):
+        ocultable.hide() 
+        $('td:nth-child(7),th:nth-child(4)').show();
+        col.prepend('<<- ')
+        break;
+        case ("<<"):
+          ocultable.show()
+          ocultable2.show()
+          var nuevoContenido = col.text().replace("<<- ", "");
+          col.html(nuevoContenido);
+        break;
+      
+    }
+    
+});
+
+  $("table button.btnChange").click(async function (event) {
+    event.preventDefault();
+    
+    var button = $(this);
+    var tr = button.closest('tr');
+    
+    // Obtén el valor actual del botón y cambia al estado contrario
+    var isPresente = button.hasClass('w3-border-indigo');
+    button.removeClass('w3-border-indigo w3-border-red');
+    
+    if (isPresente) {
+      button.addClass('w3-border-red').html('Ausente');
+    } else {
+      button.addClass('w3-border-indigo').html('<strong>Presente</strong>');
+    }
+
+    // También puedes realizar otras acciones aquí, como guardar el estado en algún lugar.
+
+    // Ejemplo de obtener la información de la fila
+    var rowNumber = tr.attr('rowNumber');
+    //var rowNumber = tr.find("td:eq(0)").html();
+    await  tr.find(".modified").html('true')
+    var encuentros = [];
+    $('.btn_save').prop('disabled', false)
+    $('.btn_save').addClass('btn-outline-success')
+  });
+
+  $("table select.slcChange").change(async function (event) {
+    event.preventDefault();
+    
+    var select = $(this);
+    var tr = select.closest('tr');
+    
+    var rowNumber = tr.attr('rowNumber');
+    //var rowNumber = tr.find("td:eq(0)").html();
+    switch (parseInt(select.val())) {
+      case 1:
+        select.removeClass('w3-border-red w3-border-black').addClass('w3-border-blue');
+        break;
+      case 2:
+        select.removeClass('w3-border-blue w3-border-black').addClass('w3-border-red');
+        break;
+      case 3:
+        select.removeClass('w3-border-red w3-border-blue').addClass('w3-border-black');
+        break;
+    }
+    await  tr.find(".modified").html('true')
+    var encuentros = [];
+    $('.btn_save').prop('disabled', false)
+  $('.btn_save').addClass('btn-outline-success')
+  });
+
+
+  //--->save whole row entery > start	
+$(document).on('click', '.btn_save',async function(event) 
+{
+  event.preventDefault();
+  $('.btn_save').attr('disabled','disabled');
+  $('#waitIconAsignatura').css("display", "block");
+  var arrayJson = []
+  $("table > tbody > tr").each(async function () {
+    //await  tr.find(".modified").html('true')
+    if ($(this).find(".modified").html() == 'true') {
+
+      let rowNumber = $(this).attr('rowNumber');
+      
+      let arr = {};
+      $(this).find('.row_data').each(function(index, val) {   
+        let col_name = $(this).attr('col_name')
+        let col_val = ($(this).val() || $(this).text())
+
+        // Utiliza switch para mapear los valores
+        switch (col_val) {
+            case "Presente":
+                arr[col_name] = 'TRUE';
+                break;
+            case "Ausente":
+                arr[col_name] = 'FALSE';
+                break;
+            case "Seleccione":
+                arr[col_name] = '';
+                break;
+            default:
+                // Otros casos, asigna el valor tal cual
+                arr[col_name] = col_val;
+                break;
+  }
+    });
+      
+      $.extend(arr, {rowNumber: rowNumber-2})
+
+      arrayJson.push(arr)
+
+    }			
+  })
+  $.ajax({
+    
+    url: '/cursante/put',
+    contentType: 'application/json',
+    method: 'PUT',
+    data: JSON.stringify({arrayJson}),
+    dataType: 'text',
+    
+    success: function (response) {  
+      $('#waitIconAsignatura').css("display", "none");
+      $('.btn_save').prop('disabled', false);
+      $('#myModal').modal('show')
+      $('#cant').html(arrayJson.length);
+    }
+    
+    });
+    $(document).ajaxStop(function(){
+    window.location.reload();
+  });
+
+
+});
 }); 

@@ -2,6 +2,7 @@ const req = require('express/lib/request')
 const cursanteService = require('../services/cursante.service')
 const cohorteService = require('../services/cohorte.service')
 const calificacionService = require('../services/calificacion.service')
+const encuentroFechaService = require('../services/encuentroFecha.service')
 
 const get = async (req,res) => {
     registros = await cursanteService.get()
@@ -13,8 +14,9 @@ const getPorCapacitacion = async (req,res) => {
     cohorteUltima = await cohorteService.getUltimo()
     calificaciones = await calificacionService.get()
     cursantes = await cursanteService.getPorCampo(paramCampo, cohorteUltima.clave)
-    //console.log("*getPorCapacitacion* / cohorteUltima --> " + cohorteUltima.clave)
-    res.render("pages/cursante/asistencia", {user: req.user, cursantes, paramCampo, cohorteUltima, calificaciones})
+    encuentroFecha = await encuentroFechaService.getPorCampoCohorte(paramCampo,cohorteUltima.clave) 
+    //fechas = await encuentroFechaService.getFechas(encuentroFecha)
+    res.render("pages/cursante/asistencia", {user: req.user, cursantes, paramCampo, cohorteUltima, calificaciones, encuentroFecha})
 }
 
 const putArray = async (req, res) => {

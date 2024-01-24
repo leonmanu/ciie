@@ -25,12 +25,11 @@
       <thead>
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
           <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
-            <button id="btnBack" class=" w3-button w3-teal" disabled><i class="fa fa-reply-all" aria-hidden="true"></i></button>
             Cursante (<%= cursantes.length %>)
           </th>
           <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">DNI</th>
-          <th class="ocultable2" colspan="<%= cohorteUltima.nroEncuentros %>" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Encuentros
-            <button id="btnFechaEncuentros" href="#" class="btn_save w3-button w3-teal">
+          <th class="ocultable" colspan="<%= cohorteUltima.nroEncuentros %>" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Encuentros
+            <button id="btnFechaEncuentros" href="#" class="w3-button w3-teal">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
                 <img class="pull-right" id="waitIconFecha" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
           </button></th>
@@ -39,7 +38,8 @@
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
           <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
             <% encuentro = 'encuentro'+j %>
-          <th class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"><%= j %>°</th>
+            
+          <th class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"><%= j %>° : <%= String(encuentroFecha[encuentro]).substring(5,10) %></th>
           <% } %>
         </tr>
       </thead>
@@ -85,169 +85,7 @@
     </table>
   </div>
 
-  <script>
-
-$("th").click(async function (event) {
-      event.preventDefault();
-      var row = $(this).parent();
-      var col = $(this);
-      var colIndex = col.index() + 1
-      var tdIndex = colIndex + 3
-      var head = col.text()
-      var td = $("td")
-      var tdParent = td.parent();
-      var ocultable = $('.ocultable')
-      var ocultable2 = $('.ocultable2')
-      var cantCol = ($("td").length) / ($("tr").length - 2) - 1
-      var btnShow= $('<button id="mostrarTodo" class="w3-button w3-black"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>');
-      var temp = $('#temp')
-      var btnBack = $('#btnBack')
-
-      ocultable.hide() 
-      switch (head) {
-        case "1°": case "2°": case "3°": case "4°" : case "5°" :
-             
-            $('td:nth-child('+tdIndex+')').show()
-            $('th:nth-child('+colIndex+')').show()
-            btnBack.prop("disabled", false);
-          break;
-        case ("Valoración"):
-          $('td:nth-child(7),th:nth-child(4)').show();
-          ocultable2.hide()
-          btnBack.prop("disabled", false);
-          
-          break;
-        default:
-            ocultable.show()
-            ocultable2.show()
-            btnBack.prop("disabled", true);
-            break;
-        
-      }
-      
-});
-
-    $("table button.btnChange").click(async function (event) {
-      event.preventDefault();
-      
-      var button = $(this);
-      var tr = button.closest('tr');
-      
-      // Obtén el valor actual del botón y cambia al estado contrario
-      var isPresente = button.hasClass('w3-border-indigo');
-      button.removeClass('w3-border-indigo w3-border-red');
-      
-      if (isPresente) {
-        button.addClass('w3-border-red').html('Ausente');
-      } else {
-        button.addClass('w3-border-indigo').html('<strong>Presente</strong>');
-      }
-
-      // También puedes realizar otras acciones aquí, como guardar el estado en algún lugar.
-  
-      // Ejemplo de obtener la información de la fila
-      var rowNumber = tr.attr('rowNumber');
-      //var rowNumber = tr.find("td:eq(0)").html();
-      await  tr.find(".modified").html('true')
-      var encuentros = [];
-      $('.btn_save').prop('disabled', false)
-		  $('.btn_save').addClass('btn-outline-success')
-    });
-
-    $("table select.slcChange").change(async function (event) {
-      event.preventDefault();
-      
-      var select = $(this);
-      var tr = select.closest('tr');
-      
-      var rowNumber = tr.attr('rowNumber');
-      //var rowNumber = tr.find("td:eq(0)").html();
-      switch (parseInt(select.val())) {
-        case 1:
-          select.removeClass('w3-border-red w3-border-black').addClass('w3-border-blue');
-          break;
-        case 2:
-          select.removeClass('w3-border-blue w3-border-black').addClass('w3-border-red');
-          break;
-        case 3:
-          select.removeClass('w3-border-red w3-border-blue').addClass('w3-border-black');
-          break;
-      }
-      await  tr.find(".modified").html('true')
-      var encuentros = [];
-      $('.btn_save').prop('disabled', false)
-		$('.btn_save').addClass('btn-outline-success')
-    });
-
-
-    //--->save whole row entery > start	
-	$(document).on('click', '.btn_save',async function(event) 
-	{
-		event.preventDefault();
-		$('.btn_save').attr('disabled','disabled');
-		$('#waitIconAsignatura').css("display", "block");
-		var arrayJson = []
-		$("table > tbody > tr").each(async function () {
-			//await  tr.find(".modified").html('true')
-			if ($(this).find(".modified").html() == 'true') {
-
-				let rowNumber = $(this).attr('rowNumber');
-        
-				let arr = {};
-				$(this).find('.row_data').each(function(index, val) {   
-          let col_name = $(this).attr('col_name')
-          let col_val = ($(this).val() || $(this).text())
-
-          // Utiliza switch para mapear los valores
-          switch (col_val) {
-              case "Presente":
-                  arr[col_name] = 'TRUE';
-                  break;
-              case "Ausente":
-                  arr[col_name] = 'FALSE';
-                  break;
-              case "Seleccione":
-                  arr[col_name] = '';
-                  break;
-              default:
-                  // Otros casos, asigna el valor tal cual
-                  arr[col_name] = col_val;
-                  break;
-    }
-      });
-				
-				$.extend(arr, {rowNumber: rowNumber-2})
-
-				arrayJson.push(arr)
-
-			}			
-		})
-		$.ajax({
-			
-			url: '/cursante/put',
-			contentType: 'application/json',
-			method: 'PUT',
-			data: JSON.stringify({arrayJson}),
-			dataType: 'text',
-			
-			success: function (response) {  
-				$('#waitIconAsignatura').css("display", "none");
-				$('.btn_save').prop('disabled', false);
-				$('#myModal').modal('show')
-				$('#cant').html(arrayJson.length);
-			}
-			
-		  });
-		  $(document).ajaxStop(function(){
-			window.location.reload();
-		});
-
-
-	});
-
-  
  
-  </script>
   <style>
     .sticky-top {
       position: sticky;

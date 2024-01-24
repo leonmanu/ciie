@@ -61,6 +61,18 @@ async function siExiste(objeto) {
     }
 }
 
+const getFechas = async (objeto) => {
+    fechasArray = []
+    fechasArray.push(objeto.encuentro1)
+    fechasArray.push(objeto.encuentro2)
+    fechasArray.push(objeto.encuentro3)
+    fechasArray.push(objeto.encuentro4)
+    fechasArray.push(objeto.encuentro5)
+    
+    console.log("fechasArray: " + fechasArray)
+    return fechasArray
+}
+
 module.exports = {
     get:get,
     getPorCampoCohorte,
@@ -68,4 +80,5 @@ module.exports = {
     post,
     put,
     siExiste,
+    getFechas
 } 
