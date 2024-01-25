@@ -1,10 +1,5 @@
-const req = require('express/lib/request')
 const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
 const cargoSheet =  require("../sheets/docenteCargo.sheet")
-
-const cursoService = require('./curso.service')
-const cursoAsignaturaService = require('./cursoAsignatura.service')
-const rolService = require('./rol.service')
 const usuarioService = require('./usuario.service')
 const utilidadesService = require('./utilidades.service')
 const { v4: uuidv4 } = require('uuid');

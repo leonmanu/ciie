@@ -1,9 +1,7 @@
 const req = require('express/lib/request')
 const { head } = require('request')
-const estudianteSheet =  require("../sheets/estudiante.sheet")
 const estudianteCursoSheet =require("../sheets/estudianteCurso.sheet")
 const cursoService = require('./curso.service')
-const estudianteService = require('./estudiante.service')
 const utilidadesService = require('./utilidades.service')
 
 async function get(){

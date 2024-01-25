@@ -32,17 +32,18 @@ const getPorCampoCohorte = async (campoClave, cohorteClave) => {
     const filtrados = await registros.filter(row => row.idCampo == campo.id && row.idCohorte == cohorte.id)
     if(filtrados.length > 0){
         const resultadoJson = await utilidadesService.convertToJson(filtrados)
-    //const resultado = resultadoJson[0]
+    const resultado = resultadoJson[0]
         return resultadoJson[0]
     } else {
         return null
     }
 }
-
 async function siExiste(objeto) {
-    let rn = parseInt(objeto.rowNumber) - 2
-    if(parseInt(objeto.rowNumber) > 0){
+    
+    if(objeto){
+        rn = parseInt(objeto.rowNumber)-2
         anteriores = await get()
+        console.log(rn + "encuentroFecha anterior: " + anteriores[rn])
         emparejado = await utilidadesService.emparejar(objeto, anteriores[rn]);
         resultado = await encuentroFechaSheet.put(emparejado);
         
@@ -69,7 +70,6 @@ const getFechas = async (objeto) => {
     fechasArray.push(objeto.encuentro4)
     fechasArray.push(objeto.encuentro5)
     
-    console.log("fechasArray: " + fechasArray)
     return fechasArray
 }
 

@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 require("dotenv").config()
 
 const express = require('express')
@@ -10,16 +9,12 @@ const MemoryStore = require('memorystore')(session)
 const passport = require('passport')
 const inicialRouter = require('./routes/google.route')
 const usuarioRouter = require('./routes/usuario.route')
-const cursoRouter = require('./routes/curso.route')
 const docenteCargoRouter = require('./routes/docenteCargo.route')
 const cargoRouter = require('./routes/cargo.route')
 const capacitacionRouter = require('./routes/capacitacion.route')
 const cursanteRouter = require('./routes/cursante.route')
 const rolRouter = require('./routes/rol.route')
 const revistaRouter = require('./routes/revista.route')
-const estudianteRouter = require('./routes/estudiante.route')
-const cursoEstudianteRouter = require('./routes/cursoEstudiante.route')
-const calificacionRouter = require('./routes/calificacion.route')
 const encuentroFechaRouter = require('./routes/encuentroFecha.route')
 
 var sessionMiddelware = require('./middelware/session.middelware')
@@ -49,16 +44,12 @@ app
     .use(passport.session())
     .use(inicialRouter)
     .use("/usuario", usuarioRouter)
-    .use("/curso", cursoRouter)
     .use("/docente/cargo", docenteCargoRouter)
     .use("/cargo", cargoRouter)
     .use("/cursante", cursanteRouter)
     .use("/capacitacion", capacitacionRouter)
     .use("/rol", rolRouter)
     .use("/revista", revistaRouter)
-    .use("/estudiante", estudianteRouter)
-    .use("/estudiante/curso", cursoEstudianteRouter)
-    .use("/calificacion", calificacionRouter)
     .use("/encuentroFecha", encuentroFechaRouter)
 
 module.exports = app
@@ -71,15 +62,21 @@ authUser = async (request, accessToken, refreshToken, profile, done)  => {
 }
 
 passport.use(
-  new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: process.env.NODE_ENV === 'production'
-      ? 'https://ciie06902.onrender.com/auth/google/callback'
-      : 'http://localhost:3000/auth/google/callback',
-  passReqToCallback: true,
-}, 
-authUser));
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL:
+        process.env.NODE_ENV === 'production'
+          ? 'https://ciie06902.onrender.com/auth/google/callback'
+          : 'http://localhost:3000/auth/google/callback',
+      passReqToCallback: true,
+    },
+    (request, accessToken, refreshToken, profile, done) => {
+      return done(null, profile);
+    }
+  )
+)
 
 passport.serializeUser( (user, done) => {
     done(null, user)

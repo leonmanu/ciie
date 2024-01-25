@@ -1,7 +1,5 @@
 const req = require('express/lib/request')
 const cargoService = require('../services/cargo.service')
-const rolService = require('../services/rol.service')
-const turnoService = require('../services/turno.service')
 const utilidadesService = require('../services/utilidades.service')
 //const cargoSheet = require('../sheets/cargo.sheet')
 

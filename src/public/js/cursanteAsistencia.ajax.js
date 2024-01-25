@@ -123,11 +123,11 @@ $(document).ready(function () {
     var ocultable2 = $('.ocultable2')
     var cantCol = ($("td").length) / ($("tr").length - 2) - 1
 
-    
-    switch (head.substring(0,2)) {
+    alert(head.length)
+    switch (head.toString().substring(0,2)) {
       case "1°": case "2°": case "3°": case "4°" : case "5°" :
           ocultable.hide() 
-          $('table tr:eq(0) th:eq(2)').show()
+          
           $('td:nth-child('+tdIndex+')').show()
           $('th:nth-child('+colIndex+')').show()
           col.prepend('<<- ')
