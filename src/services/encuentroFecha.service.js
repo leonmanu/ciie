@@ -38,9 +38,10 @@ const getPorCampoCohorte = async (campoClave, cohorteClave) => {
         return null
     }
 }
+
 async function siExiste(objeto) {
     
-    if(objeto){
+    if(objeto.rowNumber){
         rn = parseInt(objeto.rowNumber)-2
         anteriores = await get()
         console.log(rn + "encuentroFecha anterior: " + anteriores[rn])
