@@ -6,13 +6,14 @@
     <h2>Fecha de Encuentros</h2>
   </div>
   <form action="/encuentroFecha/post" method="post" class="w3-container">
-    <input type="" name="rowNumber" id="efRowNumber" value="<%= encuentroFecha._rowNumber %>">
+    <input type="" name="rowNumber" id="efRowNumber" value="<% (encuentroFecha) ? encuentroFecha._rowNumber : '' %>">
+    
     <input type="hidden" name="campoClave" id="efCampo" value="<%= paramCampo %>">
     <input type="hidden" name="cohorteClave" id="efCohorte" value="<%= cohorteUltima.clave %>">
     <div class="w3-row-padding">
       <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
         <% encuentro = 'encuentro'+j %>
-        <% let fechaSubstring = (encuentroFecha[encuentro] !== undefined && encuentroFecha[encuentro] !== '') ? encuentroFecha[encuentro] : '' %>
+        <% let fechaSubstring = (encuentroFecha && encuentroFecha[encuentro] !== undefined && encuentroFecha[encuentro] !== '') ? encuentroFecha[encuentro] : '' %>
         <div class="">
           <label class="w3-text-brown"><b><%= j %>° encuentro </b></label>
           <input id="encuentro<%= j %>" class="w3-input w3-border w3-sand" name="encuentro<%= j %>" type="date" value="<%= fechaSubstring %>">
