@@ -11,7 +11,7 @@ const getPorCampoCohorte = async (req, res) => {
 
 const post = async (req, res) => {
     resultado = await encuentroFechaeService.siExiste(req.body)
-    res.redirect('back')
+    res.redirect('/cursante/Adult')
 }
 
 module.exports = {
