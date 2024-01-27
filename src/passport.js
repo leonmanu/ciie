@@ -19,7 +19,7 @@ passport.use(
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.NODE_ENV === 'production'
-        ? 'https://ciie06902.onrender.com/auth/google/callback'
+        ? 'https://ciie069.onrender.com/auth/google/callback'
         : 'http://localhost:3000/auth/google/callback',
     passReqToCallback: true,
 }, 
