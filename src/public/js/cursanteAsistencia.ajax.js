@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function () { 
   var btnOpenModal = $('#btnFechaEncuentros');
   var btnBaja = $('#btnDocenteCargoBaja');
   var mdlFenc = $('#modalFechaEcuentros');
@@ -8,8 +8,9 @@ $(document).ready(function () {
   selectAll.each(function( index ) {
     slcCss($( this ))
   });
+
   //Cuando se tocal el botón de fechaEncuentros
-  btnOpenModal.on('click', async function () {
+  btnOpenModal.on('click', async function () { //abre el modal del formulario de la fecha
     btnOpenModal.prop("disabled", true);
     //mdlFenc.show()
     $('#lblFormAlta').show('slow')
@@ -58,6 +59,73 @@ $(document).ready(function () {
     });
       */
   })
+
+   //Cuando se tocal el botón de envío del formulario
+   
+   $("#idForm").submit( async function (e) { //envía el formulario
+    await e.preventDefault();
+    var form = await $(this);
+    var actionUrl = await form.attr('action');
+    var data = await form.serialize()
+    var encuentros = $('.encuentro')
+
+    $("#waitIconFecha").css("display", "block");
+    //Inicio función que trae la fecha de los encuentros
+    
+    $.ajax({
+      url: actionUrl,
+      method: 'POST',
+      data: data,
+      success: await function (response) {  
+        
+        if (response.success) {
+          let encuentros = $('#encuentros'); // Asumiendo que encuentros es un elemento jQuery
+          let fechaFormateada, encuetroText, fechaCorta;
+  
+            // encuetroText = encuentros.eq(0).text().substring(0, 2);
+            // fechaCorta = response.objeto.encuentro1.substring(5, 10);
+            // alert(encuentros.eq(0).text())
+            // alert(encuetroText + " : " + fechaCorta + '*')
+            // encuentros.eq(0).text(encuetroText + " : " + fechaCorta + '*');
+  
+
+            // fechaFormateada = response.objeto.encuentro2;
+            // encuetroText = encuentros.eq(0).text().substring(0, 2);
+            // fechaCorta = response.objeto.encuentro2.substring(5, 10);
+            // encuentros.eq(1).text(encuetroText + " : " + fechaCorta + '*');
+
+
+            // fechaFormateada = response.objeto.encuentro3;
+            // encuetroText = encuentros.eq(0).text().substring(0, 2);
+            // fechaCorta = response.objeto.encuentro2.substring(5, 10);
+            // encuentros.eq(2).text(encuetroText + " : " + fechaCorta + '*');
+
+            // fechaFormateada = response.objeto.encuentro4;
+            // encuetroText = encuentros.eq(0).text().substring(0, 2);
+            // fechaCorta = response.objeto.encuentro2.substring(5, 10);
+            // encuentros.eq(3).text(encuetroText + " : " + fechaCorta + '*');
+
+            // fechaFormateada = response.objeto.encuentro5;
+            // encuetroText = encuentros.eq(0).text().substring(0, 2);
+            // fechaCorta = response.objeto.encuentro2.substring(5, 10);
+            // encuentros.eq(4).text(encuetroText + " : " + fechaCorta + '*');
+    
+        //   btnOpenModal.prop('disabled', false);
+        // $('.modal').hide()
+        // $('#waitIconFecha').css("display", "none"); 
+        } else {
+          $('#efRowNumber').val(0)
+          location.reload();
+        }
+        
+        location.reload();
+        
+      }
+      
+    });
+  })
+
+  
   
   function formatDate(fecha) {
     // Convierte la cadena de fecha a un objeto Date de JavaScript

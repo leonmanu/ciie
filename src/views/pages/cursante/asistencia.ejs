@@ -38,7 +38,7 @@
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
           <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) { %>
             <% encuentro ='encuentro'+j %>
-            <% let fechaSubstring = (encuentroFecha && [encuentro] !== undefined && encuentroFecha[encuentro] !== '') ? String(encuentroFecha[encuentro]).substring(8,10) + "/" + String(encuentroFecha[encuentro]).substring(5,7)  : '' %>
+            <% let fechaSubstring = (encuentroFecha && [encuentro] !== undefined && encuentroFecha[encuentro] !== '') ? String(encuentroFecha[encuentro]).substring(8,10) + "-" + String(encuentroFecha[encuentro]).substring(5,7)  : '' %>
             <th class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"><%= j %>° : <%= fechaSubstring %></th>
           <% } %>
         </tr>
@@ -60,9 +60,9 @@
             <td class="ocultable" style="text-align: center; vertical-align: middle;" >
               
               <% if(registro[encuentro] == 'TRUE'){ %>
-                <button class="row_data btnChange w3-button w3-round-large w3-border w3-border-indigo" col_name = "<%= encuentro %>"><strong>Presente</strong></button>
+                <button class="row_data btnChange w3-button w3-border w3-border-indigo" col_name = "<%= encuentro %>"><strong>Presente</strong></button>
               <% } else { %>
-                <button class="row_data btnChange w3-button w3-round-large w3-border w3-border-red" col_name = "<%= encuentro %>">Ausente</button>
+                <button class="row_data btnChange w3-button w3-border w3-border-red" col_name = "<%= encuentro %>">Ausente</button>
               <% } %>
               
             </td>

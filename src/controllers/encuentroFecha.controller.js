@@ -10,8 +10,10 @@ const getPorCampoCohorte = async (req, res) => {
 }
 
 const post = async (req, res) => {
-    resultado = await encuentroFechaeService.siExiste(req.body)
-    res.redirect('/cursante/Adult')
+    
+    const resultado = await encuentroFechaeService.postOrPut(req.body)
+    console.log("Controller POST -> resultado:  "+ resultado)
+    res.send(resultado)
 }
 
 module.exports = {

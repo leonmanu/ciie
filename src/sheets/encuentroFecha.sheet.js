@@ -29,10 +29,10 @@ async function put(objeto) {
     try {
         await objeto.save();
         console.log("Modificación exitosa");
-        return "Modificación exitosa";
+        return { success: true, message: "Modificación exitosa" };
     } catch (error) {
         console.error("Error al modificar:", error);
-        return null
+        return { success: false, message: "Error al modificar" };
     }
 }
 

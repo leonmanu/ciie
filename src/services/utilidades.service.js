@@ -25,6 +25,31 @@ const convertToJson = async (resultados) => {
     }
 }
 
+const convertOneToJson = async (resultado) => {
+    try {
+        if (!resultado || !resultado._sheet || !resultado._sheet.headerValues) {
+            throw new Error('El objeto está vacío o falta información de cabecera');
+        }
+
+        const header = resultado._sheet.headerValues;
+
+        const varuser = {
+            _rowNumber: resultado._rowNumber,
+            ...header.reduce((acc, key) => {
+                acc[key] = resultado[key];
+                return acc;
+            }, {}),
+        };
+
+        return varuser;
+    } catch (error) {
+        console.log(`Error en convertOneToJson: ${error.message}`);
+        return null; // Devuelve null en caso de error
+    }
+}
+
+
+
 async function getUltimo(registros){
     const indice = registros.length
     const resultado = registros[indice - 1]
@@ -53,6 +78,18 @@ async function emparejar(nuevo, anterior){
     return anterior
   }
 
+  async function getHeadersAndValues(objeto){
+    if (objeto.length === 0) { //verifica eque arrayJson no esté vacío, si está vacío, es lo que devuelve
+      return [];
+    }
+    headers = await getHeaders(objeto)
+    headers.forEach(head => {
+        console.log("HEAD: " + head + " | VALUE: " + objeto[head])
+    })
+    
+    return objeto
+  }
+
 async function crearId(){
     let nuevoId = uuidv4()
     return nuevoId
@@ -64,4 +101,6 @@ module.exports = {
     getHeaders,
     emparejar,
     crearId,
+    getHeadersAndValues,
+    convertOneToJson,
 };

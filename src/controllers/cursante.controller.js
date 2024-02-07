@@ -19,6 +19,16 @@ const getPorCapacitacion = async (req,res) => {
     res.render("pages/cursante/asistencia", {user: req.user, cursantes, paramCampo, cohorteUltima, calificaciones, encuentroFecha})
 }
 
+const getPorCapacitacionCursantesDatos = async (req,res) => {
+    paramCampo = await req.params.campoClave
+    cohorteUltima = await cohorteService.getUltimo()
+    calificaciones = await calificacionService.get()
+    cursantes = await cursanteService.getPorCampo(paramCampo, cohorteUltima.clave)
+    encuentroFecha = await encuentroFechaService.getPorCampoCohorte(paramCampo,cohorteUltima.clave) 
+    //fechas = await encuentroFechaService.getFechas(encuentroFecha)
+    res.render("pages/cursante/cursanteList", {user: req.user, cursantes, paramCampo, cohorteUltima, calificaciones, encuentroFecha})
+}
+
 const putArray = async (req, res) => {
     arrayJson = req.body.arrayJson
     resultado = await cursanteService.putArray(arrayJson)
@@ -29,5 +39,6 @@ const putArray = async (req, res) => {
 module.exports = {
     get,
     getPorCapacitacion,
+    getPorCapacitacionCursantesDatos,
     putArray,
 }

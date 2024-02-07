@@ -24,8 +24,9 @@
           <th>Rol</th>
           <th>Campo</th>
           <th>Revista</th>
+          <th>Cursantes</th>
+          <th>Asistencia</th>
           <th>Eliminar</th>
-          <th>Acción</th>
         </tr>
       </thead>
       <% docenteCargos.forEach(function(docenteCargo){ %>
@@ -61,26 +62,29 @@
               
                 <% if (cargo.idRol < 5) { %>
                   <% isAdmin = true %>
+                  <td></td>
+                  <td class="">
+                  </td>
                   <td class="">
                     <button type="button" id="btnDocenteCargoBaja" class="w3-button w3-border w3-round w3-red btnDocenteCargoBaja" data-bs-toggle="modal" data-clave="<%= rolNombre %>">
                       <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
                   </td>
+                <% } else { %>
                   <td class="">
-                  <a href="cargo/capacitacion" class="w3-button w3-blue" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
-                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                  <a href="../cursante/<%= campoClave %>/cursantesDatos" class="w3-button w3-light-blue" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
                   </a>
                   </td>
-                <% } else { %>
+                  <td class="">
+                    <a href="../cursante/<%= campoClave %>" class="w3-button w3-light-blue" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                      <i class="fa fa-list" aria-hidden="true"></i>
+                    </a>
+                  </td>
                   <td class="">
                     <button type="button" id="btnDocenteCargoBaja" class="w3-button w3-border w3-round w3-red btnDocenteCargoBaja" data-bs-toggle="modal" data-clave="<%= campoClave %>">
                       <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
-                  </td>
-                  <td class="">
-                  <a href="../cursante/<%= campoClave %>" class="w3-button w3-light-blue" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                  </a>
                   </td>
                 <% } %>
 

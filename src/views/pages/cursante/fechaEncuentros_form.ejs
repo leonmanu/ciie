@@ -5,7 +5,7 @@
   <div class="w3-container w3-teal">
     <h2>Fecha de Encuentros</h2>
   </div>
-  <form action="/encuentroFecha/post" method="post" class="w3-container">
+  <form id="idForm" action="/encuentroFecha/post" method="post" class="w3-container">
     <input type="" name="rowNumber" id="efRowNumber" value="<%= (encuentroFecha) ? encuentroFecha._rowNumber : '' %>">
     
     <input type="hidden" name="campoClave" id="efCampo" value="<%= paramCampo %>">
@@ -19,7 +19,7 @@
         <% } %>
         <div class="">
           <label class="w3-text-brown"><b><%= j %>° encuentro </b></label>
-          <input id="encuentro<%= j %>" class="w3-input w3-border w3-sand" name="encuentro<%= j %>" type="date" value="<%= fechaSubstring %>">
+          <input id="encuentro<%= j %>" class="w3-input w3-border w3-sand inpEncuentro" name="encuentro<%= j %>" type="date" value="<%= fechaSubstring %>">
         </div>
       
       <% } %>
@@ -30,6 +30,7 @@
     <div class="w3-btn-group w3-col m12">
       <button id="btnEnviar" class="w3-btn w3-green" type="submit">
         <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        <img class="pull-right" id="waitIconFecha" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
         Enviar solicitud
       </button>
       <button id="btnCancelar" class="w3-btn w3-orange" type="button">

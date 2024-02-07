@@ -1,47 +1,72 @@
 <!-- Parte de arriba -->
 <%- include('../../layout/partTop.ejs') %>
-
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:200px;margin-top:43px;">
-
+<!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
+<% let i = 1 %>
+      <% let encuentro %>
   <!-- Header -->
-  <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> Asistencia </b></h5>
+  <header class="w3-container w3-bar sticky-top" style="padding-top:22px; display: flex; align-items: center;">
+    <h5 style="margin-right: auto;"><b><i class="fa fa-dashboard"></i><span id="campoClave"><%= paramCampo %></span>/ Cursantes / <span id="cohorteClave"><%= cohorteUltima.clave %></span></b></h5>
   </header>
 
   <div class="w3-container">
-    <table class="w3-table-all w3-hoverable">
-      <thead>
-        <tr class="w3-light-grey">
-          <th>Cursante</th>
-          <th>DNI</th>
-          <th>1°</th>
-          <th>2°</th>
-          <th>3°</th>
-        </tr>
-      </thead>
-      <% registros.forEach(function(registro){ %>
-        <tr>
-          <td> 
-            <%= registro['Apellido/s'] %>,  <%= registro['Nombre/s'] %>
-          </td>
-          <td>
-            <%= registro['Número de DNI'] %>
-          </td>
-          <td>
-            <%= registro['Encuentro 1'] %>
-          </td>
-          <td>
-            <%= registro['Encuentro 2'] %>
-          </td>
-          <td>
-            <%= registro['Encuentro 3'] %>
-          </td>
-        </tr>
-        <% }) %>
+    <table class="w3-table-all">
+        <thead>
+            <tr class="w3-light-grey" style="border: 1px solid #ddd;">
+                <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
+                    Cursante (<%= cursantes.length %>)
+                </th>
+                <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">DNI</th>
+                <th class="ocultable" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
+                    Email <button id="copyEmailsBtn">Copy</button>
+                </th>
+                <th class="ocultable" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Teléfono</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% cursantes.forEach(function(registro){ %>
+            <tr rowNumber='<%= registro._rowNumber %>'>
+                <td class="modified" style="display:none;" col_name="change">false</td>
+                <td><%= i %> | <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>
+                <td><%= registro['Número de DNI'] %></td>
+                <td><%= registro['Dirección de correo electrónico'] %></td>
+                <td><%= registro['Teléfono de contacto'] %></td>
+            </tr>
+            <% i++ %>
+            <% }) %>
+        </tbody>
     </table>
-  </div>
+</div>
 
+ 
+  <script>
+    $(document).ready(function(){
+        $('#copyEmailsBtn').click(function(){
+            var emails = [];
+            $('.w3-table-all tbody tr').each(function(){
+                var email = $(this).find('td:nth-child(4)').text().trim();
+                if (email !== '') {
+                    emails.push(email);
+                }
+            });
+    
+            if (emails.length > 0) {
+                // Convertir el array de correos electrónicos a una cadena separada por comas
+                var emailsStr = emails.join(', ');
+                // Copiar la cadena de correos electrónicos al portapapeles del navegador
+                navigator.clipboard.writeText(emailsStr).then(function(){
+                    console.log('Correos electrónicos copiados al portapapeles: ' + emailsStr);
+                    alert('Correos electrónicos copiados al portapapeles: ' + emailsStr);
+                }).catch(function(error){
+                    console.error('Error al copiar correos electrónicos al portapapeles: ' + error);
+                    alert('Error al copiar correos electrónicos al portapapeles: ' + error);
+                });
+            } else {
+                console.warn('No se encontraron correos electrónicos para copiar.');
+                alert('No se encontraron correos electrónicos para copiar.');
+            }
+        });
+    });
+    </script>
   <!-- Parte de abajo -->
   <%- include('../../layout/partBotton.ejs') %>
  

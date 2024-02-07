@@ -11,7 +11,8 @@ const get = async () => {
 
 const post = async (objeto) => {
     resultado = await encuentroFechaSheet.post(objeto)
-    return registros
+    console.log(objeto)
+    return objeto
 }
 
 const getUltimo = async () => {
@@ -21,7 +22,15 @@ const getUltimo = async () => {
 }
 
 async function put(objeto) {
-    resultado = await cursanteSheet.put(objeto)
+    rn = parseInt(objeto.rowNumber)-2
+    anteriores = await get()
+    emparejado = await utilidadesService.emparejar(objeto, anteriores[rn]);
+    await utilidadesService.getHeadersAndValues(emparejado)
+    resultado = await encuentroFechaSheet.put(emparejado)
+    if(resultado.success){ 
+        resultadoJson = await utilidadesService.convertOneToJson(emparejado)
+        resultado.objeto = resultadoJson
+    }
     return resultado
 }
 
@@ -39,15 +48,10 @@ const getPorCampoCohorte = async (campoClave, cohorteClave) => {
     }
 }
 
-async function siExiste(objeto) {
+async function postOrPut(objeto) {
     
     if(objeto.rowNumber){
-        rn = parseInt(objeto.rowNumber)-2
-        anteriores = await get()
-        console.log(rn + "encuentroFecha anterior: " + anteriores[rn])
-        emparejado = await utilidadesService.emparejar(objeto, anteriores[rn]);
-        resultado = await encuentroFechaSheet.put(emparejado);
-        
+        resultado = await put(objeto);
         return resultado
 
     } else {
@@ -80,6 +84,6 @@ module.exports = {
     getUltimo,
     post,
     put,
-    siExiste,
+    postOrPut,
     getFechas
 } 
