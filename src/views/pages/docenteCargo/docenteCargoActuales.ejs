@@ -64,6 +64,9 @@
                   <% isAdmin = true %>
                   <td></td>
                   <td class="">
+                    <a href="../cursante/listaAsistencia" class="w3-button w3-light-blue" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                      <i class="fa fa-table" aria-hidden="true"></i>
+                    </a>
                   </td>
                   <td class="">
                     <button type="button" id="btnDocenteCargoBaja" class="w3-button w3-border w3-round w3-red btnDocenteCargoBaja" data-bs-toggle="modal" data-clave="<%= rolNombre %>">
@@ -100,7 +103,7 @@
       <% if(isAdmin == true) {%>
              <!-- Header -->
         <header class="w3-container" >
-          <h5><b><i class="fa fa-dashboard"></i> Capacitaciones </b></h5>
+          <h5><b><i class="fa fa-dashboard"></i> Capacitaciones <a href=""></a> </b></h5>
         </header>
         <table class="w3-table-all w3-hoverable">
           <thead>

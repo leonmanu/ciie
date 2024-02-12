@@ -8,6 +8,30 @@ const get = async () => {
     return registros
 }
 
+const getPorCohorte = async (cohorte) => {
+  const cursantes = await get();
+    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
+
+    // Ordenar por apellido
+    const resultados = await filtrados.sort((a, b) => {
+      const apellidoA = a['Apellido/s'].toLowerCase();
+      const apellidoB = b['Apellido/s'].toLowerCase();
+  
+      if (apellidoA < apellidoB) {
+        return -1;
+      } else if (apellidoA > apellidoB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    })
+    
+    // resultados.forEach(async result => {
+    //   console.log("cursante: ", result['Apellido/s'])
+    // } )
+    return resultados;
+}
+
 const getPorCampo = async (campoClave, cohorte) => {
    console.log("COHORTE -- > " + cohorte)
     const cursantes = await get();
@@ -76,4 +100,5 @@ module.exports = {
     getPorCampo,
     put,
     putArray,
+    getPorCohorte,
 } 

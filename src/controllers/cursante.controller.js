@@ -3,6 +3,7 @@ const cursanteService = require('../services/cursante.service')
 const cohorteService = require('../services/cohorte.service')
 const calificacionService = require('../services/calificacion.service')
 const encuentroFechaService = require('../services/encuentroFecha.service')
+const campoService = require('../services/campo.service')
 
 const get = async (req,res) => {
     registros = await cursanteService.get()
@@ -29,6 +30,16 @@ const getPorCapacitacionCursantesDatos = async (req,res) => {
     res.render("pages/cursante/cursanteList", {user: req.user, cursantes, paramCampo, cohorteUltima, calificaciones, encuentroFecha})
 }
 
+const getListaAsistenciaTodas = async (req, res) => {
+    cohorteUltima = await cohorteService.getUltimo()
+    console.log("cohorteUltima: " + cohorteUltima)
+    campos = await campoService.get()
+    console.log("campos: " + campos)
+    cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
+    //fechas = await encuentroFechaService.getFechas(encuentroFecha)
+    res.render("pages/cursante/listaAsistenciaTodas", {user: req.user, cursantes, campos, cohorteUltima})
+}
+
 const putArray = async (req, res) => {
     arrayJson = req.body.arrayJson
     resultado = await cursanteService.putArray(arrayJson)
@@ -41,4 +52,5 @@ module.exports = {
     getPorCapacitacion,
     getPorCapacitacionCursantesDatos,
     putArray,
+    getListaAsistenciaTodas,
 }
