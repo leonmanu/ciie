@@ -43,14 +43,14 @@
             <% if (registro['Seleccione su/s curso/s'].includes(campo.clave+" - |")) { %>
             <tr rowNumber='<%= registro._rowNumber %>'>
                 <td class="modified" style="display:none;" col_name="change">false</td>
-                <td><%= i %> | <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>
+                <td><b><%= i %>)</b> <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>
                 <td><%= registro['Número de DNI'] %></td>
                 <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) { %>
                     <% encuentro ='encuentro'+j %>
-                    <td class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"></td>
+                    <td class="encuentro ocultable" style="border: 1px solid #ddd;"><small><%= i %>) </small></td>
                 <% } %>
                 <!-- Celda para observaciones -->
-                <td style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"></td>
+                <td style="vertical-align: middle; border: 1px solid #ddd;"><small><%= i %> </small></td>
             </tr>
             <% i++ %>
             <% } %>
