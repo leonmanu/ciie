@@ -30,11 +30,17 @@ const getPorCapacitacionCursantesDatos = async (req,res) => {
     res.render("pages/cursante/cursanteList", {user: req.user, cursantes, paramCampo, cohorteUltima, calificaciones, encuentroFecha})
 }
 
+const getListaAsistencia = async (req, res) => {
+    paramCampo = await req.params.campoClave
+    cohorteUltima = await cohorteService.getUltimo()
+    cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
+    //fechas = await encuentroFechaService.getFechas(encuentroFecha)
+    res.render("pages/cursante/listaAsistencia", {user: req.user, cursantes, campo: paramCampo, cohorteUltima})
+}
+
 const getListaAsistenciaTodas = async (req, res) => {
     cohorteUltima = await cohorteService.getUltimo()
-    console.log("cohorteUltima: " + cohorteUltima)
     campos = await campoService.get()
-    console.log("campos: " + campos)
     cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
     //fechas = await encuentroFechaService.getFechas(encuentroFecha)
     res.render("pages/cursante/listaAsistenciaTodas", {user: req.user, cursantes, campos, cohorteUltima})
@@ -53,4 +59,5 @@ module.exports = {
     getPorCapacitacionCursantesDatos,
     putArray,
     getListaAsistenciaTodas,
+    getListaAsistencia,
 }
