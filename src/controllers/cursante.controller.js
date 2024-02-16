@@ -4,6 +4,7 @@ const cohorteService = require('../services/cohorte.service')
 const calificacionService = require('../services/calificacion.service')
 const encuentroFechaService = require('../services/encuentroFecha.service')
 const campoService = require('../services/campo.service')
+const encuentroHoraService = require('../services/encuentroHora.service')
 
 const get = async (req,res) => {
     registros = await cursanteService.get()
@@ -46,6 +47,16 @@ const getListaAsistenciaTodas = async (req, res) => {
     res.render("pages/cursante/listaAsistenciaTodas", {user: req.user, cursantes, campos, cohorteUltima})
 }
 
+const getConstancia = async (req, res) => {
+    paramCampo = await req.params.campoClave
+    cohorteUltima = await cohorteService.getUltimo()
+    campo = await campoService.getPorClave(paramCampo)
+    cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
+    encuentroFecha = await encuentroFechaService.getPorCampoCohorte(paramCampo,cohorteUltima.clave)
+    encuentroHora = await encuentroHoraService.getPorCampoCohorte(paramCampo,cohorteUltima.clave) 
+    res.render("pages/cursante/constancias", {user: req.user, cursantes, campo, cohorteUltima, encuentroFecha, encuentroHora})
+}
+
 const putArray = async (req, res) => {
     arrayJson = req.body.arrayJson
     resultado = await cursanteService.putArray(arrayJson)
@@ -60,4 +71,5 @@ module.exports = {
     putArray,
     getListaAsistenciaTodas,
     getListaAsistencia,
+    getConstancia,
 }
