@@ -56,7 +56,7 @@
             <% if (registro['Seleccione su/s curso/s'].includes(campo.clave+" - |") && (registro.encuentro1 ==  'TRUE' || registro.encuentro2 ==  'TRUE' || registro.encuentro3 ==  'TRUE')) { %>
                 <div class="solid">
                     <img src="/img/logoCiie201.png" alt="Logo" class="logo"> <!-- Agregamos la imagen del logo -->
-                    <p><strong>CERTIFICADO DE ASISTENCIA</strong></p>
+                    <p><strong>CONSTANCIA DE ASISTENCIA</strong></p>
                     <p>La Dirección del CIIE de Laferrere hace constar que el/la Docente <strong><%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></strong>, DNI <strong><%= registro['Número de DNI'] %></strong> ha asistido al curso de capacitación en servicio en el área de <strong><%= campo.nombre %></strong> en nuestro establecimiento, en los siguientes días y horarios:</p>
                     <p>
                         <% for(var x=1; x<=cohorteUltima.nroEncuentros; x++) { %>
