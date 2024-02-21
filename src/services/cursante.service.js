@@ -35,7 +35,7 @@ const getPorCohorte = async (cohorte) => {
 const getPorCampo = async (campoClave, cohorte) => {
    console.log("COHORTE -- > " + cohorte)
     const cursantes = await get();
-    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].includes(campoClave) && cursante['Seleccione su/s curso/s'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
+    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].includes(campoClave+' - |') && cursante['Seleccione su/s curso/s'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
 
     // Ordenar por apellido
     const resultados = await filtrados.sort((a, b) => {
