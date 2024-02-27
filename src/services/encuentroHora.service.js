@@ -34,6 +34,19 @@ async function put(objeto) {
     return resultado
 }
 
+const getPorCohorte = async (cohorteClave) => {
+    cohorte = await cohorteService.getPorClave(cohorteClave)
+    registros = await get()
+    const filtrados = await registros.filter(row => row.idCohorte == cohorte.id)
+    if(filtrados.length > 0){
+        const resultadoJson = await utilidadesService.convertToJson(filtrados)
+        const resultado = resultadoJson[0]
+        return resultadoJson[0]
+    } else {
+        return null
+    }
+}
+
 const getPorCampoCohorte = async (campoClave, cohorteClave) => {
     campo = await campoService.getPorClave(campoClave)
     cohorte = await cohorteService.getPorClave(cohorteClave)
@@ -80,6 +93,7 @@ const getFechas = async (objeto) => {
 
 module.exports = {
     get:get,
+    getPorCohorte,
     getPorCampoCohorte,
     getUltimo,
     post,

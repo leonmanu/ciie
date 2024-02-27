@@ -49,12 +49,30 @@ const getListaAsistenciaTodas = async (req, res) => {
 
 const getConstancia = async (req, res) => {
     paramCampo = await req.params.campoClave
+    paramDni = await req.params.dni
     cohorteUltima = await cohorteService.getUltimo()
     campo = await campoService.getPorClave(paramCampo)
-    cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
+    if (paramDni) {
+        cursantes = await cursanteService.getPorDni(paramDni)
+    } else {
+        cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
+    }
+
+    
     encuentroFecha = await encuentroFechaService.getPorCampoCohorte(paramCampo,cohorteUltima.clave)
     encuentroHora = await encuentroHoraService.getPorCampoCohorte(paramCampo,cohorteUltima.clave) 
     res.render("pages/cursante/constancias", {user: req.user, cursantes, campo, cohorteUltima, encuentroFecha, encuentroHora})
+}
+
+const getConstanciaPorCursante = async (req, res) => {
+    paramCampo = await req.params.dni
+    cursantes = await cursanteService.getPorDni(paramCampo)
+    console.log("cursantes[0] : " + cursantes)
+    cohorteUltima = await cohorteService.getUltimo()
+    campos = await campoService.get()
+    encuentroFecha = await encuentroFechaService.getPorCohorte(cohorteUltima.clave)
+    encuentroHora = await encuentroHoraService.getPorCohorte(cohorteUltima.clave) 
+    res.render("pages/cursante/constanciasIndividual", {user: req.user, cursantes, campo:campos, cohorteUltima, encuentroFecha, encuentroHora})
 }
 
 const putArray = async (req, res) => {
@@ -72,4 +90,5 @@ module.exports = {
     getListaAsistenciaTodas,
     getListaAsistencia,
     getConstancia,
+    getConstanciaPorCursante,
 }

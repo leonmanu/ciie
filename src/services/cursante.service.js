@@ -8,6 +8,13 @@ const get = async () => {
     return registros
 }
 
+const getPorDni = async (dni) => {
+  const cursantes = await get();
+  const filtrados = await cursantes.filter(cursante => cursante['Número de DNI'] == dni)
+  
+  return filtrados
+}
+
 const getPorCohorte = async (cohorte) => {
   const cursantes = await get();
     const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
@@ -97,6 +104,7 @@ const cambiarValores = async () => {
 
 module.exports = {
     get,
+    getPorDni,
     getPorCampo,
     put,
     putArray,
