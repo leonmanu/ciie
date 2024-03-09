@@ -17,6 +17,13 @@ const getPorId = async (idCargo) => {
     return resultado
 }
 
+const getPorCampo = async (idCampo) => {
+    const registros = await cargoSheet.get()
+    const filtrados = await registros.filter(row => row.idCampo == idCampo)
+    resultado = filtrados[0]
+    return resultado
+}
+
 
 //Dedería llamarse getTodosPorCurso o algo de Asignaturas
 const getTodos = async (req, res) => {
@@ -72,4 +79,5 @@ module.exports = {
     getPorId,
     getCargoPorRol: getCargoPorRol,
     getPorDocenteCargo:getPorDocenteCargo,
+    getPorCampo,
 } 

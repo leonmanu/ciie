@@ -15,6 +15,8 @@ const getCargoPorRol = async (req, res) => {
     res.send(cargos)
 }
 
+
+
 const getPorIdCursoAjax = async (req, res) => {
     const idCurso = await req.params.idCurso
     console.log("idCurso: ",idCurso)

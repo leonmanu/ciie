@@ -1,0 +1,143 @@
+<!-- Parte de arriba -->
+<%- include('../../layout/partTopPrint.ejs') %>
+<!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
+
+<% let i = 1 %>
+<% let encuentro %>
+<% let aprobados = 0 %>
+<% let desaprobados = 0 %>
+<% let ausentes = 0 %>
+
+
+<!-- Header -->
+<div class="w3-bar w3-large">
+    <img class="w3-image" src="/img/logoCiie201.png" alt="logoCiie201" style="width:30px;">
+    <img class="w3-image w3-right" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:50px;">
+</div>
+<div class="w3-bar w3-large">
+    <% let fechaHoy = new Date(); %>
+    <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
+    <% let dia = fechaHoy.getDate(); %>
+    <% let mes = meses[fechaHoy.getMonth()]; %>
+    <% let año = fechaHoy.getFullYear(); %>
+    <span class="w3-right">Fecha:  <%= dia %> de <%= mes %> de <%= año %></span>
+</div>
+<div class="w3-bar w3-large" style="text-align: center;">
+    <b> <span >  ACTA VOLANTE </span> </b>
+</div>
+<div class="w3-bar w3-large">
+    <b> <span >  Área:  <strong><%= campo.nombre %></strong></span> </b>
+    <p><b>Nombre:</b></p>
+    <span class="w3-right">  Dispositivo:  </span>
+    <br>
+    <span>Proyecto: </span>
+    <span> Resolución: </span> 
+    <span>Dictamen: </span> 
+    <span>Carga horaria: hs.</span> 
+    <br>
+    <span>Cohorte: <%= cohorteUltima.clave %>, </span>
+    <% let fechaInicio = new Date(encuentroFecha.encuentro1); %>
+    <span>Inicio: <%= fechaInicio.getDate() %>/<%= fechaInicio.getMonth() + 1 %>/<%= fechaInicio.getFullYear() %>, </span>
+    <% let encuentroFinal = 'encuentro'+cohorteUltima.nroEncuentros %>
+    <% let fechaFin = new Date(encuentroFecha[encuentroFinal]); %>
+    <span>Finalización: <%= fechaFin.getDate() %>/<%= fechaFin.getMonth() + 1 %>/<%= fechaFin.getFullYear() %>,</span>
+</div>
+
+<div class="">
+    <table class="w3-table-all">
+        
+        <tr class="w3-light-grey" style="border: 1px solid #ddd;">
+            <th>Orden</th>
+            <th style="text-align: center; vertical-align: middle; border: 1px solid #ddd; width: 10%;">
+                DNI
+            </th>
+            <th class="overflow-hidden" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd; width: 30%;">
+                Cursante
+            </th>
+            <th style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
+                Calificación
+            </th>
+            <!-- Nueva columna para observaciones -->
+            <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd; width: 12%;">Observaciones</th>
+        </tr>
+    
+        <tbody>
+            <% cursantes.forEach(function(registro){ %>
+                <% if (registro['Seleccione su/s curso/s'].includes(campo.clave+" - |")) { %>
+                    <tr rowNumber='<%= registro._rowNumber %>'>
+                        <td ><%= i %></td>
+                        <td><%= registro['Número de DNI'] %></td>
+                        <td> <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>
+                        <!-- Celda para observaciones -->
+                        <td <% if (registro.Valoracion === 'aprobado') { %> style="font-weight: bold;" <% aprobados++ %> <% } %>
+                            <% if (registro.Valoracion === 'desaprobado') { %> desaprobados++ <% } %>
+                            <% if (registro.Valoracion === 'ausente') { %> ausentes++ <% } %>
+                        ><%= registro.Valoracion %></td>
+                        <td> <%= registro.Observacion %> </td>
+                    </tr>
+                    <% i++ %>
+                <% } %>
+            <% }) %>
+        </tbody>
+    </table>
+    <br>
+    <div>
+        <span>Inscriptos: <%= i %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
+    </div>
+    <div class="w3-right">
+        <span>Gregorio de Laferrere, _____________________</span>
+        <br>
+        <span>Firma: __________________________</span>
+        <br>
+        Form: 
+    </div>
+
+</div>
+
+<style>
+    /* Ajustar las columnas al contenido */
+    .w3-table-all {
+        table-layout: auto;
+    }
+    .w3-table-all td:first-child {
+        width: 30px; /* Establece el ancho máximo deseado para la primera columna */
+    }
+    .w3-table-all td:nth-child(3) {
+        max-width: 300px; /* Establece el ancho máximo deseado para la columna "Cursante" */
+        white-space: nowrap; /* Evita que el texto se divida en líneas */
+        overflow: hidden; /* Oculta el texto que desborda del ancho máximo */
+        text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al final del texto si desborda */
+    }
+    @media print {
+        /* Estilos para la vista de impresión */
+
+        /* Ocultar elementos */
+        .noPrint {
+            display: none;
+        }
+
+        .brPage {
+            page-break-after: always;
+        }
+
+        thead {
+            display: table-header-group; /* Evita que el encabezado de la tabla se repita en cada página */
+        }
+
+        .w3-table-all tbody tr {
+            height: 10px; /* Ajusta esta altura según tus necesidades */
+        }
+
+        .w3-table-all tbody tr td,
+        .w3-table-all tbody tr th {
+            padding-top: 5px; /* Ajusta el espacio superior de la celda */
+            padding-bottom: 4px; /* Ajusta el espacio inferior de la celda */
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+            white-space: nowrap; /* Evita que el texto se divida en líneas */
+            text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al final del texto si desborda */
+        }
+    }
+</style>
