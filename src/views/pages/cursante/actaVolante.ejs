@@ -14,33 +14,34 @@
     <img class="w3-image" src="/img/logoCiie201.png" alt="logoCiie201" style="width:30px;">
     <img class="w3-image w3-right" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:50px;">
 </div>
+<br>
 <div class="w3-bar w3-large">
     <% let fechaHoy = new Date(); %>
     <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
     <% let dia = fechaHoy.getDate(); %>
     <% let mes = meses[fechaHoy.getMonth()]; %>
     <% let año = fechaHoy.getFullYear(); %>
-    <span class="w3-right">Fecha:  <%= dia %> de <%= mes %> de <%= año %></span>
+    <i><b><span class="w3-right"><%= dia %> de <%= mes %> de <%= año %></span></i></b>
 </div>
 <div class="w3-bar w3-large" style="text-align: center;">
     <b> <span >  ACTA VOLANTE </span> </b>
 </div>
 <div class="w3-bar w3-large">
-    <b> <span >  Área:  <strong><%= campo.nombre %></strong></span> </b>
-    <p><b>Nombre:</b></p>
-    <span class="w3-right">  Dispositivo:  </span>
+    <span >  Área:  <strong><%= campo.nombre %></strong></span>
+    <p>Nombre:<b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard</b></p>
+    <span class="w3-right">  Dispositivo:_________________________  </span>
     <br>
-    <span>Proyecto: </span>
-    <span> Resolución: </span> 
-    <span>Dictamen: </span> 
-    <span>Carga horaria: hs.</span> 
+    <span>Proyecto: <b></b></span>
+    <span> Resolución: <b></b></span> 
+    <span>Dictamen: <b></b></span> 
+    <span>Carga horaria: <b></b> hs.</span> 
     <br>
-    <span>Cohorte: <%= cohorteUltima.clave %>, </span>
+    <span>Cohorte: <b><%= cohorteUltima.clave %> </b>, </span>
     <% let fechaInicio = new Date(encuentroFecha.encuentro1); %>
-    <span>Inicio: <%= fechaInicio.getDate() %>/<%= fechaInicio.getMonth() + 1 %>/<%= fechaInicio.getFullYear() %>, </span>
+    <span>Inicio: <b><%= fechaInicio.getDate() %>/<%= fechaInicio.getMonth() + 1 %>/<%= fechaInicio.getFullYear() %></b>, </span>
     <% let encuentroFinal = 'encuentro'+cohorteUltima.nroEncuentros %>
     <% let fechaFin = new Date(encuentroFecha[encuentroFinal]); %>
-    <span>Finalización: <%= fechaFin.getDate() %>/<%= fechaFin.getMonth() + 1 %>/<%= fechaFin.getFullYear() %>,</span>
+    <span>Finalización: <b> <%= fechaFin.getDate() %>/<%= fechaFin.getMonth() + 1 %>/<%= fechaFin.getFullYear() %> </b></span>
 </div>
 
 <div class="">
@@ -71,7 +72,7 @@
                         <!-- Celda para observaciones -->
                         <td <% if (registro.Valoracion === 'aprobado') { %> style="font-weight: bold;" <% aprobados++ %> <% } %>
                             <% if (registro.Valoracion === 'desaprobado') { %> desaprobados++ <% } %>
-                            <% if (registro.Valoracion === 'ausente') { %> ausentes++ <% } %>
+                            <% if (registro.Valoracion == 'ausente') { %> ausentes++ <% } %>
                         ><%= registro.Valoracion %></td>
                         <td> <%= registro.Observacion %> </td>
                     </tr>
@@ -82,16 +83,19 @@
     </table>
     <br>
     <div>
-        <span>Inscriptos: <%= i %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
+        <span>Inscriptos: <%= i -1 %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
     </div>
+    <br>
+
     <div class="w3-right">
         <span>Gregorio de Laferrere, _____________________</span>
         <br>
-        <span>Firma: __________________________</span>
+        <small><span style="display: inline-block; width: 100%; text-align: center;">(Fecha)</span></small>
         <br>
-        Form: 
+        <span style="display: inline-block; width: 100%;">_________________________________________</span>
+        <br>
+        <small><span style="display: inline-block; width: 100%; text-align: center;">Firma form.: <%= docente.apellido %>, <%= docente.nombre %></span></small>
     </div>
-
 </div>
 
 <style>

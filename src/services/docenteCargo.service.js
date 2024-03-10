@@ -23,6 +23,13 @@ const getPorDocente = async (user) => {//este es el que manda los cargos por doc
     return filtrados
 }
 
+const getPorCargoId = async (idCargo) => {//este es el que manda los cargos por docentes
+    const docenteCargos = await get()
+    const filtrados = await docenteCargos.filter(row => row.idCargo == idCargo)
+    console.log(" filtrados.pop() "+filtrados[0])
+    return filtrados.pop()
+}
+
 const getPorDocenteCargoCurso = async (req, res) => {
     const registros = await cargoSheet.getCargosTodos()
     const resultados = registros.filter(row => row ["idGoogleUsuario"] === req.user.id && row.rol === "Pf")
@@ -102,4 +109,5 @@ module.exports = {
     putBajaDocenteCargo: putBajaDocenteCargo,
     getSiExiste: getSiExiste,
     getSiDisponible: getSiDisponible,
+    getPorCargoId,
 } 

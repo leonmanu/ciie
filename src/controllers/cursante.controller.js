@@ -6,6 +6,9 @@ const encuentroFechaService = require('../services/encuentroFecha.service')
 const campoService = require('../services/campo.service')
 const encuentroHoraService = require('../services/encuentroHora.service')
 const cargoService = require('../services/cargo.service')
+const docenteCargoService = require('../services/docenteCargo.service')
+const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
+const docenteService = require('../services/docente.service')
 
 const get = async (req,res) => {
     registros = await cursanteService.get()
@@ -48,9 +51,9 @@ const getActaVolante = async (req, res) => {
     cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
     calificaciones = await calificacionService.get()
     encuentroFecha = await encuentroFechaService.getPorCampoCohorte(paramCampo,cohorteUltima.clave) 
-    cargo = cargoService.getPorCampo(campo.id)
-    //fechas = await encuentroFechaService.getFechas(encuentroFecha)
-    res.render("pages/cursante/actaVolante", {user: req.user, cursantes, campo, cohorteUltima, calificaciones, encuentroFecha})
+    docente = await docenteService.getPorCampoId(campo.id)
+    console.log(" cursante.controller / getActaVolante / docente: " + docente.apellido)
+    res.render("pages/cursante/actaVolante", {user: req.user, cursantes, campo, cohorteUltima, calificaciones, encuentroFecha, docente})
 }
 
 const getListaAsistenciaTodas = async (req, res) => {
