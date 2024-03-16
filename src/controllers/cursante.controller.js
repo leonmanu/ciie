@@ -15,7 +15,18 @@ const get = async (req,res) => {
     res.render("pages/cursante/asistencia", {cursante: registros, user: req.user})
 }
 
-const getPorCapacitacion = async (req,res) => {
+const getPorCapacitacion = async (req,res) => { //esta antes filtraba también por cohorte, ahora no
+    paramCampo = await req.params.campoClave
+    cohorteUltima = await cohorteService.getUltimo()
+    cohortes = await cohorteService.get()
+    calificaciones = await calificacionService.get()
+    cursantes = await cursanteService.getPorCampo(paramCampo)
+    encuentroFecha = await encuentroFechaService.getPorCampoCohorte(paramCampo,cohorteUltima.clave) 
+    //fechas = await encuentroFechaService.getFechas(encuentroFecha)
+    res.render("pages/cursante/asistencia", {user: req.user, cursantes, paramCampo, cohorteUltima, cohortes, calificaciones, encuentroFecha})
+}
+
+const getPorCapacitacionCohorte = async (req,res) => { //esta era getPorCapacitacion pero ahora necesito que no lo haga por cohorte
     paramCampo = await req.params.campoClave
     cohorteUltima = await cohorteService.getUltimo()
     calificaciones = await calificacionService.get()

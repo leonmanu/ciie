@@ -9,6 +9,17 @@ const getUltimo = async () => {
     res.send(resultado)
 }
 
+const getConFechaPorClaveAjax = async (req, res) => {
+    const claveCohorte = await req.params.claveCohorte
+    //console.log("claveCohorte: ",claveCohorte)
+    //const curso = await cursoService.getPorId
+    const cohortes = await cohorteService.getPorClave(claveCohorte)
+
+    const toJson = await utilidadesService.convertToJson(asignaturas)
+    res.send(toJson) 
+}
+
 module.exports = {
-    getUltimo
+    getUltimo,
+    getConFechaPorClaveAjax
 } 

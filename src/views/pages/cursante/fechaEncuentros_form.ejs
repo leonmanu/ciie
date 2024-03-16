@@ -1,27 +1,32 @@
 <!-- <script src="/js/docenteCargoAlta.ajax.js"></script> -->
 <script src="/js/cursanteAsistencia.ajax.js"></script>
 
-<div class="w3-container">
+<div class="w3-light-grey">
   <div class="w3-container w3-teal">
     <h2>Fecha de Encuentros</h2>
   </div>
   <form id="idForm" action="/encuentroFecha/post" method="post" class="w3-container">
     <input type="" name="rowNumber" id="efRowNumber" value="<%= (encuentroFecha) ? encuentroFecha._rowNumber : '' %>">
-    
-    <input type="hidden" name="campoClave" id="efCampo" value="<%= paramCampo %>">
-    <input type="hidden" name="cohorteClave" id="efCohorte" value="<%= cohorteUltima.clave %>">
+    <input type="" name="campoClave" id="efCampo" value="<%= paramCampo %>">
+    <input type="" name="cohorteClave" id="efCohorte" value="<%= cohorteUltima.clave %>">
     <div class="w3-row-padding">
-      <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
+      <% for(var j=1; j<=5; j++) {%>
         <% encuentro = 'encuentro'+j %>
         <% let fechaSubstring = "----" %>
         <% if(encuentroFecha) {%>
           <% fechaSubstring = (encuentroFecha[encuentro] !== undefined) ? encuentroFecha[encuentro] : '' %>
         <% } %>
+        <% if(cohorteUltima.nroEncuentros >= j) {%>
         <div class="">
           <label class="w3-text-brown"><b><%= j %>° encuentro </b></label>
-          <input id="encuentro<%= j %>" class="w3-input w3-border w3-sand inpEncuentro" name="encuentro<%= j %>" type="date" value="<%= fechaSubstring %>">
+          <input id="encuentro<%= j %>" class="w3-input w3-border inpEncuentro" name="encuentro<%= j %>" type="date" value="<%= fechaSubstring %>">
         </div>
-      
+        <% } else {%>
+          <div class="">
+            <label class="w3-text-brown"><b><%= j %>° encuentro </b></label>
+            <input disabled id="encuentro<%= j %>" class="w3-input w3-border inpEncuentro" name="encuentro<%= j %>" type="date" value="<%= fechaSubstring %>">
+          </div>
+        <% } %>
       <% } %>
      
     </div>

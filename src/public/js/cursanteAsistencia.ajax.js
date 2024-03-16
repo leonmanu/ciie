@@ -213,7 +213,7 @@ $(document).ready(function () {
       
     }
     
-});
+  });
 
   $("table button.btnChange").click(async function (event) {
     event.preventDefault();
@@ -274,67 +274,177 @@ $(document).ready(function () {
 
 
   //--->save whole row entery > start	
-$(document).on('click', '.btn_save',async function(event) 
-{
-  event.preventDefault();
-  $('.btn_save').attr('disabled','disabled');
-  $('#waitIconAsignatura').css("display", "block");
-  var arrayJson = []
-  $("table > tbody > tr").each(async function () {
-    //await  tr.find(".modified").html('true')
-    if ($(this).find(".modified").html() == 'true') {
+  $(document).on('click', '.btn_save',async function(event) 
+  {
+    event.preventDefault();
+    $('.btn_save').attr('disabled','disabled');
+    $('#waitIconAsignatura').css("display", "block");
+    var arrayJson = []
+    $("table > tbody > tr").each(async function () {
+      //await  tr.find(".modified").html('true')
+      if ($(this).find(".modified").html() == 'true') {
 
-      let rowNumber = $(this).attr('rowNumber');
-      
-      let arr = {};
-      $(this).find('.row_data').each(function(index, val) {   
-        let col_name = $(this).attr('col_name')
-        let col_val = ($(this).val() || $(this).text())
+        let rowNumber = $(this).attr('rowNumber');
+        
+        let arr = {};
+        $(this).find('.row_data').each(function(index, val) {   
+          let col_name = $(this).attr('col_name')
+          let col_val = ($(this).val() || $(this).text())
 
-        // Utiliza switch para mapear los valores
-        switch (col_val) {
-            case "Presente":
-                arr[col_name] = 'TRUE';
-                break;
-            case "Ausente":
-                arr[col_name] = 'FALSE';
-                break;
-            case "Seleccione":
-                arr[col_name] = '';
-                break;
-            default:
-                // Otros casos, asigna el valor tal cual
-                arr[col_name] = col_val;
-                break;
-  }
-    });
-      
-      $.extend(arr, {rowNumber: rowNumber-2})
-
-      arrayJson.push(arr)
-
-    }			
-  })
-  $.ajax({
-    
-    url: '/cursante/put',
-    contentType: 'application/json',
-    method: 'PUT',
-    data: JSON.stringify({arrayJson}),
-    dataType: 'text',
-    
-    success: function (response) {  
-      $('#waitIconAsignatura').css("display", "none");
-      $('.btn_save').prop('disabled', false);
-      $('#myModal').modal('show')
-      $('#cant').html(arrayJson.length);
+          // Utiliza switch para mapear los valores
+          switch (col_val) {
+              case "Presente":
+                  arr[col_name] = 'TRUE';
+                  break;
+              case "Ausente":
+                  arr[col_name] = 'FALSE';
+                  break;
+              case "Seleccione":
+                  arr[col_name] = '';
+                  break;
+              default:
+                  // Otros casos, asigna el valor tal cual
+                  arr[col_name] = col_val;
+                  break;
     }
-    
+      });
+        
+        $.extend(arr, {rowNumber: rowNumber-2})
+
+        arrayJson.push(arr)
+
+      }			
+    })
+    $.ajax({
+      
+      url: '/cursante/put',
+      contentType: 'application/json',
+      method: 'PUT',
+      data: JSON.stringify({arrayJson}),
+      dataType: 'text',
+      
+      success: function (response) {  
+        $('#waitIconAsignatura').css("display", "none");
+        $('.btn_save').prop('disabled', false);
+        $('#myModal').modal('show')
+        $('#cant').html(arrayJson.length);
+      }
+      
+      });
+      $(document).ajaxStop(function(){
+      window.location.reload();
     });
-    $(document).ajaxStop(function(){
-    window.location.reload();
+
+
+  });
+
+  //////////////////
+
+
+    //== CUANDO SE SELECCIONA COHORTE ===============
+    $('#cohorteClave').on('change', function () {
+
+        var cohorteClave = $(this).val();
+        var campoClave = $('#efCampo').val();
+      $("#waitIconAsignatura3").css("display", "block");
+      $.ajax({
+          url: '/encuentroFecha/getAjax',
+          contentType: 'application/json',
+          method: 'GET',
+          data: {
+            campoClave: campoClave,
+            cohorteClave: cohorteClave
+        },
+        dataType: 'json',
+          success: function (response) { 
+              // alert("nroEncuentros: " + response.cohorte.nroEncuentros )
+              
+              $("#waitIconAsignatura3").css("display", "none");
+          }
+      });
+      filtrarCursantes();
   });
 
 
+
+  /////////////////
+
+    // Filtrar cursantes al cargar la página
+   filtrarCursantes();
+   ocultarPresents3encuentros()
+  
+ 
+    function filtrarCursantes() {
+      var cohorteSeleccionada = $("#cohorteClave").val().toLowerCase();
+      var contadorFila = 0;
+      var contadorCursantesFiltrados = 0;
+      var spnNroCursantes = $("#spnNroCursantes")
+      
+      $("tr[rowNumber]").each(function(index, fila) {
+        var cursoCursante = $(fila).find("td:nth-child(10)").text().toLowerCase();
+        
+        if (cursoCursante.includes(cohorteSeleccionada)) {
+          $(fila).show();
+          contadorFila++;
+          contadorCursantesFiltrados++;
+          $(fila).find("td:nth-child(2)").text(contadorFila + ' | ' + $(fila).find("td:nth-child(2)").text().split(' | ')[1]);
+          
+          if (contadorFila % 2 === 0) {
+            $(fila).css("background-color", "#f2f2f2");
+          } else {
+            $(fila).css("background-color", "#ffffff");
+          }
+        } else {
+          $(fila).hide();
+        }
+
+      });
+      
+      spnNroCursantes.text(contadorCursantesFiltrados);
+    }
+
+    function ocultarPresents3encuentros() {
+      var cohorteParaFiltrar = '1ch';
+  
+      $("tr[rowNumber]").each(function(index, fila) {
+          var cursoCursante = $(fila).find("td:nth-child(10)").text().toLowerCase();
+  
+          if (cursoCursante.includes(cohorteParaFiltrar.toLowerCase())) {
+              // Ocultar los botones de presente/ausente para los encuentros 4 y 5
+              $(fila).find("td:nth-child(7) button, td:nth-child(8) button").hide();
+          }
+      });
+  }
+  
+  /////////////////////////////
+
+  $(document).ready(function() {
+    $("#copyEmailsBtn").click(function() {
+        var emails = [];
+        // Itera sobre las filas visibles y agrega los correos electrónicos a la lista
+        $("tr:visible").each(function() {
+            var email = $(this).find("td:last-child").text().trim();
+            if (email !== "") {
+                emails.push(email);
+            }
+        });
+
+        // Convierte la lista de correos electrónicos en una cadena separada por comas
+        var emailsStr = emails.join(", ");
+
+        // Copia la cadena al portapapeles
+        var tempInput = $("<input>");
+        $("body").append(tempInput);
+        tempInput.val(emailsStr).select();
+        document.execCommand("copy");
+        tempInput.remove();
+
+        // Muestra un mensaje de éxito
+        alert(emails.length + " correos electrónicos han sido copiados al portapapeles.");
+    });
 });
+
+
+
+
 }); 

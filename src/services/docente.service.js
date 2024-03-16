@@ -21,6 +21,13 @@ const getPorCampoId = async (idCampo) => {
     return persona
 }
 
+const getJerarquiaMin = async (user) => {//este es el que manda los cargos por docentes
+    const usuario = await usuarioService.getPorIdGoogle(user.id)
+    const docenteCargos = await get()
+    const filtrados = await docenteCargos.filter(row => row.idUsuario == usuario.id)
+    return filtrados
+}
+
 
 
 module.exports = {

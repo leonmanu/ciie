@@ -30,7 +30,7 @@ router
         req.session.destroy();
       })
 
-      global.base_dir = __dirname;
+global.base_dir = __dirname;
 global.abs_path = function(path) {
   return base_dir + path;
 }

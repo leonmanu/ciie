@@ -51,10 +51,12 @@ const getPorCampoCohorte = async (campoClave, cohorteClave) => {
     campo = await campoService.getPorClave(campoClave)
     cohorte = await cohorteService.getPorClave(cohorteClave)
     registros = await get()
+
+    cohorteJson = await utilidadesService.convertOneToJson(cohorte)
     const filtrados = await registros.filter(row => row.idCampo == campo.id && row.idCohorte == cohorte.id)
     if(filtrados.length > 0){
         const resultadoJson = await utilidadesService.convertToJson(filtrados)
-    const resultado = resultadoJson[0]
+        resultadoJson[0].cohorte = cohorteJson
         return resultadoJson[0]
     } else {
         return null

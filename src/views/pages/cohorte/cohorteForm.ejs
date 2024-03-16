@@ -1,0 +1,30 @@
+<!-- Parte de arriba -->
+<%- include('../../layout/partTop.ejs') %>
+
+<div class="w3-container">
+    <h2>Formulario de Alta de Cohortes</h2>
+    <form action="/guardarCohorte" method="POST" class="w3-container">
+        <label for="ano">Año:</label>
+        <input type="number" id="ano" name="ano" required><br><br>
+
+        <label for="cohorte">Número de Cohorte:</label>
+        <input type="number" id="cohorte" name="cohorte" required><br><br>
+
+        <label for="nroEncuentros">Número de Encuentros:</label>
+        <select id="nroEncuentros" name="nroEncuentros" required>
+            <option value="3">3</option>
+            <option value="5">5</option>
+        </select><br><br>
+
+        <label for="enServicio">¿Los encuentros son en servicio?</label>
+        <select id="enServicio" name="enServicio" required>
+            <option value="true">Sí</option>
+            <option value="false">No</option>
+        </select><br><br>
+
+        <button type="submit" class="w3-button w3-blue">Guardar</button>
+    </form>
+</div>
+
+  <!-- Parte de abajo -->
+  <%- include('../../layout/partBotton.ejs') %>

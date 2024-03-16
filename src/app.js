@@ -14,6 +14,7 @@ const cargoRouter = require('./routes/cargo.route')
 const capacitacionRouter = require('./routes/capacitacion.route')
 const cursanteRouter = require('./routes/cursante.route')
 const rolRouter = require('./routes/rol.route')
+const cohorteRouter = require('./routes/cohorte.route')
 const revistaRouter = require('./routes/revista.route')
 const encuentroFechaRouter = require('./routes/encuentroFecha.route')
 
@@ -51,6 +52,7 @@ app
     .use("/rol", rolRouter)
     .use("/revista", revistaRouter)
     .use("/encuentroFecha", encuentroFechaRouter)
+    .use("/cohorte", cohorteRouter)
 
 module.exports = app
 

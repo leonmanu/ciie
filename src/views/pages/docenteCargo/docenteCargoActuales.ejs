@@ -48,7 +48,9 @@
                 <% campos.forEach(function(campo){ %>
                   <% if(cargo.idCampo == campo.id){ %>
                     <%= campo.nombre %>
-                    <% campoClave = campo.clave %>
+                    <br>
+                    (<%= campoClave = campo.clave %>)
+
                   <% } %>
                 <% }) %>
               </td>
@@ -115,8 +117,8 @@
               <th>Clave</th>
               <th>Revista</th>
               <th>Cursantes</th>
-          <th>Asistencia</th>
-          <th>Eliminar</th>
+              <th>Asistencia</th>
+              <th>Eliminar</th>
             </tr>
           </thead>
           <% docenteCargos.forEach(function(docenteCargo){ %>

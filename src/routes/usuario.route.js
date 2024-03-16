@@ -18,6 +18,4 @@ router
     })
     .get('/todos', getTodos)
     
-
-
 module.exports = router

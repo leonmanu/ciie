@@ -4,12 +4,35 @@
 <% let i = 1 %>
       <% let encuentro %>
   <!-- Header -->
-  <header class="w3-container w3-bar sticky-top" style="padding-top:22px; display: flex; align-items: center;">
-    <h5 style="margin-right: auto;"><b><i class="fa fa-dashboard"></i><span id="campoClave"><%= paramCampo %></span>/ Asistencia / <span id="cohorteClave"><%= cohorteUltima.clave %></span></b></h5>
-    <button href="#" class="btn_save w3-button w3-teal " row_id="'+row_id+'" disabled>
-      <span id="">Guardar</span> 
-      <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
-    </button>
+  <header class="w3-container w3-bar sticky-top" style="padding-top:22px; align-items: center; background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */">
+
+    <div class="">
+      <div class="w3-white w3-large" style="max-width:1200px;margin:auto">
+        <div class="w3-right w3-padding-10">
+          <button href="#" class="btn_save w3-button w3-teal" row_id="'+row_id+'" disabled>
+            <span id="">Guardar</span> 
+            <img class="pull-right" id="waitIconAsignatura" src='/img/whiteIconGrisSegmentos.gif' style="display:none;" width="22" height="22" />
+          </button>
+        </div>
+        <div class="w3-left w3-padding-16">
+          <i class="fa fa-dashboard"></i> <span id="campoClave">Asistencia: <%= paramCampo %> / Ch: </span>
+        </div>
+        <div class="w3-left w3-padding-16">
+          <select id="cohorteClave" class="row_data w3-border" name="calificacion" col_name = "Valoracion">
+            <option value="seleccione"  style="display:none"> seleccione </option>
+            <% cohortes.forEach(function(cohorte){ %>
+              <% let selected %>
+              <% if(cohorte['clave'] == cohorteUltima.clave) { %>
+                <% selected = "selected" %>
+              <% }%>
+              <option <%= selected %> value="<%= cohorte.clave %>"><%= cohorte.clave %></option>
+            <% }) %>
+          </select>
+          <img class="pull-right" id="waitIconAsignatura3" src='/img/whiteIconGrisSegmentos.gif' style="display:none;" width="22" height="22" />
+        </div>
+      </div>
+    </div>
+    
   </header>
 
   <div id="modalFechaEcuentros" class="w3-modal modal">
@@ -25,10 +48,10 @@
       <thead>
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
           <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
-            Cursante (<%= cursantes.length %>)
+            Cursante (<span id="spnNroCursantes"><%= cursantes.length %></span>) <button id="copyEmailsBtn" class="w3-button w3-teal"><b>@</b></button>
           </th>
           <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">DNI</th>
-          <th class="ocultable" colspan="<%= cohorteUltima.nroEncuentros %>" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Encuentros
+          <th class="ocultable" colspan="5" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Encuentros
             <button id="btnFechaEncuentros" href="#" class="w3-button w3-teal">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
                 <img class="pull-right" id="waitIconFecha" src='/img/whiteIconGrisSegmentos.gif' style="display:none ;" width="22" height="22" />
@@ -36,7 +59,7 @@
           <th class="ocultable" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">Valoración</th>
         </tr>
         <tr class="w3-light-grey" style="border: 1px solid #ddd;">
-          <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) { %>
+          <% for(var j=1; j<=5; j++) { %>
             <% encuentro ='encuentro'+j %>
             <% let fechaSubstring = (encuentroFecha && [encuentro] !== undefined && encuentroFecha[encuentro] !== '') ? String(encuentroFecha[encuentro]).substring(8,10) + "-" + String(encuentroFecha[encuentro]).substring(5,7)  : '' %>
             <th class="encuentro ocultable" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;"><%= j %>° : <%= fechaSubstring %></th>
@@ -55,7 +78,7 @@
           <td>
             <%= registro['Número de DNI'] %>
           </td>
-          <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) {%>
+          <% for(var j=1; j<=5; j++) {%>
             <% encuentro = 'encuentro'+j %>
             <td class="ocultable" style="text-align: center; vertical-align: middle;" >
               
@@ -79,6 +102,10 @@
             <% }) %>
           </select>
         </td>
+        <td class="modified" style="display:none ;">
+          <%= i %> | <%= registro['Seleccione su/s curso/s'] %> %>
+         </td>
+         <td class="modified" style="display:none ;"><%= registro['Dirección de correo electrónico'] %></td>
         </tr>
         <% i++ %>
         <% }) %>
@@ -96,6 +123,11 @@
       display: none;
     }
   </style>
+
+  <script>
+ 
+</script>
+
   <!-- Parte de abajo -->
   <%- include('../../layout/partBotton.ejs') %>
  

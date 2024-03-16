@@ -7,6 +7,7 @@ const { getPorCampoCohorte, post } = require('../controllers/encuentroFecha.cont
 var sessionMiddelware = require('../middelware/session.middelware')
 
 router
+    .get('/getAjax', getPorCampoCohorte)
     .post('/get', getPorCampoCohorte)
     .post('/post', post)
     

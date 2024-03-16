@@ -11,7 +11,7 @@ const get = async () => {
 
 const post = async (objeto) => {
     resultado = await encuentroHoraSheet.post(objeto)
-    console.log(objeto)
+    //console.log(objeto)
     return objeto
 }
 

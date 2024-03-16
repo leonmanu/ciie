@@ -23,6 +23,8 @@ const getPorDocente = async (user) => {//este es el que manda los cargos por doc
     return filtrados
 }
 
+
+
 const getPorCargoId = async (idCargo) => {//este es el que manda los cargos por docentes
     const docenteCargos = await get()
     const filtrados = await docenteCargos.filter(row => row.idCargo == idCargo)
