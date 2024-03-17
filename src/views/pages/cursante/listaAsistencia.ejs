@@ -16,41 +16,41 @@
 <div class="">
     <table class="w3-table-all">
         
-        <tr class="w3-light-grey" style="border: 1px solid #ddd;">
-            <td class="overflow-hidden" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd; width: 30%;">
-                Cursante
+        <tr class="w3-light-grey" style="border: 1px solid #000000;">
+            <td class="overflow-hidden" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #000000; width: 30%;">
+                <b> Cursante </b>
             </td>
-            <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd; width: 10%;">
+            <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #000000; width: 10%;">
                 DNI
             </th>
             <!-- Encabezado común para los encuentros -->
-            <th colspan="<%= cohorteUltima.nroEncuentros %>" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
+            <th colspan="<%= cohorteUltima.nroEncuentros %>" style="text-align: center; vertical-align: middle; border: 1px solid #000000;">
                 Encuentros : <i>fecha</i>
             </th>
             <!-- Nueva columna para observaciones -->
-            <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd; width: 12%;">Observaciones</th>
+            <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #000000; width: 12%;">Observaciones</th>
         </tr>
         <!-- Subencabezado para los números de encuentro -->
-        <tr class="w3-light-grey" style="border: 1px solid #ddd;">
+        <tr class="w3-light-grey" style="border: 1px solid #000000;">
             <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) { %>
                 <% encuentro ='encuentro'+j %>
-                <th class="encuentro ocultable" style="vertical-align: middle; border: 1px solid #ddd;"><%= j %>° : </th>
+                <th class="encuentro ocultable" style="vertical-align: middle; border: 1px solid #000000;"><%= j %>° : </th>
             <% } %>
         </tr>
     
     <tbody>
         <% cursantes.forEach(function(registro){ %>
         <% if (registro['Seleccione su/s curso/s'].includes(campo.clave+" ")) { %>
-        <tr rowNumber='<%= registro._rowNumber %>'>
+        <tr rowNumber='<%= registro._rowNumber %>' style="border: 1px solid #000000;">
             <td class="modified" style="display:none;" col_name="change">false</td>
-            <td><b><%= i %>)</b> <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>
-            <td><%= registro['Número de DNI'] %></td>
+            <td> <b><%= i %>)</b> <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>
+            <td style="border: 1px solid #000000;"><%= registro['Número de DNI'] %></td>
             <% for(var j=1; j<=cohorteUltima.nroEncuentros; j++) { %>
                 <% encuentro ='encuentro'+j %>
-                <td class="encuentro ocultable" style="border: 1px solid #ddd;"><small><%= i %>)</small></td>
+                <td class="encuentro ocultable" style="border: 1px solid #000000;"><small><%= i %>)</small></td>
             <% } %>
             <!-- Celda para observaciones -->
-            <td style="vertical-align: middle; border: 1px solid #ddd;"><small><%= i %>) </small></td>
+            <td style="vertical-align: middle; border: 1px solid #000000;"><small><%= i %>) </small></td>
         </tr>
         <% i++ %>
         <% } %>
