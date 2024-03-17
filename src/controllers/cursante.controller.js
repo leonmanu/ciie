@@ -48,10 +48,13 @@ const getPorCapacitacionCursantesDatos = async (req,res) => {
 
 const getListaAsistencia = async (req, res) => {
     paramCampo = await req.params.campoClave
+    campo = await campoService.getPorClave(paramCampo)
+    docente = await docenteService.getPorCampoId(campo.id)
     cohorteUltima = await cohorteService.getUltimo()
+    console.log("docente: " + docente)
     cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
     //fechas = await encuentroFechaService.getFechas(encuentroFecha)
-    res.render("pages/cursante/listaAsistencia", {user: req.user, cursantes, campo: paramCampo, cohorteUltima})
+    res.render("pages/cursante/listaAsistencia", {user: req.user, docente, cursantes, campo, cohorteUltima})
 }
 
 

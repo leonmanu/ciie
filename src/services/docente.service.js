@@ -17,7 +17,6 @@ const getPorCampoId = async (idCampo) => {
     const cargo = await cargoService.getPorCampo(idCampo)
     const docenteCargo = await docenteCargoService.getPorCargoId(cargo.id)
     const persona = await personaService.getPorUsuarioId(docenteCargo.idUsuario)
-    console.log("docente.service / getPorCampoId / persona "+persona.apellido)
     return persona
 }
 

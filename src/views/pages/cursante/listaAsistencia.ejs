@@ -8,9 +8,10 @@
 <!-- Header -->
     <% i = 1 %>
     <div class="w3-bar w3-large">
-        <b><span>Lista de Asistencia: </span> <span id="campoClave"><strong><%= campo %></strong></span> / <span id="cohorteClave"><%= cohorteUltima.clave %></span></b>
+        <span>Lista de Asistencia: </span> <b><span id="campoClave"><ins><strong><%= campo.nombre %></strong> (<%= campo.clave %>)</ins></span>, <span id="cohorteClave"><%= cohorteUltima.clave %></span></b> | 
+        <span>Form: <b><%= docente.apellido %></b>, <%= docente.nombre %></span>
         <span class="w3-bar-item w3-right">CIIE - Laferrere</span>
-        <img class="w3-image w3-blue-grey w3-right" src="/img/logoCiieIslas.png" alt="Hamburger Catering" style="width:30px;">
+        <img class="w3-image w3-right" src="/img/escudoCiie-islas.png" alt="Hamburger Catering" style="width:36px;">
     </div>
 <div class="">
     <table class="w3-table-all">
@@ -39,7 +40,7 @@
     
     <tbody>
         <% cursantes.forEach(function(registro){ %>
-        <% if (registro['Seleccione su/s curso/s'].includes(campo+" - |")) { %>
+        <% if (registro['Seleccione su/s curso/s'].includes(campo.clave+" ")) { %>
         <tr rowNumber='<%= registro._rowNumber %>'>
             <td class="modified" style="display:none;" col_name="change">false</td>
             <td><b><%= i %>)</b> <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>

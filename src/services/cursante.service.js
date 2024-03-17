@@ -17,8 +17,7 @@ const getPorDni = async (dni) => {
 
 const getPorCohorte = async (cohorte) => {
   const cursantes = await get();
-    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
-
+    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes(cohorte.toLowerCase()))
     // Ordenar por apellido
     const resultados = await filtrados.sort((a, b) => {
       const apellidoA = a['Apellido/s'].toLowerCase();
