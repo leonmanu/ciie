@@ -3,6 +3,7 @@ const utilidadesService = require('./utilidades.service')
 const encuentroFechaSheet = require('../sheets/encuentroFecha.sheet')
 const campoService = require('./campo.service')
 const cohorteService = require('./cohorte.service')
+const encuentroHoraService = require('./encuentroHora.service')
 
 const get = async () => {
     registros = await encuentroFechaSheet.get()
@@ -93,6 +94,26 @@ const getFechas = async (objeto) => {
     return fechasArray
 }
 
+const getCamposFechas = async (campos, cohortes) => {
+    let encuetroFechas = await get();
+
+    for (const campo of campos) {
+        for (const encuentroFecha of encuetroFechas) {
+            if (campo.id == encuentroFecha.idCampo) {
+                for (const cohorte of cohortes) {
+                    if (cohorte.id == encuentroFecha.idCohorte) {
+                        campo.encuentroFecha = encuentroFecha;
+                        campo.cohorte = cohorte
+                        //console.log("EncuentrosFecha: " + campo.clave + " | " + campo.encuentroFecha.encuentro1);
+                    }
+                }
+            }
+        }
+    }
+
+    return campos;
+}
+
 module.exports = {
     get:get,
     getPorCampoCohorte,
@@ -101,5 +122,6 @@ module.exports = {
     post,
     put,
     postOrPut,
-    getFechas
+    getFechas,
+    getCamposFechas
 } 

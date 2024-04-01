@@ -28,9 +28,33 @@ const getJerarquiaMin = async (user) => {//este es el que manda los cargos por d
 }
 
 
+const getCamposYDocentes = async (campos) => {
+    cargos = await cargoService.get()
+    docenteCargos = await docenteCargoService.get()
+    personas = await personaService.get()
+    await campos.forEach(async campo => {
+        await cargos.forEach(async cargo =>{
+            if (campo.id == cargo.idCampo) {
+                await docenteCargos.forEach(async docenteCargo =>{
+                    if (cargo.id == docenteCargo.idCargo) {
+                        await personas.forEach(async persona =>{
+                           if (docenteCargo.idUsuario == persona.idUsuario) {
+                                campo.persona = persona
+                           }
+                        })
+                        
+                    }
+                })
+            }
+        })
+        //console.log("CAMPO: " + campo.clave + " | " + campo.persona.apellido + ", " + campo.persona.nombre)
+    } )
+    return campos
+}
+
 
 module.exports = {
     get:get,
-    getPorCampoId
-
+    getPorCampoId,
+    getCamposYDocentes
 } 

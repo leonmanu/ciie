@@ -1,0 +1,129 @@
+<!-- Parte de arriba -->
+<!-- <%- include('../../layout/partTopPrint.ejs') %> -->
+<!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
+
+<div>
+    <% let i = 1 %>
+    <% let encuentro %>
+    <% let aprobados = 0 %>
+    <% let desaprobados = 0 %>
+    <% let ausentes = 0 %>
+    <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
+    
+</div>
+
+<div style="break-after: page;"></div>
+<div class="">
+
+            <% cursantes.forEach(function(cursante){ %>
+                <% camposDocentes.forEach(function(campoDocente){ %>
+                    <% if (cursante['Seleccione su/s curso/s'].includes(campoDocente.clave+" ")) { %>
+                    <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
+                    <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2) %>
+                    <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
+                    <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2) %>
+                    <% let fechaFinLarga = (newFechaFin.getUTCDate() + 7) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
+                    
+                    
+                        <div class="borderPage container ">
+                            <sup style=" float: right; margin: 0;"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %></sup>
+                            <div class="w3-bar w3-large" style="margin-top: 10;">
+                                <img class="w3-image" src="/img/cabeceraBlog.jpg" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
+                                <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; float: right;">
+                            </div>
+                            
+                            <div class="w3-bar" style="margin: 0; text-align: center; clear: both;">
+                                <h3 class="" style="margin-bottom: 5px;"> <strong> CERTIFICADO </strong> </h3>
+                                <hr style="margin-top: 0px;">
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <div class="grid-container" style="width: 50%;">
+                                    Certifico que: <b><%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></b>
+                                </div>
+                                <div class="grid-container" style="background-color: white;">
+                                    DNI <b><%= cursante['Número de DNI'] %></b>, ha asistido y aprobó el curso:
+                                </div>
+                            </div>
+                            
+                            <div style="height: 70px; overflow: hidden; text-align: center; display: flex; justify-content: center; align-items: center; font-family: Luminari , cursive;">
+                                <h4><i><%= campoDocente.propuesta.nombre %> </i></h4>
+                            </div>
+                            
+                            
+                            
+                            <div>
+                                <p>con una carga horaria de <b>20</b> horas reloj, desde el <b><%= fechaInicio %></b> hasta el <b><%= fechaFin %></b> con la correspondiente evaluación ﬁnal.</p>
+                                 <p>&nbsp;Aprobado por Resolución N° 2425/23 	Dictamen N° 10848 	Proyecto N° 005/23 NC</p>
+                                 <p style="text-align: right;"><i>La Matanza, G. de Laferrere, <%= fechaFinLarga %>.</i></p>
+                            </div>
+                            <div style="text-align: center; margin-top: 8%; margin-bottom: 2%;">
+                                <div class="grid-container" style="width: 35%;">
+                                    <hr>
+                                    <small>Formador/a: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
+                                </div>
+                                <div class="grid-container" style="width: 20%;">
+                                    
+                                </div>
+                                <div class="grid-container" style="width: 35%;">
+                                    <hr>
+                                    <small>Director/a</small>
+                                </div>
+                            </div>
+                        <% i++ %>
+                        </div>
+                        <hr style="margin-top: 5%;margin-bottom: 5%;">
+                    <% } %>
+                <% }) %>
+            <% }) %>
+    
+</div>
+
+<style>
+
+    .borderPage {
+        border: 5px solid black; /* Ancho y color del borde */
+        margin: 0px;
+    }
+    body {
+                margin: 0; /* Eliminar el margen predeterminado */
+                padding: 20px; /* Espacio interior para que el contenido no esté pegado al borde */
+                font-family: Arial, sans-serif;
+            }
+    @media print {
+        /* Estilos para la vista de impresión */
+
+        /* Ocultar elementos */
+        .noPrint {
+            display: none;
+        }
+
+        .brPage {
+            page-break-after: always;
+        }
+        body {
+            padding: 0; /* Eliminar el margen predeterminado */
+            }
+    }
+    /* Estilos del contenedor */
+    .container {
+            padding: 20px; /* Espacio interior del contenedor */
+            padding-top: 0%;
+        }
+
+        /* Estilos de los elementos dentro del contenedor */
+        .content {
+            text-align: center; /* Alinear el contenido al centro */
+        }
+    .grid-container {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    p {
+        margin: 2;
+    }
+    sup {
+  font-size: 12px;
+}
+</style>

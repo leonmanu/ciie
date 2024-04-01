@@ -9,6 +9,8 @@ const cargoService = require('../services/cargo.service')
 const docenteCargoService = require('../services/docenteCargo.service')
 const docenteCargoSheet = require('../sheets/docenteCargo.sheet')
 const docenteService = require('../services/docente.service')
+const propuestaService = require('../services/propuesta.service')
+const personaService = require('../services/persona.service')
 
 const get = async (req,res) => {
     registros = await cursanteService.get()
@@ -106,6 +108,41 @@ const getConstanciaPorCursante = async (req, res) => {
     res.render("pages/cursante/constanciasIndividual", {user: req.user, cursantes, campo:campos, cohorteUltima, encuentroFecha, encuentroHora})
 }
 
+const getCertificado = async (req, res) => {
+    paramCohorte = await req.params.cohorte
+    paramCampo = await req.params.campoClave
+    paramDni = await req.params.dni
+    propuestas = await propuestaService.get()
+    cursantes = await cursanteService.get()
+    cohortes = await cohorteService.get()
+    campos = await campoService.get()
+    if (paramCohorte) {
+        console.log("paramCohorte: " + paramCohorte)
+        propuestas = await propuestas.filter(row => row.cohorte.toLowerCase() == paramCohorte.toLowerCase())
+        console.log(propuestas)
+        cohortes = await cohortes.filter(row => row.clave.toLowerCase() == paramCohorte.toLowerCase())
+        cursantes = await cursanteService.filtrarPorCohorte(cursantes, paramCohorte)
+    }
+    if (paramCampo) {
+        console.log("paramCampo: " + paramCampo)
+        propuestas = await propuestas.filter(row => row.codigo == paramCampo)
+        cursantes = await cursanteService.filtrarPorCampo(cursantes, paramCampo)
+        campos = await campos.filter(row => row.clave == clave)
+    }
+    if (paramDni) {
+        console.log("paramDni: " + paramDni)
+        
+        cursantes = await cursantes.cursanteService.getPorDni(cursantes, paramDni)
+    }
+
+    campos = await campoService.getCampoYPropuesta(campos, propuestas)
+    campos = await encuentroFechaService.getCamposFechas(campos,cohortes)
+
+    camposDocentes = await docenteService.getCamposYDocentes(campos)
+    res.render("pages/cursante/certificado", {user: req.user, cursantes, camposDocentes})
+}
+
+
 const putArray = async (req, res) => {
     arrayJson = req.body.arrayJson
     resultado = await cursanteService.putArray(arrayJson)
@@ -123,4 +160,6 @@ module.exports = {
     getConstancia,
     getConstanciaPorCursante,
     getActaVolante,
+    getCertificado,
+    
 }
