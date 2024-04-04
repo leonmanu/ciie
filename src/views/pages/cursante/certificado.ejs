@@ -1,7 +1,4 @@
-<!-- Parte de arriba -->
-<!-- <%- include('../../layout/partTopPrint.ejs') %> -->
 <!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
-
 <div>
     <% let i = 1 %>
     <% let encuentro %>
@@ -11,7 +8,31 @@
     <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
     
 </div>
-
+<div>
+    <div class="topnav">
+        <div class="login-container">
+          <form action="/cursante/certificado" method="post">
+            <select name="cohorte">
+                <option value=''  style="display:none"> Cohorte </option>
+                  <% cohortesTodas.forEach(function(cohorte){ %>
+                    <% let selected %>
+                    <option <%= selected %> value="<%= cohorte.clave %>"><%= cohorte.clave %></option>
+                  <% }) %>
+              </select>
+              <select name="campoClave">
+                <option value=''  style="display:none"> Campo </option>
+                  <% campos.forEach(function(campo){ %>
+                    <% let selected %>
+                    <option <%= selected %> value="<%= campo.clave %>"><%= campo.clave %></option>
+                  <% }) %>
+              </select>
+            <input type="text" placeholder="DNI" name="dni">
+            <button type="submit">Consultar</button>
+          </form>
+        </div>
+      </div>
+      <p></p>
+</div>
 <div style="break-after: page;"></div>
 <div class="">
 
@@ -22,12 +43,12 @@
                     <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2) %>
                     <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
                     <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2) %>
-                    <% let fechaFinLarga = (newFechaFin.getUTCDate() + 7) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
+                    <% let fechaFinLarga = (newFechaFin.getUTCDate()) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
                     
                     
                         <div class="borderPage container ">
                             <sup style=" float: right; margin: 0;"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %></sup>
-                            <div class="w3-bar w3-large" style="margin-top: 10;">
+                            <div class="w3-bar w3-large" style="margin: 0;">
                                 <img class="w3-image" src="/img/cabeceraBlog.jpg" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
                                 <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; float: right;">
                             </div>
@@ -38,15 +59,15 @@
                             </div>
                             <div style="margin-top: 5px;">
                                 <div class="grid-container" style="width: 50%;">
-                                    Certifico que: <b><%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></b>
+                                    &nbsp;Certifico que: <b><%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></b>
                                 </div>
                                 <div class="grid-container" style="background-color: white;">
                                     DNI <b><%= cursante['Número de DNI'] %></b>, ha asistido y aprobó el curso:
                                 </div>
                             </div>
                             
-                            <div style="height: 70px; overflow: hidden; text-align: center; display: flex; justify-content: center; align-items: center; font-family: Luminari , cursive;">
-                                <h4><i><%= campoDocente.propuesta.nombre %> </i></h4>
+                            <div style="height: 70px; overflow: hidden; text-align: center; display: flex; justify-content: center; align-items: center; ">
+                                <h4><i><u><%= campoDocente.propuesta.nombre %></u> </i></h4>
                             </div>
                             
                             
@@ -66,7 +87,7 @@
                                 </div>
                                 <div class="grid-container" style="width: 35%;">
                                     <hr>
-                                    <small>Director/a</small>
+                                    <small>Director/a: Sica, Adriana</small>
                                 </div>
                             </div>
                         <% i++ %>
@@ -124,6 +145,83 @@
         margin: 2;
     }
     sup {
-  font-size: 12px;
+  font-size: 10px;
 }
 </style>
+<style>
+    * {box-sizing: border-box;}
+    
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .topnav {
+      overflow: hidden;
+      background-color: #e9e9e9;
+    }
+    
+    .topnav a {
+      float: left;
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    
+    .topnav a.active {
+      background-color: #2196F3;
+      color: white;
+    }
+    
+    .topnav .login-container {
+      float: left;
+    }
+    
+    .topnav input[type=text],select {
+      padding: 6px;
+      margin-top: 8px;
+      font-size: 17px;
+      border: none;
+      width:120px;
+    }
+    
+    .topnav .login-container button {
+      padding: 6px 10px;
+      margin-top: 8px;
+      margin-right: 16px;
+      background-color: #555;
+      color: white;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .topnav .login-container button:hover {
+      background-color: green;
+    }
+    
+    @media screen and (max-width: 600px) {
+      .topnav .login-container {
+        float: none;
+      }
+      .topnav a, .topnav input[type=text], .topnav .login-container button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+      }
+      .topnav input[type=text] {
+        border: 1px solid #ccc;  
+      }
+    }
+    </style>

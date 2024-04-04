@@ -22,8 +22,8 @@ const siExisteUsuario = async (req, res) => {
     console.log("USUARIO: ",req.user.email)
     // creo que este if debería ir en el service
     if(req.user._json.domain === 'abc.gob.ar'){
-        if(req.user.email == resultado.email){
-           
+        if(req.user.email == resultado.email){ 
+           req.user.admin = resultado.admin
             res.redirect("/docente/cargo")
        } else {
             res.redirect("/usuarioAlta")
@@ -57,6 +57,11 @@ const fromularioAlta = (req, res) => {
 const post = (req, res) => {
     const resultado = usuarioService.post(req.body)
     res.redirect("/")
+}
+
+const esAdmin = async (email) => {
+    const resultado = await usuarioService.esAdmin(email)
+    return resultado
 }
 
 

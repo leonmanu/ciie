@@ -27,6 +27,9 @@
     <div class="w3-bar-block">
       <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
       <a href="/docente/cargo" class="w3-bar-item w3-button w3-padding4"><i class="fa fa-briefcase fa-fw"></i>  Cargos</a>
+      <%if(user.admin == 'TRUE'){%>
+        <a href="/cursante/certificado/blanco" class="w3-bar-item w3-button w3-padding4"><i class="fa fa-certificate" aria-hidden="true"></i>  Certificados</a>
+      <%}%>
       <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
       <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Traffic</a>
       <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>

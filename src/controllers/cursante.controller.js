@@ -109,28 +109,29 @@ const getConstanciaPorCursante = async (req, res) => {
 }
 
 const getCertificado = async (req, res) => {
-    paramCohorte = await req.params.cohorte
-    paramCampo = await req.params.campoClave
-    paramDni = await req.params.dni
+    paramCohorte = await req.body.cohorte
+    paramCampo = await req.body.campoClave
+    paramDni = await req.body.dni
+    console.log("paramCohorte: " + paramCohorte + " # paramCampo: " + paramCampo + " # paramDni: " + paramDni)
     propuestas = await propuestaService.get()
-    cursantes = await cursanteService.get()
-    cohortes = await cohorteService.get()
+    cursantes = await cursanteService.getAprobados()
+    cohortesTodas = cohortes = await cohorteService.get()
     campos = await campoService.get()
-    if (paramCohorte) {
+    if (paramCohorte != '') {
         console.log("paramCohorte: " + paramCohorte)
         propuestas = await propuestas.filter(row => row.cohorte.toLowerCase() == paramCohorte.toLowerCase())
-        console.log(propuestas)
+        //console.log(propuestas)
         cohortes = await cohortes.filter(row => row.clave.toLowerCase() == paramCohorte.toLowerCase())
         cursantes = await cursanteService.filtrarPorCohorte(cursantes, paramCohorte)
     }
-    if (paramCampo) {
-        console.log("paramCampo: " + paramCampo)
+    if (paramCampo != '') {
+        //console.log("paramCampo: " + paramCampo)
         propuestas = await propuestas.filter(row => row.codigo == paramCampo)
         cursantes = await cursanteService.filtrarPorCampo(cursantes, paramCampo)
-        campos = await campos.filter(row => row.clave == clave)
+        campos = await campos.filter(row => row.clave == paramCampo)
     }
-    if (paramDni) {
-        console.log("paramDni: " + paramDni)
+    if (paramDni != '') {
+        //console.log("paramDni: " + paramDni)
         
         cursantes = await cursantes.cursanteService.getPorDni(cursantes, paramDni)
     }
@@ -139,7 +140,16 @@ const getCertificado = async (req, res) => {
     campos = await encuentroFechaService.getCamposFechas(campos,cohortes)
 
     camposDocentes = await docenteService.getCamposYDocentes(campos)
-    res.render("pages/cursante/certificado", {user: req.user, cursantes, camposDocentes})
+    res.render("pages/cursante/certificado", {user: req.user, cursantes, camposDocentes, cohortesTodas})
+}
+
+const getCertificadoBlanco = async (req, res) => {
+
+    cohortesTodas = cohortes = await cohorteService.get()
+    campos = await campoService.get()
+    cursantes = []
+
+    res.render("pages/cursante/certificado", {user: req.user, cohortesTodas,cursantes})
 }
 
 
@@ -161,5 +171,6 @@ module.exports = {
     getConstanciaPorCursante,
     getActaVolante,
     getCertificado,
+    getCertificadoBlanco
     
 }

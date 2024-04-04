@@ -17,7 +17,8 @@ const getPorEmail = async (email) => {
             idGoogle: resultado[0].idGoogle,
             email: resultado[0].email,
             apellido: resultado[0].apellido,
-            nombre: resultado[0].nombre
+            nombre: resultado[0].nombre,
+            admin: resultado[0].admin
         }
 
         return usuarioInterface
@@ -84,6 +85,12 @@ async function put(objExistente, objNuevo){
     resultado = await objExistente.save()
     console.log("objExistente ::   ", objExistente)
     return objExistente
+}
+
+const esAdmin = async (email) => {
+    registros = await usuarioDb.getTodos()
+    console.log("Data: ",registros[0].cargo[0].rol)
+    return registros
 }
 
 module.exports = {

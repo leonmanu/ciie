@@ -11,7 +11,8 @@ const { get,
     getConstancia,
     getConstanciaPorCursante,
     getActaVolante,
-    getCertificado
+    getCertificado,
+    getCertificadoBlanco
 } = require('../controllers/cursante.controller')
 var sessionMiddelware = require('../middelware/session.middelware')
 
@@ -21,7 +22,8 @@ router
     .get('/listaAsistencia/:campoClave', getListaAsistencia)
     .get('/actaVolante/:campoClave?', getActaVolante)
     .get('/constancia/:campoClave/:dni?', getConstancia)
-    .get('/certificado/:cohorte?/:campoClave?/:dni?', getCertificado)
+    .post('/certificado', getCertificado)
+    .get('/certificado/blanco', getCertificadoBlanco)
     //.get('/constancia/:campoClave/:dni', getConstanciaPorCursante)
     .get('/:campoClave', getPorCapacitacion)
     .get('/:campoClave/cursantesDatos', getPorCapacitacionCursantesDatos)
