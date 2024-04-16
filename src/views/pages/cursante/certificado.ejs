@@ -8,7 +8,7 @@
     <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
     
 </div>
-<div>
+<div class="noPrint">
     <div class="topnav">
         <div class="login-container">
           <form action="/cursante/certificado" method="post">
@@ -33,7 +33,6 @@
       </div>
       <p></p>
 </div>
-<div style="break-after: page;"></div>
 <div class="">
 
             <% cursantes.forEach(function(cursante){ %>
@@ -73,11 +72,11 @@
                             
                             
                             <div>
-                                <p>con una carga horaria de <b>20</b> horas reloj, desde el <b><%= fechaInicio %></b> hasta el <b><%= fechaFin %></b> con la correspondiente evaluación ﬁnal.</p>
-                                 <p>&nbsp;Aprobado por Resolución N° 2425/23 	Dictamen N° 10848 	Proyecto N° 005/23 NC</p>
+                                <p>con una carga horaria de <b><%= campoDocente.propuesta['Carga horaria'] %></b> horas reloj, desde el <b><%= fechaInicio %></b> hasta el <b><%= fechaFin %></b> con la correspondiente evaluación ﬁnal.</p>
+                                 <p>&nbsp;Aprobado por Resolución N° <b><%= campoDocente.propuesta['Resolución'] %></b> 	Dictamen N° <b><%= campoDocente.propuesta['Dictamen'] %></b> 	Proyecto N° <b><%= campoDocente.propuesta['Proyecto'] %></b></p>
                                  <p style="text-align: right;"><i>La Matanza, G. de Laferrere, <%= fechaFinLarga %>.</i></p>
                             </div>
-                            <div style="text-align: center; margin-top: 8%; margin-bottom: 2%;">
+                            <div style="text-align: center; margin-top: 11%; margin-bottom: 2%;">
                                 <div class="grid-container" style="width: 35%;">
                                     <hr>
                                     <small>Formador/a: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
@@ -90,9 +89,15 @@
                                     <small>Director/a: Sica, Adriana</small>
                                 </div>
                             </div>
-                        <% i++ %>
+                        
                         </div>
-                        <hr style="margin-top: 5%;margin-bottom: 5%;">
+                        
+                        <% if (i % 2 === 0) { %>
+                          <div style="break-after: page;"></div>
+                        <% } else {%>
+                          <hr style="margin-top: 5%;margin-bottom: 5%;">
+                        <% } %>
+                        <% i++ %>
                     <% } %>
                 <% }) %>
             <% }) %>
