@@ -1,0 +1,209 @@
+<!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
+<div>
+    <% let i = 1 %>
+    <% let encuentro %>
+    <% let aprobados = 0 %>
+    <% let desaprobados = 0 %>
+    <% let ausentes = 0 %>
+    <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
+    
+</div>
+<div class="noPrint">
+    <div class="topnav">
+        <div class="login-container">
+          <form action="/cursante/certificado/actaRetiro" method="post">
+            <select name="cohorte">
+                <option value=''  style="display:none"> Cohorte </option>
+                  <% cohortesTodas.forEach(function(cohorte){ %>
+                    <% let selected %>
+                    <option <%= selected %> value="<%= cohorte.clave %>"><%= cohorte.clave %></option>
+                  <% }) %>
+              </select>
+              <select name="campoClave">
+                <option value=''  style="display:none"> Campo </option>
+                  <% campos.forEach(function(campo){ %>
+                    <% let selected %>
+                    <option <%= selected %> value="<%= campo.clave %>"><%= campo.clave %></option>
+                  <% }) %>
+              </select>
+            <input type="text" placeholder="DNI" name="dni">
+            <button type="submit">Consultar</button>
+          </form>
+        </div>
+      </div>
+      <p></p>
+</div>
+<div class="container">
+  <div class="section left">
+    <img class="w3-image" src="/img/cabeceraBlog.jpg" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
+  </div>
+  <div class="section center">
+    <h2>Acta de Retiro de Certificados: <mark><u><%= paramCohorte.toUpperCase() %></u></mark> </h2>
+  </div>
+  <div class="section right">
+    <!-- <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; float: right;"> -->
+  </div>
+</div>
+  <table class="w3-small">
+    <thead>
+      <tr>
+        <th style="width: 1%;">N°</th>
+        <th style="width: 15%;">Cursante</th>
+        <th>DNI</th>
+        <th style="width: 30%;">Capacitación</th>
+        <th style="width: 5%;">In-Fin</th>
+        <th>Área</th>
+        <th style="width: 10%;">Formador/a</th>
+        <th style="width: 10%;">Firma</th>
+        <th style="width: 10%;">Fecha</th>
+        <th style="width: 10%;">Observación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% let numero = 1; %>
+      <% cursantes.forEach(function(cursante){ %>
+        <% camposDocentes.forEach(function(campoDocente){ %>
+          <% if (cursante['Seleccione su/s curso/s'].includes(campoDocente.clave+" ")) { %>
+            <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
+            <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) %>
+            <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
+            <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) %>
+            <% let fechaFinLarga = (newFechaFin.getUTCDate()) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
+            <tr  class="headt" style="border: 1px solid #000000;">
+              <td style="text-align: right;"><%= numero %></td>
+              <td  style="line-height: 15px;"> <%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></td>
+              <td><%= cursante['Número de DNI'] %></td>
+              <td style="line-height: 10px;"><span><small><%= campoDocente.propuesta.nombre %></span></small></td>
+              <td style="line-height: 15px;"><%= fechaInicio %> <%= fechaFin %></td>
+              <td><%= campoDocente.clave %></td>
+              <td style="overflow: hidden;"><small><%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <% numero++; %>
+          <% } %>
+        <% }) %>
+      <% }) %>
+    </tbody>
+  </table>
+    
+</div>
+
+<style>
+  /* Estilos generales */
+
+  /* Estilos para las líneas de las tablas */
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+
+  /* Estilos para las celdas de datos */
+
+  /* Estilos para evitar que las filas se dividan en saltos de página */
+  tr {
+      page-break-inside: avoid;
+  }
+
+  /* Otros estilos */
+  .borderPage {
+      border: 5px solid black;
+      margin: 0;
+  }
+
+  @media print {
+      /* Estilos para la vista de impresión */
+      .noPrint {
+          display: none;
+      }
+
+      .brPage {
+          page-break-after: always;
+      }
+
+      body {
+          padding: 0;
+      }
+  }
+
+  /* Estilos del menú de navegación */
+  .topnav {
+      overflow: hidden;
+      background-color: #e9e9e9;
+  }
+
+  .topnav a {
+      float: left;
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+  }
+
+  .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+  }
+
+  .topnav a.active {
+      background-color: #2196F3;
+      color: white;
+  }
+
+  .topnav .login-container {
+      float: left;
+  }
+
+  .topnav input[type=text], select {
+      padding: 6px;
+      margin-top: 8px;
+      font-size: 17px;
+      border: none;
+      width: 120px;
+  }
+
+  .topnav .login-container button {
+      padding: 6px 10px;
+      margin-top: 8px;
+      margin-right: 16px;
+      background-color: #555;
+      color: white;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+  }
+
+  .topnav .login-container button:hover {
+      background-color: green;
+  }
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.section {
+  flex: 1;
+}
+
+.left {
+  text-align: left;
+  flex-basis: 25%;
+}
+
+.center {
+  text-align: center;
+  flex-basis: 50%;
+}
+
+.right {
+  text-align: right;
+  flex-basis: 25%;
+}
+
+  
+</style>

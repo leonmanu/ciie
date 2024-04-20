@@ -109,13 +109,21 @@ const getConstanciaPorCursante = async (req, res) => {
 }
 
 const getCertificado = async (req, res) => {
-    paramCohorte = await req.body.cohorte
-    paramCampo = await req.body.campoClave
-    paramDni = await req.body.dni
-    console.log("paramCohorte: " + paramCohorte + " # paramCampo: " + paramCampo + " # paramDni: " + paramDni)
+    const paramCohorte = req.body.cohorte || '';
+    const paramCampo = req.body.campoClave || '';
+    const paramDni = req.body.dni || '';
+    cohortesTodas = cohortes = await cohorteService.get()
+   
+    if (!paramCohorte && !paramCampo && !paramDni) {
+        // Si todos los parámetros están en blanco, no se realizan las consultas
+        console.log("paramCohorte: " + paramCohorte + " # paramCampo: " + paramCampo + " # paramDni: " + paramDni)
+        res.render("pages/cursante/certificado", {user: req.user, cursantes: [], camposDocentes: [], cohortesTodas});
+        return;
+    }
+
     propuestas = await propuestaService.get()
     cursantes = await cursanteService.getAprobados()
-    cohortesTodas = cohortes = await cohorteService.get()
+    //cohortesTodas = cohortes = await cohorteService.get()
     campos = await campoService.get()
     if (paramCohorte != '') {
         console.log("paramCohorte: " + paramCohorte)
@@ -152,6 +160,49 @@ const getCertificadoBlanco = async (req, res) => {
     res.render("pages/cursante/certificado", {user: req.user, cohortesTodas,cursantes})
 }
 
+const getActaRetiro = async (req, res) => {
+    const paramCohorte = req.body.cohorte || '';
+    const paramCampo = req.body.campoClave || '';
+    const paramDni = req.body.dni || '';
+    cohortesTodas = cohortes = await cohorteService.get()
+   
+    if (!paramCohorte && !paramCampo && !paramDni) {
+        // Si todos los parámetros están en blanco, no se realizan las consultas
+        console.log("paramCohorte: " + paramCohorte + " # paramCampo: " + paramCampo + " # paramDni: " + paramDni)
+        res.render("pages/cursante/actaRetiro", {user: req.user, cursantes: [], camposDocentes: [], cohortesTodas});
+        return;
+    }
+
+    propuestas = await propuestaService.get()
+    cursantes = await cursanteService.getAprobados()
+    cohortesTodas = cohortes = await cohorteService.get()
+    campos = await campoService.get()
+    if (paramCohorte != '') {
+        console.log("paramCohorte: " + paramCohorte)
+        propuestas = await propuestas.filter(row => row.cohorte.toLowerCase() == paramCohorte.toLowerCase())
+        //console.log(propuestas)
+        cohortes = await cohortes.filter(row => row.clave.toLowerCase() == paramCohorte.toLowerCase())
+        cursantes = await cursanteService.filtrarPorCohorte(cursantes, paramCohorte)
+    }
+    if (paramCampo != '') {
+        //console.log("paramCampo: " + paramCampo)
+        propuestas = await propuestas.filter(row => row.codigo == paramCampo)
+        cursantes = await cursanteService.filtrarPorCampo(cursantes, paramCampo)
+        campos = await campos.filter(row => row.clave == paramCampo)
+    }
+    if (paramDni != '') {
+        //console.log("paramDni: " + paramDni)
+        
+        cursantes = await cursantes.cursanteService.getPorDni(cursantes, paramDni)
+    }
+
+    campos = await campoService.getCampoYPropuesta(campos, propuestas)
+    campos = await encuentroFechaService.getCamposFechas(campos,cohortes)
+
+    camposDocentes = await docenteService.getCamposYDocentes(campos)
+    res.render("pages/cursante/actaRetiro", {user: req.user, cursantes, camposDocentes, cohortesTodas, paramCohorte})
+}
+
 
 const putArray = async (req, res) => {
     arrayJson = req.body.arrayJson
@@ -170,6 +221,7 @@ module.exports = {
     getConstancia,
     getConstanciaPorCursante,
     getActaVolante,
+    getActaRetiro,
     getCertificado,
     getCertificadoBlanco
     
