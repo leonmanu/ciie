@@ -38,7 +38,7 @@
     <img class="w3-image" src="/img/cabeceraBlog.jpg" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
   </div>
   <div class="section center">
-    <h2>Acta de Retiro de Certificados: <mark><u><%= paramCohorte.toUpperCase() %></u></mark> </h2>
+    <h2>Acta de Retiro de Certificados: <mark><u><%= paramCohorte?.toUpperCase() %></u></mark> </h2>
   </div>
   <div class="section right">
     <!-- <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; float: right;"> -->
@@ -73,10 +73,10 @@
               <td style="text-align: right;"><%= numero %></td>
               <td  style="line-height: 15px;"> <%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></td>
               <td><%= cursante['Número de DNI'] %></td>
-              <td style="line-height: 10px;"><span><small><%= campoDocente.propuesta.nombre %></span></small></td>
+              <td style="line-height: 10px;"><div  class="wrap2"><small><%= campoDocente.propuesta.nombre %></div></small></td>
               <td style="line-height: 15px;"><%= fechaInicio %> <%= fechaFin %></td>
-              <td><%= campoDocente.clave %></td>
-              <td style="overflow: hidden;"><small><%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small></td>
+              <td style="line-height: 15px;"><%= campoDocente.clave %></td>
+              <td style="line-height: 15px;"><div  class="wrap2"><small><%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small></div></td>
               <td></td>
               <td></td>
               <td></td>
@@ -205,5 +205,11 @@
   flex-basis: 25%;
 }
 
+.wrap2 { 
+  white-space: pre-wrap; 
+  overflow: hidden;
+  height:30px;
+  margin: 0;
+}
   
 </style>

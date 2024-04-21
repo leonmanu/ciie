@@ -165,18 +165,18 @@ const getActaRetiro = async (req, res) => {
     const paramCampo = req.body.campoClave || '';
     const paramDni = req.body.dni || '';
     cohortesTodas = cohortes = await cohorteService.get()
-   
+    campos = await campoService.get()
+
     if (!paramCohorte && !paramCampo && !paramDni) {
         // Si todos los parámetros están en blanco, no se realizan las consultas
         console.log("paramCohorte: " + paramCohorte + " # paramCampo: " + paramCampo + " # paramDni: " + paramDni)
-        res.render("pages/cursante/actaRetiro", {user: req.user, cursantes: [], camposDocentes: [], cohortesTodas});
+        res.render("pages/cursante/actaRetiro", {user: req.user, cursantes: [], camposDocentes: [], cohortesTodas, paramCohorte: '--'});
         return;
     }
 
     propuestas = await propuestaService.get()
     cursantes = await cursanteService.getAprobados()
     cohortesTodas = cohortes = await cohorteService.get()
-    campos = await campoService.get()
     if (paramCohorte != '') {
         console.log("paramCohorte: " + paramCohorte)
         propuestas = await propuestas.filter(row => row.cohorte.toLowerCase() == paramCohorte.toLowerCase())
