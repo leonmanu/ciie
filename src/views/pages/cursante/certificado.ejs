@@ -50,12 +50,12 @@
                         <div class="borderPage container ">
                             <sup style=" float: right; margin: 0;"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %></sup>
                             <div class="w3-bar w3-large" style="margin: 0;">
-                                <img class="w3-image" src="/img/cabeceraBlog.jpg" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
+                                <img class="w3-image" src="/img/IsologoCIIE.png" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
                                 <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; float: right;">
                             </div>
                             
                             <div class="w3-bar" style="margin: 0; text-align: center; clear: both;">
-                                <h3 class="" style="margin-bottom: 5px;"> <strong> CERTIFICADO </strong> </h3>
+                                <h3 class="" style="margin-bottom: 5px;"> <strong> C E R T I F I C A D O </strong> </h3>
                                 <hr style="margin-top: 0px;">
                             </div>
                             <div style="margin-top: 5px;">
@@ -75,7 +75,7 @@
                             
                             <div>
                                 <p class="justify">con una carga horaria de <b><%= campoDocente.propuesta['Carga horaria'] %></b> horas reloj, desde el <b><%= fechaInicio %></b> hasta el <b><%= fechaFin %></b> con la correspondiente evaluación ﬁnal.</p>
-                                 <p class="justify">&nbsp;Aprobado por Resolución N° <b><%= campoDocente.propuesta['Resolución'] %></b> 	Dictamen N° <b><%= campoDocente.propuesta['Dictamen'] %></b> 	Proyecto N° <b><%= campoDocente.propuesta['Proyecto'] %></b></p>
+                                 <p class="justify" style="margin-top: 7;">&nbsp;Aprobado por Resolución N° <b><%= campoDocente.propuesta['Resolución'] %></b> 	Dictamen N° <b><%= campoDocente.propuesta['Dictamen'] %></b> 	Proyecto N° <b><%= campoDocente.propuesta['Proyecto'] %></b></p>
                                  <br>
                                  <p style="text-align: right;"><i>La Matanza, G. de Laferrere, <%= fechaFinLarga %>.</i></p>
                             </div>
@@ -223,6 +223,11 @@
     .justify {
       text-align: justify;
       text-justify: inter-word;
+    }
+
+    sup {
+      font-family: "Lucida Console", "Courier New", monospace;
+      color:gray;
     }
     
     @media screen and (max-width: 600px) {
