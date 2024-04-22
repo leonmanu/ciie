@@ -2,7 +2,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courgette&display=swap">
 <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 <div>
-    <% let i = 1 %>
+    <% let i = 0 %>
+    <% let j = 0 %>
     <% let encuentro %>
     <% let aprobados = 0 %>
     <% let desaprobados = 0 %>
@@ -17,17 +18,15 @@
             <select name="cohorte">
                 <option value=''  style="display:none"> Cohorte </option>
                   <% cohortesTodas.forEach(function(cohorte){ %>
-                    <% let selected %>
-                    <option <%= selected %> value="<%= cohorte.clave %>"><%= cohorte.clave %></option>
+                    <option value="<%= cohorte.clave %>" <% if (cohorte.clave === paramCohorte) { %> selected <% } %> ><%= cohorte.clave %></option>
                   <% }) %>
               </select>
               <select name="campoClave">
-                <option value=''  style="display:none"> Campo </option>
-                  <% campos.forEach(function(campo){ %>
-                    <% let selected %>
-                    <option <%= selected %> value="<%= campo.clave %>"><%= campo.clave %></option>
-                  <% }) %>
-              </select>
+                <option value='' style="display:none"> Campo </option>
+                <% camposTodos.forEach(function(campo){ %>
+                    <option value="<%= campo.clave %>" <% if (campo.clave === paramCampo) { %> selected <% } %> ><%= campo.clave %></option>
+                <% }) %>
+            </select>
             <input type="text" placeholder="DNI" name="dni">
             <button type="submit">Consultar</button>
           </form>
@@ -38,6 +37,7 @@
 <div class="">
 
             <% cursantes.forEach(function(cursante){ %>
+              <% j++ %>
                 <% camposDocentes.forEach(function(campoDocente){ %>
                     <% if (cursante['Seleccione su/s curso/s'].includes(campoDocente.clave+" ")) { %>
                     <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
@@ -46,61 +46,63 @@
                     <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2) %>
                     <% let fechaFinLarga = (newFechaFin.getUTCDate()) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
                     
-                    
-                        <div class="borderPage container ">
-                            <sup style=" float: right; margin: 0;"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %></sup>
-                            <div class="w3-bar w3-large" style="margin: 0;">
-                                <img class="w3-image" src="/img/IsologoCIIE.png" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
-                                <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; float: right;">
-                            </div>
-                            
-                            <div class="w3-bar" style="margin: 0; text-align: center; clear: both;">
-                                <h3 class="" style="margin-bottom: 5px;"> <strong> C E R T I F I C A D O </strong> </h3>
-                                <hr style="margin-top: 0px;">
-                            </div>
-                            <div style="margin-top: 5px;">
-                                <div class="grid-container" style="width: 50%;">
-                                    <p>&nbsp;Certifico que: <b><%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></b></p>
-                                </div>
-                                <div class="grid-container" style="background-color: white; line-height: 15px;">
-                                    <p>DNI <b><%= cursante['Número de DNI'] %></b>, ha asistido y aprobó el curso:</p>
-                                </div>
-                            </div>
-                            
-                            <div style="height: 80px; overflow: hidden; text-align: center; display: flex; justify-content: center; align-items: center; ">
-                                <p class="cursive"><%= campoDocente.propuesta.nombre %></p>
-                            </div>
-                            
-                            
-                            
-                            <div>
-                                <p class="justify">con una carga horaria de <b><%= campoDocente.propuesta['Carga horaria'] %></b> horas reloj, desde el <b><%= fechaInicio %></b> hasta el <b><%= fechaFin %></b> con la correspondiente evaluación ﬁnal.</p>
-                                 <p class="justify" style="margin-top: 7;">&nbsp;Aprobado por Resolución N° <b><%= campoDocente.propuesta['Resolución'] %></b> 	Dictamen N° <b><%= campoDocente.propuesta['Dictamen'] %></b> 	Proyecto N° <b><%= campoDocente.propuesta['Proyecto'] %></b></p>
-                                 <br>
-                                 <p style="text-align: right;"><i>La Matanza, G. de Laferrere, <%= fechaFinLarga %>.</i></p>
-                            </div>
-                            <div style="text-align: center; margin-top: 12%; margin-bottom: 2%;">
-                                <div class="grid-container" style="width: 35%;">
-                                    <hr>
-                                    <small>Formador/a: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
-                                </div>
-                                <div class="grid-container" style="width: 20%;">
-                                    
-                                </div>
-                                <div class="grid-container" style="width: 35%;">
-                                    <hr>
-                                    <small>Director/a: Sica, Adriana</small>
-                                </div>
-                            </div>
-                        
+                    <div class="<% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen']  == '' || campoDocente.propuesta['Proyecto'] == '') { %>noPrint<% } else {i++} %>">
+                      <div class="borderPage container">
+                        <sup style=" float: right; margin: 0;"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %></sup>
+                        <div class="w3-bar w3-large" style="margin: 0;">
+                            <img class="w3-image" src="/img/IsologoCIIE.png" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
+                            <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; float: right;">
                         </div>
                         
-                        <% if (i % 2 === 0) { %>
-                          <div style="break-after: page;"></div>
-                        <% } else {%>
-                          <hr style="margin-top: 5%;margin-bottom: 5%;">
-                        <% } %>
-                        <% i++ %>
+                        <div class="w3-bar" style="margin: 0; text-align: center; clear: both;">
+                            <h3 class="" style="margin-bottom: 5px;"> <strong> C E R T I F I C A D O </strong> </h3>
+                            <hr style="margin-top: 0px;">
+                        </div>
+                        <div style="margin-top: 5px;">
+                            <div class="grid-container" style="width: 50%;">
+                                <p>&nbsp;Certifico que: <b><%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></b></p>
+                            </div>
+                            <div class="grid-container" style="background-color: white; line-height: 15px;">
+                                <p>DNI <b><%= cursante['Número de DNI'] %></b>, ha asistido y aprobó el curso:</p>
+                            </div>
+                        </div>
+                        
+                        <div style="height: 80px; overflow: hidden; text-align: center; display: flex; justify-content: center; align-items: center; ">
+                            <p class="cursive"><%= campoDocente.propuesta.nombre %></p>
+                        </div>
+                        
+                        
+                        
+                        <div>
+                            <p class="justify">con una carga horaria de <b><%= campoDocente.propuesta['Carga horaria'] %></b> horas reloj, desde el <b><%= fechaInicio %></b> hasta el <b><%= fechaFin %></b> con la correspondiente evaluación ﬁnal.</p>
+                             <p class="justify" style="margin-top: 7;">&nbsp;Aprobado por Resolución N° <b><%= campoDocente.propuesta['Resolución'] %></b> 	Dictamen N° <b><%= campoDocente.propuesta['Dictamen'] %></b> 	Proyecto N° <b><%= campoDocente.propuesta['Proyecto'] %></b></p>
+                             <br>
+                             <p style="text-align: right;"><i>La Matanza, G. de Laferrere, <%= fechaFinLarga %>.</i></p>
+                        </div>
+                        <div style="text-align: center; margin-top: 12%; margin-bottom: 2%;">
+                            <div class="grid-container" style="width: 35%;">
+                                <hr>
+                                <small>Formador/a: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
+                            </div>
+                            <div class="grid-container" style="width: 20%;">
+                                
+                            </div>
+                            <div class="grid-container" style="width: 35%;">
+                                <hr>
+                                <small>Director/a: Sica, Adriana</small>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <% if(j < cursantes.length) {%>
+                      <% if (i !== 0 && i % 2 === 0) { %>
+                        <div style="break-after: page;"></div>
+                      <% } else {%>
+                        <hr style="margin-top: 5%;margin-bottom: 5%;">
+                      <% } %>
+                    <% } %>
+                    </div>
+                        
                     <% } %>
                 <% }) %>
             <% }) %>

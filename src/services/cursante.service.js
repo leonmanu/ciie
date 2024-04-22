@@ -24,26 +24,18 @@ const getAprobados = async (dni) => {
 
 const getPorCohorte = async (cohorte) => {
   const cursantes = await get();
-    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes(cohorte.toLowerCase()))
-    // Ordenar por apellido
-    const resultados = await filtrados.sort((a, b) => {
-      const apellidoA = a['Apellido/s'].toLowerCase();
-      const apellidoB = b['Apellido/s'].toLowerCase();
+  const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes(cohorte.toLowerCase()));
+
+  // Ordenar por apellido utilizando localeCompare()
+  const resultados = await filtrados.sort((a, b) => {
+    const apellidoA = a['Apellido/s'].toLowerCase();
+    const apellidoB = b['Apellido/s'].toLowerCase();
+    return apellidoA.localeCompare(apellidoB, 'es', { sensitivity: 'accent' });
+  });
   
-      if (apellidoA < apellidoB) {
-        return -1;
-      } else if (apellidoA > apellidoB) {
-        return 1;
-      } else {
-        return 0;
-      }
-    })
-    
-    // resultados.forEach(async result => {
-    //   console.log("cursante: ", result['Apellido/s'])
-    // } )
-    return resultados;
+  return resultados;
 }
+
 
 const getPorCampo = async (campoClave, cohorte) => { //este antes buscaba tambiÃ©n por ultima cohorte, lo cambiÃ©
    console.log("COHORTE -- > " + cohorte)
@@ -53,15 +45,8 @@ const getPorCampo = async (campoClave, cohorte) => { //este antes buscaba tambiÃ
     const resultados = await filtrados.sort((a, b) => {
       const apellidoA = a['Apellido/s'].toLowerCase();
       const apellidoB = b['Apellido/s'].toLowerCase();
-  
-      if (apellidoA < apellidoB) {
-        return -1;
-      } else if (apellidoA > apellidoB) {
-        return 1;
-      } else {
-        return 0;
-      }
-    })
+      return apellidoA.localeCompare(apellidoB, 'es', { sensitivity: 'accent' });
+    });
     
     // resultados.forEach(async result => {
     //   console.log("cursante: ", result['Apellido/s'])
@@ -76,17 +61,10 @@ const getPorCampo = async (campoClave, cohorte) => { //este antes buscaba tambiÃ
  
      // Ordenar por apellido
      const resultados = await filtrados.sort((a, b) => {
-       const apellidoA = a['Apellido/s'].toLowerCase();
-       const apellidoB = b['Apellido/s'].toLowerCase();
-   
-       if (apellidoA < apellidoB) {
-         return -1;
-       } else if (apellidoA > apellidoB) {
-         return 1;
-       } else {
-         return 0;
-       }
-     })
+      const apellidoA = a['Apellido/s'].toLowerCase();
+      const apellidoB = b['Apellido/s'].toLowerCase();
+      return apellidoA.localeCompare(apellidoB, 'es', { sensitivity: 'accent' });
+    });
      
      // resultados.forEach(async result => {
      //   console.log("cursante: ", result['Apellido/s'])
@@ -139,15 +117,8 @@ const filtrarPorCohorte = async (cursantes, cohorte) => {
     const resultados = await filtrados.sort((a, b) => {
       const apellidoA = a['Apellido/s'].toLowerCase();
       const apellidoB = b['Apellido/s'].toLowerCase();
-  
-      if (apellidoA < apellidoB) {
-        return -1;
-      } else if (apellidoA > apellidoB) {
-        return 1;
-      } else {
-        return 0;
-      }
-    })
+      return apellidoA.localeCompare(apellidoB, 'es', { sensitivity: 'accent' });
+    });
     
     // resultados.forEach(async result => {
     //   console.log("cursante: ", result['Apellido/s'])
@@ -159,17 +130,10 @@ const filtrarPorCampo = async (cursantes, campoClave) => {
    const filtrados = await cursantes.filter(cursante => cursante['Seleccione su/s curso/s'].includes(campoClave+' -') && cursante.Apto == 'TRUE' )
    // Ordenar por apellido
    const resultados = await filtrados.sort((a, b) => {
-     const apellidoA = a['Apellido/s'].toLowerCase();
-     const apellidoB = b['Apellido/s'].toLowerCase();
- 
-     if (apellidoA < apellidoB) {
-       return -1;
-     } else if (apellidoA > apellidoB) {
-       return 1;
-     } else {
-       return 0;
-     }
-   })
+    const apellidoA = a['Apellido/s'].toLowerCase();
+    const apellidoB = b['Apellido/s'].toLowerCase();
+    return apellidoA.localeCompare(apellidoB, 'es', { sensitivity: 'accent' });
+  });
    
    // resultados.forEach(async result => {
    //   console.log("cursante: ", result['Apellido/s'])

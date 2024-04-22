@@ -91,7 +91,6 @@ const getConstancia = async (req, res) => {
         cursantes = await cursanteService.getPorCohorte(cohorteUltima.clave)
     }
 
-    
     encuentroFecha = await encuentroFechaService.getPorCampoCohorte(paramCampo,cohorteUltima.clave)
     encuentroHora = await encuentroHoraService.getPorCampoCohorte(paramCampo,cohorteUltima.clave) 
     res.render("pages/cursante/constancias", {user: req.user, cursantes, campo, cohorteUltima, encuentroFecha, encuentroHora})
@@ -113,18 +112,18 @@ const getCertificado = async (req, res) => {
     const paramCampo = req.body.campoClave || '';
     const paramDni = req.body.dni || '';
     cohortesTodas = cohortes = await cohorteService.get()
+    camposTodos = campos = await campoService.get()
    
     if (!paramCohorte && !paramCampo && !paramDni) {
         // Si todos los parámetros están en blanco, no se realizan las consultas
         console.log("paramCohorte: " + paramCohorte + " # paramCampo: " + paramCampo + " # paramDni: " + paramDni)
-        res.render("pages/cursante/certificado", {user: req.user, cursantes: [], camposDocentes: [], cohortesTodas});
+        res.render("pages/cursante/certificado", {user: req.user, cursantes: [], camposDocentes: [], cohortesTodas, camposTodos, paramCampo, paramCohorte});
         return;
     }
 
     propuestas = await propuestaService.get()
     cursantes = await cursanteService.getAprobados()
     //cohortesTodas = cohortes = await cohorteService.get()
-    campos = await campoService.get()
     if (paramCohorte != '') {
         console.log("paramCohorte: " + paramCohorte)
         propuestas = await propuestas.filter(row => row.cohorte.toLowerCase() == paramCohorte.toLowerCase())
@@ -148,7 +147,7 @@ const getCertificado = async (req, res) => {
     campos = await encuentroFechaService.getCamposFechas(campos,cohortes)
 
     camposDocentes = await docenteService.getCamposYDocentes(campos)
-    res.render("pages/cursante/certificado", {user: req.user, cursantes, camposDocentes, cohortesTodas})
+    res.render("pages/cursante/certificado", {user: req.user, cursantes, camposDocentes, cohortesTodas, camposTodos, paramCampo, paramCohorte})
 }
 
 const getCertificadoBlanco = async (req, res) => {
