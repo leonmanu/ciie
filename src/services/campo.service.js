@@ -5,7 +5,12 @@ const utilidadesService = require('./utilidades.service')
 
 const get = async () => {
     registros = await campoSheet.get()
-    return registros
+    const resultados = await registros.sort((a, b) => {
+        const clveA = a.clave.toLowerCase();
+        const clveB = b.clave.toLowerCase();
+        return clveA.localeCompare(clveB, 'es', { sensitivity: 'accent' });
+      });
+    return resultados
 }
 
 const getPorId = async (idRol) => {

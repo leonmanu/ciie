@@ -35,10 +35,10 @@
       <p></p>
 </div>
 <div class="">
-
-            <% cursantes.forEach(function(cursante){ %>
+            <% camposDocentes.forEach(function(campoDocente){ %>
+            
               <% j++ %>
-                <% camposDocentes.forEach(function(campoDocente){ %>
+              <% cursantes.forEach(function(cursante){ %>
                     <% if (cursante['Seleccione su/s curso/s'].includes(campoDocente.clave+" ")) { %>
                     <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
                     <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2) %>
