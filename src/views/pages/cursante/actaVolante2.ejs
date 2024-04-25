@@ -1,0 +1,293 @@
+<!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courgette&display=swap">
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+<div>
+    <% let j = 0 %>
+    <% let encuentro %>
+    <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
+</div>
+
+<div class="noPrint">
+    <div class="topnav">
+        <div class="login-container">
+            <form action="/cursante/actaVolante" method="post">
+                <select name="cohorte">
+                    <option value='' style="display:none"> Cohorte </option>
+                    <% cohortesTodas.forEach(function(cohorte){ %>
+                        <option value="<%= cohorte.clave %>" <% if (cohorte.clave === paramCohorte) { %> selected <% } %> ><%= cohorte.clave %></option>
+                    <% }) %>
+                </select>
+                <select name="campoClave">
+                    <option value='' style="display:none"> Campo </option>
+                    <% camposTodos.forEach(function(campo){ %>
+                        <option value="<%= campo.clave %>" <% if (campo.clave === paramCampo) { %> selected <% } %> ><%= campo.clave %></option>
+                    <% }) %>
+                </select>
+                <input type="text" placeholder="DNI" name="dni">
+                <button type="submit">Consultar</button>
+            </form>
+        </div>
+    </div>
+    <p></p>
+</div>
+
+<% camposDocentes.forEach(function(campoDocente){ %>
+  <% let i = 1 %>
+  <% let aprobados = 0 %>
+    <% let desaprobados = 0 %>
+    <% let ausentes = 0 %>
+    <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
+    <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2) %>
+    <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
+    <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2) %>
+    <% let fechaFinLarga = (newFechaFin.getUTCDate()) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
+    
+    <div class="header">
+        <div class="section left">
+            <img class="w3-image" src="/img/IsologoCIIE.png" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
+        </div>
+        <div class="section center">
+            
+        </div>
+        <div class="section right">
+            <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px;">
+        </div>
+    </div>
+
+    <div class="info">
+        <div style="text-align: left;">
+            <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %></span>
+        </div>
+        <div style="text-align: right;">
+            <i><b><span class="w3-right"><%= fechaFinLarga %></span></b></i>
+        </div>
+        <div class="w3-bar w3-large" style="text-align: center;">
+            <h3><span>ACTA VOLANTE</span></h3>
+        </div>
+    </div>
+
+    <div class="info">
+        <div style="text-align: left;">
+            <span>Área: <u><strong><%= campoDocente.nombre %></strong></u></span>
+        </div>
+        <div style="text-align: right;">
+            <span class="w3-right">Dispositivo: _____________________</span>
+        </div>
+    </div>
+
+    <div class="w3-bar w3-large">
+        <p>Nombre: <b><%= campoDocente.propuesta.nombre %></b></p>
+        <br>
+        <span>Proyecto: <b><%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %></b></span>
+        <span> Resolución: <b><%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %></b></span>
+        <span>Dictamen: <b><%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %></b></span> 
+        <span>Carga horaria: <b><%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %></b> hs.</span> 
+        <br>
+        <span>Inicio: <b><%= fechaInicio %></b>, </span>
+        <span>Finalización: <b><%= fechaFin %></b></span>
+    </div>
+    <br>
+    <table class="w3-table-all">
+        <tr class="w3-light-grey">
+            <th style="width: 5%;">Orden</th>
+            <th style="text-align: center; vertical-align: middle; width: 10%;">DNI</th>
+            <th class="overflow-hidden" rowspan="2" style="text-align: center; vertical-align: middle; width: 30%;">Cursante</th>
+            <th style="text-align: center; vertical-align: middle;width: 10%; overflow: hidden;">Calificación</th>
+            <th rowspan="2" style="text-align: center; vertical-align: middle; width: 12%;">Observaciones</th>
+        </tr>
+        <tbody>
+            <% cursantes.forEach(function(cursante){ %>
+                <% if (cursante['Seleccione su/s curso/s'].includes(campoDocente.clave+" ")) { %>
+                    <tr rowNumber='<%= cursante._rowNumber %>'>
+                        <td style="text-align: right;"><%= i %></td>
+                        <td style="text-align: right;"><%= cursante['Número de DNI'] %></td>
+                        <td style="overflow: hidden; white-space: nowrap;"><%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></td>
+                        <td <% if (cursante.Valoracion === 'aprobado') { %> style="font-weight: bold;" <% aprobados++; %> <% } %>
+                            <% if (cursante.Valoracion === 'desaprobado') { %> desaprobados++; <% } %>
+                            <% if (cursante.Valoracion === 'ausente') { %> style="font-style: italic;" <% ausentes++; %> <% } %>
+                        ><%= cursante.Valoracion %></td>
+                        <td><%= cursante.Observacion %></td>
+                    </tr>
+                    <% i++; %>
+                <% } %>
+            <% }) %>
+            <% let rowsPerPage = 0 %>
+            <% if(i >= 30) {%>
+              <% rowsPerPage = 51; // Número aproximado de filas por página -->%>
+            <% } else if(i < 30){ %>
+              <% rowsPerPage = 30; // Número aproximado de filas por página -->%>
+            <% }
+              <% for (k = i; k < rowsPerPage; k++) { %>
+                  <tr>
+                      <td style="text-align: right;"><%= k %></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+              <% } %>
+            
+        </tbody>
+    </table>
+    <br>
+    <div>
+        <span>Inscriptos: <%= i - 1 %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
+    </div>
+    <br>
+
+    <div style="text-align: right;">
+        <span>Gregorio de Laferrere, _____________________</span>
+        <div>
+            <small>(Fecha)</small>
+        </div>
+        <br>
+        <div style="display: flex; justify-content: flex-end;">
+            <div style="width: 50%;">
+                <span style="display: inline-block; width: 100%;">_________________________________________</span>
+                <div style="text-align: center;">
+                    <small>Firma form.: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
+                </div>
+            </div>
+        </div>
+        <div style="break-after: page;"></div>
+    </div>
+<% }) %>
+
+<style>
+    /* Estilos globales */
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Estilos de impresión */
+    @media print {
+        .noPrint {
+            display: none;
+        }
+
+        .brPage {
+            page-break-after: always;
+        }
+
+        body {
+            padding: 0;
+        }
+    }
+
+    /* Contenedor principal */
+    .container {
+        padding: 20px;
+        padding-top: 0%;
+    }
+
+    /* Contenido dentro del contenedor */
+    .content {
+        text-align: center;
+    }
+
+    /* Estilos de la barra de navegación */
+    .topnav {
+        overflow: hidden;
+        background-color: #e9e9e9;
+    }
+
+    .topnav a {
+        float: left;
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .topnav a.active {
+        background-color: #2196F3;
+        color: white;
+    }
+
+    .topnav .login-container {
+        float: left;
+    }
+
+    .topnav input[type=text], select {
+        padding: 6px;
+        margin-top: 8px;
+        font-size: 17px;
+        border: none;
+        width: 120px;
+    }
+
+    .topnav .login-container button {
+        padding: 6px 10px;
+        margin-top: 8px;
+        margin-right: 16px;
+        background-color: #555;
+        color: white;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .topnav .login-container button:hover {
+        background-color: green;
+    }
+
+    /* Estilos adicionales */
+    .justify {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+    .sup {
+        font-size: 10px;
+    }
+
+    .grid-container {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    p {
+        margin: 2;
+    }
+
+    /* Secciones */
+    .section {
+        flex: 1;
+    }
+
+    .left {
+        text-align: left;
+        flex-basis: 25%;
+    }
+
+    .center {
+        text-align: center;
+        flex-basis: 50%;
+    }
+
+    .right {
+        text-align: right;
+        flex-basis: 25%;
+    }
+
+    /* Tabla */
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        height: 20;
+    }
+</style>

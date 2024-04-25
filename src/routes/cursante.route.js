@@ -22,6 +22,7 @@ router
     .get('/listaAsistencia', getListaAsistenciaTodas)
     .get('/listaAsistencia/:campoClave', getListaAsistencia)
     .get('/actaVolante/:campoClave?', getActaVolante)
+    .post('/actaVolante/:campoClave?', getActaVolante)
     .get('/constancia/:campoClave/:dni?', getConstancia)
     .get('/certificado', getCertificado)
     .post('/certificado', getCertificado)
