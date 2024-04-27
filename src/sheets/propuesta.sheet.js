@@ -14,7 +14,6 @@ async function obtenercredenciales(){
 async function get(){
     await obtenercredenciales()
     const registros =  await sheet.getRows()
-
     return registros
 }
 

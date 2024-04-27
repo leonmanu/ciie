@@ -48,10 +48,24 @@ const getCampoYPropuesta = async (campos, propuestas) => {
     return campos;
 }
 
+const getCampoYCursante = async (camposDocentes, cursantes) => {
+    for (const campo of camposDocentes) {
+        campo.cursantes = []; // Inicializar campo.cursantes como un array
+        for (const cursante of cursantes) {
+            if (cursante['Seleccione su/s curso/s'].includes(campo.clave+' -') && cursante.Apto == 'TRUE') {
+                campo.cursantes.push(cursante);
+            }
+        }
+    }
+    return camposDocentes;
+}
+
+
 module.exports = {
     get:get,
     getPorId: getPorId,
     getPorClave,
     getPorClavex,
-    getCampoYPropuesta
+    getCampoYPropuesta,
+    getCampoYCursante
 } 
