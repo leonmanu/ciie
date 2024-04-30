@@ -47,105 +47,118 @@
       <% let aprobados = 0 %>
     <% let desaprobados = 0 %>
     <% let ausentes = 0 %>
-    <div class="header">
-        <div class="section left">
-            <img class="w3-image" src="/img/IsologoCIIE.png" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
-        </div>
-        <div class="section center">
-            
-        </div>
-        <div class="section right">
-            <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; margin-top: 0;">
-        </div>
-    </div>
-    <div>
-      <div style="float: right;">
-        <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> | pág. <%= x %> / <%= hojas %></span>
-    </div>
-    </div>
-    <div class="info">
-        <div style="text-align: center;">
-            <h3><span>ACTA VOLANTE</span></h3>
-        </div>
-    </div>
-
-    <div class="info">
-        <div style="float: left;">
-            <span>Área: <u><strong><%= campoDocente.nombre %></strong></u></span>
-        </div>
+    <div class="
+                    <% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen']  == '' || campoDocente.propuesta['Proyecto'] == '' || campoDocente.propuesta['impreso'] == 'TRUE')
+                     { 
+                        if(campoDocente.propuesta['impreso'] == 'TRUE'){
+                          borde = 'borderPageGreen'
+                        } else {
+                          borde = 'borderPageGrey';
+                        }
+                        %>noPrint<% 
+                      } %>
+                      ">
+      <div class="header">
+          <div class="section left">
+              <img class="w3-image" src="/img/IsologoCIIE.png" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
+          </div>
+          <div class="section center">
+              
+          </div>
+          <div class="section right">
+              <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; margin-top: 0;">
+          </div>
+      </div>
+      <div>
         <div style="float: right;">
-            <span class="w3-right">Dispositivo: <b>Curso</b></span>
+          <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> | pág. <%= x %> / <%= hojas %></span>
         </div>
-    </div>
-    <br>
-    <div style="margin-top: 5; margin-bottom: 5;">
-      Nombre: <b><%= campoDocente.propuesta.nombre %></b>
-    </div>
-    <div class="w3-bar w3-large">
-        <span>Proyecto: <b><%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %></b></span>
-        <span> Resolución: <b><%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %></b></span>
-        <span>Dictamen: <b><%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %></b></span> 
-        <span>Carga horaria: <b><%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %></b> hs.</span> 
-        <br>
-        <span>Inicio: <b><%= fechaInicio %></b>, </span>
-        <span>Finalización: <b><%= fechaFin %></b></span>
-    </div>
-    <table class="w3-table-all" style="margin-top: 5;">
-        <tr class="w3-light-grey">
-            <th style="width: 5%;">Orden</th>
-            <th style="text-align: center; vertical-align: middle; width: 10%;">DNI</th>
-            <th class="overflow-hidden" rowspan="2" style="text-align: center; vertical-align: middle; width: 30%;">Cursante</th>
-            <th style="text-align: center; vertical-align: middle;width: 10%; overflow: hidden;">Calificación</th>
-            <th rowspan="2" style="text-align: center; vertical-align: middle; width: 12%;">Observaciones</th>
-        </tr>
-        <tbody>
-            <% for (var y = limit * (x - 1); y < limit * x;  y++ ) { %>
-              <% if (y < inscriptos) { %>
-                    <tr>
-                        <td style="text-align: right;"><%= i %></td>
-                        <td style="text-align: right;"><%= campoDocente.cursantes[y]['Número de DNI'] %></td>
-                        <td style="overflow: hidden; white-space: nowrap;"><%= campoDocente.cursantes[y]['Apellido/s'] %>, <%= campoDocente.cursantes[y]['Nombre/s'] %></td>
-                        <td <% if (campoDocente.cursantes[y].Valoracion === 'aprobado') { %> style="font-weight: bold;" <% aprobados++; %> <% } %>
-                            <% if (campoDocente.cursantes[y].Valoracion === 'desaprobado') { %> desaprobados++; <% } %>
+      </div>
+      <div class="info">
+          <div style="text-align: center;">
+              <h3><span>ACTA VOLANTE</span></h3>
+          </div>
+      </div>
+
+      <div class="info">
+          <div style="float: left;">
+              <span>Área: <u><strong><%= campoDocente.nombre %></strong></u></span>
+          </div>
+          <div style="float: right;">
+              <span class="w3-right">Dispositivo: <b>Curso</b></span>
+          </div>
+      </div>
+      <br>
+      <div style="margin-top: 5; margin-bottom: 5;">
+        Nombre: <b><%= campoDocente.propuesta.nombre %></b>
+      </div>
+      <div class="w3-bar w3-large">
+          <span>Proyecto: <b><%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %></b></span>
+          <span> Resolución: <b><%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %></b></span>
+          <span>Dictamen: <b><%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %></b></span> 
+          <span>Carga horaria: <b><%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %></b> hs.</span> 
+          <br>
+          <span>Inicio: <b><%= fechaInicio %></b>, </span>
+          <span>Finalización: <b><%= fechaFin %></b></span>
+      </div>
+      <table class="w3-table-all" style="margin-top: 5;">
+          <tr class="w3-light-grey">
+              <th style="width: 5%;">Orden</th>
+              <th style="text-align: center; vertical-align: middle; width: 10%;">DNI</th>
+              <th class="overflow-hidden" rowspan="2" style="text-align: center; vertical-align: middle; width: 30%;">Cursante</th>
+              <th style="text-align: center; vertical-align: middle;width: 10%; overflow: hidden;">Calificación</th>
+              <th rowspan="2" style="text-align: center; vertical-align: middle; width: 12%;">Observaciones</th>
+          </tr>
+          <tbody>
+              <% for (var y = limit * (x - 1); y < limit * x;  y++ ) { %>
+                <% if (y < inscriptos) { %>
+                      <tr>
+                          <td style="text-align: right;"><%= i %></td>
+                          <td style="text-align: right;"><%= campoDocente.cursantes[y]['Número de DNI'] %></td>
+                          <td style="overflow: hidden; white-space: nowrap;"><%= campoDocente.cursantes[y]['Apellido/s'] %>, <%= campoDocente.cursantes[y]['Nombre/s'] %></td>
+                          <td <% if (campoDocente.cursantes[y].Valoracion === 'aprobado') { %> style="font-weight: bold;" <% aprobados++; %> <% } %>
+                            <% if (campoDocente.cursantes[y].Valoracion === 'desaprobado') { %> <% desaprobados++; %> <% } %>
                             <% if (campoDocente.cursantes[y].Valoracion === 'ausente') { %> style="font-style: italic;" <% ausentes++; %> <% } %>
                         ><%= campoDocente.cursantes[y].Valoracion %></td>
-                        <td><%= campoDocente.cursantes[y].Observacion %></td>
-                    </tr>
-                  <% } else{ %>
-                    <tr>
-                      <td style="text-align: right;"><%= i %></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  <% } %>
-                  <% i++; %>
-            <% } %>
+                          <td><%= campoDocente.cursantes[y].Observacion %></td>
+                      </tr>
+                    <% } else{ %>
+                      <tr>
+                        <td style="text-align: right;"><%= i %></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    <% } %>
+                    <% i++; %>
+              <% } %>
 
-        </tbody>
-    </table>
-    <div style="margin-top: 5; margin-bottom: 5;">
-        <span>Inscriptos: <%= aprobados + desaprobados + ausentes  %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
-    </div>
-    <div style="text-align: right;">
-        <span>Gregorio de Laferrere, _____________________</span>
-        <div>
-            <small>(Fecha)</small>
-        </div>
-        <br>
-        <div style="display: flex; justify-content: flex-end;">
-            <div style="width: 50%;">
-                <span style="display: inline-block; width: 100%;">_________________________________________</span>
-                <div style="text-align: center;">
-                    <small>Firma form.: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
-                </div>
-            </div>
-        </div>
-        <div style="break-after: page;"></div>
-    </div>
-    <% } %>
-<% }) %>
+          </tbody>
+      </table>
+      <div style="margin-top: 5; margin-bottom: 5;">
+          <span>Inscriptos: <%= aprobados + desaprobados + ausentes  %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
+      </div>
+      <div style="text-align: right;">
+          <span>Gregorio de Laferrere, _____________________</span>
+          <div>
+              <small>(Fecha)</small>
+          </div>
+          <br>
+          <div style="display: flex; justify-content: flex-end;">
+              <div style="width: 50%;">
+                  <span style="display: inline-block; width: 100%;">_________________________________________</span>
+                  <div style="text-align: center;">
+                      <small>Firma form.: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+      <div style="break-after: page;"></div>
+      </div>
+      <% } %>
+  <% }) %>
 
 <style>
     /* Estilos globales */
