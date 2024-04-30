@@ -44,7 +44,7 @@
                     <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2) %>
                     <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
                     <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2) %>
-                    <% let fechaFinLarga = (newFechaFin.getUTCDate()) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
+                    <% let fechaFinLarga = ( newFechaFin.getUTCDate() ) +" de "+ meses[newFechaFin.getMonth()] +" de "+ newFechaFin.getFullYear() %>
                     <% let borde %>
                     <div class="
                     <% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen']  == '' || campoDocente.propuesta['Proyecto'] == '' || campoDocente.propuesta['impreso'] == 'TRUE')
