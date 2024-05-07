@@ -24,7 +24,7 @@ const getAprobados = async (dni) => {
 
 const getPorCohorte = async (cohorte) => {
   const cursantes = await get();
-  const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes(cohorte.toLowerCase()));
+  const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su curso'].toLowerCase().includes(cohorte.toLowerCase()));
 
   // Ordenar por apellido utilizando localeCompare()
   const resultados = await filtrados.sort((a, b) => {
@@ -40,7 +40,8 @@ const getPorCohorte = async (cohorte) => {
 const getPorCampo = async (campoClave, cohorte) => { //este antes buscaba también por ultima cohorte, lo cambié
    console.log("COHORTE -- > " + cohorte)
     const cursantes = await get();
-    const filtrados = await cursantes.filter(cursante => cursante['Seleccione su/s curso/s'].includes(campoClave+' -') && cursante.Apto == 'TRUE' )
+    console.log("Cursantes #"+cursantes.length)
+    const filtrados = await cursantes.filter(cursante => cursante['Seleccione su curso'].includes(campoClave+' -') && cursante.Apto == 'TRUE' )
     // Ordenar por apellido
     const resultados = await filtrados.sort((a, b) => {
       const apellidoA = a['Apellido/s'].toLowerCase();
@@ -57,7 +58,7 @@ const getPorCampo = async (campoClave, cohorte) => { //este antes buscaba tambi�
   const getPorCampoCohorte = async (campoClave, cohorte) => {
     console.log("COHORTE -- > " + cohorte)
      const cursantes = await get();
-     const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].includes(campoClave+' - |') && cursante['Seleccione su/s curso/s'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
+     const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su curso'].includes(campoClave+' - |') && cursante['Seleccione su curso'].toLowerCase().includes('|$'+cohorte.toLowerCase()))
  
      // Ordenar por apellido
      const resultados = await filtrados.sort((a, b) => {
@@ -97,7 +98,7 @@ const putArray = async (arrayJson) => {
   cursantes = await get()
   for (const json of arrayJson) {
     let rn = json.rowNumber;
-    emparejado = await putEmparejar(json, cursantes[rn]);
+    emparejado = await putEmparejar(json, cursantes[rn]); 
     resultado = await cursanteSheet.put(emparejado);
   }
   
@@ -112,7 +113,7 @@ const cambiarValores = async () => {
 
 
 const filtrarPorCohorte = async (cursantes, cohorte) => {
-    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su/s curso/s'].toLowerCase().includes(cohorte.toLowerCase()))
+    const filtrados = await cursantes.filter(cursante => cursante.Apto == 'TRUE' && cursante['Seleccione su curso'].toLowerCase().includes(cohorte.toLowerCase()))
     // Ordenar por apellido
     const resultados = await filtrados.sort((a, b) => {
       const apellidoA = a['Apellido/s'].toLowerCase();
@@ -127,7 +128,7 @@ const filtrarPorCohorte = async (cursantes, cohorte) => {
 }
 
 const filtrarPorCampo = async (cursantes, campoClave) => {
-   const filtrados = await cursantes.filter(cursante => cursante['Seleccione su/s curso/s'].includes(campoClave+' -') && cursante.Apto == 'TRUE' )
+   const filtrados = await cursantes.filter(cursante => cursante['Seleccione su curso'].includes(campoClave+' -') && cursante.Apto == 'TRUE' )
    // Ordenar por apellido
    const resultados = await filtrados.sort((a, b) => {
     const apellidoA = a['Apellido/s'].toLowerCase();

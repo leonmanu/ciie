@@ -52,7 +52,7 @@ const getCampoYCursante = async (camposDocentes, cursantes) => {
     for (const campo of camposDocentes) {
         campo.cursantes = []; // Inicializar campo.cursantes como un array
         for (const cursante of cursantes) {
-            if (cursante['Seleccione su/s curso/s'].includes(campo.clave+' -') && cursante.Apto == 'TRUE') {
+            if (cursante['Seleccione su curso'].includes(campo.clave+' -') && cursante.Apto == 'TRUE') {
                 campo.cursantes.push(cursante);
             }
         }

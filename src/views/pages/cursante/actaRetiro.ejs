@@ -63,7 +63,7 @@
       <% let numero = 1; %>
       <% cursantes.forEach(function(cursante){ %>
         <% camposDocentes.forEach(function(campoDocente){ %>
-          <% if (cursante['Seleccione su/s curso/s'].includes(campoDocente.clave+" ")) { %>
+          <% if (cursante['Seleccione su curso'].includes(campoDocente.clave+" ")) { %>
             <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
             <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) %>
             <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>

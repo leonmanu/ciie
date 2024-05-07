@@ -40,7 +40,7 @@
         
         <tbody>
             <% cursantes.forEach(function(registro){ %>
-            <% if (registro['Seleccione su/s curso/s'].includes(campo.clave+" - |")) { %>
+            <% if (registro['Seleccione su curso'].includes(campo.clave+" - |")) { %>
             <tr rowNumber='<%= registro._rowNumber %>'>
                 <td class="modified" style="display:none;" col_name="change">false</td>
                 <td><b><%= i %>)</b> <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>

@@ -53,7 +53,7 @@
     <!-- Contenido -->
     <div class="">
         <% cursantes.forEach(function(registro){ %>
-            <% if (registro['Seleccione su/s curso/s'].includes(campo.clave+" - |") && (registro.encuentro1 ==  'TRUE' || registro.encuentro2 ==  'TRUE' || registro.encuentro3 ==  'TRUE')) { %>
+            <% if (registro['Seleccione su curso'].includes(campo.clave+" - |") && (registro.encuentro1 ==  'TRUE' || registro.encuentro2 ==  'TRUE' || registro.encuentro3 ==  'TRUE')) { %>
                 <div class="solid">
                     <img src="/img/logoCiie201.png" alt="Logo" class="logo"> <!-- Agregamos la imagen del logo -->
                     <p><strong>CONSTANCIA DE ASISTENCIA</strong></p>

@@ -39,7 +39,7 @@
             
               <% j++ %>
               <% cursantes.forEach(function(cursante){ %>
-                    <% if (cursante['Seleccione su/s curso/s'].includes(campoDocente.clave+" ")) { %>
+                    <% if (cursante['Seleccione su curso'].includes(campoDocente.clave+" ")) { %>
                     <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
                     <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2) %>
                     <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
