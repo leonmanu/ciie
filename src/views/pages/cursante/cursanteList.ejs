@@ -13,7 +13,7 @@
         <thead>
             <tr class="w3-light-grey" style="border: 1px solid #ddd;">
                 <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
-                    Cursante (<%= cursantes.length %>)
+                    Cursante
                 </th>
                 <th rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">DNI</th>
                 <th class="ocultable" rowspan="2" style="text-align: center; vertical-align: middle; border: 1px solid #ddd;">
@@ -24,14 +24,19 @@
         </thead>
         <tbody>
             <% cursantes.forEach(function(registro){ %>
+                <% if(registro['Seleccione su curso'].includes(cohorteUltima.clave.toUpperCase())) { %>
+
             <tr rowNumber='<%= registro._rowNumber %>'>
                 <td class="modified" style="display:none;" col_name="change">false</td>
                 <td><%= i %> | <%= registro['Apellido/s'] %>, <%= registro['Nombre/s'] %></td>
                 <td><%= registro['Número de DNI'] %></td>
                 <td><%= registro['Dirección de correo electrónico'] %></td>
                 <td><%= registro['Teléfono de contacto'] %></td>
-            </tr>
+            </tr> 
             <% i++ %>
+            <% } %>
+                
+            
             <% }) %>
         </tbody>
     </table>
