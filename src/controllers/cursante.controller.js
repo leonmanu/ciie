@@ -236,6 +236,41 @@ const getActaVolante = async (req, res) => {
     res.render("pages/cursante/actaVolante2", {user: req.user, camposDocentes, cohortesTodas, camposTodos, paramCohorte,paramCampo})
 }
 
+const getAnalisis = async (req, res) => {
+    const paramCohorte = req.body.cohorte || '';
+    const paramCampo = req.body.campoClave || '';
+    cohortesTodas = cohortes = await cohorteService.get()
+    camposTodos = campos = await campoService.get()
+
+    if (!paramCohorte) {
+        // Si todos los parámetros están en blanco, no se realizan las consultas
+        res.render("pages/cursante/analisis", {user: req.user, cursantes: [], camposDocentes: [], cohortesTodas, camposTodos, paramCohorte: '--', campos, paramCampo });
+        return;
+    }
+
+    propuestas = await propuestaService.get()
+    cursantes = await cursanteService.getPorCohorte(paramCohorte)
+    cohortesTodas = cohortes = await cohorteService.get()
+    propuestas = await propuestas.filter(row => row.cohorte.toLowerCase() == paramCohorte.toLowerCase())
+    cohortes = await cohortes.filter(row => row.clave.toLowerCase() == paramCohorte.toLowerCase())
+    //cursantes = await cursanteService.filtrarPorCohorte(cursantes, paramCohorte)
+
+    if (paramCampo != '') {
+        //console.log("paramCampo: " + paramCampo)
+        propuestas = await propuestas.filter(row => row.codigo == paramCampo)
+        cursantes = await cursanteService.filtrarPorCampo(cursantes, paramCampo)
+        campos = await campos.filter(row => row.clave == paramCampo)
+    }
+
+    campos = await campoService.getCampoYPropuesta(campos, propuestas)
+    campos = await encuentroFechaService.getCamposFechas(campos,cohortes)
+
+    camposDocentes = await docenteService.getCamposYDocentes(campos)
+    camposDocentes = await campoService.getCampoYCursante(camposDocentes,cursantes)
+    console.log(camposDocentes[0].cursantes)
+    res.render("pages/cursante/analisis", {user: req.user, camposDocentes, cohortesTodas, camposTodos, paramCohorte,paramCampo})
+}
+
 
 const putArray = async (req, res) => {
     arrayJson = req.body.arrayJson
@@ -254,6 +289,7 @@ module.exports = {
     getConstancia,
     getConstanciaPorCursante,
     getActaVolante,
+    getAnalisis,
     getActaRetiro,
     getCertificado,
     getCertificadoBlanco

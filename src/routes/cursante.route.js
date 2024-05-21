@@ -11,6 +11,7 @@ const { get,
     getConstancia,
     getConstanciaPorCursante,
     getActaVolante,
+    getAnalisis,
     getCertificado,
     getCertificadoBlanco,
     getActaRetiro
@@ -28,6 +29,8 @@ router
     .post('/certificado', getCertificado)
     .get('/certificado/actaRetiro', getActaRetiro)
     .post('/certificado/actaRetiro', getActaRetiro)
+    .get('/analisis', getAnalisis)
+    .post('/analisis', getAnalisis)
     //.get('/constancia/:campoClave/:dni', getConstanciaPorCursante)
     .get('/:campoClave', getPorCapacitacion)
     .get('/:campoClave/cursantesDatos', getPorCapacitacionCursantesDatos)

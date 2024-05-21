@@ -49,20 +49,31 @@ const getPorCohorte = async (cohorteClave) => {
 }
 
 const getPorCampoCohorte = async (campoClave, cohorteClave) => {
-    campo = await campoService.getPorClave(campoClave)
-    cohorte = await cohorteService.getPorClave(cohorteClave)
-    registros = await get()
+    try {
+        const campo = await campoService.getPorClave(campoClave);
+        const cohorte = await cohorteService.getPorClave(cohorteClave);
 
-    cohorteJson = await utilidadesService.convertOneToJson(cohorte)
-    const filtrados = await registros.filter(row => row.idCampo == campo.id && row.idCohorte == cohorte.id)
-    if(filtrados.length > 0){
-        const resultadoJson = await utilidadesService.convertToJson(filtrados)
-        resultadoJson[0].cohorte = cohorteJson
-        return resultadoJson[0]
-    } else {
-        return null
+        if (!campo || !cohorte) {
+            console.error("Campo o Cohorte no encontrado");
+            return null;
+        }
+
+        const registros = await get();
+        const cohorteJson = await utilidadesService.convertOneToJson(cohorte);
+        const filtrados = registros.filter(row => row.idCampo === campo.id && row.idCohorte === cohorte.id);
+
+        if (filtrados.length > 0) {
+            const resultadoJson = await utilidadesService.convertToJson(filtrados);
+            resultadoJson[0].cohorte = cohorteJson;
+            return resultadoJson[0];
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error("Error en getPorCampoCohorte:", error);
+        return null;
     }
-}
+};
 
 async function postOrPut(objeto) {
     
