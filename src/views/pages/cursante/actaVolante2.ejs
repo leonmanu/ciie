@@ -11,7 +11,7 @@
 <div class="noPrint">
     <div class="topnav">
         <div class="login-container">
-            <form action="/cursante/actaVolante" method="post">
+            <form action="/cursante/analisis" method="post">
                 <select name="cohorte">
                     <option value='' style="display:none"> Cohorte </option>
                     <% cohortesTodas.forEach(function(cohorte){ %>
@@ -32,31 +32,40 @@
 </div>
 
 <% camposDocentes.forEach(function(campoDocente){ %>
-  <% let i = 1 %>
+    <% let i = 1 %>
+  <% let fechaInicio = 'N/A'; %>
+  <% let fechaFin = 'N/A'; %>
+  <% if (campoDocente.encuentroFecha && campoDocente.encuentroFecha.encuentro1 && campoDocente.cohorte && campoDocente.cohorte.nroEncuentros) { %>
     <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
-    <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2) %>
+    <% fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2); %>
     <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
-    <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2) %>
-    <% let fechaFinLarga = (newFechaFin.getUTCDate()) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
-    
-    <% let limit = 30 %>
-    <% let inscriptos = campoDocente.cursantes.length %>
-    <% let hojas = Math.trunc(inscriptos / limit + 1) %>
+    <% fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2); %>
+  <% } %>
 
-    <% for (var x = 1; x <= hojas;  x++ ) { %>
-      <% let aprobados = 0 %>
+  <% if (campoDocente.encuentroFecha && campoDocente.encuentroFecha['encuentro' + campoDocente.cohorte.nroEncuentros]) { %>
+    <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro' + campoDocente.cohorte.nroEncuentros]); %>
+    <% let fechaFin = newFechaFin.getUTCDate() + "/" + (newFechaFin.getMonth() + 1) + "/" + newFechaFin.getFullYear().toString().slice(-2) %>
+    <% let fechaFinLarga = newFechaFin.getUTCDate() + " de " + meses[newFechaFin.getMonth()] + " de " + newFechaFin.getFullYear() %>
+  <% } else { %>
+    <% let fechaFin = 'N/A'; %>
+    <% let fechaFinLarga = 'N/A'; %>
+  <% } %>
+
+  <% let limit = 30 %>
+  <% let inscriptos = campoDocente.cursantes.length %>
+  <% let hojas = Math.trunc(inscriptos / limit + 1) %>
+
+  <% for (var x = 1; x <= hojas; x++) { %>
+    <% let aprobados = 0 %>
     <% let desaprobados = 0 %>
     <% let ausentes = 0 %>
     <div class="
-                    <% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen']  == '' || campoDocente.propuesta['Proyecto'] == '' || campoDocente.propuesta['impreso'] == 'TRUE')
-                     { 
-                        if(campoDocente.propuesta['impreso'] == 'TRUE'){
+                    <% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen'] == '' || campoDocente.propuesta['Proyecto'] == '' || campoDocente.propuesta['impreso'] == 'TRUE') { 
+                        if (campoDocente.propuesta['impreso'] == 'TRUE') {
                           borde = 'borderPageGreen'
                         } else {
                           borde = 'borderPageGrey';
-                        }
-                        %>noPrint<% 
-                      } %>
+                        } %> noPrint <% } %>
                       ">
       <div class="header">
           <div class="section left">
@@ -70,9 +79,12 @@
           </div>
       </div>
       <div>
-        <div style="float: right;">
-          <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> | pág. <%= x %> / <%= hojas %></span>
-        </div>
+        
+        <% if (campoDocente && campoDocente.cohorte && campoDocente.cohorte.clave) { %>
+            <div style="float: right;">
+              <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> | pág. <%= x %> / <%= hojas %></span>
+            </div>
+          <% } %>
       </div>
       <div class="info">
           <div style="text-align: center;">
@@ -110,7 +122,7 @@
               <th rowspan="2" style="text-align: center; vertical-align: middle; width: 12%;">Observaciones</th>
           </tr>
           <tbody>
-              <% for (var y = limit * (x - 1); y < limit * x;  y++ ) { %>
+              <% for (var y = limit * (x - 1); y < limit * x; y++) { %>
                 <% if (y < inscriptos) { %>
                       <tr>
                           <td style="text-align: right;"><%= i %></td>
@@ -122,7 +134,7 @@
                         ><%= campoDocente.cursantes[y].Valoracion %></td>
                           <td><%= campoDocente.cursantes[y].Observacion %></td>
                       </tr>
-                    <% } else{ %>
+                    <% } else { %>
                       <tr>
                         <td style="text-align: right;"><%= i %></td>
                         <td></td>
@@ -137,7 +149,7 @@
           </tbody>
       </table>
       <div style="margin-top: 5; margin-bottom: 5;">
-          <span>Inscriptos: <%= aprobados + desaprobados + ausentes  %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
+          <span>Inscriptos: <%= aprobados + desaprobados + ausentes %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
       </div>
       <div style="text-align: right;">
           <span>Gregorio de Laferrere, _____________________</span>
@@ -153,12 +165,11 @@
                   </div>
               </div>
           </div>
-          
       </div>
       <div style="break-after: page;"></div>
-      </div>
-      <% } %>
-  <% }) %>
+    </div>
+  <% } %>
+<% }) %>
 
 <style>
     /* Estilos globales */

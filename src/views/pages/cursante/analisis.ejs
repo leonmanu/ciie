@@ -33,142 +33,167 @@
 
 <% camposDocentes.forEach(function(campoDocente){ %>
     <% let i = 1 %>
-  <% let fechaInicio = 'N/A'; %>
-  <% let fechaFin = 'N/A'; %>
-  <% if (campoDocente.encuentroFecha && campoDocente.encuentroFecha.encuentro1 && campoDocente.cohorte && campoDocente.cohorte.nroEncuentros) { %>
-    <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
-    <% fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2); %>
-    <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
-    <% fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2); %>
-  <% } %>
-
-  <% if (campoDocente.encuentroFecha && campoDocente.encuentroFecha['encuentro' + campoDocente.cohorte.nroEncuentros]) { %>
-    <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro' + campoDocente.cohorte.nroEncuentros]); %>
-    <% let fechaFin = newFechaFin.getUTCDate() + "/" + (newFechaFin.getMonth() + 1) + "/" + newFechaFin.getFullYear().toString().slice(-2) %>
-    <% let fechaFinLarga = newFechaFin.getUTCDate() + " de " + meses[newFechaFin.getMonth()] + " de " + newFechaFin.getFullYear() %>
-  <% } else { %>
+    <% let fechaInicio = 'N/A'; %>
     <% let fechaFin = 'N/A'; %>
-    <% let fechaFinLarga = 'N/A'; %>
-  <% } %>
+    <% if (campoDocente.encuentroFecha && campoDocente.encuentroFecha.encuentro1 && campoDocente.cohorte && campoDocente.cohorte.nroEncuentros) { %>
+        <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
+        <% fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) +"/"+ newFechaInicio.getFullYear().toString().slice(-2); %>
+        <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
+        <% fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) +"/"+ newFechaFin.getFullYear().toString().slice(-2); %>
+    <% } %>
 
-  <% let limit = 30 %>
-  <% let inscriptos = campoDocente.cursantes.length %>
-  <% let hojas = Math.trunc(inscriptos / limit + 1) %>
+    <% if (campoDocente.encuentroFecha && campoDocente.encuentroFecha['encuentro' + campoDocente.cohorte.nroEncuentros]) { %>
+        <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro' + campoDocente.cohorte.nroEncuentros]); %>
+        <% let fechaFin = newFechaFin.getUTCDate() + "/" + (newFechaFin.getMonth() + 1) + "/" + newFechaFin.getFullYear().toString().slice(-2) %>
+        <% let fechaFinLarga = newFechaFin.getUTCDate() + " de " + meses[newFechaFin.getMonth()] + " de " + newFechaFin.getFullYear() %>
+    <% } else { %>
+        <% let fechaFin = 'N/A'; %>
+        <% let fechaFinLarga = 'N/A'; %>
+    <% } %>
 
-  <% for (var x = 1; x <= hojas; x++) { %>
-    <% let aprobados = 0 %>
-    <% let desaprobados = 0 %>
-    <% let ausentes = 0 %>
-    <div class="
-                    <% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen'] == '' || campoDocente.propuesta['Proyecto'] == '' || campoDocente.propuesta['impreso'] == 'TRUE') { 
-                        if (campoDocente.propuesta['impreso'] == 'TRUE') {
-                          borde = 'borderPageGreen'
-                        } else {
-                          borde = 'borderPageGrey';
-                        } %> noPrint <% } %>
-                      ">
-      <div class="header">
-          <div class="section left">
-              <img class="w3-image" src="/img/IsologoCIIE.png" alt="logoCiie201" style="height:45px; float: left; clear: both; margin-top: 5;">
-          </div>
-          <div class="section center">
-              
-          </div>
-          <div class="section right">
-              <img class="w3-image" src="/img/logo-pbea.png" alt="Hamburger Catering" style="height:60px; margin-top: 0;">
-          </div>
-      </div>
-      <div>
-        
-        <% if (campoDocente && campoDocente.cohorte && campoDocente.cohorte.clave) { %>
-            <div style="float: right;">
-              <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> | pág. <%= x %> / <%= hojas %></span>
+    <% let limit = 30 %>
+    <% let inscriptos = campoDocente.cursantes.length %>
+    <% let hojas = Math.trunc(inscriptos / limit + 1) %>
+
+    <% for (var x = 1; x <= hojas; x++) { %>
+        <% let aprobados = 0 %>
+        <% let desaprobados = 0 %>
+        <% let ausentes = 0 %>
+        <% let otros = 0 %>
+        <% let masculinoTotal = 0 %>
+        <% let femeninoTotal = 0 %>
+        <% let masculinoAprobados = 0 %>
+        <% let masculinoDesaprobados = 0 %>
+        <% let masculinoAusentes = 0 %>
+        <% let masculinoOtros = 0 %>
+
+        <div class="<% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen'] == '' || campoDocente.propuesta['Proyecto'] == '' || campoDocente.propuesta['impreso'] == 'TRUE') { if (campoDocente.propuesta['impreso'] == 'TRUE') { borde = 'borderPageGreen' } else { borde = 'borderPageGrey'; } %> noPrint <% } %>">
+            <div>
+                <% if (campoDocente && campoDocente.cohorte && campoDocente.cohorte.clave) { %>
+                    <div style="float: right;">
+                        <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> | pág. <%= x %> / <%= hojas %></span>
+                    </div>
+                <% } %>
             </div>
-          <% } %>
-      </div>
-      <div class="info">
-          <div style="text-align: center;">
-              <h3><span>ACTA VOLANTE</span></h3>
-          </div>
-      </div>
 
-      <div class="info">
-          <div style="float: left;">
-              <span>Área: <u><strong><%= campoDocente.nombre %></strong></u></span>
-          </div>
-          <div style="float: right;">
-              <span class="w3-right">Dispositivo: <b>Curso</b></span>
-          </div>
-      </div>
-      <br>
-      <div style="margin-top: 5; margin-bottom: 5;">
-        Nombre: <b><%= campoDocente.propuesta.nombre %></b>
-      </div>
-      <div class="w3-bar w3-large">
-          <span>Proyecto: <b><%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %></b></span>
-          <span> Resolución: <b><%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %></b></span>
-          <span>Dictamen: <b><%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %></b></span> 
-          <span>Carga horaria: <b><%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %></b> hs.</span> 
-          <br>
-          <span>Inicio: <b><%= fechaInicio %></b>, </span>
-          <span>Finalización: <b><%= fechaFin %></b></span>
-      </div>
-      <table class="w3-table-all" style="margin-top: 5;">
-          <tr class="w3-light-grey">
-              <th style="width: 5%;">Orden</th>
-              <th style="text-align: center; vertical-align: middle; width: 10%;">DNI</th>
-              <th class="overflow-hidden" rowspan="2" style="text-align: center; vertical-align: middle; width: 30%;">Cursante</th>
-              <th style="text-align: center; vertical-align: middle;width: 10%; overflow: hidden;">Calificación</th>
-              <th rowspan="2" style="text-align: center; vertical-align: middle; width: 12%;">Observaciones</th>
-          </tr>
-          <tbody>
-              <% for (var y = limit * (x - 1); y < limit * x; y++) { %>
-                <% if (y < inscriptos) { %>
-                      <tr>
-                          <td style="text-align: right;"><%= i %></td>
-                          <td style="text-align: right;"><%= campoDocente.cursantes[y]['Número de DNI'] %></td>
-                          <td style="overflow: hidden; white-space: nowrap;"><%= campoDocente.cursantes[y]['Apellido/s'] %>, <%= campoDocente.cursantes[y]['Nombre/s'] %></td>
-                          <td <% if (campoDocente.cursantes[y].Valoracion === 'aprobado') { %> style="font-weight: bold;" <% aprobados++; %> <% } %>
-                            <% if (campoDocente.cursantes[y].Valoracion === 'desaprobado') { %> <% desaprobados++; %> <% } %>
-                            <% if (campoDocente.cursantes[y].Valoracion === 'ausente') { %> style="font-style: italic;" <% ausentes++; %> <% } %>
-                        ><%= campoDocente.cursantes[y].Valoracion %></td>
-                          <td><%= campoDocente.cursantes[y].Observacion %></td>
-                      </tr>
-                    <% } else { %>
-                      <tr>
-                        <td style="text-align: right;"><%= i %></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+            <div class="info">
+                <div style="float: left;">
+                    <span>Área: <u><strong><%= campoDocente.nombre %></strong></u></span>
+                </div>
+                <div style="float: right;">
+                    <span class="w3-right">Dispositivo: <b>Curso</b></span>
+                </div>
+            </div>
+            <br>
+            <div style="margin-top: 5; margin-bottom: 5;">
+                Nombre: <b><%= campoDocente.propuesta.nombre %></b>
+            </div>
+            <div class="w3-bar w3-large">
+                <span>Proyecto: <b><%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %></b></span>
+                <span> Resolución: <b><%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %></b></span>
+                <span>Dictamen: <b><%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %></b></span> 
+                <span>Carga horaria: <b><%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %></b> hs.</span> 
+                <br>
+                <span>Inicio: <b><%= fechaInicio %></b>, </span>
+                <span>Finalización: <b><%= fechaFin %></b></span>
+            </div>
+            <table class="w3-table-all" style="margin-top: 5;">
+                <tbody>
+                    <% for (var y = limit * (x - 1); y < limit * x; y++) { %>
+                        <% if (y < inscriptos) { %>
+                            <% let cursante = campoDocente.cursantes[y]; %>
+                            <% let genero = cursante['Género (como figura en el DNI)']; %>
+                            <% let valoracion = cursante.Valoracion; %>
+                            <% if (genero === 'Masculino') { masculinoTotal++; } else { femeninoTotal++; } %>
+                            <% if (valoracion === 'aprobado') { 
+                                aprobados++; 
+                                if (genero === 'Masculino') { masculinoAprobados++; } 
+                            } %>
+                            <% if (valoracion === 'desaprobado') { 
+                                desaprobados++; 
+                                if (genero === 'Masculino') { masculinoDesaprobados++; } 
+                            } %>
+                            <% if (valoracion === 'ausente') { 
+                                ausentes++; 
+                                if (genero === 'Masculino') { masculinoAusentes++; } 
+                            } %>
+                            <% if (valoracion !== 'ausente' && valoracion !== 'aprobado' && valoracion !== 'desaprobado') { 
+                                otros++; 
+                                if (genero === 'Masculino') { masculinoOtros++; } 
+                            } %>
+                            <tr>
+                                <td style="text-align: right;"><%= i %></td>
+                                <td style="text-align: right;"><%= cursante['Número de DNI'] %></td>
+                                <td style="overflow: hidden; white-space: nowrap;"><%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></td>
+                                <td <% if (valoracion === 'aprobado') { %> style="font-weight: bold;" <% } %>
+                                    <% if (valoracion === 'desaprobado') { %> <% } %>
+                                    <% if (valoracion === 'ausente') { %> style="font-style: italic;" <% } %>
+                                    <% if (valoracion !== 'ausente' && valoracion !== 'aprobado' && valoracion !== 'desaprobado') { %> style="font-style: underline;" <% } %>
+                                ><%= valoracion %></td>
+                                <td><%= genero %></td>
+                            </tr>
+                        <% } %>
+                        <% i++; %>
                     <% } %>
-                    <% i++; %>
-              <% } %>
-
-          </tbody>
-      </table>
-      <div style="margin-top: 5; margin-bottom: 5;">
-          <span>Inscriptos: <%= aprobados + desaprobados + ausentes %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %></span>
-      </div>
-      <div style="text-align: right;">
-          <span>Gregorio de Laferrere, _____________________</span>
-          <div>
-              <small>(Fecha)</small>
-          </div>
-          <br>
-          <div style="display: flex; justify-content: flex-end;">
-              <div style="width: 50%;">
-                  <span style="display: inline-block; width: 100%;">_________________________________________</span>
-                  <div style="text-align: center;">
-                      <small>Firma form.: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div style="break-after: page;"></div>
-    </div>
-  <% } %>
+                </tbody>
+            </table>
+            <div style="margin-top: 5; margin-bottom: 5;">
+                <table class="w3-table-all" style="margin-top: 5;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;" rowspan="2"><b>Curso</b></th>
+                            <th style="text-align: center; vertical-align: middle;" colspan="5">Totales</th>
+                            <th style="text-align: center; vertical-align: middle;" colspan="5">Masculinos</th>
+                        </tr>
+                        <tr class="w3-light-grey">
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Inscriptos</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Aprobados</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Desaprobados</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Ausentes</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Otros</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Inscriptos</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Aprobados</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Desaprobados</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Ausentes</th>
+                            <th style="text-align: center; vertical-align: middle; width: 8%;">Otros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style=""><strong><%= campoDocente.clave %></strong></td>
+                            <td style="text-align: right;"><%= aprobados + desaprobados + ausentes + otros %></td>
+                            <td style="text-align: right;"><%= aprobados%></td>
+                            <td style="text-align: right;"><%= desaprobados %></td>
+                            <td style="text-align: right;"><%= ausentes %></td>
+                            <td style="text-align: right;"><%= otros %></td>
+                            <td style="text-align: right;"><%= masculinoTotal %></td>
+                            <td style="text-align: right;"><%= masculinoAprobados %></td>
+                            <td style="text-align: right;"><%= masculinoDesaprobados %></td>
+                            <td style="text-align: right;"><%= masculinoAusentes %></td>
+                            <td style="text-align: right;"><%= masculinoOtros %></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span>Inscriptos: , Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %>, Otros: <%= otros %></span>
+                <br>
+                <span>Masculinos: <%= masculinoTotal %>, Femeninos: <%= femeninoTotal %></span>
+                <br>
+                <span>Masculinos Aprobados: <%= masculinoAprobados %>, Masculinos Desaprobados: <%= masculinoDesaprobados %>, Masculinos Ausentes: <%= masculinoAusentes %>, Masculinos Otros: <%= masculinoOtros %></span>
+            </div>
+            <div style="text-align: right;">
+                
+                <div style="display: flex; justify-content: flex-end;">
+                    <div style="width: 50%;">
+                        <span style="display: inline-block; width: 100%;">_________________________________________</span>
+                        <div style="text-align: center;">
+                            <small>Firma form.: <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="break-after: page;"></div>
+        </div>
+    <% } %>
 <% }) %>
 
 <style>
