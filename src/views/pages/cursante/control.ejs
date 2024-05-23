@@ -1,11 +1,13 @@
 <!-- <script src="/js/estudianteAsignatura.ajax.js"></script> -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courgette&display=swap">
 <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 
 <div>
     <% let j = 0 %>
     <% let encuentro %>
     <% let meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']; %>
+    <% let estado = "" %>
 </div>
 
 <div class="noPrint">
@@ -78,32 +80,57 @@
                 <% } %>
             </div>
 
-            <div class="info">
-                <div style="float: left;">
-                    <span>Área: <strong><u><%= campoDocente.nombre %>(<%= campoDocente.clave %>)</u>: </strong>
-                    <i><%= campoDocente.propuesta.nombre %></i> - <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></span>
-                </div>
-            </div>
-            <br>
-            <div style="margin-top: 5; margin-bottom: 5;">
-                
-            </div>
             <div class="w3-bar w3-large">
-                <span style="<% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen'] == '' || campoDocente.propuesta['Proyecto'] == '') { %> color: red; <% }  %>">Datos:</span>
-                <span>Proyecto: <b><%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %></b></span>
-                <span> Resolución: <b><%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %></b></span>
-                <span>Dictamen: <b><%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %></b></span> 
-                <span>Carga horaria: <b><%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %></b> hs.</span> 
-                <br>
-                <span>Encuentros:</span>
-                    <% var j = 1%>
-                    <% fechasEncuentros.forEach(function(fecha) { %>
-                        <b><u><%= j++ %>°:</u> <%= fecha %></b> - 
-                    <% }) %>
+                <ul>
+                    <% if (campoDocente.nombre == '') {
+                        estado = 'error'
+                    } else {
+                        estado = ''
+                    }%>
+                    <li class="<%= estado %>">
+                        <span><strong>Área:</strong> <u><%= campoDocente.nombre %>(<%= campoDocente.clave %>)</u>: 
+                            <i><%= campoDocente.propuesta.nombre %></i> - <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></span>
+                    </li>
+                    <% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen'] == '' || campoDocente.propuesta['Proyecto'] == '') {
+                        estado = 'error'
+                    } else {
+                        estado = ''
+                    }%>
+                    <li class="<%= estado %>">
+                        <span> <strong>Datos: </strong>
+                            Proyecto: <%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %>, 
+                            Resolución: <%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %>, 
+                            Dictamen: <%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %>, 
+                            Carga horaria: <%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %> hs.
+                        </span>
+                    </li>
+                    <% if (fechasEncuentros.length <= 0) {
+                        estado = 'error'
+                    } else {
+                        estado = ''
+                    }%>
+                    <li class="<%= estado %>">
+                        <span>
+                           <strong> Encuentros (<%=fechasEncuentros.length%>):</strong>
+                            <% var j = 1%>
+                            <% fechasEncuentros.forEach(function(fecha) { %>
+                                <u><%= j++ %>°:</u> <%= fecha %> - 
+                            <% }) %>
+                        </span>
+                    </li>
+                    <% if (otros > 0) {
+                        estado = 'error'
+                    } else {
+                        estado = ''
+                    }%>
+                    <li class="<%= estado %>">
+                        <span>
+                            <strong>Inscriptos:</strong> <%= inscriptos %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %>, Otros: <%= otros %>
+                        </span>
+                    </li>
+                </ul>
             </div>
-            <div style="margin-top: 5; margin-bottom: 5;">
-                <span>Inscriptos: <%= inscriptos %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %>, Otros: <%= otros %></span>
-            </div>
+
             <hr>
             <div style="break-after: page;"></div>
         </div>
@@ -115,6 +142,10 @@
         margin: 0;
         padding: 20px;
         font-family: Arial, sans-serif;
+    }
+
+    .error {
+        color: red;
     }
 
     /* Estilos de impresión */
@@ -196,52 +227,9 @@
         background-color: green;
     }
 
-    /* Estilos adicionales */
-    .justify {
-        text-align: justify;
-        text-justify: inter-word;
-    }
-
     .sup {
         font-size: 10px;
     }
 
-    .grid-container {
-        display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
 
-    p {
-        margin: 2;
-    }
-
-    /* Secciones */
-    .section {
-        flex: 1;
-    }
-
-    .left {
-        text-align: left;
-        flex-basis: 25%;
-    }
-
-    .center {
-        text-align: center;
-        flex-basis: 50%;
-    }
-
-    .right {
-        text-align: right;
-        flex-basis: 25%;
-    }
-
-    /* Tabla */
-    table,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
 </style>

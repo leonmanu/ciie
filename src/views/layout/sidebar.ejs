@@ -32,10 +32,13 @@
         </a>
         <% if (user.admin == 'TRUE') { %>
           <div class="w3-bar-item w3-button" onclick="toggleMenu('certificados')">
-            <i class="fa fa-certificate" aria-hidden="true"></i> Certificados <i class="fa fa-caret-down"></i>
+            <i class="fa fa-certificate" aria-hidden="true"></i> Certificación <i class="fa fa-caret-down"></i>
           </div>
           <div id="certificados" class="w3-hide w3-white w3-card-4">
             <a href="/cursante/certificado" class="w3-bar-item w3-button">Certificados</a>
+            <a href="../cursante/actaVolante" class="w3-button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+              <i class="fa fa-file-text" aria-hidden="true"></i>  Acta volante
+            </a>
             <a href="/cursante/certificado/actaRetiro" class="w3-bar-item w3-button">Acta de retiro</a>
           </div>
           <div class="w3-bar-item w3-button" onclick="toggleMenu('analisis')">
