@@ -17,7 +17,10 @@ const rolRouter = require('./routes/rol.route')
 const cohorteRouter = require('./routes/cohorte.route')
 const revistaRouter = require('./routes/revista.route')
 const encuentroFechaRouter = require('./routes/encuentroFecha.route')
+const uploadRouter = require('./routes/upload.route');
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 var sessionMiddelware = require('./middelware/session.middelware')
 const usuarioController = require('./controllers/usuario.controller')
 const LocalStrategy = require('passport-local').Strategy
@@ -53,6 +56,7 @@ app
     .use("/revista", revistaRouter)
     .use("/encuentroFecha", encuentroFechaRouter)
     .use("/cohorte", cohorteRouter)
+    .use("/upload", uploadRouter)
 
 module.exports = app
 

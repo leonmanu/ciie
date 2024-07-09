@@ -46,95 +46,95 @@
         <% } %>
     <% } %>
 
-    <% let inscriptos = campoDocente.cursantes.length %>
+    <% let inscriptos = (campoDocente.cursantes && campoDocente.cursantes.length) || 0 %>
 
-        <% let aprobados = 0 %>
-        <% let desaprobados = 0 %>
-        <% let ausentes = 0 %>
-        <% let otros = 0 %>
+    <% let aprobados = 0 %>
+    <% let desaprobados = 0 %>
+    <% let ausentes = 0 %>
+    <% let otros = 0 %>
 
-            <% for (i = 0; i < inscriptos; i++) { %>
-                    <% let cursante = campoDocente.cursantes[i]; %>
-                    <% let valoracion = cursante.Valoracion; %>
-                    <% if (valoracion === 'aprobado') { 
-                        aprobados++; 
-                    } %>
-                    <% if (valoracion === 'desaprobado') { 
-                        desaprobados++; 
-                    } %>
-                    <% if (valoracion === 'ausente') { 
-                        ausentes++; 
-                    } %>
-                    <% if (valoracion !== 'ausente' && valoracion !== 'aprobado' && valoracion !== 'desaprobado') { 
-                        otros++; 
-                    } %>
+    <% for (i = 0; i < inscriptos; i++) { %>
+        <% let cursante = campoDocente.cursantes[i] || {}; %>
+        <% let valoracion = cursante.Valoracion || ''; %>
+        <% if (valoracion === 'aprobado') { 
+            aprobados++; 
+        } %>
+        <% if (valoracion === 'desaprobado') { 
+            desaprobados++; 
+        } %>
+        <% if (valoracion === 'ausente') { 
+            ausentes++; 
+        } %>
+        <% if (valoracion !== 'ausente' && valoracion !== 'aprobado' && valoracion !== 'desaprobado') { 
+            otros++; 
+        } %>
+    <% } %>
+
+    <div class="">
+        <div>
+            <% if (campoDocente && campoDocente.cohorte && campoDocente.cohorte.clave) { %>
+                <div style="float: right;">
+                    <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> </span>
+                </div>
             <% } %>
-
-
-        <div class="">
-            <div>
-                <% if (campoDocente && campoDocente.cohorte && campoDocente.cohorte.clave) { %>
-                    <div style="float: right;">
-                        <span class="sup"><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %> </span>
-                    </div>
-                <% } %>
-            </div>
-
-            <div class="w3-bar w3-large">
-                <ul>
-                    <% if (campoDocente.nombre == '') {
-                        estado = 'error'
-                    } else {
-                        estado = ''
-                    }%>
-                    <li class="<%= estado %>">
-                        <span><strong>Área:</strong> <u><%= campoDocente.nombre %>(<%= campoDocente.clave %>)</u>: 
-                            <i><%= campoDocente.propuesta.nombre %></i> - <%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></span>
-                    </li>
-                    <% if (campoDocente.propuesta['Resolución'] == '' || campoDocente.propuesta['Dictamen'] == '' || campoDocente.propuesta['Proyecto'] == '') {
-                        estado = 'error'
-                    } else {
-                        estado = ''
-                    }%>
-                    <li class="<%= estado %>">
-                        <span> <strong>Datos: </strong>
-                            Proyecto: <%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %>, 
-                            Resolución: <%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %>, 
-                            Dictamen: <%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %>, 
-                            Carga horaria: <%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %> hs.
-                        </span>
-                    </li>
-                    <% if (fechasEncuentros.length <= 0) {
-                        estado = 'error'
-                    } else {
-                        estado = ''
-                    }%>
-                    <li class="<%= estado %>">
-                        <span>
-                           <strong> Encuentros (<%=fechasEncuentros.length%>):</strong>
-                            <% var j = 1%>
-                            <% fechasEncuentros.forEach(function(fecha) { %>
-                                <u><%= j++ %>°:</u> <%= fecha %> - 
-                            <% }) %>
-                        </span>
-                    </li>
-                    <% if (otros > 0) {
-                        estado = 'error'
-                    } else {
-                        estado = ''
-                    }%>
-                    <li class="<%= estado %>">
-                        <span>
-                            <strong>Inscriptos:</strong> <%= inscriptos %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %>, Otros: <%= otros %>
-                        </span>
-                    </li>
-                </ul>
-            </div>
-
-            <hr>
-            <div style="break-after: page;"></div>
         </div>
+
+        <div class="w3-bar w3-large">
+            <ul>
+                <% if (campoDocente.nombre == '') {
+                    estado = 'error'
+                } else {
+                    estado = ''
+                }%>
+                <li class="<%= estado %>">
+                    <span><strong>Área:</strong> <u><%= campoDocente.nombre || "_________" %>(<%= campoDocente.clave || "_________" %>)</u>: 
+                        <i><%= campoDocente.propuesta && campoDocente.propuesta.nombre ? campoDocente.propuesta.nombre : "_________" %></i> - <%= campoDocente.persona && campoDocente.persona.apellido ? campoDocente.persona.apellido : "_________" %>, <%= campoDocente.persona && campoDocente.persona.nombre ? campoDocente.persona.nombre : "_________" %></span>
+                </li>
+                <% if (!campoDocente.propuesta || campoDocente.propuesta['Resolución'] === '' || campoDocente.propuesta['Dictamen'] === '' || campoDocente.propuesta['Proyecto'] === '') {
+                    estado = 'error'
+                } else {
+                    estado = ''
+                }%>
+                <li class="<%= estado %>">
+                    <span> <strong>Datos: </strong>
+                        Proyecto: <%= campoDocente.propuesta && campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "_________" %>, 
+                        Resolución: <%= campoDocente.propuesta && campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "_________" %>, 
+                        Dictamen: <%= campoDocente.propuesta && campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "_________" %>, 
+                        Carga horaria: <%= campoDocente.propuesta && campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "______" %> hs.
+                    </span>
+                </li>
+                <% if (fechasEncuentros.length <= 0) {
+                    estado = 'error'
+                } else {
+                    estado = ''
+                }%>
+                <li class="<%= estado %>">
+                    <span>
+                       <strong> Encuentros (<%=fechasEncuentros.length%>):</strong>
+                        <% var j = 1 %>
+                        <% fechasEncuentros.forEach(function(fecha) { %>
+                            <u><%= j++ %>°:</u> <%= fecha %> - 
+                        <% }) %>
+                    </span>
+                </li>
+                <% if (otros > 0) {
+                    estado = 'error'
+                } else {
+                    estado = ''
+                }%>
+                <li class="<%= estado %>">
+                    <span>
+                        <strong>Inscriptos:</strong> <%= inscriptos %>, Aprobados: <%= aprobados %>, Desaprobados: <%= desaprobados %>, Ausentes: <%= ausentes %>, Otros: <%= otros %>
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+        <div style="break-after: page;"></div>
+    </div>
 <% }) %>
+
 
 <style>
     /* Estilos globales */

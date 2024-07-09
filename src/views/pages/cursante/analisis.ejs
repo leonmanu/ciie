@@ -130,14 +130,14 @@
                         <% i++; %>
                     <% } %>
                     <tr>
-                        <td style=""><strong><%= campoDocente.clave %> - <%= campoDocente.cohorte.clave %></strong></td>
-                        <td style=""><%= campoDocente.nombre %></td>
-                        <td style=""><%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></td>
-                        <td style=""><%= campoDocente.propuesta.nombre %></td>
-                        <td style=""><%= campoDocente.propuesta['Proyecto'] !== '' ? campoDocente.propuesta['Proyecto'] : "---" %></td>
-                        <td style=""><%= campoDocente.propuesta['Resolución'] !== '' ? campoDocente.propuesta['Resolución'] : "---" %></td>
-                        <td style=""><%= campoDocente.propuesta['Dictamen'] !== '' ? campoDocente.propuesta['Dictamen'] : "---" %></td>
-                        <td style=""><%= campoDocente.propuesta['Carga horaria'] !== '' ? campoDocente.propuesta['Carga horaria'] : "---" %></td>
+                        <td style=""><strong><%= campoDocente && campoDocente.clave ? campoDocente.clave + ' - ' + (campoDocente.cohorte ? campoDocente.cohorte.clave : 'N/A') : 'N/A' %></strong></td>
+                        <td style=""><%= campoDocente && campoDocente.nombre ? campoDocente.nombre : 'N/A' %></td>
+                        <td style=""><%= (campoDocente && campoDocente.persona && campoDocente.persona.apellido) ? campoDocente.persona.apellido : 'N/A' %>, <%= (campoDocente && campoDocente.persona && campoDocente.persona.nombre) ? campoDocente.persona.nombre : 'N/A' %></td>
+                        <td style=""><%= (campoDocente && campoDocente.propuesta && campoDocente.propuesta.nombre !== '') ? campoDocente.propuesta.nombre : '---' %></td>
+                        <td style=""><%= (campoDocente && campoDocente.propuesta && campoDocente.propuesta['Proyecto'] !== '') ? campoDocente.propuesta['Proyecto'] : '---' %></td>
+                        <td style=""><%= (campoDocente && campoDocente.propuesta && campoDocente.propuesta['Resolución'] !== '') ? campoDocente.propuesta['Resolución'] : '---' %></td>
+                        <td style=""><%= (campoDocente && campoDocente.propuesta && campoDocente.propuesta['Dictamen'] !== '') ? campoDocente.propuesta['Dictamen'] : '---' %></td>
+                        <td style=""><%= (campoDocente && campoDocente.propuesta && campoDocente.propuesta['Carga horaria'] !== '') ? campoDocente.propuesta['Carga horaria'] : '---' %></td>
                         <td style=""><%= fechaInicio %> - <%= fechaFin %></td>
                         <td style="text-align: right;"><%= aprobados + desaprobados + ausentes + otros %> (<%= masculinoTotal %>)</td>
                         <td style="text-align: right;"><%= aprobados%> (<%= masculinoAprobados %>)</td>
@@ -145,6 +145,7 @@
                         <td style="text-align: right;"><%= ausentes%>  (<%= masculinoAusentes %>)</td>
                         <td style="text-align: right;"><%= otros %></td>
                     </tr>
+                    
                     <% 
                         // Sumar los totales de este curso a los totales generales
                         totalInscriptos += aprobados + desaprobados + ausentes + otros;
