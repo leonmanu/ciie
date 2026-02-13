@@ -193,7 +193,7 @@ const getActaRetiro = async (req, res) => {
         
         cursantes = await cursantes.cursanteService.getPorDni(cursantes, paramDni)
     }
-
+    console.log("cursantes[0]: ", cursantes[0])
     campos = await campoService.getCampoYPropuesta(campos, propuestas)
     campos = await encuentroFechaService.getCamposFechas(campos,cohortes)
 

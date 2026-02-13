@@ -63,20 +63,21 @@
       <% let numero = 1; %>
       <% cursantes.forEach(function(cursante){ %>
         <% camposDocentes.forEach(function(campoDocente){ %>
-          <% if (cursante['Seleccione su curso'].includes(campoDocente.clave+" ")) { %>
-            <% let newFechaInicio = new Date(campoDocente.encuentroFecha.encuentro1); %>
+          <% if (cursante['Seleccione su curso'] && cursante['Seleccione su curso'].includes(campoDocente.clave+" ")) { %>
+            <% let newFechaInicio = campoDocente.encuentroFecha?.encuentro1 ? new Date(campoDocente.encuentroFecha.encuentro1) : new Date(); %>
             <% let fechaInicio = newFechaInicio.getUTCDate() +"/"+ (newFechaInicio.getMonth() + 1) %>
-            <% let newFechaFin = new Date(campoDocente.encuentroFecha['encuentro'+campoDocente.cohorte.nroEncuentros]); %>
+            <% let nroEncuentros = campoDocente.cohorte?.nroEncuentros || 1; %>
+            <% let newFechaFin = campoDocente.encuentroFecha?.['encuentro'+nroEncuentros] ? new Date(campoDocente.encuentroFecha['encuentro'+nroEncuentros]) : new Date(); %>
             <% let fechaFin = newFechaFin.getUTCDate() +"/"+ (newFechaFin.getMonth() + 1) %>
             <% let fechaFinLarga = (newFechaFin.getUTCDate()) +" de "+ meses[newFechaFin.getMonth() + 1] +" de "+ newFechaFin.getFullYear() %>
             <tr  class="headt" style="border: 1px solid #000000;">
               <td style="text-align: right;"><%= numero %></td>
-              <td  style="line-height: 15px;"> <%= cursante['Apellido/s'] %>, <%= cursante['Nombre/s'] %></td>
-              <td><%= cursante['Número de DNI'] %></td>
-              <td style="line-height: 10px;"><div  class="wrap2"><small><%= campoDocente.propuesta.nombre %></div></small></td>
+              <td  style="line-height: 15px;"> <%= cursante['Apellido/s'] || '' %>, <%= cursante['Nombre/s'] || '' %></td>
+              <td><%= cursante['Número de DNI'] || '' %></td>
+              <td style="line-height: 10px;"><div  class="wrap2"><small><%= cursante['Seleccione su curso'] || 'Sin propuesta' %></small></div></td>
               <td style="line-height: 15px;"><%= fechaInicio %> <%= fechaFin %></td>
-              <td style="line-height: 15px;"><%= campoDocente.clave %></td>
-              <td style="line-height: 15px;"><div  class="wrap2"><small><%= campoDocente.persona.apellido %>, <%= campoDocente.persona.nombre %></small></div></td>
+              <td style="line-height: 15px;"><%= campoDocente.clave || '' %></td>
+              <td style="line-height: 15px;"><div  class="wrap2"><small><%= campoDocente.persona?.apellido || '' %>, <%= campoDocente.persona?.nombre || '' %></small></div></td>
               <td></td>
               <td></td>
               <td></td>
